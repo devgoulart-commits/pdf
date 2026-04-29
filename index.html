@@ -721,6 +721,66 @@ footer {
   </div>
 </div>
 
+<!-- ========= HEIC → PNG/JPEG ========= -->
+<div id="page-heic" class="page">
+  <div class="tool-wrap">
+    <div class="tool-header">
+      <h2>HEIC → <span>PNG / JPEG</span></h2>
+      <p>Converta fotos HEIC/HEIF do iPhone para PNG ou JPEG — múltiplos arquivos de uma vez</p>
+    </div>
+    <div class="dropzone" id="heic-drop" onclick="document.getElementById('heic-input').click()">
+      <div class="dropzone-icon">📱</div>
+      <div class="dropzone-text">Arraste arquivos HEIC aqui ou <strong>clique para selecionar</strong></div>
+      <div class="dropzone-sub">HEIC · HEIF — múltiplos arquivos suportados</div>
+    </div>
+    <input type="file" id="heic-input" accept=".heic,.heif,image/heic,image/heif" multiple style="display:none;">
+    <div class="file-list" id="heic-file-list"></div>
+
+    <div class="ctrl-row">
+      <span class="ctrl-label">Formato de saída</span>
+      <select class="ctrl-select" id="heic-fmt">
+        <option value="image/png">PNG (sem perda)</option>
+        <option value="image/jpeg">JPEG (menor tamanho)</option>
+        <option value="image/webp">WebP</option>
+      </select>
+    </div>
+    <div class="ctrl-row" id="heic-quality-row">
+      <span class="ctrl-label">Qualidade JPEG/WebP</span>
+      <input type="range" id="heic-quality" min="0.5" max="1" step="0.05" value="0.92"
+        style="flex:1;" oninput="document.getElementById('heic-quality-val').textContent=Math.round(this.value*100)+'%'">
+      <span id="heic-quality-val" style="font-size:13px;color:var(--muted);min-width:35px;">92%</span>
+    </div>
+
+    <div class="progress-bar" id="heic-prog">
+      <div class="progress-label" id="heic-prog-label">Convertendo...</div>
+      <div class="progress-container"><div class="progress-fill" id="heic-prog-fill"></div></div>
+      <div class="progress-text"><span id="heic-prog-pct">0</span>%</div>
+    </div>
+
+    <!-- Preview grid -->
+    <div id="heic-preview-grid" style="display:none; margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <span style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.5px;">Imagens Convertidas</span>
+        <span id="heic-count-label" style="font-size:11px;color:var(--muted);"></span>
+      </div>
+      <div id="heic-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;"></div>
+    </div>
+
+    <div class="result-box" id="heic-result">
+      <div class="result-title">✓ Conversão Concluída</div>
+      <div class="result-row"><span class="result-label">Arquivos convertidos</span><span class="result-value" id="hr-count"></span></div>
+      <div class="result-row"><span class="result-label">Tamanho total original</span><span class="result-value" id="hr-orig"></span></div>
+      <div class="result-row"><span class="result-label">Tamanho total convertido</span><span class="result-value" id="hr-conv"></span></div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-primary" id="heic-btn" onclick="runHEIC()">Converter HEIC →</button>
+      <button class="btn btn-primary" id="heic-dl" style="display:none;" onclick="downloadBlob('heic')">⬇️ Download Todos (ZIP)</button>
+      <button class="btn btn-secondary" onclick="goHome()">← Voltar</button>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <p>&copy; 2026 FredTech Systems™ Suite. Todos os direitos reservados.</p>
@@ -736,6 +796,7 @@ const tools = [
   { id: 'merge',    name: 'Merge PDFs',         desc: 'Combine múltiplos PDFs em um',             cat: 'pdf',   icon: '🔗' },
   { id: 'ocr',      name: 'OCR',               desc: 'Extraia texto de imagens e PDFs',           cat: 'pdf',   icon: '👁️' },
   { id: 'imgconv',  name: 'Converter Imagem',  desc: 'Converta entre JPEG, PNG, WebP',            cat: 'image', icon: '🖼️' },
+  { id: 'heic',     name: 'HEIC → PNG/JPEG',  desc: 'Converta fotos HEIC do iPhone para PNG ou JPEG', cat: 'image', icon: '📱', badge: 'Novo' },
   { id: 'resize',   name: 'Redimensionar',     desc: 'Ajuste dimensões de imagens',               cat: 'image', icon: '📐' },
   { id: 'vidcomp',  name: 'Comprimir Vídeo',   desc: 'Reduza tamanho de vídeos',                  cat: 'video', icon: '🎬' },
   { id: 'audio',    name: 'Extrair Áudio',     desc: 'Separe áudio de vídeos MP4',                cat: 'video', icon: '🎵' },
@@ -751,6 +812,7 @@ const state = {
   resize:   { file: null, blob: null, img: null, origW: 0, origH: 0 },
   vidcomp:  { file: null, blob: null, quality: 'medium' },
   audio:    { file: null, blob: null },
+  heic:     { files: [], blobs: [] },
 };
 
 /* =========================================================
@@ -823,6 +885,8 @@ function hideProgress(prefix) {
 function blobs(key, blob) { state[key].blob = blob; }
 
 function downloadBlob(key) {
+  // heic has its own multi-download
+  if (key === 'heic') { downloadHEICAll(); return; }
   const ext = {
     compress: 'pdf', editor: 'pdf', merge: 'pdf',
     imgconv: imgconvExt(), resize: resizeExt(),
@@ -1477,6 +1541,154 @@ async function runAudioExtract() {
     hideProgress('audio'); alert('Erro ao extrair áudio: '+e.message+'\nVerifique se o vídeo possui trilha de áudio.');
   }
   btn.disabled=false;
+}
+
+/* =========================================================
+   HEIC → PNG/JPEG
+   ========================================================= */
+setupDrop('heic-drop', 'heic-input', files => {
+  if (!files || !files.length) return;
+  // Accept HEIC/HEIF regardless of how browser reports MIME
+  const valid = files.filter(f =>
+    f.name.toLowerCase().match(/\.(heic|heif)$/) ||
+    f.type === 'image/heic' || f.type === 'image/heif'
+  );
+  if (!valid.length) return alert('Selecione arquivos HEIC ou HEIF válidos.');
+  state.heic.files.push(...valid);
+  renderHEICList();
+}, true);
+
+function renderHEICList() {
+  const el = document.getElementById('heic-file-list');
+  el.innerHTML = state.heic.files.map((f,i) => `
+    <div class="file-item">
+      <div class="fi-icon">📱</div>
+      <div class="fi-details">
+        <div class="fi-name">${f.name}</div>
+        <div class="fi-size">${formatSize(f.size)}</div>
+      </div>
+      <button class="fi-remove" onclick="heicDel(${i})">✕</button>
+    </div>`).join('');
+}
+
+function heicDel(i) {
+  state.heic.files.splice(i, 1);
+  renderHEICList();
+}
+
+async function runHEIC() {
+  if (!state.heic.files.length) { alert('Adicione arquivos HEIC.'); return; }
+  const btn = document.getElementById('heic-btn'); btn.disabled = true;
+  document.getElementById('heic-result').classList.remove('show');
+  document.getElementById('heic-dl').style.display = 'none';
+  document.getElementById('heic-preview-grid').style.display = 'none';
+  state.heic.blobs = [];
+
+  try {
+    // Load heic2any lib
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js');
+
+    const fmt  = document.getElementById('heic-fmt').value;
+    const q    = parseFloat(document.getElementById('heic-quality').value);
+    const ext  = fmt === 'image/jpeg' ? 'jpg' : fmt === 'image/webp' ? 'webp' : 'png';
+    const files = state.heic.files;
+    let totalOrig = 0, totalConv = 0;
+    const gridEl = document.getElementById('heic-grid');
+    gridEl.innerHTML = '';
+
+    for (let i = 0; i < files.length; i++) {
+      setProgress('heic', Math.round(((i) / files.length) * 95), `Convertendo ${i+1} de ${files.length}: ${files[i].name}`);
+      totalOrig += files[i].size;
+
+      let blob;
+      try {
+        blob = await heic2any({
+          blob: files[i],
+          toType: fmt,
+          quality: q,
+        });
+        // heic2any may return array for multi-page HEIC
+        if (Array.isArray(blob)) blob = blob[0];
+      } catch(e) {
+        // Fallback: try reading as raw image via FileReader → canvas
+        blob = await heicFallbackConvert(files[i], fmt, q);
+      }
+
+      state.heic.blobs.push({ blob, name: files[i].name.replace(/\.(heic|heif)$/i, '') + '.' + ext });
+      totalConv += blob.size;
+
+      // Thumbnail preview
+      const url = URL.createObjectURL(blob);
+      const card = document.createElement('div');
+      card.style.cssText = 'background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;';
+      card.innerHTML = `
+        <img src="${url}" style="width:100%;height:100px;object-fit:cover;display:block;" loading="lazy">
+        <div style="padding:6px 8px;">
+          <div style="font-size:10px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${files[i].name.replace(/\.(heic|heif)$/i,'')}</div>
+          <div style="font-size:9px;color:var(--muted);margin-top:2px;">${formatSize(blob.size)}</div>
+          <a href="${url}" download="${files[i].name.replace(/\.(heic|heif)$/i,'')}.${ext}"
+            style="display:inline-block;margin-top:4px;font-size:9px;color:var(--cyan);font-weight:600;text-decoration:none;">⬇ baixar</a>
+        </div>`;
+      gridEl.appendChild(card);
+    }
+
+    setProgress('heic', 100, 'Concluído!');
+    await sleep(400); hideProgress('heic');
+
+    document.getElementById('hr-count').textContent = files.length;
+    document.getElementById('hr-orig').textContent  = formatSize(totalOrig);
+    document.getElementById('hr-conv').textContent  = formatSize(totalConv);
+    document.getElementById('heic-count-label').textContent = `${files.length} imagem(s)`;
+    document.getElementById('heic-result').classList.add('show');
+    document.getElementById('heic-preview-grid').style.display = 'block';
+    document.getElementById('heic-dl').style.display = 'block';
+
+  } catch(e) {
+    hideProgress('heic');
+    alert('Erro ao converter: ' + e.message + '\n\nVerifique se os arquivos são HEIC válidos.');
+  }
+  btn.disabled = false;
+}
+
+// Fallback: try to decode HEIC via canvas (works only if browser natively supports HEIC — Safari)
+function heicFallbackConvert(file, fmt, quality) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.naturalWidth; c.height = img.naturalHeight;
+      const ctx = c.getContext('2d');
+      if (fmt !== 'image/png') { ctx.fillStyle = '#fff'; ctx.fillRect(0,0,c.width,c.height); }
+      ctx.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+      c.toBlob(resolve, fmt, quality);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Não foi possível decodificar o arquivo HEIC neste navegador.')); };
+    img.src = url;
+  });
+}
+
+// Download all as ZIP using JSZip
+async function downloadHEICAll() {
+  if (!state.heic.blobs.length) return;
+  if (state.heic.blobs.length === 1) {
+    const { blob, name } = state.heic.blobs[0];
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download=name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    return;
+  }
+  // Multiple: zip them
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js');
+  const zip = new JSZip();
+  for (const { blob, name } of state.heic.blobs) zip.file(name, blob);
+  const zipBlob = await zip.generateAsync({ type:'blob' });
+  const url = URL.createObjectURL(zipBlob);
+  const a = document.createElement('a'); a.href=url; a.download='heic_convertidos.zip';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
 }
 
 /* =========================================================
