@@ -4,261 +4,298 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FredTech Systems™ Suite</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --primary: #0066ff;
-  --primary-dark: #0052cc;
-  --bg-light: #f8f9fa;
-  --bg-dark: #0a0e27;
-  --card-light: #ffffff;
-  --card-dark: #1a1f3a;
-  --border-light: #e0e4f0;
-  --border-dark: #2d3252;
-  --text-light: #1a1a2e;
-  --text-light-muted: #6b7280;
-  --text-dark: #f3f4f6;
-  --text-dark-muted: #a0aec0;
+  --accent: #0066ff;
+  --accent-2: #00d4ff;
   --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  
+  --bg-light: #ffffff;
+  --bg-light-2: #f8f9fb;
+  --bg-light-3: #f0f2f7;
+  --text-light: #0a0e27;
+  --text-light-secondary: #6b7280;
+  
+  --bg-dark: #0a0e27;
+  --bg-dark-2: #111827;
+  --bg-dark-3: #1f2937;
+  --text-dark: #f3f4f6;
+  --text-dark-secondary: #d1d5db;
 }
 
 body.light {
   --bg: var(--bg-light);
-  --card: var(--card-light);
-  --border: var(--border-light);
+  --bg-2: var(--bg-light-2);
+  --bg-3: var(--bg-light-3);
   --text: var(--text-light);
-  --text-muted: var(--text-light-muted);
+  --text-secondary: var(--text-light-secondary);
 }
 
 body.dark {
   --bg: var(--bg-dark);
-  --card: var(--card-dark);
-  --border: var(--border-dark);
+  --bg-2: var(--bg-dark-2);
+  --bg-3: var(--bg-dark-3);
   --text: var(--text-dark);
-  --text-muted: var(--text-dark-muted);
+  --text-secondary: var(--text-dark-secondary);
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
   transition: background 0.3s, color 0.3s;
   line-height: 1.6;
 }
 
-body.light { background: #f8f9fa; }
-body.dark { background: #0a0e27; }
-
-/* HEADER */
-header {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  padding: 1.5rem 2rem;
+/* NAVBAR */
+nav {
+  background: var(--bg-2);
+  backdrop-filter: blur(20px);
+  background: rgba(10, 14, 39, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.2rem 2rem;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
-.header-content {
+body.light nav {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.nav-container {
   max-width: 1400px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 2rem;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.logo-icon {
-  width: auto;
-  height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: -0.8px;
-  line-height: 1;
-}
-
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.logo-text p {
-  font-size: 10px;
-  color: var(--primary);
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.header-actions {
+.logo-section {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
 }
 
-.mode-toggle {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--card);
+.logo-text {
+  line-height: 1.2;
+}
+
+.logo-text .name {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.logo-text .name .accent {
+  color: var(--accent);
+}
+
+.logo-text .suite {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 102, 255, 0.2);
+  background: rgba(0, 102, 255, 0.1);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  transition: all 0.2s;
+  font-size: 20px;
+  transition: all 0.3s;
 }
 
-body.light .mode-toggle:hover {
-  background: #f0f4f8;
-}
-
-body.dark .mode-toggle:hover {
-  background: #2d3252;
+.theme-toggle:hover {
+  border-color: var(--accent);
+  background: rgba(0, 102, 255, 0.15);
+  transform: scale(1.05);
 }
 
 /* HERO */
 .hero {
-  background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
   color: white;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -50%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(60px);
 }
 
 .hero-content {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .hero h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  letter-spacing: -1px;
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
 }
 
 .hero p {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   opacity: 0.95;
   margin-bottom: 2rem;
-  max-width: 700px;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.filters {
+.filter-tabs {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 2rem;
 }
 
-.filter-btn {
-  padding: 8px 20px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.1);
+.filter-tab {
+  padding: 10px 24px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 500;
-  transition: all 0.2s;
+  font-weight: 600;
+  transition: all 0.3s;
   backdrop-filter: blur(10px);
 }
 
-.filter-btn:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.5);
+.filter-tab:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.filter-btn.active {
+.filter-tab.active {
   background: white;
-  color: #0066ff;
+  color: var(--accent);
+  border-color: white;
 }
 
 /* MAIN */
 main {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 4rem 2rem;
 }
 
-.section-title {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
+.section-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--accent);
+  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 2rem;
 }
 
-.section-title::before {
+.section-label::before {
   content: '';
-  width: 3px;
-  height: 12px;
-  background: var(--primary);
-  border-radius: 2px;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
 }
 
-.tools-grid {
+.tools-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  margin-bottom: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 4rem;
 }
 
-.tool-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px;
+.tool-item {
+  background: var(--bg-2);
+  border: 1px solid rgba(0, 102, 255, 0.1);
+  border-radius: 16px;
+  padding: 28px 24px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.tool-card::before {
+.tool-item::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: var(--primary);
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.3s;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.tool-card:hover {
-  border-color: var(--primary);
-  box-shadow: 0 10px 30px rgba(0,102,255,0.1);
-  transform: translateY(-4px);
+.tool-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15);
 }
 
-.tool-card:hover::before {
+.tool-item:hover::before {
   transform: scaleX(1);
 }
 
@@ -266,45 +303,41 @@ main {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 12px;
 }
 
-.tool-icon {
-  width: 56px;
-  height: 56px;
+.tool-icon-box {
+  width: 64px;
+  height: 64px;
+  background: var(--bg-3);
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 28px;
   flex-shrink: 0;
 }
 
-.tool-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
 .tool-badge {
-  display: inline-block;
-  font-size: 10px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, var(--success), #059669);
   color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.3px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
-.tool-name {
+.tool-info h3 {
   font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 700;
   margin-bottom: 6px;
+  color: var(--text);
 }
 
-.tool-desc {
+.tool-info p {
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -317,8 +350,8 @@ main {
   display: block;
 }
 
-.converter-container {
-  max-width: 800px;
+.converter-wrapper {
+  max-width: 700px;
   margin: 0 auto;
   padding: 3rem 2rem;
 }
@@ -329,71 +362,75 @@ main {
 }
 
 .converter-header h2 {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 800;
   margin-bottom: 12px;
-  color: var(--text);
 }
 
 .converter-header p {
   font-size: 14px;
-  color: var(--text-muted);
-  line-height: 1.6;
+  color: var(--text-secondary);
 }
 
-.dropzone {
-  border: 2px dashed var(--border);
-  border-radius: 12px;
-  padding: 3rem 2rem;
+.upload-zone {
+  border: 2px dashed rgba(0, 102, 255, 0.3);
+  border-radius: 16px;
+  padding: 4rem 2rem;
   text-align: center;
   cursor: pointer;
-  background: var(--card);
-  transition: all 0.2s;
+  background: var(--bg-2);
+  transition: all 0.3s;
   margin-bottom: 2rem;
 }
 
-.dropzone:hover, .dropzone.drag {
-  border-color: var(--primary);
-  background: linear-gradient(135deg, rgba(0,102,255,0.03), rgba(0,102,255,0.01));
+.upload-zone:hover {
+  border-color: var(--accent);
+  background: rgba(0, 102, 255, 0.05);
 }
 
-.dropzone-icon {
+.upload-zone.drag {
+  border-color: var(--accent);
+  background: rgba(0, 102, 255, 0.1);
+}
+
+.upload-icon {
   font-size: 48px;
   margin-bottom: 16px;
+  display: block;
 }
 
-.dropzone-text {
+.upload-text {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
   margin-bottom: 6px;
 }
 
-.dropzone-sub {
+.upload-sub {
   font-size: 13px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
-.file-info {
+.file-display {
   display: none;
-  align-items: center;
-  gap: 16px;
-  background: linear-gradient(135deg, rgba(0,102,255,0.05), rgba(0,102,255,0.02));
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  background: var(--bg-2);
+  border-radius: 12px;
   padding: 16px;
   margin-bottom: 2rem;
+  border: 1px solid rgba(0, 102, 255, 0.2);
+  align-items: center;
+  gap: 16px;
 }
 
-.file-info.show {
+.file-display.show {
   display: flex;
 }
 
-.file-icon-box {
+.file-icon-badge {
   width: 48px;
   height: 48px;
-  background: var(--primary);
-  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -402,75 +439,78 @@ main {
   flex-shrink: 0;
 }
 
-.file-details {
+.file-info {
   flex: 1;
 }
 
-.file-name {
+.file-info .name {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
 }
 
-.file-size {
+.file-info .size {
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 4px;
 }
 
-.file-remove {
+.file-remove-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 18px;
-  color: #ef4444;
-  padding: 4px 8px;
+  font-size: 20px;
+  color: var(--error);
+  padding: 4px;
   transition: all 0.2s;
 }
 
-.file-remove:hover {
+.file-remove-btn:hover {
   transform: scale(1.2);
 }
 
-.progress-section {
+.progress-box {
   display: none;
+  background: var(--bg-2);
+  border-radius: 12px;
+  padding: 20px;
   margin-bottom: 2rem;
+  border: 1px solid rgba(0, 102, 255, 0.2);
 }
 
-.progress-section.show {
+.progress-box.show {
   display: block;
 }
 
-.progress-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 12px;
+.progress-header {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.progress-bar-bg {
+.progress-bar-track {
   width: 100%;
   height: 6px;
-  background: var(--border);
+  background: rgba(0, 102, 255, 0.1);
   border-radius: 3px;
   overflow: hidden;
 }
 
 .progress-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #0066ff, #0052cc);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
   width: 0%;
   transition: width 0.3s;
 }
 
 .result-box {
   display: none;
-  background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(16,185,129,0.02));
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
   border: 1px solid var(--success);
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 24px;
   margin-bottom: 2rem;
 }
 
@@ -478,82 +518,145 @@ main {
   display: block;
 }
 
-.result-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--success);
+.extracted-text-box {
+  display: none;
+  background: var(--bg-2);
+  border: 1px solid rgba(0, 102, 255, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 2rem;
+}
+
+.extracted-text-box.show {
+  display: block;
+}
+
+.extracted-text-header {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin-bottom: 12px;
 }
 
-.result-row {
+.extracted-text-content {
+  background: var(--bg-3);
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.text-copy-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.3s;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.text-copy-btn:hover {
+  background: var(--accent-2);
+  transform: translateY(-2px);
+}
+
+.text-copy-btn.copied {
+  background: var(--success);
+}
+
+.result-header {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--success);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.result-item {
   display: flex;
   justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(16,185,129,0.2);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
   font-size: 13px;
 }
 
-.result-row:last-child {
+.result-item:last-child {
   border-bottom: none;
 }
 
 .result-label {
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .result-value {
   color: var(--text);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.button-group {
+.actions {
   display: flex;
   gap: 12px;
   flex-direction: column;
 }
 
 .btn {
-  padding: 12px 24px;
+  padding: 14px 28px;
   border: none;
-  border-radius: 8px;
-  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  letter-spacing: 0.3px;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #0066ff, #0052cc);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: white;
 }
 
 .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 8px 16px rgba(0,102,255,0.3);
   transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 102, 255, 0.3);
 }
 
 .btn-primary:disabled {
-  opacity: 0.5;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
 .btn-secondary {
-  background: var(--card);
+  background: var(--bg-2);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0, 102, 255, 0.2);
 }
 
 .btn-secondary:hover {
-  background: var(--bg);
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--accent);
+  background: rgba(0, 102, 255, 0.05);
 }
 
 .btn-download {
@@ -566,130 +669,141 @@ main {
 
 /* FOOTER */
 footer {
-  background: var(--card);
-  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  border-top: 1px solid rgba(0, 102, 255, 0.1);
   padding: 2rem;
   text-align: center;
-  color: var(--text-muted);
-  font-size: 13px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin-top: 4rem;
 }
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
-  .tools-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
-  .converter-header h2 { font-size: 1.5rem; }
-  header { padding: 1rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .tools-container { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .converter-header h2 { font-size: 1.8rem; }
+  .nav-container { flex-wrap: wrap; }
+  .logo-section { width: 100%; }
+  .nav-actions { margin-left: 0; }
 }
 
 @media (max-width: 480px) {
-  .header-content { flex-direction: column; gap: 12px; }
-  .hero { padding: 2rem 1rem; }
-  .hero h1 { font-size: 1.5rem; }
-  main { padding: 1.5rem 1rem; }
-  .converter-container { padding: 1.5rem 1rem; }
-  .tools-grid { grid-template-columns: 1fr; }
+  .hero { padding: 3rem 1rem; }
+  .hero h1 { font-size: 1.8rem; }
+  main { padding: 2rem 1rem; }
+  .converter-wrapper { padding: 1.5rem 1rem; }
+  .tools-container { grid-template-columns: 1fr; }
+  .tool-item { padding: 20px 16px; }
 }
 
 </style>
 </head>
 <body class="light">
 
-<!-- HEADER -->
-<header>
-  <div class="header-content">
-    <a href="#" class="logo" onclick="goHome(); return false;">
-      <div class="logo-icon">
-        <span style="color: var(--text);">FREDTECH</span><span style="color: #0066ff;">SYSTEMS™</span>
-      </div>
-      <div class="logo-text">
-        <p>Suite</p>
-      </div>
-    </a>
-    <div class="header-actions">
-      <button class="mode-toggle" id="mode-btn" onclick="toggleMode()" title="Alternar modo claro/escuro">
-        <span id="mode-icon">🌙</span>
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="logo-section">
+      <a href="#" onclick="goHome(); return false;" style="text-decoration: none; color: inherit;">
+        <div class="logo-text">
+          <div class="name">FREDTECH<span class="accent">SYSTEMS</span>™</div>
+          <div class="suite">Suite</div>
+        </div>
+      </a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Alternar modo">
+        <span id="icon">🌙</span>
       </button>
     </div>
   </div>
-</header>
+</nav>
 
-<!-- HOME PAGE -->
+<!-- HOME -->
 <div id="home-page" class="page active">
   <div class="hero">
     <div class="hero-content">
       <h1>Ferramentas de Produtividade</h1>
-      <p>Suite completa com soluções profissionais para converter, comprimir e processar seus arquivos</p>
-      <div class="filters">
-        <button class="filter-btn active" onclick="filterTools('all', this)">Todos</button>
-        <button class="filter-btn" onclick="filterTools('pdf', this)">PDF</button>
-        <button class="filter-btn" onclick="filterTools('image', this)">Imagem</button>
-        <button class="filter-btn" onclick="filterTools('video', this)">Vídeo</button>
+      <p>Suite completa para converter, comprimir e processar seus arquivos com velocidade e segurança</p>
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterTools('all', this)">Todos</button>
+        <button class="filter-tab" onclick="filterTools('pdf', this)">PDF</button>
+        <button class="filter-tab" onclick="filterTools('image', this)">Imagem</button>
+        <button class="filter-tab" onclick="filterTools('video', this)">Vídeo</button>
       </div>
     </div>
   </div>
 
   <main>
-    <h2 class="section-title">Soluções Disponíveis</h2>
-    <div class="tools-grid" id="tools-grid"></div>
+    <h2 class="section-label">Soluções Disponíveis</h2>
+    <div class="tools-container" id="tools-grid"></div>
   </main>
 </div>
 
-<!-- CONVERTER PAGE -->
+<!-- CONVERTER -->
 <div id="converter-page" class="converter-page">
-  <div class="converter-container">
+  <div class="converter-wrapper">
     <div class="converter-header">
       <h2 id="conv-title">Converter</h2>
-      <p id="conv-desc">Selecione seu arquivo para converter</p>
+      <p id="conv-desc">Selecione seu arquivo para processar</p>
     </div>
 
-    <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
-      <div class="dropzone-icon">⬆️</div>
-      <div class="dropzone-text">Arraste seu arquivo aqui</div>
-      <div class="dropzone-sub">ou clique para selecionar (máximo 100 MB)</div>
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+      <span class="upload-icon">⬆️</span>
+      <div class="upload-text">Arraste seu arquivo aqui</div>
+      <div class="upload-sub">ou clique para selecionar (máximo 100 MB)</div>
     </div>
     <input type="file" id="file-input" style="display:none;">
 
-    <div class="file-info" id="file-info">
-      <div class="file-icon-box">📄</div>
-      <div class="file-details">
-        <div class="file-name" id="file-name">arquivo.pdf</div>
-        <div class="file-size" id="file-size">2.5 MB</div>
+    <div class="file-display" id="file-display">
+      <div class="file-icon-badge">📄</div>
+      <div class="file-info">
+        <div class="name" id="file-name">arquivo.pdf</div>
+        <div class="size" id="file-size">2.5 MB</div>
       </div>
-      <button class="file-remove" onclick="clearFile()" title="Remover arquivo">✕</button>
+      <button class="file-remove-btn" onclick="clearFile()">✕</button>
     </div>
 
-    <div class="progress-section" id="progress">
-      <div class="progress-label">
+    <div class="progress-box" id="progress">
+      <div class="progress-header">
         <span id="progress-label">Processando...</span>
         <span id="progress-pct">0%</span>
       </div>
-      <div class="progress-bar-bg">
+      <div class="progress-bar-track">
         <div class="progress-bar-fill" id="progress-fill"></div>
       </div>
     </div>
 
     <div class="result-box" id="result">
-      <div class="result-title">✓ Conversão Concluída</div>
-      <div class="result-row">
+      <div class="result-header">✓ Processamento Concluído</div>
+      <div class="result-item">
         <span class="result-label">Arquivo Original</span>
         <span class="result-value" id="result-orig">documento.docx</span>
       </div>
-      <div class="result-row">
-        <span class="result-label">Convertido Para</span>
+      <div class="result-item">
+        <span class="result-label">Processado Para</span>
         <span class="result-value" id="result-format">PDF</span>
       </div>
     </div>
 
-    <div class="button-group">
+    <div class="extracted-text-box" id="extracted-box">
+      <div class="extracted-text-header">Texto Extraído</div>
+      <div class="extracted-text-content" id="extracted-text"></div>
+      <button class="text-copy-btn" id="copy-btn" onclick="copyExtractedText()">
+        📋 Copiar Texto
+      </button>
+    </div>
+
+    <div class="actions">
       <button class="btn btn-primary" id="convert-btn" onclick="convert()">
-        ⚙️ Converter Arquivo
+        ⚙️ Processar Arquivo
       </button>
       <button class="btn btn-secondary" onclick="goHome()">
         ← Voltar para Home
       </button>
       <button class="btn btn-primary btn-download" id="download-btn" onclick="downloadFile()">
-        ⬇️ Download Arquivo Convertido
+        ⬇️ Download Arquivo
       </button>
     </div>
   </div>
@@ -701,24 +815,11 @@ footer {
 </footer>
 
 <script>
-// SVG ICONS
 const icons = {
-  pdf: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-8-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
-  docx: `<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4z" fill="#2B579A"/><text x="50%" y="50%" font-size="12" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="central">W</text></svg>`,
-  ppt: `<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4z" fill="#D24726"/><text x="50%" y="50%" font-size="12" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="central">P</text></svg>`,
-  excel: `<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4z" fill="#217346"/><text x="50%" y="50%" font-size="12" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="central">X</text></svg>`,
-  image: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="8" r="1.5" stroke="currentColor" stroke-width="2"/><path d="M3 16l5-5 8 8m-8-3l4-4 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-  video: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="2.18" stroke="currentColor" stroke-width="2"/><path d="M7 12l5-3.5v7L7 12z" fill="currentColor"/></svg>`,
-  audio: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5h-3V10h3l5-5v14z" stroke="currentColor" stroke-width="2"/></svg>`,
-  compress: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4v16h16V4H4zm8 8L7 7m10 10l-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
-  merge: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h4m10 0h4M11 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="7" cy="12" r="2" fill="currentColor"/><circle cx="17" cy="12" r="2" fill="currentColor"/></svg>`,
-  ocr: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>`,
-  heic: `<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4z" fill="#FF9500"/><text x="50%" y="50%" font-size="10" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="central">📱</text></svg>`,
-  resize: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z" stroke="currentColor" stroke-width="2"/></svg>`,
-  edit: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15.5 7l3.5-3.5a2.828 2.828 0 0 0-4-4L11.5 3" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`
+  compress: '📦', docx: '📝', ppt: '🎯', excel: '📊', image: '🖼️', heic: '📱', 
+  resize: '📐', video: '🎬', audio: '🎵', merge: '🔗', ocr: '👁️', edit: '✏️', pdf: '📄'
 };
 
-// DATA
 const tools = [
   { name: 'Comprimir PDF', desc: 'Reduza até 90% do tamanho dos seus PDFs', cat: 'pdf', icon: 'compress', new: true },
   { name: 'Editor PDF', desc: 'Extraia e edite textos de PDFs', cat: 'pdf', icon: 'edit' },
@@ -735,45 +836,36 @@ const tools = [
   { name: 'Extrair Áudio', desc: 'Separe áudio de vídeos MP4', cat: 'video', icon: 'audio' }
 ];
 
-let currentFile = null;
-let currentBlob = null;
-let currentType = null;
+let currentFile = null, currentBlob = null, currentType = null, extractedTextData = '';
 
-// TOOLS
 function renderTools(filter = 'all') {
   const filtered = filter === 'all' ? tools : tools.filter(t => t.cat === filter);
-  const grid = document.getElementById('tools-grid');
-  grid.innerHTML = filtered.map(t => `
-    <div class="tool-card" onclick="toolClick('${t.name}')">
+  document.getElementById('tools-grid').innerHTML = filtered.map(t => `
+    <div class="tool-item" onclick="toolClick('${t.name}')">
       <div class="tool-header">
-        <div class="tool-icon">${icons[t.icon]}</div>
+        <div class="tool-icon-box">${icons[t.icon]}</div>
         ${t.new ? '<span class="tool-badge">Novo</span>' : ''}
       </div>
-      <div class="tool-name">${t.name}</div>
-      <div class="tool-desc">${t.desc}</div>
+      <div class="tool-info">
+        <h3>${t.name}</h3>
+        <p>${t.desc}</p>
+      </div>
     </div>
   `).join('');
 }
 
 function filterTools(cat, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderTools(cat);
 }
 
 function toolClick(name) {
-  showConverter(name);
-}
-
-// PAGES
-function showConverter(toolName) {
-  currentType = toolName;
+  currentType = name;
   document.getElementById('home-page').classList.remove('active');
   document.getElementById('converter-page').classList.add('active');
-  
-  document.getElementById('conv-title').textContent = toolName;
-  document.getElementById('conv-desc').textContent = `Selecione seu arquivo para converter`;
-  
+  document.getElementById('conv-title').textContent = name;
+  document.getElementById('conv-desc').textContent = `Selecione seu arquivo para processar`;
   clearFile();
 }
 
@@ -783,72 +875,73 @@ function goHome() {
   renderTools('all');
 }
 
-// FILE HANDLING
 document.getElementById('file-input').addEventListener('change', e => {
   const f = e.target.files[0];
   if (f) {
     currentFile = f;
     document.getElementById('file-name').textContent = f.name;
     document.getElementById('file-size').textContent = formatSize(f.size);
-    document.getElementById('file-info').classList.add('show');
+    document.getElementById('file-display').classList.add('show');
   }
 });
 
-const dropzone = document.getElementById('dropzone');
-dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
-dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
-dropzone.addEventListener('drop', e => {
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+zone.addEventListener('drop', e => {
   e.preventDefault();
-  dropzone.classList.remove('drag');
+  zone.classList.remove('drag');
   const f = e.dataTransfer.files[0];
   if (f) {
     currentFile = f;
     document.getElementById('file-name').textContent = f.name;
     document.getElementById('file-size').textContent = formatSize(f.size);
-    document.getElementById('file-info').classList.add('show');
+    document.getElementById('file-display').classList.add('show');
   }
 });
 
 function clearFile() {
   currentFile = null;
   currentBlob = null;
-  document.getElementById('file-info').classList.remove('show');
+  extractedTextData = '';
+  document.getElementById('file-display').classList.remove('show');
   document.getElementById('file-input').value = '';
   document.getElementById('result').classList.remove('show');
+  document.getElementById('extracted-box').classList.remove('show');
   document.getElementById('download-btn').classList.remove('show');
 }
 
-// CONVERT
 async function convert() {
-  if (!currentFile) {
-    alert('Selecione um arquivo');
-    return;
-  }
-
+  if (!currentFile) { alert('Selecione um arquivo'); return; }
+  
   const btn = document.getElementById('convert-btn');
   btn.disabled = true;
   document.getElementById('progress').classList.add('show');
   document.getElementById('result').classList.remove('show');
+  document.getElementById('extracted-box').classList.remove('show');
 
   try {
-    updateProgress(10, 'Lendo arquivo...');
-    await sleep(1000);
+    // Verificar se é OCR
+    if (currentType === 'OCR') {
+      await performOCR();
+    } else {
+      // Conversão normal
+      updateProgress(10, 'Lendo arquivo...');
+      await sleep(1000);
+      updateProgress(50, 'Processando...');
+      await sleep(1000);
+      updateProgress(90, 'Finalizando...');
+      currentBlob = new Blob([currentFile], { type: 'application/octet-stream' });
+      updateProgress(100, 'Concluído!');
+      await sleep(500);
+      
+      document.getElementById('progress').classList.remove('show');
+      document.getElementById('result').classList.add('show');
+      document.getElementById('result-orig').textContent = currentFile.name;
+      document.getElementById('result-format').textContent = currentType.split(' para ')[1] || currentType;
+      document.getElementById('download-btn').classList.add('show');
+    }
     
-    updateProgress(50, 'Processando...');
-    await sleep(1000);
-    
-    updateProgress(90, 'Finalizando...');
-    currentBlob = new Blob([currentFile], { type: 'application/octet-stream' });
-    
-    updateProgress(100, 'Concluído!');
-    await sleep(500);
-    
-    document.getElementById('progress').classList.remove('show');
-    document.getElementById('result').classList.add('show');
-    document.getElementById('result-orig').textContent = currentFile.name;
-    document.getElementById('result-format').textContent = currentType.split(' para ')[1] || currentType;
-    document.getElementById('download-btn').classList.add('show');
-
     btn.disabled = false;
   } catch (err) {
     alert('Erro: ' + err.message);
@@ -857,10 +950,58 @@ async function convert() {
   }
 }
 
-// DOWNLOAD
+async function performOCR() {
+  try {
+    updateProgress(15, 'Carregando OCR...');
+    
+    const imageUrl = URL.createObjectURL(currentFile);
+    const worker = await Tesseract.createWorker('por');
+    
+    updateProgress(30, 'Analisando imagem...');
+    const result = await worker.recognize(imageUrl);
+    
+    updateProgress(70, 'Extraindo texto...');
+    extractedTextData = result.data.text;
+    
+    updateProgress(90, 'Finalizando...');
+    await worker.terminate();
+    
+    updateProgress(100, 'Texto extraído com sucesso!');
+    await sleep(500);
+    
+    document.getElementById('progress').classList.remove('show');
+    document.getElementById('extracted-text').textContent = extractedTextData || '[Nenhum texto detectado]';
+    document.getElementById('extracted-box').classList.add('show');
+    document.getElementById('result').classList.add('show');
+    document.getElementById('result-orig').textContent = currentFile.name;
+    document.getElementById('result-format').textContent = 'Texto Extraído';
+    document.getElementById('download-btn').style.display = 'none';
+    
+  } catch (err) {
+    throw new Error('Erro no OCR: ' + err.message);
+  }
+}
+
+function copyExtractedText() {
+  if (!extractedTextData) return;
+  
+  navigator.clipboard.writeText(extractedTextData).then(() => {
+    const btn = document.getElementById('copy-btn');
+    const originalText = btn.textContent;
+    btn.textContent = '✓ Copiado!';
+    btn.classList.add('copied');
+    
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    alert('Erro ao copiar: ' + err.message);
+  });
+}
+
 function downloadFile() {
   if (!currentBlob) return;
-  
   const ext = currentType.includes('para') ? currentType.split(' para ')[1].toLowerCase().replace('/', '') : 'pdf';
   const url = URL.createObjectURL(currentBlob);
   const a = document.createElement('a');
@@ -870,7 +1011,6 @@ function downloadFile() {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-// UTILS
 function updateProgress(pct, label) {
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('progress-pct').textContent = pct + '%';
@@ -883,37 +1023,28 @@ function formatSize(b) {
   return b + ' B';
 }
 
-function sleep(ms) {
-  return new Promise(r => setTimeout(r, ms));
-}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// MODE
-function toggleMode() {
+function toggleTheme() {
   const isDark = document.body.classList.toggle('dark');
   document.body.classList.toggle('light');
-  document.getElementById('mode-icon').textContent = isDark ? '☀️' : '🌙';
+  document.getElementById('icon').textContent = isDark ? '☀️' : '🌙';
   localStorage.setItem('ft-mode', isDark ? 'dark' : 'light');
 }
 
-// INIT
-(function() {
+(() => {
   const mode = localStorage.getItem('ft-mode') || 'light';
   document.body.classList.remove('light', 'dark');
   document.body.classList.add(mode);
-  document.getElementById('mode-icon').textContent = mode === 'dark' ? '☀️' : '🌙';
-  
-  const sysDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
-  if (!localStorage.getItem('ft-mode') && sysDark) {
-    document.body.classList.add('dark');
+  document.getElementById('icon').textContent = mode === 'dark' ? '☀️' : '🌙';
+  if (!localStorage.getItem('ft-mode') && window.matchMedia('(prefers-color-scheme:dark)').matches) {
     document.body.classList.remove('light');
-    document.getElementById('mode-icon').textContent = '☀️';
+    document.body.classList.add('dark');
+    document.getElementById('icon').textContent = '☀️';
   }
-  
   renderTools('all');
+  document.getElementById('home-page').classList.add('active');
 })();
-
-// Página ativa
-document.getElementById('home-page').classList.add('active');
 </script>
 </body>
 </html>
