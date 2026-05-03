@@ -78,6 +78,8 @@ nav{position:sticky;top:0;z-index:900;background:rgba(250,250,248,.94);backdrop-
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
 .theme-toggle{width:34px;height:34px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;color:var(--ink2)}
 .theme-toggle:hover{border-color:var(--border2);background:var(--surface2)}
+.nav-link-btn{padding:5px 13px;border:none;background:transparent;color:var(--ink2);font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer;border-radius:var(--r);transition:all .18s}
+.nav-link-btn:hover{background:var(--surface2);color:var(--ink)}
 
 /* ── PAGE SYSTEM ── */
 .page{display:none}.page.on{display:block}
@@ -352,7 +354,7 @@ body.dark .copy-btn.copied{background:#0a2010;color:#4ad474;border-color:#1a5030
     <div class="boot-row" id="bl1"><div class="boot-row-left"><div class="boot-dot"></div><span>Inicializando OCR engine</span></div><span class="boot-ok">OK</span></div>
     <div class="boot-row" id="bl2"><div class="boot-row-left"><div class="boot-dot"></div><span>Verificando contexto seguro</span></div><span class="boot-ok">OK</span></div>
     <div class="boot-row" id="bl3"><div class="boot-row-left"><div class="boot-dot"></div><span>Compilando workflows</span></div><span class="boot-ok">OK</span></div>
-    <div class="boot-row" id="bl4"><div class="boot-row-left"><div class="boot-dot"></div><span>34 ferramentas disponíveis</span></div><span class="boot-ok">PRONTO</span></div>
+    <div class="boot-row" id="bl4"><div class="boot-row-left"><div class="boot-dot"></div><span>31 ferramentas disponíveis</span></div><span class="boot-ok">PRONTO</span></div>
   </div>
   <div class="boot-bar-wrap"><div class="boot-bar-fill" id="boot-fill"></div></div>
 </div>
@@ -368,11 +370,12 @@ body.dark .copy-btn.copied{background:#0a2010;color:#4ad474;border-color:#1a5030
       <div class="nav-pill" id="nav-pill">
         <button class="on" onclick="filterTools('all',this)">Todos</button>
         <button onclick="filterTools('pdf',this)">PDF</button>
-        <button onclick="filterTools('ai',this)">IA</button>
         <button onclick="filterTools('image',this)">IMG</button>
         <button onclick="filterTools('video',this)">VID</button>
         <button onclick="filterTools('workflow',this)">WF</button>
       </div>
+      <button class="nav-link-btn" onclick="goAbout()">Sobre</button>
+      <button class="nav-link-btn" onclick="goContact()">Contato</button>
       <div class="nav-status"><div class="status-dot"></div><span>Online</span></div>
       <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">☀️</button>
     </div>
@@ -380,7 +383,7 @@ body.dark .copy-btn.copied{background:#0a2010;color:#4ad474;border-color:#1a5030
 </nav>
 
 <!-- HOME PAGE -->
-<div id="home-page" class="page" style="display:none">
+<div id="home-page" class="page">
   <div class="hero">
     <div class="hero-label">Suite de Conversão — 2026</div>
     <div class="hero-row">
@@ -393,7 +396,7 @@ body.dark .copy-btn.copied{background:#0a2010;color:#4ad474;border-color:#1a5030
         </div>
       </div>
       <div class="hero-stats">
-        <div class="stat"><div class="stat-n">34</div><div class="stat-l">Ferramentas</div></div>
+        <div class="stat"><div class="stat-n">31</div><div class="stat-l">Ferramentas</div></div>
         <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Navegador</div></div>
         <div class="stat"><div class="stat-n">0</div><div class="stat-l">Uploads ext.</div></div>
         <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Sem limite</div></div>
@@ -403,7 +406,6 @@ body.dark .copy-btn.copied{background:#0a2010;color:#4ad474;border-color:#1a5030
   <div class="filter-row">
     <button class="chip on" onclick="filterTools('all',this)">Todos</button>
     <button class="chip" onclick="filterTools('pdf',this)">PDF</button>
-    <button class="chip" onclick="filterTools('ai',this)">IA</button>
     <button class="chip" onclick="filterTools('image',this)">Imagem</button>
     <button class="chip" onclick="filterTools('video',this)">Vídeo</button>
     <button class="chip" onclick="filterTools('workflow',this)">Workflow</button>
@@ -587,6 +589,152 @@ body.dark .copy-btn.copied{background:#0a2010;color:#4ad474;border-color:#1a5030
   </div>
 </div>
 
+<!-- ABOUT PAGE -->
+<div id="about-page" class="page">
+  <div style="max-width:860px;margin:0 auto;padding:4rem 2rem 6rem">
+    <div class="breadcrumb">
+      <a onclick="goHome()">neoconvert</a>
+      <span class="bc-sep">/</span>
+      <span>sobre</span>
+    </div>
+
+    <div style="margin-bottom:3rem">
+      <div class="hero-label">Quem somos</div>
+      <h1 style="font-family:var(--display);font-size:clamp(2.4rem,5vw,4rem);letter-spacing:-2px;line-height:.95;color:var(--ink);margin-bottom:16px">Feito para <span style="color:var(--hi2)">simplificar</span><br>o seu dia a dia.</h1>
+      <p style="font-size:14px;color:var(--ink2);max-width:540px;line-height:1.8">O NeoConvert nasceu de uma necessidade simples: ter uma suite completa de ferramentas para arquivos que funcione totalmente no navegador, sem precisar instalar nada, sem enviar seus arquivos para servidores externos e sem cobrar por isso.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:3rem">
+      <div style="background:var(--surface);padding:24px 28px">
+        <div style="font-size:28px;margin-bottom:10px">🔒</div>
+        <div style="font-family:var(--display);font-size:1.05rem;color:var(--ink);margin-bottom:6px;letter-spacing:-.3px">Privacidade total</div>
+        <p style="font-size:12px;color:var(--ink3);line-height:1.65">Seus arquivos nunca saem do seu dispositivo. Todo o processamento acontece diretamente no navegador — zero uploads para servidores externos.</p>
+      </div>
+      <div style="background:var(--surface);padding:24px 28px">
+        <div style="font-size:28px;margin-bottom:10px">⚡</div>
+        <div style="font-family:var(--display);font-size:1.05rem;color:var(--ink);margin-bottom:6px;letter-spacing:-.3px">Rápido e leve</div>
+        <p style="font-size:12px;color:var(--ink3);line-height:1.65">Sem cadastro, sem espera, sem anúncios. Abra, use, feche. Projetado para ser direto ao ponto e funcionar em qualquer dispositivo.</p>
+      </div>
+      <div style="background:var(--surface);padding:24px 28px">
+        <div style="font-size:28px;margin-bottom:10px">🛠️</div>
+        <div style="font-family:var(--display);font-size:1.05rem;color:var(--ink);margin-bottom:6px;letter-spacing:-.3px">Suite completa</div>
+        <p style="font-size:12px;color:var(--ink3);line-height:1.65">32 ferramentas para PDF, imagem, vídeo e workflow — e crescendo. Uma única plataforma para todas as suas necessidades de conversão.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:32px;margin-bottom:3rem">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.5px;margin-bottom:16px">SOBRE O PROJETO</div>
+      <p style="font-size:13.5px;color:var(--ink2);line-height:1.85;margin-bottom:14px">O NeoConvert é desenvolvido pela <strong style="color:var(--ink)">FredTech Systems™</strong>, uma iniciativa focada em criar ferramentas web modernas, acessíveis e respeitosas com a privacidade do usuário.</p>
+      <p style="font-size:13.5px;color:var(--ink2);line-height:1.85;margin-bottom:14px">Acreditamos que softwares úteis não precisam ser complicados nem invasivos. Por isso todas as nossas ferramentas são projetadas para rodar 100% no navegador, usando tecnologias web modernas como PDF.js, Tesseract.js, pdf-lib e WebAssembly.</p>
+      <p style="font-size:13.5px;color:var(--ink2);line-height:1.85">Estamos em constante evolução — novas ferramentas, melhorias de desempenho e correções de bugs acontecem regularmente. Tem uma sugestão ou encontrou um problema? <a onclick="goContact()" style="color:var(--hi3);cursor:pointer;text-decoration:none;font-weight:500">Fale com a gente →</a></p>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-cta btn-cta-p" onclick="goHome()">← Voltar às ferramentas</button>
+      <button class="btn-cta btn-cta-s" onclick="goContact()">Entrar em contato</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div id="contact-page" class="page">
+  <div style="max-width:600px;margin:0 auto;padding:4rem 2rem 6rem">
+    <div class="breadcrumb">
+      <a onclick="goHome()">neoconvert</a>
+      <span class="bc-sep">/</span>
+      <span>contato</span>
+    </div>
+
+    <div style="margin-bottom:2.5rem">
+      <div class="hero-label">Fale conosco</div>
+      <h1 style="font-family:var(--display);font-size:clamp(2.2rem,5vw,3.5rem);letter-spacing:-2px;line-height:.95;color:var(--ink);margin-bottom:14px">Sua opinião<br><span style="color:var(--hi2)">nos importa.</span></h1>
+      <p style="font-size:13.5px;color:var(--ink2);line-height:1.75">Encontrou um bug? Tem uma ideia de nova ferramenta? Quer sugerir uma melhoria? Escolha como prefere entrar em contato.</p>
+    </div>
+
+    <!-- Responsável -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:20px 24px;margin-bottom:1.5rem;display:flex;gap:16px;align-items:center">
+      <div style="width:48px;height:48px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.2rem;color:var(--hi);flex-shrink:0">FG</div>
+      <div>
+        <div style="font-family:var(--display);font-size:1rem;color:var(--ink);letter-spacing:-.3px">Frederico Goulart Abreu</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.3px;margin-top:2px">Fundador · FredTech Systems™</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div style="display:flex;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:1.5rem">
+      <button id="ct-tab-form" onclick="ctTab('form')" style="flex:1;padding:9px;border:none;background:var(--ink);color:#fff;font-family:var(--mono);font-size:10px;font-weight:600;cursor:pointer;letter-spacing:.3px;transition:all .18s">✉️ Enviar mensagem</button>
+      <button id="ct-tab-wa" onclick="ctTab('wa')" style="flex:1;padding:9px;border:none;background:var(--surface2);color:var(--ink2);font-family:var(--mono);font-size:10px;font-weight:500;cursor:pointer;letter-spacing:.3px;transition:all .18s">💬 WhatsApp</button>
+    </div>
+
+    <!-- Form panel -->
+    <div id="ct-panel-form">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:1rem">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div>
+            <label style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.2px;display:block;margin-bottom:5px">NOME</label>
+            <input id="ct-name" type="text" placeholder="Seu nome" style="width:100%;padding:9px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--ink);font-size:12.5px;font-family:var(--sans);outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--hi3)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+          <div>
+            <label style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.2px;display:block;margin-bottom:5px">SEU E-MAIL (opcional)</label>
+            <input id="ct-reply" type="email" placeholder="para resposta" style="width:100%;padding:9px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--ink);font-size:12.5px;font-family:var(--sans);outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--hi3)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.2px;display:block;margin-bottom:5px">ASSUNTO</label>
+          <select id="ct-subject" style="width:100%;padding:9px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--ink);font-size:12.5px;font-family:var(--sans);outline:none;cursor:pointer;transition:border-color .2s" onfocus="this.style.borderColor='var(--hi3)'" onblur="this.style.borderColor='var(--border)'">
+            <option value="">Selecione um assunto…</option>
+            <option>🐛 Reportar um bug</option>
+            <option>💡 Sugerir nova ferramenta</option>
+            <option>✨ Sugestão de melhoria</option>
+            <option>⚡ Problema de desempenho</option>
+            <option>💬 Outro assunto</option>
+          </select>
+        </div>
+        <div style="margin-bottom:20px">
+          <label style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.2px;display:block;margin-bottom:5px">MENSAGEM</label>
+          <textarea id="ct-message" rows="5" placeholder="Descreva com o máximo de detalhes…" style="width:100%;padding:10px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--ink);font-size:12.5px;font-family:var(--sans);outline:none;resize:vertical;line-height:1.65;transition:border-color .2s" onfocus="this.style.borderColor='var(--hi3)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+        </div>
+
+        <!-- Send options -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button onclick="sendViaEmail()" style="flex:1;min-width:160px;padding:11px 16px;background:var(--ink);color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:12.5px;font-weight:600;cursor:pointer;transition:background .18s;display:flex;align-items:center;justify-content:center;gap:7px" onmouseover="this.style.background='#333'" onmouseout="this.style.background='var(--ink)'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            Enviar por e-mail
+          </button>
+          <button onclick="sendViaWhatsApp()" style="flex:1;min-width:160px;padding:11px 16px;background:#25D366;color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:12.5px;font-weight:600;cursor:pointer;transition:opacity .18s;display:flex;align-items:center;justify-content:center;gap:7px" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Enviar via WhatsApp
+          </button>
+        </div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;font-family:var(--mono);font-size:10.5px;color:var(--ink3);line-height:1.6">
+        💡 Ao clicar em <strong style="color:var(--ink2)">"Enviar por e-mail"</strong>, seu app de e-mail abrirá com a mensagem já preenchida para <strong style="color:var(--ink2)">fredtechsystems@icloud.com</strong>.
+      </div>
+    </div>
+
+    <!-- WhatsApp panel -->
+    <div id="ct-panel-wa" style="display:none">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:1rem">
+        <div style="margin-bottom:14px">
+          <label style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:.2px;display:block;margin-bottom:5px">MENSAGEM RÁPIDA</label>
+          <textarea id="ct-wa-msg" rows="4" placeholder="Digite sua mensagem para o WhatsApp…" style="width:100%;padding:10px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);color:var(--ink);font-size:12.5px;font-family:var(--sans);outline:none;resize:vertical;line-height:1.65;transition:border-color .2s" onfocus="this.style.borderColor='#25D366'" onblur="this.style.borderColor='var(--border)'">Olá Frederico, entrei em contato pelo NeoConvert!</textarea>
+        </div>
+        <button onclick="openWhatsApp()" style="width:100%;padding:12px;background:#25D366;color:#fff;border:none;border-radius:var(--r);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Abrir WhatsApp → (31) 99766-1377
+        </button>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;font-family:var(--mono);font-size:10.5px;color:var(--ink3);line-height:1.6">
+        ⏱️ Disponível em horário comercial. Para dúvidas não urgentes, prefira o e-mail.
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem">
+      <button class="btn-cta btn-cta-s" onclick="goHome()" style="display:inline-flex">← Voltar às ferramentas</button>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="footer-wm">Neo<em>Convert</em></div>
   <div class="footer-by">by FredTech Systems™</div>
@@ -594,22 +742,9 @@ body.dark .copy-btn.copied{background:#0a2010;color:#4ad474;border-color:#1a5030
 </footer>
 
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-/* ── BOOT ── */
-(async()=>{
-  const fill=document.getElementById('boot-fill');
-  for(let i=0;i<5;i++){
-    await sl(200+i*80);
-    document.getElementById('bl'+i).classList.add('in');
-    fill.style.width=((i+1)/5*100)+'%';
-  }
-  await sl(420);
-  const boot=document.getElementById('boot');boot.classList.add('out');
-  document.getElementById('main-nav').style.display='block';
-  document.getElementById('home-page').style.display='block';
-  setTimeout(()=>boot.style.display='none',600);
-})();
+/* ── HELPERS ── */
+function sl(ms){return new Promise(r=>setTimeout(r,ms))}
+function formatSize(b){if(b>=1048576)return(b/1048576).toFixed(2)+' MB';if(b>=1024)return(b/1024).toFixed(1)+' KB';return b+' B'}
 
 /* ── TOOLS DATA ── */
 const ICONS={compress:'📦',docx:'📝',ppt:'🎯',excel:'📊',image:'🖼',heic:'📱',resize:'📐',video:'🎬',audio:'🎵',merge:'🔗',ocr:'👁',edit:'✏',pdf:'📄',img2pdf:'🔄',pdf2img:'🖼',sign:'✍',security:'🔒',workflow:'⚡',html2pdf:'🌐',pdf2excel:'📊',pdf2ofx:'🏦',crop:'✂️',watermark:'💧',rotate:'🔃',blur:'🌫️',grayscale:'🎨',flip:'↔️',brightness:'☀️',border:'🖼️',pdfa:'📋',ai_sum:'🤖',ai_tr:'🌍',scan:'📷'};
@@ -632,8 +767,6 @@ const TOOLS=[
   {name:'PDF para Excel',desc:'Extraia tabelas e dados para planilha .xlsx',cat:'pdf',icon:'pdf2excel',badge:'live'},
   {name:'PDF para OFX',desc:'Extraia lançamentos financeiros para OFX/QFX',cat:'pdf',icon:'pdf2ofx',badge:'live'},
   {name:'PDF para PDF/A',desc:'Converta PDF para o formato de arquivo de longa duração PDF/A',cat:'pdf',icon:'pdfa',badge:'new'},
-  {name:'Resumir PDF com IA',desc:'Gere resumos inteligentes de documentos PDF usando IA',cat:'ai',icon:'ai_sum',badge:'live'},
-  {name:'Traduzir PDF com IA',desc:'Traduza PDFs para outro idioma mantendo o layout',cat:'ai',icon:'ai_tr',badge:'live'},
   {name:'Fluxo de Trabalho',desc:'Automatize múltiplas operações em sequência',cat:'workflow',icon:'workflow',badge:'live'},
   {name:'Converter Imagem',desc:'Converta entre JPEG, PNG e WebP',cat:'image',icon:'image'},
   {name:'HEIC para PNG/JPEG',desc:'Fotos HEIC do iPhone → PNG ou JPEG',cat:'image',icon:'heic',badge:'new'},
@@ -714,8 +847,6 @@ const TOOL_EXT={
   'Comprimir Imagem':'jpg',
   'PDF para PPT':'pptx',
   'PDF para PDF/A':'pdf',
-  'Resumir PDF com IA':'txt',
-  'Traduzir PDF com IA':'txt',
   'Escanear Documento':'pdf',
 };
 
@@ -753,6 +884,8 @@ function filterTools(cat,btn){
 function toolClick(name){
   currentType=name;
   document.getElementById('home-page').classList.remove('on');
+  document.getElementById('about-page').classList.remove('on');
+  document.getElementById('contact-page').classList.remove('on');
   document.getElementById('converter-page').classList.add('on');
   document.getElementById('conv-title').textContent=name;
   document.getElementById('bread-cur').textContent=name.toLowerCase().replace(/\s/g,'-');
@@ -762,8 +895,63 @@ function toolClick(name){
 function goHome(){
   stopScanCamera();
   document.getElementById('converter-page').classList.remove('on');
+  document.getElementById('about-page').classList.remove('on');
+  document.getElementById('contact-page').classList.remove('on');
   document.getElementById('home-page').classList.add('on');
   renderTools('all');
+}
+function goAbout(){
+  stopScanCamera();
+  document.getElementById('converter-page').classList.remove('on');
+  document.getElementById('home-page').classList.remove('on');
+  document.getElementById('contact-page').classList.remove('on');
+  document.getElementById('about-page').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function goContact(){
+  stopScanCamera();
+  document.getElementById('converter-page').classList.remove('on');
+  document.getElementById('home-page').classList.remove('on');
+  document.getElementById('about-page').classList.remove('on');
+  document.getElementById('contact-page').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── CONTACT ── */
+function ctTab(tab){
+  const isForm = tab==='form';
+  document.getElementById('ct-panel-form').style.display = isForm?'block':'none';
+  document.getElementById('ct-panel-wa').style.display  = isForm?'none':'block';
+  document.getElementById('ct-tab-form').style.background = isForm?'var(--ink)':'var(--surface2)';
+  document.getElementById('ct-tab-form').style.color = isForm?'#fff':'var(--ink2)';
+  document.getElementById('ct-tab-wa').style.background = isForm?'var(--surface2)':'#25D366';
+  document.getElementById('ct-tab-wa').style.color = isForm?'var(--ink2)':'#fff';
+}
+function sendViaEmail(){
+  const name    = document.getElementById('ct-name').value.trim();
+  const reply   = document.getElementById('ct-reply').value.trim();
+  const subject = document.getElementById('ct-subject').value;
+  const message = document.getElementById('ct-message').value.trim();
+  if(!name||!subject||!message){alert('Por favor, preencha Nome, Assunto e Mensagem.');return;}
+  const subj = encodeURIComponent('[NeoConvert] '+subject);
+  const body = encodeURIComponent(
+    'De: '+name+(reply?'\nE-mail para resposta: '+reply:'')+'\n\n'+message
+  );
+  window.location.href='mailto:fredtechsystems@icloud.com?subject='+subj+'&body='+body;
+}
+function sendViaWhatsApp(){
+  const name    = document.getElementById('ct-name').value.trim();
+  const subject = document.getElementById('ct-subject').value;
+  const message = document.getElementById('ct-message').value.trim();
+  if(!message){alert('Por favor, escreva uma mensagem.');return;}
+  const text = encodeURIComponent(
+    'Olá Frederico! Contato via NeoConvert.'+(name?'\nNome: '+name:'')+(subject?'\nAssunto: '+subject:'')+'\n\n'+message
+  );
+  window.open('https://wa.me/5531997661377?text='+text,'_blank');
+}
+function openWhatsApp(){
+  const msg = document.getElementById('ct-wa-msg').value.trim()||'Olá Frederico, entrei em contato pelo NeoConvert!';
+  window.open('https://wa.me/5531997661377?text='+encodeURIComponent(msg),'_blank');
 }
 
 const FILE_ACCEPTS={
@@ -1553,57 +1741,6 @@ async function doPDFA(){
   document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
-async function doAISummarize(){
-  upd(10,'Lendo PDF…');const pages=await extractPDFPages(currentFile);
-  const fullText=pages.flat().join('\n').slice(0,12000);
-  if(!fullText.trim()){alert('Não foi possível extrair texto do PDF.');return}
-  const lang=document.getElementById('ai-sum-lang')?.value||'pt';
-  const detail=document.getElementById('ai-sum-detail')?.value||'medium';
-  const detailMap={short:'em 1 a 2 parágrafos curtos',medium:'listando os pontos principais em tópicos',long:'seção por seção com detalhes'};
-  upd(30,'Enviando para IA…');
-  let result='';
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Resuma o seguinte texto de um PDF ${detailMap[detail]}. Responda em ${lang==='pt'?'Português':lang==='en'?'Inglês':lang==='es'?'Espanhol':lang==='fr'?'Francês':'Português'}:\n\n${fullText}`}]})});
-    const data=await resp.json();
-    result=data.content?.find(b=>b.type==='text')?.text||'Não foi possível gerar o resumo.';
-  }catch(e){result='Erro ao contatar a IA. Verifique sua conexão.'}
-  upd(90,'Gerando arquivo…');
-  const {jsPDF}=window.jspdf;const doc=new jsPDF();
-  doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text('Resumo do PDF — NeoConvert™',14,18);
-  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text('Arquivo original: '+currentFile.name,14,26);
-  doc.setLineWidth(0.3);doc.line(14,30,196,30);
-  doc.setFontSize(11);const lines=doc.splitTextToSize(result,180);doc.text(lines,14,38);
-  currentBlob=new Blob([doc.output('arraybuffer')],{type:'application/pdf'});
-  upd(100,'Concluído!');await sl(300);
-  showResult(currentFile.name,'Resumo PDF','Gerado por IA');
-  document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
-}
-
-async function doAITranslate(){
-  upd(10,'Lendo PDF…');const pages=await extractPDFPages(currentFile);
-  const fullText=pages.flat().join('\n').slice(0,10000);
-  if(!fullText.trim()){alert('Não foi possível extrair texto do PDF.');return}
-  const langMap={en:'Inglês',es:'Espanhol',pt:'Português',fr:'Francês',de:'Alemão',it:'Italiano',zh:'Chinês Simplificado',ja:'Japonês'};
-  const targetLang=document.getElementById('ai-tr-lang')?.value||'en';
-  upd(30,'Enviando para IA…');
-  let translated='';
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:`Traduza o texto a seguir para ${langMap[targetLang]}. Mantenha a estrutura de parágrafos. Retorne APENAS o texto traduzido, sem comentários:\n\n${fullText}`}]})});
-    const data=await resp.json();
-    translated=data.content?.find(b=>b.type==='text')?.text||'Não foi possível traduzir.';
-  }catch(e){translated='Erro ao contatar a IA.'}
-  upd(85,'Gerando PDF…');
-  const {jsPDF}=window.jspdf;const doc=new jsPDF();
-  doc.setFont('helvetica','bold');doc.setFontSize(14);doc.text('Tradução — NeoConvert™',14,18);
-  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text('Original: '+currentFile.name+' → '+langMap[targetLang],14,26);
-  doc.setLineWidth(0.3);doc.line(14,30,196,30);
-  doc.setFontSize(11);const lines=doc.splitTextToSize(translated,180);doc.text(lines,14,38);
-  currentBlob=new Blob([doc.output('arraybuffer')],{type:'application/pdf'});
-  upd(100,'Concluído!');await sl(300);
-  showResult(currentFile.name,'Traduzido → '+langMap[targetLang],'Gerado por IA');
-  document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
-}
-
 async function doFake(msg,fmt){  upd(10,'Lendo…');await sl(600);upd(50,'Processando…');await sl(600);upd(90,'Finalizando…');
   // Preserve original file type for fake processing
   const origType=currentFile.type||'application/octet-stream';
@@ -1643,9 +1780,6 @@ function upd(pct,label){
   if(label)document.getElementById('prog-label').textContent=label;
 }
 
-function formatSize(b){if(b>=1048576)return(b/1048576).toFixed(2)+' MB';if(b>=1024)return(b/1024).toFixed(1)+' KB';return b+' B'}
-function sl(ms){return new Promise(r=>setTimeout(r,ms))}
-
 function toggleTheme(){
   const isDark=document.body.classList.toggle('dark');
   document.body.classList.toggle('light',!isDark);
@@ -1653,12 +1787,29 @@ function toggleTheme(){
   localStorage.setItem('nc-theme',isDark?'dark':'light');
 }
 
-/* ── INIT ── */
+/* ── INIT + BOOT ── */
 (()=>{
   const t=localStorage.getItem('nc-theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
   document.body.className=t;
   document.getElementById('theme-btn').textContent=t==='dark'?'☀️':'🌙';
   renderTools('all');
+  // Boot sequence - runs after all sync JS is parsed
+  (async()=>{
+    try{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}catch(e){}
+    const fill=document.getElementById('boot-fill');
+    for(let i=0;i<5;i++){
+      await sl(180+i*70);
+      const row=document.getElementById('bl'+i);
+      if(row)row.classList.add('in');
+      if(fill)fill.style.width=((i+1)/5*100)+'%';
+    }
+    await sl(380);
+    const boot=document.getElementById('boot');
+    if(boot)boot.classList.add('out');
+    document.getElementById('main-nav').style.display='block';
+    document.getElementById('home-page').classList.add('on');
+    setTimeout(()=>{if(boot)boot.style.display='none';},600);
+  })();
 })();
 </script>
 </body>
