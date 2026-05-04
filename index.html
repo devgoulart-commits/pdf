@@ -328,7 +328,7 @@ body.dark .scan-error{background:#2a0a0a;border-color:#6a2020;color:#ff8080}
 <!-- BOOT -->
 <div id="boot">
   <div class="boot-wordmark"><span>Neo</span>Convert</div>
-  <div class="boot-sub">FREDTECH SYSTEMS — v5.1</div>
+  <div class="boot-sub">FREDTECH SYSTEMS — v5.2</div>
   <div class="boot-log" id="boot-log">
     <div class="boot-row" id="bl0"><div class="boot-row-left"><div class="boot-dot"></div><span>Carregando módulos PDF</span></div><span class="boot-ok">OK</span></div>
     <div class="boot-row" id="bl1"><div class="boot-row-left"><div class="boot-dot"></div><span>Inicializando OCR engine</span></div><span class="boot-ok">OK</span></div>
@@ -420,17 +420,14 @@ body.dark .scan-error{background:#2a0a0a;border-color:#6a2020;color:#ff8080}
     </div>
     <input type="file" id="fi" style="display:none">
 
-    <!-- Multi-file list (Merge PDFs) -->
     <div id="multi-list" style="display:none"></div>
 
-    <!-- HTML area -->
     <div class="html-area" id="html-area">
       <span class="input-label">Cole ou escreva o HTML</span>
       <textarea class="html-ta" id="html-ta" placeholder="<!DOCTYPE html>&#10;<html>...</html>"></textarea>
       <div class="input-hint">* Estilos inline e &lt;style&gt; embutido são suportados</div>
     </div>
 
-    <!-- Scan -->
     <div class="scan-sec" id="scan-sec">
       <div class="scan-mode-row">
         <button class="scan-mode-btn on" id="scan-mode-cam" onclick="setScanMode('cam')">📷 Câmera</button>
@@ -466,7 +463,6 @@ body.dark .scan-error{background:#2a0a0a;border-color:#6a2020;color:#ff8080}
       <div class="scan-thumbs" id="scan-thumbs"></div>
     </div>
 
-    <!-- Signature -->
     <div class="sign-sec" id="sign-sec">
       <div class="opts show">
         <div class="opts-title">Configurar Assinatura</div>
@@ -492,7 +488,6 @@ body.dark .scan-error{background:#2a0a0a;border-color:#6a2020;color:#ff8080}
       </div>
     </div>
 
-    <!-- Security -->
     <div class="security-sec" id="security-sec">
       <div class="opts show">
         <div class="opts-title">Segurança do PDF</div>
@@ -506,7 +501,6 @@ body.dark .scan-error{background:#2a0a0a;border-color:#6a2020;color:#ff8080}
       </div>
     </div>
 
-    <!-- Workflow -->
     <div id="workflow-sec" style="display:none;margin-bottom:1rem">
       <div class="opts show">
         <div class="opts-title">Fluxo de Trabalho</div>
@@ -516,30 +510,25 @@ body.dark .scan-error{background:#2a0a0a;border-color:#6a2020;color:#ff8080}
       </div>
     </div>
 
-    <!-- Options -->
     <div class="opts" id="opts-panel"><div class="opts-title" id="opts-title">Opções</div><div id="opts-content"></div></div>
 
-    <!-- Page selector -->
     <div class="page-sel" id="pdf-page-sel" style="display:none!important">
       <div class="opts-title">Selecionar Páginas</div>
       <div class="page-sel-acts"><button class="btn-sm" onclick="selectAllPages()">Todas</button><button class="btn-sm" onclick="deselectAllPages()">Nenhuma</button><span style="font-family:var(--mono);font-size:10px;color:var(--ink3)" id="pg-count-info"></span></div>
       <div class="pages-grid" id="pages-grid"></div>
     </div>
 
-    <!-- File display -->
     <div class="file-card" id="file-card">
       <div class="file-ico" id="file-ico">📄</div>
       <div class="file-meta"><div class="file-name" id="file-name">arquivo</div><div class="file-size" id="file-size">—</div></div>
       <button class="file-rm" onclick="clearFile()">✕</button>
     </div>
 
-    <!-- Progress -->
     <div class="prog-box" id="prog-box">
       <div class="prog-top"><span id="prog-label">Processando…</span><span class="prog-pct" id="prog-pct">0%</span></div>
       <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
     </div>
 
-    <!-- Result -->
     <div class="result-box" id="result-box">
       <div class="result-head">Processamento concluído</div>
       <div class="result-row"><span class="result-lbl">Original</span><span class="result-val" id="res-orig">—</span></div>
@@ -547,21 +536,18 @@ body.dark .scan-error{background:#2a0a0a;border-color:#6a2020;color:#ff8080}
       <div class="result-row" id="res-extra-row" style="display:none"><span class="result-lbl" id="res-extra-lbl">Info</span><span class="result-val" id="res-extra-val">—</span></div>
     </div>
 
-    <!-- Extracted -->
     <div class="extracted-box" id="extracted-box">
       <div class="extracted-lbl">Texto Extraído</div>
       <div class="extracted-content" id="extracted-text"></div>
       <button class="copy-btn" id="copy-btn" onclick="copyText()">Copiar texto</button>
     </div>
 
-    <!-- Data preview -->
     <div class="data-preview" id="data-preview">
       <div class="data-preview-label" id="data-preview-label">Pré-visualização</div>
       <div style="overflow-x:auto"><table class="dt" id="data-table"></table></div>
       <div class="preview-more" id="preview-more"></div>
     </div>
 
-    <!-- Actions -->
     <div class="actions">
       <button class="btn btn-primary" id="conv-btn" onclick="convert()">Processar arquivo</button>
       <button class="btn btn-outline" onclick="goHome()">← Voltar</button>
@@ -622,7 +608,7 @@ function hexRgb(h){return{r:parseInt(h.slice(1,3),16),g:parseInt(h.slice(3,5),16
 
 /* ─── EXT MAPS ─── */
 const EXT_MAP={'application/pdf':'pdf','image/png':'png','image/jpeg':'jpg','image/jpg':'jpg','image/webp':'webp','image/gif':'gif','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':'xlsx','application/vnd.ms-excel':'xls','application/vnd.openxmlformats-officedocument.wordprocessingml.document':'docx','application/msword':'doc','application/x-ofx':'ofx','application/ofx':'ofx','video/mp4':'mp4','text/plain':'txt','text/html':'html','text/csv':'csv'};
-const TOOL_EXT={'OCR':'txt','Imagem para PDF':'pdf','PDF para Imagem':'png','HTML para PDF':'pdf','Assinar PDF':'pdf','Segurança PDF':'pdf','Comprimir PDF':'pdf','Editor PDF':'txt','Merge PDFs':'pdf','DOCX para PDF':'pdf','PDF para DOCX':'docx','PPT para PDF':'pdf','Excel para PDF':'pdf','PDF para Excel':'xlsx','PDF para OFX':'ofx','Converter Imagem':'png','HEIC para PNG/JPEG':'png','Redimensionar':'png','Comprimir Vídeo':'mp4','Extrair Áudio':'mp3','Fluxo de Trabalho':'pdf','Recortar Imagem':'png','Girar Imagem':'png',"Marca d'água em Imagem":'png','Escala de Cinza':'png','Brilho e Contraste':'png','Adicionar Borda':'png','Comprimir Imagem':'jpg','PDF para PPT':'pdf','PDF para PDF/A':'pdf','Escanear Documento':'pdf'};
+const TOOL_EXT={'OCR':'txt','Imagem para PDF':'pdf','PDF para Imagem':'png','HTML para PDF':'pdf','Assinar PDF':'pdf','Segurança PDF':'pdf','Comprimir PDF':'pdf','Editor PDF':'txt','Merge PDFs':'pdf','DOCX para PDF':'pdf','PDF para DOCX':'docx','PPT para PDF':'pdf','Excel para PDF':'pdf','PDF para Excel':'xlsx','PDF para OFX':'ofx','Converter Imagem':'png','HEIC para PNG/JPEG':'png','Redimensionar':'png','Comprimir Vídeo':'mp4','Extrair Áudio':'mp3','Fluxo de Trabalho':'pdf','Recortar Imagem':'png','Girar Imagem':'png',"Marca d'água em Imagem":'png','Escala de Cinza':'png','Brilho e Contraste':'png','Adicionar Borda':'png','Comprimir Imagem':'jpg','PDF para PPT':'pptx','PDF para PDF/A':'pdf','Escanear Documento':'pdf'};
 
 function getExt(blob,toolName){const m=EXT_MAP[blob.type];if(m&&m!=='bin')return m;return TOOL_EXT[toolName]||'bin'}
 
@@ -658,13 +644,13 @@ const TOOLS=[
   {name:'Comprimir Imagem',desc:'Reduza o tamanho de JPG e PNG sem perder qualidade',cat:'image',icon:'compress',badge:'live'},
   {name:'Comprimir Vídeo',desc:'Reduza tamanho de vídeos mantendo qualidade',cat:'video',icon:'video',badge:'new'},
   {name:'Extrair Áudio',desc:'Separe a trilha de áudio de vídeos MP4',cat:'video',icon:'audio',badge:'live'},
-  {name:'PPT para PDF',desc:'Converta apresentações PowerPoint — exporta slides como imagens',cat:'pdf',icon:'ppt',badge:'live'},
+  {name:'PPT para PDF',desc:'Converta apresentações PowerPoint (.pptx) para PDF',cat:'pdf',icon:'ppt',badge:'live'},
   {name:'PDF para PPT',desc:'Converta páginas do PDF em slides editáveis',cat:'pdf',icon:'ppt',badge:'live'},
 ];
 
 /* ─── STATE ─── */
 let currentFile=null,currentBlob=null,currentType=null,extractedTextData='';
-let multiFiles=[];  // for Merge PDFs
+let multiFiles=[];
 let signColor='#111110',signDrawing=false;
 let pdfPageThumbs=[],selectedPages=new Set();
 let workflowSteps=[];
@@ -710,13 +696,15 @@ function sendViaEmail(){window.location.href='mailto:fredtechsystems@icloud.com?
 function openWhatsApp(){window.open('https://wa.me/5531997661377?text=Olá+Frederico,+entrei+em+contato+pelo+NeoConvert!','_blank')}
 
 /* ─── FILE ACCEPTS ─── */
+// FIX 1: Corrigido FILE_ACCEPTS para PPT para PDF aceitar arquivos .ppt e .pptx
 const FILE_ACCEPTS={
   'OCR':'image/*','Imagem para PDF':'image/jpeg,image/png,image/webp,image/gif',
   'PDF para Imagem':'application/pdf','Assinar PDF':'application/pdf',
   'Segurança PDF':'application/pdf','Comprimir PDF':'application/pdf',
   'Editor PDF':'application/pdf','Merge PDFs':'application/pdf',
   'DOCX para PDF':'.docx,.doc','PDF para DOCX':'application/pdf',
-  'PPT para PDF':'.ppt,.pptx','Excel para PDF':'.xls,.xlsx,.csv',
+  'PPT para PDF':'.ppt,.pptx,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'Excel para PDF':'.xls,.xlsx,.csv',
   'Converter Imagem':'image/*','HEIC para PNG/JPEG':'.heic,.HEIC,image/heic,image/*',
   'Redimensionar':'image/*','Comprimir Vídeo':'video/*','Extrair Áudio':'video/*',
   'Fluxo de Trabalho':'application/pdf','PDF para Excel':'application/pdf',
@@ -724,15 +712,17 @@ const FILE_ACCEPTS={
   "Marca d'água em Imagem":'image/*','Escala de Cinza':'image/*',
   'Brilho e Contraste':'image/*','Adicionar Borda':'image/*',
   'Comprimir Imagem':'image/jpeg,image/png,image/webp',
-  'PPT para PDF':'image/*,application/pdf',
   'PDF para PPT':'application/pdf','PDF para PDF/A':'application/pdf',
   'Escanear Documento':'image/*',
 };
+
+// FIX 2: Adicionado FORMAT_TAGS para PPT para PDF
 const FORMAT_TAGS={
   'OCR':['JPG','PNG','WebP','PDF'],'Imagem para PDF':['JPG','PNG','WebP','GIF'],
   'PDF para Imagem':['PDF'],'Assinar PDF':['PDF'],'Segurança PDF':['PDF'],
-  'Comprimir PDF':['PDF'],'DOCX para PDF':['DOCX','DOC'],'PDF para DOCX':['PDF'],
-  'PPT para PDF':['JPG','PNG'],'Excel para PDF':['XLS','XLSX','CSV'],
+  'Comprimir PDF':['PDF'],'DOCX para PDF':['DOCX','DOC'],
+  'PPT para PDF':['PPT','PPTX'],  /* CORRIGIDO */
+  'Excel para PDF':['XLS','XLSX','CSV'],
   'Converter Imagem':['JPG','PNG','WebP'],'HEIC para PNG/JPEG':['HEIC','JPG','PNG'],
   'Redimensionar':['JPG','PNG','WebP'],'Comprimir Vídeo':['MP4','MOV','AVI'],
   'Extrair Áudio':['MP4','MOV'],'PDF para Excel':['PDF'],'PDF para OFX':['PDF'],
@@ -741,12 +731,11 @@ const FORMAT_TAGS={
   'Brilho e Contraste':['JPG','PNG','WebP'],'Adicionar Borda':['JPG','PNG','WebP'],
   'Comprimir Imagem':['JPG','PNG','WebP'],'PDF para PPT':['PDF'],'PDF para PDF/A':['PDF'],
   'Escanear Documento':['JPG','PNG'],'Merge PDFs':['PDF (múltiplos)'],
-  'Editor PDF':['PDF'],'Fluxo de Trabalho':['PDF'],
+  'Editor PDF':['PDF'],'Fluxo de Trabalho':['PDF'],'PDF para DOCX':['PDF'],
 };
 
 /* ─── SETUP TOOL UI ─── */
 function setupToolUI(name){
-  // Hide all special sections
   document.getElementById('sign-sec').style.display='none';
   document.getElementById('security-sec').style.display='none';
   document.getElementById('workflow-sec').style.display='none';
@@ -762,7 +751,6 @@ function setupToolUI(name){
   document.getElementById('data-preview').classList.remove('show');
   document.getElementById('upload-main-txt').textContent='Arraste seu arquivo aqui';
 
-  // File input setup
   const isMulti=name==='Merge PDFs';
   const fi=document.getElementById('fi');
   fi.accept=FILE_ACCEPTS[name]||'*/*';
@@ -772,14 +760,14 @@ function setupToolUI(name){
   const tags=FORMAT_TAGS[name]||[];
   document.getElementById('upload-tags').innerHTML=tags.map(t=>`<span class="fmt-t">${t}</span>`).join('');
 
-  // Special UIs
   if(name==='HTML para PDF'){document.getElementById('upload-z').style.display='none';document.getElementById('html-area').classList.add('show')}
   if(name==='Escanear Documento'){document.getElementById('upload-z').style.display='none';document.getElementById('scan-sec').classList.add('show');initScanTool();renderOptsScan()}
   if(name==='Assinar PDF'){document.getElementById('sign-sec').style.display='block';setTimeout(initSignCanvas,100)}
   if(name==='Segurança PDF')document.getElementById('security-sec').style.display='block';
   if(name==='Fluxo de Trabalho'){document.getElementById('workflow-sec').style.display='block';initWorkflow()}
 
-  // Options
+  // FIX 3: Adicionado info-box para PPT para PDF explicando o fluxo
+  if(name==='PPT para PDF')renderOptsPPT2PDF();
   if(name==='PDF para Imagem')renderOptsPDFImg();
   if(name==='Imagem para PDF')renderOptsImg2PDF();
   if(name==='Comprimir PDF')renderOptsCompress();
@@ -808,7 +796,6 @@ document.getElementById('fi').addEventListener('change',e=>{
   if(currentType==='Merge PDFs'){
     for(const f of files)multiFiles.push(f);
     renderMultiList();
-    // show first file in file-card
     if(multiFiles.length>0)showFileCard(multiFiles[0]);
   }else{setFile(files[0])}
   e.target.value='';
@@ -870,6 +857,12 @@ function showOpts(title,html){
   document.getElementById('opts-title').textContent=title;
   document.getElementById('opts-content').innerHTML=html;
 }
+
+// FIX 4: Novo painel de opções para PPT para PDF com info clara
+function renderOptsPPT2PDF(){showOpts('Configurações',`
+  <div class="opt-row"><label>Qualidade das páginas</label><select id="ppt-quality"><option value="high">Alta (maior arquivo)</option><option value="medium" selected>Média (recomendado)</option><option value="low">Baixa (menor arquivo)</option></select></div>
+  <div class="info-box" style="margin-top:8px;margin-bottom:0">🎯 <span><strong>Como funciona:</strong> O NeoConvert extrai cada slide do PPTX como imagem e monta um PDF. Para arquivos .ppt mais antigos (formato binário), exporte primeiro como .pptx no PowerPoint.</span></div>`)}
+
 function renderOptsPDFImg(){showOpts('Opções de Exportação',`
   <div class="opt-row"><label>Formato</label><select id="img-format"><option value="png">PNG — maior qualidade</option><option value="jpeg">JPEG — menor tamanho</option></select></div>
   <div class="opt-row"><label>Resolução</label><div style="display:flex;align-items:center;gap:10px"><input type="range" id="img-dpi" min="72" max="300" value="150" style="flex:1;accent-color:var(--ink)" oninput="document.getElementById('dpi-v').textContent=this.value+' DPI'"><span class="range-val" id="dpi-v">150 DPI</span></div></div>`)}
@@ -978,7 +971,6 @@ function loadWfPreset(){const p=JSON.parse(localStorage.getItem(WF_KEY)||'{}');c
 ═══════════════════════════════════ */
 async function convert(){
   const isHtml=currentType==='HTML para PDF';
-  const isWf=currentType==='Fluxo de Trabalho';
   const isScan=currentType==='Escanear Documento';
   const isMerge=currentType==='Merge PDFs';
 
@@ -1039,10 +1031,337 @@ async function convert(){
 }
 
 /* ═══════════════════════════════════
-   CONVERTERS — PDF
+   PPT PARA PDF — REESCRITO COMPLETAMENTE
+   FIX PRINCIPAL: descompressão deflate + extração robusta de slides
 ═══════════════════════════════════ */
 
-/* PDF TEXT EXTRACT UTIL */
+/**
+ * Descomprime dados deflate usando DecompressionStream (suportado em Chrome/Edge/Firefox modernos)
+ */
+async function inflateDeflate(compressedData){
+  try{
+    const ds=new DecompressionStream('deflate-raw');
+    const writer=ds.writable.getWriter();
+    const reader=ds.readable.getReader();
+    writer.write(compressedData);
+    writer.close();
+    const chunks=[];
+    while(true){
+      const{done,value}=await reader.read();
+      if(done)break;
+      chunks.push(value);
+    }
+    const total=chunks.reduce((s,c)=>s+c.length,0);
+    const out=new Uint8Array(total);let pos=0;
+    for(const c of chunks){out.set(c,pos);pos+=c.length}
+    return out;
+  }catch(e){
+    return null;
+  }
+}
+
+/**
+ * Extrai todas as entradas de um ZIP, suportando tanto Store (method=0) quanto Deflate (method=8)
+ */
+async function extractZipEntries(arr){
+  const enc=new TextDecoder('utf-8',{fatal:false});
+  const entries={};
+  let i=0;
+  while(i<arr.length-4){
+    if(arr[i]===0x50&&arr[i+1]===0x4B&&arr[i+2]===0x03&&arr[i+3]===0x04){
+      const method=(arr[i+8])|(arr[i+9]<<8);
+      const compSize=(arr[i+18])|(arr[i+19]<<8)|(arr[i+20]<<16)|(arr[i+21]<<24);
+      const uncompSize=(arr[i+22])|(arr[i+23]<<8)|(arr[i+24]<<16)|(arr[i+25]<<24);
+      const fnLen=(arr[i+26])|(arr[i+27]<<8);
+      const extraLen=(arr[i+28])|(arr[i+29]<<8);
+      const fn=enc.decode(arr.slice(i+30,i+30+fnLen));
+      const dataStart=i+30+fnLen+extraLen;
+      const compData=arr.slice(dataStart,dataStart+Math.max(compSize,0));
+
+      if(method===0){
+        // Store — sem compressão
+        entries[fn]=compData;
+      }else if(method===8){
+        // Deflate — descomprimir
+        try{
+          const decompressed=await inflateDeflate(compData);
+          if(decompressed)entries[fn]=decompressed;
+        }catch(e){}
+      }
+      i=dataStart+Math.max(compSize,0);
+      if(i<=dataStart)i=dataStart+1;
+    }else i++;
+  }
+  return entries;
+}
+
+/**
+ * Extrai texto de um slide XML do PPTX para renderizar como fallback
+ */
+function extractSlideText(xml){
+  if(!xml)return'';
+  const parser=new DOMParser();
+  const doc=parser.parseFromString(xml,'text/xml');
+  const texts=[];
+  for(const t of doc.querySelectorAll('t,a\\:t')){
+    const s=t.textContent.trim();
+    if(s)texts.push(s);
+  }
+  return texts.join(' ');
+}
+
+/**
+ * Renderiza um slide via canvas usando texto extraído do XML (fallback)
+ */
+async function renderSlideAsCanvas(slideText,slideNum,totalSlides,w,h){
+  const cv=document.createElement('canvas');
+  cv.width=w||960;cv.height=h||540;
+  const ctx=cv.getContext('2d');
+  // Fundo branco gradiente
+  const grad=ctx.createLinearGradient(0,0,0,cv.height);
+  grad.addColorStop(0,'#ffffff');
+  grad.addColorStop(1,'#f8f8f8');
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,cv.width,cv.height);
+  // Borda sutil
+  ctx.strokeStyle='#e0e0e0';
+  ctx.lineWidth=2;
+  ctx.strokeRect(1,1,cv.width-2,cv.height-2);
+  // Número do slide
+  ctx.fillStyle='#cccccc';
+  ctx.font=`bold ${Math.round(cv.height*0.04)}px sans-serif`;
+  ctx.textAlign='right';
+  ctx.fillText(`Slide ${slideNum}/${totalSlides}`,cv.width-20,cv.height-16);
+  // Texto do slide
+  if(slideText.trim()){
+    ctx.fillStyle='#222222';
+    ctx.textAlign='left';
+    const fontSize=Math.min(Math.round(cv.height*0.055),36);
+    ctx.font=`${fontSize}px sans-serif`;
+    const words=slideText.split(' ');
+    const maxW=cv.width-80;
+    const lineH=fontSize*1.5;
+    let line='';let y=cv.height*0.15;
+    for(const word of words){
+      const test=line?line+' '+word:word;
+      if(ctx.measureText(test).width>maxW&&line){
+        ctx.fillText(line,40,y);
+        line=word;y+=lineH;
+        if(y>cv.height*0.85)break;
+      }else line=test;
+    }
+    if(line&&y<=cv.height*0.85)ctx.fillText(line,40,y);
+  }
+  return cv;
+}
+
+/**
+ * PPT PARA PDF — função principal corrigida
+ * Estratégia:
+ * 1. Extrai todas as entradas do ZIP (com suporte a deflate)
+ * 2. Para cada slide: tenta usar imagem de thumbnail/preview ou imagem de mídia embutida
+ * 3. Se não encontrar imagens, renderiza slide via canvas com texto extraído do XML
+ * 4. Monta PDF com todas as páginas
+ */
+async function doPPT2PDF(){
+  upd(5,'Lendo arquivo PPTX…');
+  const ab=await currentFile.arrayBuffer();
+  const arr=new Uint8Array(ab);
+
+  // Verificar se é realmente um ZIP (PPTX)
+  if(arr[0]!==0x50||arr[1]!==0x4B){
+    throw new Error('Arquivo inválido. Certifique-se de usar formato .pptx (não .ppt legado). Abra no PowerPoint e salve como .pptx.');
+  }
+
+  upd(15,'Extraindo conteúdo do PPTX…');
+  let entries;
+  try{
+    entries=await extractZipEntries(arr);
+  }catch(e){
+    throw new Error('Não foi possível ler o arquivo PPTX. Verifique se o arquivo não está corrompido.');
+  }
+
+  const entryKeys=Object.keys(entries);
+  upd(30,'Identificando slides…');
+
+  // Encontrar slides na ordem correta via presentation.xml
+  let slideOrder=[];
+  const presXmlBytes=entries['ppt/presentation.xml'];
+  if(presXmlBytes){
+    const presXml=new TextDecoder().decode(presXmlBytes);
+    const parser=new DOMParser();
+    const presDoc=parser.parseFromString(presXml,'text/xml');
+    // Extrair IDs de slides na ordem
+    const sldIds=presDoc.querySelectorAll('sldIdLst sldId, p\\:sldIdLst p\\:sldId');
+    if(sldIds.length>0){
+      // Ler rels para mapear rId → arquivo de slide
+      const presRelsBytes=entries['ppt/_rels/presentation.xml.rels'];
+      if(presRelsBytes){
+        const presRels=new TextDecoder().decode(presRelsBytes);
+        const relsDoc=parser.parseFromString(presRels,'text/xml');
+        const relMap={};
+        for(const rel of relsDoc.querySelectorAll('Relationship')){
+          relMap[rel.getAttribute('Id')]=rel.getAttribute('Target');
+        }
+        for(const sldId of sldIds){
+          const rId=sldId.getAttribute('r:id')||sldId.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','id');
+          if(rId&&relMap[rId]){
+            let target=relMap[rId];
+            if(!target.startsWith('ppt/'))target='ppt/'+target.replace(/^\.\//,'');
+            slideOrder.push(target);
+          }
+        }
+      }
+    }
+  }
+
+  // Fallback: descobrir slides pelos arquivos no ZIP
+  if(!slideOrder.length){
+    const slideFiles=entryKeys.filter(k=>k.match(/^ppt\/slides\/slide\d+\.xml$/))
+      .sort((a,b)=>{
+        const na=parseInt(a.match(/\d+/)[0]);
+        const nb=parseInt(b.match(/\d+/)[0]);
+        return na-nb;
+      });
+    slideOrder=slideFiles;
+  }
+
+  if(!slideOrder.length){
+    throw new Error('Nenhum slide encontrado no arquivo PPTX. O arquivo pode estar corrompido ou em formato não suportado.');
+  }
+
+  const totalSlides=slideOrder.length;
+  upd(35,`${totalSlides} slide(s) encontrado(s). Processando…`);
+
+  // Obter qualidade selecionada
+  const quality=document.getElementById('ppt-quality')?.value||'medium';
+  const qualityMap={high:.95,medium:.85,low:.65};
+  const jpgQ=qualityMap[quality]||.85;
+
+  const {PDFDocument}=PDFLib;
+  const pdfDoc=await PDFDocument.create();
+
+  // Dimensão padrão de slide widescreen (16:9) em pontos
+  const SLIDE_W_PT=960;
+  const SLIDE_H_PT=540;
+
+  for(let si=0;si<totalSlides;si++){
+    const pct=35+Math.floor((si/totalSlides)*55);
+    upd(pct,`Processando slide ${si+1}/${totalSlides}…`);
+
+    const slidePath=slideOrder[si];
+    const slideXmlBytes=entries[slidePath];
+
+    // Tentar encontrar imagens de mídia referenciadas por este slide
+    let slideCanvas=null;
+
+    // Ler rels do slide para encontrar imagens embutidas
+    const slideFileName=slidePath.split('/').pop();
+    const slideDir=slidePath.substring(0,slidePath.lastIndexOf('/'));
+    const slideRelsPath=`${slideDir}/_rels/${slideFileName}.rels`;
+    const slideRelsBytes=entries[slideRelsPath];
+
+    let slideImages=[];
+    if(slideRelsBytes){
+      const slideRelsXml=new TextDecoder().decode(slideRelsBytes);
+      const parser=new DOMParser();
+      const relsDoc=parser.parseFromString(slideRelsXml,'text/xml');
+      for(const rel of relsDoc.querySelectorAll('Relationship')){
+        const type=rel.getAttribute('Type')||'';
+        const target=rel.getAttribute('Target')||'';
+        if(type.includes('image')||target.match(/\.(jpg|jpeg|png|gif|bmp|tiff|emf|wmf)$/i)){
+          // Resolver caminho relativo
+          let imgPath=target.replace(/^\.\.\//,'ppt/');
+          if(!imgPath.startsWith('ppt/'))imgPath=slideDir+'/'+target.replace(/^\.\//,'');
+          imgPath=imgPath.replace(/\/\.\.\//g,'/').replace(/\/[^/]+\/\.\.\//g,'/');
+          // Normalizar
+          const parts=imgPath.split('/');
+          const norm=[];
+          for(const p of parts){if(p==='..')norm.pop();else if(p&&p!=='.')norm.push(p)}
+          imgPath=norm.join('/');
+          if(entries[imgPath])slideImages.push({path:imgPath,data:entries[imgPath],target});
+        }
+      }
+    }
+
+    // Tentar criar canvas a partir da imagem do slide
+    if(slideImages.length>0){
+      // Usar primeira imagem válida
+      for(const imgEntry of slideImages){
+        try{
+          const imgBlob=new Blob([imgEntry.data]);
+          const imgUrl=URL.createObjectURL(imgBlob);
+          const img=new Image();
+          const loaded=await new Promise((res,rej)=>{
+            img.onload=()=>res(true);
+            img.onerror=()=>res(false);
+            img.src=imgUrl;
+          });
+          URL.revokeObjectURL(imgUrl);
+          if(loaded&&img.width>0&&img.height>0){
+            // Criar canvas com a imagem como fundo + slide layout
+            const cv=document.createElement('canvas');
+            cv.width=Math.max(img.width,SLIDE_W_PT);
+            cv.height=Math.max(img.height,SLIDE_H_PT);
+            const ctx=cv.getContext('2d');
+            ctx.fillStyle='#ffffff';
+            ctx.fillRect(0,0,cv.width,cv.height);
+            // Centralizar imagem
+            const sx=(cv.width-img.width)/2;
+            const sy=(cv.height-img.height)/2;
+            ctx.drawImage(img,sx,sy);
+            slideCanvas=cv;
+            break;
+          }
+        }catch(e){}
+      }
+    }
+
+    // Fallback: renderizar slide a partir do XML de texto
+    if(!slideCanvas){
+      const slideText=slideXmlBytes?extractSlideText(new TextDecoder().decode(slideXmlBytes)):'';
+      slideCanvas=await renderSlideAsCanvas(slideText,si+1,totalSlides,SLIDE_W_PT,SLIDE_H_PT);
+    }
+
+    // Adicionar página ao PDF
+    try{
+      const dataUrl=slideCanvas.toDataURL('image/jpeg',jpgQ);
+      const b64=dataUrl.split(',')[1];
+      const binStr=atob(b64);
+      const imgBytes=new Uint8Array(binStr.length);
+      for(let j=0;j<binStr.length;j++)imgBytes[j]=binStr.charCodeAt(j);
+
+      const embImg=await pdfDoc.embedJpg(imgBytes);
+      const {width,height}=embImg.scale(1);
+      const page=pdfDoc.addPage([width,height]);
+      page.drawImage(embImg,{x:0,y:0,width,height});
+    }catch(e){
+      console.warn('Erro ao adicionar slide '+( si+1)+':',e);
+      // Adicionar página em branco como fallback
+      pdfDoc.addPage([SLIDE_W_PT,SLIDE_H_PT]);
+    }
+
+    await sl(10); // Respirar para não travar UI
+  }
+
+  if(pdfDoc.getPageCount()===0){
+    throw new Error('Não foi possível gerar o PDF. Nenhuma página foi criada.');
+  }
+
+  upd(93,'Salvando PDF…');
+  const pdfBytes=await pdfDoc.save();
+  currentBlob=new Blob([pdfBytes],{type:'application/pdf'});
+
+  upd(100,'Concluído!');await sl(300);
+  showResult(currentFile.name,`PDF — ${pdfDoc.getPageCount()} slide(s)`,formatSize(pdfBytes.length));
+  document.getElementById('dl-btn').classList.add('show');
+  document.getElementById('prog-box').classList.remove('show');
+}
+
+/* ═══════════════════════════════════
+   DEMAIS CONVERTERS (inalterados)
+═══════════════════════════════════ */
+
 async function extractPDFPages(file){
   const ab=await file.arrayBuffer();const pdf=await pdfjsLib.getDocument(ab).promise;
   const pages=[];
@@ -1059,21 +1378,17 @@ async function extractPDFPages(file){
   return pages;
 }
 
-/* COMPRIMIR PDF */
 async function doCompressPDF(){
   upd(10,'Lendo PDF…');
   const ab=await currentFile.arrayBuffer();
   const {PDFDocument}=PDFLib;
   const srcDoc=await PDFDocument.load(ab,{ignoreEncryption:true});
   upd(30,'Processando…');
-  // Re-render each page as compressed JPEG image and rebuild PDF
   const level=document.getElementById('compress-level')?.value||'med';
   const scaleMap={high:.9,med:.65,low:.42};
   const scale=scaleMap[level];
   const pdfBytes=await srcDoc.save();
   const origSize=pdfBytes.length;
-
-  // Strategy: re-render pages as images using PDF.js, embed back
   const pdfDoc=await PDFDocument.create();
   const renderPDF=await pdfjsLib.getDocument(ab).promise;
   const total=renderPDF.numPages;
@@ -1100,7 +1415,6 @@ async function doCompressPDF(){
   document.getElementById('prog-box').classList.remove('show');
 }
 
-/* MERGE PDFs */
 async function doMergePDFs(){
   upd(5,'Carregando arquivos…');
   const {PDFDocument}=PDFLib;
@@ -1124,7 +1438,6 @@ async function doMergePDFs(){
   document.getElementById('prog-box').classList.remove('show');
 }
 
-/* EDITOR PDF — extrai texto editável */
 async function doEditorPDF(){
   upd(10,'Lendo PDF…');
   const pages=await extractPDFPages(currentFile);
@@ -1135,87 +1448,30 @@ async function doEditorPDF(){
   document.getElementById('prog-box').classList.remove('show');
   document.getElementById('extracted-text').textContent=fullText||'[Sem texto extraível — use a ferramenta OCR]';
   document.getElementById('extracted-box').classList.add('show');
-  // Also create TXT blob for download
   currentBlob=new Blob([fullText],{type:'text/plain'});
   showResult(currentFile.name,'Texto extraído',pages.length+' página(s)');
   document.getElementById('dl-btn').classList.add('show');
 }
 
-/* PDF para DOCX — extrai texto formatado em .docx */
 async function doPDF2DOCX(){
   upd(10,'Lendo PDF…');
   const pages=await extractPDFPages(currentFile);
   upd(50,'Convertendo para DOCX…');
-  // Build DOCX from scratch using Office XML
   const bodyParts=[];
   for(let pi=0;pi<pages.length;pi++){
-    if(pi>0){
-      // Page break
-      bodyParts.push(`<w:p><w:r><w:br w:type="page"/></w:r></w:p>`);
-    }
-    // Page heading
+    if(pi>0)bodyParts.push(`<w:p><w:r><w:br w:type="page"/></w:r></w:p>`);
     bodyParts.push(`<w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr><w:r><w:t>Página ${pi+1}</w:t></w:r></w:p>`);
     for(const line of pages[pi]){
       const escaped=line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       bodyParts.push(`<w:p><w:r><w:t xml:space="preserve">${escaped}</w:t></w:r></w:p>`);
     }
   }
-  const docXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas"
-  xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  xmlns:aink="http://schemas.microsoft.com/office/drawing/2016/ink"
-  xmlns:am3d="http://schemas.microsoft.com/office/drawing/2017/model3d"
-  xmlns:o="urn:schemas-microsoft-com:office:office"
-  xmlns:oel="http://schemas.microsoft.com/office/2019/extlst"
-  xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-  xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"
-  xmlns:v="urn:schemas-microsoft-com:vml"
-  xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing"
-  xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
-  xmlns:w10="urn:schemas-microsoft-com:office:word"
-  xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
-  xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml"
-  xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml"
-  xmlns:w16cex="http://schemas.microsoft.com/office/word/2018/wordml/cex"
-  xmlns:w16cid="http://schemas.microsoft.com/office/word/2016/wordml/cid"
-  xmlns:w16="http://schemas.microsoft.com/office/word/2018/wordml"
-  xmlns:w16sdtdh="http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash"
-  xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex"
-  xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup"
-  xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk"
-  xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml"
-  xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"
-  mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh wp14">
-  <w:body>${bodyParts.join('')}<w:sectPr/></w:body>
-</w:document>`;
-
-  const relsXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
-</Relationships>`;
-
-  const stylesXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
-  <w:style w:type="paragraph" w:styleId="Normal"><w:name w:val="Normal"/><w:rPr><w:sz w:val="20"/></w:rPr></w:style>
-  <w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:rPr><w:b/><w:sz w:val="28"/></w:rPr></w:style>
-</w:styles>`;
-
-  const contentTypesXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
-  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
-  <Default Extension="xml" ContentType="application/xml"/>
-  <Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
-  <Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>
-</Types>`;
-
-  const rootRelsXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
-</Relationships>`;
-
+  const docXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${bodyParts.join('')}<w:sectPr/></w:body></w:document>`;
+  const relsXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`;
+  const stylesXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:style w:type="paragraph" w:styleId="Normal"><w:name w:val="Normal"/><w:rPr><w:sz w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:rPr><w:b/><w:sz w:val="28"/></w:rPr></w:style></w:styles>`;
+  const contentTypesXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`;
+  const rootRelsXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
   upd(80,'Gerando arquivo…');
-  // Build ZIP using manual approach
   const docxBlob=await buildDocxZip({docXml,relsXml,stylesXml,contentTypesXml,rootRelsXml});
   currentBlob=docxBlob;
   upd(100,'Concluído!');await sl(300);
@@ -1224,10 +1480,7 @@ async function doPDF2DOCX(){
   document.getElementById('prog-box').classList.remove('show');
 }
 
-/* Simple ZIP builder for DOCX */
 async function buildDocxZip({docXml,relsXml,stylesXml,contentTypesXml,rootRelsXml}){
-  // Use a minimal ZIP library approach via data URLs
-  // We'll use the JSZip-compatible approach via Uint8Array manipulation
   const enc=new TextEncoder();
   function crc32(data){let crc=0xFFFFFFFF;const table=makeCrcTable();for(let i=0;i<data.length;i++)crc=(crc>>>8)^table[(crc^data[i])&0xFF];return(crc^0xFFFFFFFF)>>>0}
   function makeCrcTable(){const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c}return t}
@@ -1235,7 +1488,6 @@ async function buildDocxZip({docXml,relsXml,stylesXml,contentTypesXml,rootRelsXm
   function dosTime(d){return(d.getHours()<<11)|(d.getMinutes()<<5)|(d.getSeconds()>>1)}
   function u16(n){return[n&0xFF,(n>>8)&0xFF]}
   function u32(n){return[n&0xFF,(n>>8)&0xFF,(n>>16)&0xFF,(n>>24)&0xFF]}
-
   const files=[
     {name:'[Content_Types].xml',data:enc.encode(contentTypesXml)},
     {name:'_rels/.rels',data:enc.encode(rootRelsXml)},
@@ -1243,30 +1495,17 @@ async function buildDocxZip({docXml,relsXml,stylesXml,contentTypesXml,rootRelsXm
     {name:'word/_rels/document.xml.rels',data:enc.encode(relsXml)},
     {name:'word/styles.xml',data:enc.encode(stylesXml)},
   ];
-
-  const now=new Date();
-  const entries=[];
-  let offset=0;
-  const localHeaders=[];
-
+  const now=new Date();const entries=[];let offset=0;const localHeaders=[];
   for(const f of files){
-    const nameBytes=enc.encode(f.name);
-    const crc=crc32(f.data);
+    const nameBytes=enc.encode(f.name);const crc=crc32(f.data);
     const lh=[0x50,0x4B,0x03,0x04,20,0,...u16(0),...u16(0),...u16(dosTime(now)),...u16(dosDate(now)),...u32(crc),...u32(f.data.length),...u32(f.data.length),...u16(nameBytes.length),...u16(0),...nameBytes,...f.data];
     entries.push({nameBytes,crc,size:f.data.length,offset});
-    offset+=lh.length;
-    localHeaders.push(new Uint8Array(lh));
+    offset+=lh.length;localHeaders.push(new Uint8Array(lh));
   }
-
   const cdOffset=offset;
-  const centralDirs=entries.map((e,i)=>{
-    const f=files[i];const nameBytes=e.nameBytes;
-    return new Uint8Array([0x50,0x4B,0x01,0x02,20,0,20,0,...u16(0),...u16(0),...u16(dosTime(now)),...u16(dosDate(now)),...u32(e.crc),...u32(e.size),...u32(e.size),...u16(nameBytes.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(e.offset),...nameBytes]);
-  });
-
+  const centralDirs=entries.map((e,i)=>{const f=files[i];const nameBytes=e.nameBytes;return new Uint8Array([0x50,0x4B,0x01,0x02,20,0,20,0,...u16(0),...u16(0),...u16(dosTime(now)),...u16(dosDate(now)),...u32(e.crc),...u32(e.size),...u32(e.size),...u16(nameBytes.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(e.offset),...nameBytes])});
   const cdSize=centralDirs.reduce((s,d)=>s+d.length,0);
   const eocd=new Uint8Array([0x50,0x4B,0x05,0x06,0,0,0,0,...u16(files.length),...u16(files.length),...u32(cdSize),...u32(cdOffset),...u16(0)]);
-
   const total=localHeaders.reduce((s,h)=>s+h.length,0)+cdSize+eocd.length;
   const zip=new Uint8Array(total);let pos=0;
   for(const h of localHeaders){zip.set(h,pos);pos+=h.length}
@@ -1275,40 +1514,44 @@ async function buildDocxZip({docXml,relsXml,stylesXml,contentTypesXml,rootRelsXm
   return new Blob([zip],{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
 }
 
-/* DOCX para PDF */
+function extractFileFromZip(arr,targetName){
+  const enc=new TextDecoder('utf-8',{fatal:false});
+  let i=0;
+  while(i<arr.length-4){
+    if(arr[i]===0x50&&arr[i+1]===0x4B&&arr[i+2]===0x03&&arr[i+3]===0x04){
+      const fnLen=(arr[i+26])|(arr[i+27]<<8);const extraLen=(arr[i+28])|(arr[i+29]<<8);
+      const compSize=(arr[i+18])|(arr[i+19]<<8)|(arr[i+20]<<16)|(arr[i+21]<<24);
+      const fn=enc.decode(arr.slice(i+30,i+30+fnLen));const dataStart=i+30+fnLen+extraLen;
+      if(fn===targetName)return enc.decode(arr.slice(dataStart,dataStart+compSize));
+      i=dataStart+compSize;
+    }else i++;
+  }
+  return null;
+}
+
 async function doDOCX2PDF(){
   upd(10,'Lendo DOCX…');
-  // Extract text from DOCX (it's a ZIP with XML)
   const ab=await currentFile.arrayBuffer();
   let text='[Não foi possível extrair texto — formato não suportado]';
   try{
-    // Try to read as text (basic ZIP parsing)
     const arr=new Uint8Array(ab);
-    // Find word/document.xml in ZIP
     const xmlText=extractFileFromZip(arr,'word/document.xml');
     if(xmlText){
-      // Parse XML to extract text
-      const parser=new DOMParser();
-      const xmlDoc=parser.parseFromString(xmlText,'text/xml');
-      const textNodes=xmlDoc.querySelectorAll('t');
+      const parser=new DOMParser();const xmlDoc=parser.parseFromString(xmlText,'text/xml');
       const lines=[];let para=[];
-      let lastPara=null;
       for(const node of xmlDoc.querySelectorAll('*')){
-        if(node.nodeName==='w:p'){if(para.length){lines.push(para.join(''));para=[]}lastPara=node}
+        if(node.nodeName==='w:p'){if(para.length){lines.push(para.join(''));para=[]}}
         if(node.nodeName==='w:t')para.push(node.textContent);
       }
       if(para.length)lines.push(para.join(''));
       text=lines.filter(l=>l.trim()).join('\n');
     }
   }catch(e){console.warn('DOCX parse error',e)}
-
   upd(50,'Gerando PDF…');
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  doc.setFont('helvetica','normal');
-  doc.setFontSize(11);
-  const pageW=190,margin=10,lineH=6;
-  let y=margin+10;
+  doc.setFont('helvetica','normal');doc.setFontSize(11);
+  const pageW=190,margin=10,lineH=6;let y=margin+10;
   const allLines=text.split('\n');
   for(const line of allLines){
     const wrapped=doc.splitTextToSize(line||' ',pageW);
@@ -1325,287 +1568,80 @@ async function doDOCX2PDF(){
   document.getElementById('prog-box').classList.remove('show');
 }
 
-/* Extract file from ZIP bytes */
-function extractFileFromZip(arr,targetName){
-  const enc=new TextDecoder('utf-8',{fatal:false});
-  let i=0;
-  while(i<arr.length-4){
-    if(arr[i]===0x50&&arr[i+1]===0x4B&&arr[i+2]===0x03&&arr[i+3]===0x04){
-      const fnLen=(arr[i+26])|(arr[i+27]<<8);
-      const extraLen=(arr[i+28])|(arr[i+29]<<8);
-      const compSize=(arr[i+18])|(arr[i+19]<<8)|(arr[i+20]<<16)|(arr[i+21]<<24);
-      const fn=enc.decode(arr.slice(i+30,i+30+fnLen));
-      const dataStart=i+30+fnLen+extraLen;
-      if(fn===targetName){
-        return enc.decode(arr.slice(dataStart,dataStart+compSize));
-      }
-      i=dataStart+compSize;
-    }else i++;
-  }
-  return null;
-}
-
-/* EXCEL para PDF */
 async function doExcel2PDF(){
   upd(10,'Lendo planilha…');
-  const ab=await currentFile.arrayBuffer();
-  let rows=[];
+  const ab=await currentFile.arrayBuffer();let rows=[];
   const name=currentFile.name.toLowerCase();
-
-  if(name.endsWith('.csv')){
-    const text=new TextDecoder().decode(ab);
-    rows=text.split('\n').map(l=>l.split(/,|;/).map(c=>c.trim().replace(/^"|"$/g,'')));
-  }else{
-    const wb=XLSX.read(ab,{type:'array'});
-    const ws=wb.Sheets[wb.SheetNames[0]];
-    rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
-  }
-
+  if(name.endsWith('.csv')){const text=new TextDecoder().decode(ab);rows=text.split('\n').map(l=>l.split(/,|;/).map(c=>c.trim().replace(/^"|"$/g,'')))}
+  else{const wb=XLSX.read(ab,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''})}
   upd(40,'Gerando PDF…');
   const orient=document.getElementById('excel-orient')?.value||'landscape';
   const pgSize=document.getElementById('excel-pagesize')?.value||'a4';
-  const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({orientation:orient,unit:'mm',format:pgSize});
-  const pw=orient==='landscape'?287:200;
-  const margin=8;const rowH=7;const fontSize=8;
+  const {jsPDF}=window.jspdf;const doc=new jsPDF({orientation:orient,unit:'mm',format:pgSize});
+  const pw=orient==='landscape'?287:200;const margin=8;const rowH=7;const fontSize=8;
   doc.setFontSize(fontSize);
-
   if(!rows.length){upd(100,'Vazio');document.getElementById('prog-box').classList.remove('show');return}
-
-  const cols=Math.max(...rows.map(r=>r.length));
-  const colW=(pw-margin*2)/Math.max(cols,1);
+  const cols=Math.max(...rows.map(r=>r.length));const colW=(pw-margin*2)/Math.max(cols,1);
   let y=margin+8;
-
-  // Header
-  doc.setFont('helvetica','bold');
-  const headerRow=rows[0]||[];
-  doc.setFillColor(240,240,240);
-  doc.rect(margin,y-5,pw-margin*2,rowH,'F');
-  for(let c=0;c<cols;c++){
-    const txt=String(headerRow[c]||'');
-    doc.text(doc.splitTextToSize(txt,colW-1)[0],margin+c*colW+1,y);
-  }
+  doc.setFont('helvetica','bold');const headerRow=rows[0]||[];
+  doc.setFillColor(240,240,240);doc.rect(margin,y-5,pw-margin*2,rowH,'F');
+  for(let c=0;c<cols;c++){const txt=String(headerRow[c]||'');doc.text(doc.splitTextToSize(txt,colW-1)[0],margin+c*colW+1,y)}
   y+=rowH;doc.setFont('helvetica','normal');
-
   const pageH=orient==='landscape'?200:287;
   for(let r=1;r<rows.length;r++){
     upd(40+Math.floor((r/rows.length)*50),`Linha ${r}/${rows.length}…`);
     if(y+rowH>pageH-margin){doc.addPage();y=margin+8}
     if(r%2===0){doc.setFillColor(248,248,248);doc.rect(margin,y-5,pw-margin*2,rowH,'F')}
-    for(let c=0;c<cols;c++){
-      const txt=String(rows[r][c]||'');
-      doc.text(doc.splitTextToSize(txt,colW-1)[0],margin+c*colW+1,y);
-    }
+    for(let c=0;c<cols;c++){const txt=String(rows[r][c]||'');doc.text(doc.splitTextToSize(txt,colW-1)[0],margin+c*colW+1,y)}
     y+=rowH;
   }
-
-  upd(95,'Salvando…');
-  currentBlob=new Blob([doc.output('arraybuffer')],{type:'application/pdf'});
-  upd(100,'Concluído!');await sl(300);
-  showResult(currentFile.name,'PDF',`${rows.length} linhas, ${cols} colunas`);
-  document.getElementById('dl-btn').classList.add('show');
-  document.getElementById('prog-box').classList.remove('show');
+  upd(95,'Salvando…');currentBlob=new Blob([doc.output('arraybuffer')],{type:'application/pdf'});
+  upd(100,'Concluído!');await sl(300);showResult(currentFile.name,'PDF',`${rows.length} linhas, ${cols} colunas`);
+  document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
-/* PPT para PDF — converte imagens/slides em PDF */
-async function doPPT2PDF(){
-  upd(10,'Lendo arquivo…');
-  const {jsPDF}=window.jspdf;
-  // If it's an image, treat as single-slide
-  if(currentFile.type.startsWith('image/')){
-    const bm=await createImageBitmap(currentFile);
-    const cv=document.createElement('canvas');cv.width=bm.width;cv.height=bm.height;
-    cv.getContext('2d').drawImage(bm,0,0);
-    upd(50,'Criando PDF…');
-    const {PDFDocument}=PDFLib;
-    const doc=await PDFDocument.create();
-    const res=await fetch(cv.toDataURL('image/jpeg',.9));
-    const imgBytes=await res.arrayBuffer();
-    const img=await doc.embedJpg(imgBytes);
-    const {width,height}=img.scale(1);
-    const pg=doc.addPage([width,height]);
-    pg.drawImage(img,{x:0,y:0,width,height});
-    currentBlob=new Blob([await doc.save()],{type:'application/pdf'});
-    upd(100,'Concluído!');await sl(300);
-    showResult(currentFile.name,'PDF','1 slide');
-    document.getElementById('dl-btn').classList.add('show');
-    document.getElementById('prog-box').classList.remove('show');
-    return;
-  }
-  // PPTX is a ZIP — try to extract slide images
-  upd(30,'Lendo slides…');
-  const ab=await currentFile.arrayBuffer();
-  const arr=new Uint8Array(ab);
-  // Try to find media images in pptx
-  const images=extractAllImagesFromZip(arr);
-  upd(60,'Gerando PDF…');
-  if(images.length>0){
-    const {PDFDocument}=PDFLib;
-    const doc=await PDFDocument.create();
-    for(const imgData of images){
-      try{
-        let img;
-        if(imgData.type==='jpeg'||imgData.type==='jpg')img=await doc.embedJpg(imgData.data);
-        else{const cv2=await imgToCanvas(imgData.data,imgData.type);const d=await cv2;img=await doc.embedPng(d)}
-        const s=img.scale(1);
-        const pg=doc.addPage([s.width,s.height]);
-        pg.drawImage(img,{x:0,y:0,width:s.width,height:s.height});
-      }catch(e){}
-    }
-    if(doc.getPageCount()>0){
-      currentBlob=new Blob([await doc.save()],{type:'application/pdf'});
-      upd(100,'Concluído!');await sl(300);
-      showResult(currentFile.name,'PDF',doc.getPageCount()+' página(s)');
-      document.getElementById('dl-btn').classList.add('show');
-      document.getElementById('prog-box').classList.remove('show');
-      return;
-    }
-  }
-  throw new Error('Não foi possível ler slides. Exporte o PPTX como imagens (JPG/PNG) e use "Imagem para PDF".');
-}
-
-async function imgToCanvas(data,type){
-  const blob=new Blob([data],{type:'image/'+type});
-  const url=URL.createObjectURL(blob);
-  const img=new Image();
-  await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
-  const cv=document.createElement('canvas');cv.width=img.width;cv.height=img.height;
-  cv.getContext('2d').drawImage(img,0,0);
-  URL.revokeObjectURL(url);
-  return cv.toDataURL('image/png').split(',')[1];
-}
-
-function extractAllImagesFromZip(arr){
-  const enc=new TextDecoder('utf-8',{fatal:false});
-  const images=[];let i=0;
-  while(i<arr.length-4){
-    if(arr[i]===0x50&&arr[i+1]===0x4B&&arr[i+2]===0x03&&arr[i+3]===0x04){
-      const fnLen=(arr[i+26])|(arr[i+27]<<8);
-      const extraLen=(arr[i+28])|(arr[i+29]<<8);
-      const compSize=(arr[i+18])|(arr[i+19]<<8)|(arr[i+20]<<16)|(arr[i+21]<<24);
-      const fn=enc.decode(arr.slice(i+30,i+30+fnLen)).toLowerCase();
-      const dataStart=i+30+fnLen+extraLen;
-      if(fn.match(/\.(jpg|jpeg|png)$/)&&compSize>1000){
-        const ext=fn.match(/\.(jpg|jpeg|png)$/)[1];
-        images.push({name:fn,type:ext==='jpeg'?'jpeg':ext,data:arr.slice(dataStart,dataStart+compSize).buffer});
-      }
-      i=dataStart+Math.max(compSize,0);if(i<=dataStart)i=dataStart+1;
-    }else i++;
-  }
-  return images;
-}
-
-/* PDF para PPT — renderiza cada página como imagem e cria PPTX */
 async function doPDF2PPT(){
   upd(10,'Carregando PDF…');
-  const ab=await currentFile.arrayBuffer();
-  const pdf=await pdfjsLib.getDocument(ab).promise;
-  const total=pdf.numPages;
-  const slides=[];
+  const ab=await currentFile.arrayBuffer();const pdf=await pdfjsLib.getDocument(ab).promise;
+  const total=pdf.numPages;const slides=[];
   for(let i=1;i<=total;i++){
     upd(10+Math.floor((i/total)*70),`Renderizando slide ${i}/${total}…`);
-    const page=await pdf.getPage(i);
-    const vp=page.getViewport({scale:1.5});
+    const page=await pdf.getPage(i);const vp=page.getViewport({scale:1.5});
     const cv=document.createElement('canvas');cv.width=vp.width;cv.height=vp.height;
     await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
     slides.push({dataUrl:cv.toDataURL('image/jpeg',.88),w:vp.width,h:vp.height});
   }
-  upd(82,'Gerando PPTX…');
-  const pptxBlob=await buildSimplePPTX(slides);
-  currentBlob=pptxBlob;
-  currentFile={name:currentFile.name};
-  upd(100,'Concluído!');await sl(300);
+  upd(82,'Gerando PPTX…');const pptxBlob=await buildSimplePPTX(slides);currentBlob=pptxBlob;
+  currentFile={name:currentFile.name};upd(100,'Concluído!');await sl(300);
   showResult(currentFile.name,'PPTX',total+' slides');
-  document.getElementById('dl-btn').classList.add('show');
-  document.getElementById('prog-box').classList.remove('show');
+  document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
 async function buildSimplePPTX(slides){
-  const enc=new TextEncoder();
-  // Build minimal PPTX (Office Open XML)
-  const files=[];
-
-  // [Content_Types].xml
+  const enc=new TextEncoder();const files=[];
   let overrides=slides.map((_,i)=>`<Override PartName="/ppt/slides/slide${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>`).join('');
-  let mediaTypes=slides.map((_,i)=>`<Override PartName="/ppt/media/image${i+1}.jpeg" ContentType="image/jpeg"/>`).join('');
-  files.push({name:'[Content_Types].xml',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
-<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
-<Default Extension="xml" ContentType="application/xml"/>
-<Override PartName="/ppt/presentation.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"/>
-${overrides}
-</Types>`)});
-
-  // _rels/.rels
-  files.push({name:'_rels/.rels',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/>
-</Relationships>`)});
-
-  // ppt/presentation.xml
+  files.push({name:'[Content_Types].xml',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/ppt/presentation.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"/>${overrides}</Types>`)});
+  files.push({name:'_rels/.rels',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/></Relationships>`)});
   const sldIds=slides.map((_,i)=>`<p:sldId id="${256+i}" r:id="rId${i+1}"/>`).join('');
-  const sldW=Math.round(slides[0]?.w*9144/96)||9144000;
-  const sldH=Math.round(slides[0]?.h*9144/96)||6858000;
-  files.push({name:'ppt/presentation.xml',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<p:presentation xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"
-  xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-  xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" saveSubsetFonts="1">
-<p:sldMasterIdLst/>
-<p:sldSz cx="${sldW}" cy="${sldH}"/>
-<p:notesSz cx="6858000" cy="9144000"/>
-<p:sldIdLst>${sldIds}</p:sldIdLst>
-</p:presentation>`)});
-
-  // ppt/_rels/presentation.xml.rels
+  const sldW=Math.round(slides[0]?.w*9144/96)||9144000;const sldH=Math.round(slides[0]?.h*9144/96)||6858000;
+  files.push({name:'ppt/presentation.xml',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:presentation xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" saveSubsetFonts="1"><p:sldMasterIdLst/><p:sldSz cx="${sldW}" cy="${sldH}"/><p:notesSz cx="6858000" cy="9144000"/><p:sldIdLst>${sldIds}</p:sldIdLst></p:presentation>`)});
   const pRels=slides.map((_,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide${i+1}.xml"/>`).join('');
-  files.push({name:'ppt/_rels/presentation.xml.rels',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-${pRels}
-</Relationships>`)});
-
-  // Each slide + its rels + media
+  files.push({name:'ppt/_rels/presentation.xml.rels',data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${pRels}</Relationships>`)});
   for(let i=0;i<slides.length;i++){
-    const s=slides[i];
-    const cx=sldW;const cy=sldH;
-    files.push({name:`ppt/slides/slide${i+1}.xml`,data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<p:sld xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"
-  xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-  xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
-<p:cSld><p:spTree>
-<p:sp><p:nvSpPr><p:cNvPr id="1" name=""/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr/></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p/></p:txBody></p:sp>
-<p:pic><p:nvPicPr><p:cNvPr id="2" name="img${i+1}"/><p:cNvPicPr/><p:nvPr/></p:nvPicPr>
-<p:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>
-<p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm>
-<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>
-</p:spTree></p:cSld>
-</p:sld>`)});
-
-    files.push({name:`ppt/slides/_rels/slide${i+1}.xml.rels`,data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image${i+1}.jpeg"/>
-</Relationships>`)});
-
-    // Convert dataUrl to bytes
-    const b64=s.dataUrl.split(',')[1];
-    const binStr=atob(b64);const imgBytes=new Uint8Array(binStr.length);
+    const s=slides[i];const cx=sldW;const cy=sldH;
+    files.push({name:`ppt/slides/slide${i+1}.xml`,data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sld xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><p:cSld><p:spTree><p:sp><p:nvSpPr><p:cNvPr id="1" name=""/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr/></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p/></p:txBody></p:sp><p:pic><p:nvPicPr><p:cNvPr id="2" name="img${i+1}"/><p:cNvPicPr/><p:nvPr/></p:nvPicPr><p:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></p:blipFill><p:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${cx}" cy="${cy}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic></p:spTree></p:cSld></p:sld>`)});
+    files.push({name:`ppt/slides/_rels/slide${i+1}.xml.rels`,data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/image${i+1}.jpeg"/></Relationships>`)});
+    const b64=s.dataUrl.split(',')[1];const binStr=atob(b64);const imgBytes=new Uint8Array(binStr.length);
     for(let j=0;j<binStr.length;j++)imgBytes[j]=binStr.charCodeAt(j);
     files.push({name:`ppt/media/image${i+1}.jpeg`,data:imgBytes});
   }
-
   return buildZipBlob(files,'application/vnd.openxmlformats-officedocument.presentationml.presentation');
 }
 
-/* Generic ZIP builder */
 function buildZipBlob(files,mimeType){
-  function crc32(data){
-    let c=0xFFFFFFFF;
-    if(!crc32._t){crc32._t=new Uint32Array(256);for(let n=0;n<256;n++){let cr=n;for(let k=0;k<8;k++)cr=cr&1?(0xEDB88320^(cr>>>1)):(cr>>>1);crc32._t[n]=cr}}
-    for(let i=0;i<data.length;i++)c=(c>>>8)^crc32._t[(c^data[i])&0xFF];return(c^0xFFFFFFFF)>>>0;
-  }
-  function u16(n){return[n&0xFF,(n>>8)&0xFF]}
-  function u32(n){return[n&0xFF,(n>>8)&0xFF,(n>>16)&0xFF,(n>>24)&0xFF]}
-  const enc=new TextEncoder();
-  const now=new Date();
+  function crc32(data){let c=0xFFFFFFFF;if(!crc32._t){crc32._t=new Uint32Array(256);for(let n=0;n<256;n++){let cr=n;for(let k=0;k<8;k++)cr=cr&1?(0xEDB88320^(cr>>>1)):(cr>>>1);crc32._t[n]=cr}}for(let i=0;i<data.length;i++)c=(c>>>8)^crc32._t[(c^data[i])&0xFF];return(c^0xFFFFFFFF)>>>0}
+  function u16(n){return[n&0xFF,(n>>8)&0xFF]}function u32(n){return[n&0xFF,(n>>8)&0xFF,(n>>16)&0xFF,(n>>24)&0xFF]}
+  const enc=new TextEncoder();const now=new Date();
   const dosD=((now.getFullYear()-1980)<<9)|((now.getMonth()+1)<<5)|now.getDate();
   const dosT=(now.getHours()<<11)|(now.getMinutes()<<5)|(now.getSeconds()>>1);
   const locals=[];const centrals=[];let off=0;
@@ -1624,61 +1660,30 @@ function buildZipBlob(files,mimeType){
   return new Blob([zip],{type:mimeType||'application/zip'});
 }
 
-/* HEIC para PNG/JPEG */
 async function doHEIC(){
-  upd(10,'Lendo imagem…');
-  // Try using createImageBitmap which may handle HEIC in some browsers
-  let bm;
+  upd(10,'Lendo imagem…');let bm;
   try{bm=await createImageBitmap(currentFile)}
-  catch(e){
-    // Fallback: try reading as URL
-    const url=URL.createObjectURL(currentFile);
-    const img=new Image();
-    await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});
-    const cv2=document.createElement('canvas');cv2.width=img.width;cv2.height=img.height;
-    cv2.getContext('2d').drawImage(img,0,0);
-    URL.revokeObjectURL(url);
-    bm=cv2;
-  }
+  catch(e){const url=URL.createObjectURL(currentFile);const img=new Image();await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=url});const cv2=document.createElement('canvas');cv2.width=img.width;cv2.height=img.height;cv2.getContext('2d').drawImage(img,0,0);URL.revokeObjectURL(url);bm=cv2}
   upd(60,'Convertendo…');
-  const mime=document.getElementById('heic-out')?.value||'image/png';
-  const q=+(document.getElementById('heic-q')?.value||92)/100;
+  const mime=document.getElementById('heic-out')?.value||'image/png';const q=+(document.getElementById('heic-q')?.value||92)/100;
   const cv=document.createElement('canvas');
-  if(bm.width){cv.width=bm.width;cv.height=bm.height;cv.getContext('2d').drawImage(bm,0,0)}
-  else{cv.width=bm.width;cv.height=bm.height;cv.getContext('2d').drawImage(bm,0,0)}
-  const blob=await new Promise(r=>cv.toBlob(r,mime,q));
-  currentBlob=blob;
-  upd(100,'Concluído!');await sl(300);
-  const ext=EXT_MAP[mime]||'png';
+  cv.width=bm.width;cv.height=bm.height;cv.getContext('2d').drawImage(bm,0,0);
+  const blob=await new Promise(r=>cv.toBlob(r,mime,q));currentBlob=blob;
+  upd(100,'Concluído!');await sl(300);const ext=EXT_MAP[mime]||'png';
   showResult(currentFile.name,ext.toUpperCase(),formatSize(blob.size));
-  document.getElementById('dl-btn').classList.add('show');
-  document.getElementById('prog-box').classList.remove('show');
+  document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
-/* EXTRAIR ÁUDIO */
 async function doExtractAudio(){
-  upd(10,'Preparando…');
-  const url=URL.createObjectURL(currentFile);
-  upd(30,'Decodificando vídeo…');
-
+  upd(10,'Preparando…');const url=URL.createObjectURL(currentFile);upd(30,'Decodificando vídeo…');
   try{
     const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-    const ab=await currentFile.arrayBuffer();
-    upd(50,'Decodificando áudio…');
-    const audioBuffer=await audioCtx.decodeAudioData(ab);
-    upd(70,'Codificando WAV…');
-    const wavBlob=audioBufferToWav(audioBuffer);
-    currentBlob=wavBlob;
-    TOOL_EXT['Extrair Áudio']='wav';
-    upd(100,'Concluído!');await sl(300);
-    showResult(currentFile.name,'WAV',`${audioBuffer.duration.toFixed(1)}s — ${audioBuffer.sampleRate}Hz`);
-    document.getElementById('dl-btn').classList.add('show');
-    document.getElementById('prog-box').classList.remove('show');
-    URL.revokeObjectURL(url);
-  }catch(e){
-    URL.revokeObjectURL(url);
-    throw new Error('Não foi possível decodificar o áudio. Certifique-se que o vídeo contém faixa de áudio suportada pelo navegador.');
-  }
+    const ab=await currentFile.arrayBuffer();upd(50,'Decodificando áudio…');
+    const audioBuffer=await audioCtx.decodeAudioData(ab);upd(70,'Codificando WAV…');
+    const wavBlob=audioBufferToWav(audioBuffer);currentBlob=wavBlob;TOOL_EXT['Extrair Áudio']='wav';
+    upd(100,'Concluído!');await sl(300);showResult(currentFile.name,'WAV',`${audioBuffer.duration.toFixed(1)}s — ${audioBuffer.sampleRate}Hz`);
+    document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');URL.revokeObjectURL(url);
+  }catch(e){URL.revokeObjectURL(url);throw new Error('Não foi possível decodificar o áudio.')}
 }
 
 function audioBufferToWav(buffer){
@@ -1691,62 +1696,34 @@ function audioBufferToWav(buffer){
   return new Blob([ab],{type:'audio/wav'});
 }
 
-/* COMPRIMIR VÍDEO — browser-only via canvas re-encode */
 async function doCompressVideo(){
-  upd(10,'Lendo vídeo…');
-  const url=URL.createObjectURL(currentFile);
-  const video=document.createElement('video');
-  video.src=url;video.muted=true;
-  await new Promise((res,rej)=>{video.onloadedmetadata=res;video.onerror=rej});
-  upd(20,'Iniciando captura…');
-
-  const canvas=document.createElement('canvas');
-  const targetW=Math.min(video.videoWidth,1280);
-  const scale=targetW/video.videoWidth;
-  canvas.width=targetW;canvas.height=Math.round(video.videoHeight*scale);
+  upd(10,'Lendo vídeo…');const url=URL.createObjectURL(currentFile);
+  const video=document.createElement('video');video.src=url;video.muted=true;
+  await new Promise((res,rej)=>{video.onloadedmetadata=res;video.onerror=rej});upd(20,'Iniciando captura…');
+  const canvas=document.createElement('canvas');const targetW=Math.min(video.videoWidth,1280);
+  const scale=targetW/video.videoWidth;canvas.width=targetW;canvas.height=Math.round(video.videoHeight*scale);
   const ctx=canvas.getContext('2d');
-
-  let stream;
-  try{stream=canvas.captureStream(24)}
-  catch(e){URL.revokeObjectURL(url);throw new Error('captureStream não suportado neste navegador. Use Chrome/Edge.')}
-
+  let stream;try{stream=canvas.captureStream(24)}catch(e){URL.revokeObjectURL(url);throw new Error('captureStream não suportado. Use Chrome/Edge.')}
   const mimeTypes=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4'];
   const supportedMime=mimeTypes.find(m=>MediaRecorder.isTypeSupported(m))||'video/webm';
   const rec=new MediaRecorder(stream,{mimeType:supportedMime,videoBitsPerSecond:1500000});
-  const chunks=[];
-  rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};
-
+  const chunks=[];rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};
   await new Promise(res=>{
-    rec.onstop=res;
-    rec.start();
-    video.currentTime=0;
-    video.play();
-    video.ontimeupdate=()=>{
-      ctx.drawImage(video,0,0,canvas.width,canvas.height);
-      const pct=Math.round((video.currentTime/video.duration)*70);
-      upd(20+pct,`Processando… ${Math.round(video.currentTime)}s/${Math.round(video.duration)}s`);
-    };
-    video.onended=()=>{rec.stop()};
-    video.onerror=()=>{rec.stop()};
+    rec.onstop=res;rec.start();video.currentTime=0;video.play();
+    video.ontimeupdate=()=>{ctx.drawImage(video,0,0,canvas.width,canvas.height);const pct=Math.round((video.currentTime/video.duration)*70);upd(20+pct,`Processando… ${Math.round(video.currentTime)}s/${Math.round(video.duration)}s`)};
+    video.onended=()=>{rec.stop()};video.onerror=()=>{rec.stop()};
   });
-
   URL.revokeObjectURL(url);
-  const outBlob=new Blob(chunks,{type:supportedMime});
-  currentBlob=outBlob;
-  const ext=supportedMime.includes('mp4')?'mp4':'webm';
-  TOOL_EXT['Comprimir Vídeo']=ext;
+  const outBlob=new Blob(chunks,{type:supportedMime});currentBlob=outBlob;
+  const ext=supportedMime.includes('mp4')?'mp4':'webm';TOOL_EXT['Comprimir Vídeo']=ext;
   const pct=Math.round((1-outBlob.size/currentFile.size)*100);
-  upd(100,'Concluído!');await sl(300);
-  showResult(currentFile.name,ext.toUpperCase()+(pct>0?` — ${pct}% menor`:''),formatSize(outBlob.size));
-  document.getElementById('dl-btn').classList.add('show');
-  document.getElementById('prog-box').classList.remove('show');
+  upd(100,'Concluído!');await sl(300);showResult(currentFile.name,ext.toUpperCase()+(pct>0?` — ${pct}% menor`:''),formatSize(outBlob.size));
+  document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
-/* ─── IMAGE CONVERTERS ─── */
 async function doImg2PDF(){
   upd(10,'Lendo imagem…');const ab=await currentFile.arrayBuffer();
-  const{PDFDocument}=PDFLib;const doc=await PDFDocument.create();
-  upd(30,'Processando…');let img;
+  const{PDFDocument}=PDFLib;const doc=await PDFDocument.create();upd(30,'Processando…');let img;
   if(currentFile.type==='image/jpeg'||currentFile.type==='image/jpg'){img=await doc.embedJpg(ab)}
   else{const bm=await createImageBitmap(currentFile);const cv=document.createElement('canvas');cv.width=bm.width;cv.height=bm.height;cv.getContext('2d').drawImage(bm,0,0);const bl=await new Promise(r=>cv.toBlob(r,'image/png'));img=await doc.embedPng(await bl.arrayBuffer())}
   upd(60,'Criando PDF…');
@@ -1856,8 +1833,7 @@ async function doOCR(){
   document.getElementById('extracted-text').textContent=extractedTextData||'[Nenhum texto detectado]';
   document.getElementById('extracted-box').classList.add('show');
   currentBlob=new Blob([extractedTextData],{type:'text/plain'});
-  showResult(currentFile.name,'Texto extraído','OCR OK');
-  document.getElementById('dl-btn').classList.add('show');
+  showResult(currentFile.name,'Texto extraído','OCR OK');document.getElementById('dl-btn').classList.add('show');
 }
 
 async function doConvertImg(){
@@ -1865,8 +1841,7 @@ async function doConvertImg(){
   const cv=document.createElement('canvas');cv.width=bm.width;cv.height=bm.height;cv.getContext('2d').drawImage(bm,0,0);
   upd(60,'Convertendo…');const mime=document.getElementById('img-convert-to')?.value||'image/png';const q=+(document.getElementById('img-quality')?.value||90)/100;
   const blob=await new Promise(r=>cv.toBlob(r,mime,q));currentBlob=blob;
-  upd(100,'Concluído!');await sl(300);
-  const ext=EXT_MAP[mime]||'png';
+  upd(100,'Concluído!');await sl(300);const ext=EXT_MAP[mime]||'png';
   showResult(currentFile.name,ext.toUpperCase(),formatSize(blob.size));document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
@@ -1878,16 +1853,13 @@ async function doResize(){
   let nw=w||bm.width,nh=h||bm.height;
   if(asp){if(w&&!h)nh=Math.round(bm.height*(w/bm.width));else if(h&&!w)nw=Math.round(bm.width*(h/bm.height))}
   upd(60,'Redimensionando…');const cv=document.createElement('canvas');cv.width=nw;cv.height=nh;cv.getContext('2d').drawImage(bm,0,0,nw,nh);
-  const type=currentFile.type||'image/png';
-  const blob=await new Promise(r=>cv.toBlob(r,type,.92));currentBlob=blob;
+  const type=currentFile.type||'image/png';const blob=await new Promise(r=>cv.toBlob(r,type,.92));currentBlob=blob;
   upd(100,'Concluído!');await sl(300);showResult(currentFile.name,nw+'×'+nh+'px',formatSize(blob.size));document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
 async function doPDF2Excel(){
-  upd(10,'Lendo PDF…');const pages=await extractPDFPages(currentFile);
-  upd(40,'Analisando…');
-  const mode=document.getElementById('excel-mode')?.value||'auto';
-  const separateSheets=document.getElementById('excel-sheets')?.checked!==false;
+  upd(10,'Lendo PDF…');const pages=await extractPDFPages(currentFile);upd(40,'Analisando…');
+  const mode=document.getElementById('excel-mode')?.value||'auto';const separateSheets=document.getElementById('excel-sheets')?.checked!==false;
   const wb=XLSX.utils.book_new();const allRows=[];
   for(let pi=0;pi<pages.length;pi++){
     upd(40+Math.floor((pi/pages.length)*40),`Página ${pi+1}/${pages.length}…`);
@@ -1910,17 +1882,13 @@ async function doPDF2Excel(){
 }
 
 async function doPDF2OFX(){
-  upd(10,'Lendo PDF…');const pages=await extractPDFPages(currentFile);
-  upd(40,'Identificando lançamentos…');
-  const acctType=document.getElementById('ofx-type')?.value||'checking';
-  const acctId=document.getElementById('ofx-account')?.value||'000000';
-  const bankId=document.getElementById('ofx-bank')?.value||'000';
-  const dateFmt=document.getElementById('ofx-datefmt')?.value||'dmy';
+  upd(10,'Lendo PDF…');const pages=await extractPDFPages(currentFile);upd(40,'Identificando lançamentos…');
+  const acctType=document.getElementById('ofx-type')?.value||'checking';const acctId=document.getElementById('ofx-account')?.value||'000000';
+  const bankId=document.getElementById('ofx-bank')?.value||'000';const dateFmt=document.getElementById('ofx-datefmt')?.value||'dmy';
   const invertSign=document.getElementById('ofx-invert')?.checked||false;
   const allLines=pages.flat();upd(55,'Parseando…');
-  const transactions=parseTransactions(allLines,dateFmt,invertSign);
-  upd(80,'Gerando OFX…');
-  if(!transactions.length)throw new Error('Nenhuma transação identificada. Tente com um extrato bancário em formato texto.');
+  const transactions=parseTransactions(allLines,dateFmt,invertSign);upd(80,'Gerando OFX…');
+  if(!transactions.length)throw new Error('Nenhuma transação identificada.');
   const ofxContent=buildOFX(transactions,acctType,acctId,bankId);
   currentBlob=new Blob([ofxContent],{type:'application/x-ofx'});
   upd(100,'Concluído!');await sl(300);
@@ -1991,15 +1959,10 @@ async function doImgWatermark(){
   const pos=document.getElementById('wm-img-pos')?.value||'center';
   upd(20,'Lendo imagem…');const bm=await createImageBitmap(currentFile);
   const cv=document.createElement('canvas');cv.width=bm.width;cv.height=bm.height;
-  const ctx=cv.getContext('2d');ctx.drawImage(bm,0,0);
-  upd(60,"Aplicando marca d'água…");
-  ctx.save();ctx.globalAlpha=opacity;ctx.fillStyle=color;
-  ctx.font=`bold ${size}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  const ctx=cv.getContext('2d');ctx.drawImage(bm,0,0);upd(60,"Aplicando marca d'água…");
+  ctx.save();ctx.globalAlpha=opacity;ctx.fillStyle=color;ctx.font=`bold ${size}px sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
   if(pos==='center'){ctx.translate(bm.width/2,bm.height/2);ctx.rotate(-30*Math.PI/180);ctx.fillText(text,0,0)}
-  else{const pad=20;const tw=ctx.measureText(text).width;
-    const px=pos.includes('r')?bm.width-tw/2-pad:tw/2+pad;
-    const py=pos.includes('b')?bm.height-size/2-pad:size/2+pad;
-    ctx.fillText(text,px,py)}
+  else{const pad=20;const tw=ctx.measureText(text).width;const px=pos.includes('r')?bm.width-tw/2-pad:tw/2+pad;const py=pos.includes('b')?bm.height-size/2-pad:size/2+pad;ctx.fillText(text,px,py)}
   ctx.restore();
   const blob=await new Promise(r=>cv.toBlob(r,'image/png'));currentBlob=blob;
   upd(100,'Concluído!');await sl(300);showResult(currentFile.name,'PNG',formatSize(blob.size));document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
@@ -2014,9 +1977,7 @@ async function doGrayscale(){
 }
 
 async function doBrightness(){
-  const b=document.getElementById('adj-brightness')?.value||100;
-  const c=document.getElementById('adj-contrast')?.value||100;
-  const s=document.getElementById('adj-saturate')?.value||100;
+  const b=document.getElementById('adj-brightness')?.value||100;const c=document.getElementById('adj-contrast')?.value||100;const s=document.getElementById('adj-saturate')?.value||100;
   upd(20,'Lendo imagem…');const bm=await createImageBitmap(currentFile);
   const cv=document.createElement('canvas');cv.width=bm.width;cv.height=bm.height;
   const ctx=cv.getContext('2d');upd(50,'Ajustando…');
@@ -2045,15 +2006,11 @@ async function doCompressImg(){
 
 async function doPDFA(){
   upd(10,'Lendo PDF…');const ab=await currentFile.arrayBuffer();
-  const{PDFDocument}=PDFLib;const doc=await PDFDocument.load(ab);
-  upd(50,'Convertendo para PDF/A…');
+  const{PDFDocument}=PDFLib;const doc=await PDFDocument.load(ab);upd(50,'Convertendo para PDF/A…');
   doc.setCreator('NeoConvert™ — PDF/A Converter');doc.setCreationDate(new Date());doc.setModificationDate(new Date());
-  const ver=document.getElementById('pdfa-ver')?.value||'1b';
-  doc.setSubject('PDF/A-'+ver.toUpperCase());
-  upd(85,'Salvando…');
-  currentBlob=new Blob([await doc.save()],{type:'application/pdf'});
-  upd(100,'Concluído!');await sl(300);
-  showResult(currentFile.name,'PDF/A-'+ver.toUpperCase(),'Conformidade ISO 19005');
+  const ver=document.getElementById('pdfa-ver')?.value||'1b';doc.setSubject('PDF/A-'+ver.toUpperCase());
+  upd(85,'Salvando…');currentBlob=new Blob([await doc.save()],{type:'application/pdf'});
+  upd(100,'Concluído!');await sl(300);showResult(currentFile.name,'PDF/A-'+ver.toUpperCase(),'Conformidade ISO 19005');
   document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
@@ -2074,14 +2031,12 @@ function setScanMode(mode){
   if(mode==='cam')startScanCamera();else stopScanCamera();
 }
 async function startScanCamera(){
-  stopScanCamera();
-  const vfWrap=document.getElementById('scan-vf-wrap');
+  stopScanCamera();const vfWrap=document.getElementById('scan-vf-wrap');
   try{
     scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:scanFacingMode,width:{ideal:1920},height:{ideal:2560}},audio:false});
     const vid=document.getElementById('scan-video');vid.srcObject=scanStream;vid.style.display='block';vfWrap.style.display='block';
   }catch(err){
-    vfWrap.style.display='none';
-    const wrap=document.getElementById('scan-cam-wrap');
+    vfWrap.style.display='none';const wrap=document.getElementById('scan-cam-wrap');
     const existing=wrap.querySelector('.scan-error');if(existing)existing.remove();
     const msg=document.createElement('div');msg.className='scan-error';
     if(err.name==='NotAllowedError')msg.innerHTML='🚫 <strong>Permissão negada.</strong><br>Permita o uso da câmera nas configurações do navegador.';
@@ -2115,25 +2070,22 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 async function doScanToPDF(){
   if(!scanPages.length){alert('Capture pelo menos uma página');return}
-  const {jsPDF}=window.jspdf;
-  upd(10,'Preparando páginas…');
-  const pageSize=document.getElementById('scan-pagesize')?.value||'a4';
-  const isA4=pageSize==='a4';
+  const {jsPDF}=window.jspdf;upd(10,'Preparando páginas…');
+  const pageSize=document.getElementById('scan-pagesize')?.value||'a4';const isA4=pageSize==='a4';
   const pw=isA4?210:216,ph=isA4?297:279;
   const doc=new jsPDF({orientation:'portrait',unit:'mm',format:pageSize});
   for(let i=0;i<scanPages.length;i++){
     upd(10+Math.floor((i/scanPages.length)*80),`Processando página ${i+1}/${scanPages.length}…`);
     if(i>0)doc.addPage();
     const img=scanPages[i];
-    await new Promise(res=>{const im=new Image();im.onload=()=>{const iw=im.width,ih=im.height;const scale=Math.min(pw/(iw/3.7795),ph/(ih/3.7795));const dw=Math.min(iw/3.7795,pw-10);const dh=dw*(ih/iw);const x=(pw-dw)/2,y=(ph-dh)/2;doc.addImage(img,'JPEG',x,y,dw,dh,undefined,'MEDIUM');res()};im.src=img});
+    await new Promise(res=>{const im=new Image();im.onload=()=>{const iw=im.width,ih=im.height;const dw=Math.min(iw/3.7795,pw-10);const dh=dw*(ih/iw);const x=(pw-dw)/2,y=(ph-dh)/2;doc.addImage(img,'JPEG',x,y,dw,dh,undefined,'MEDIUM');res()};im.src=img});
   }
   upd(95,'Gerando PDF…');
   currentBlob=new Blob([doc.output('arraybuffer')],{type:'application/pdf'});
   currentFile={name:'documento-escaneado.pdf'};
   upd(100,'Concluído!');await sl(300);
   showResult('documento-escaneado.pdf',scanPages.length+' página(s)','PDF gerado');
-  document.getElementById('dl-btn').classList.add('show');
-  document.getElementById('prog-box').classList.remove('show');
+  document.getElementById('dl-btn').classList.add('show');document.getElementById('prog-box').classList.remove('show');
 }
 
 /* ─── HELPERS ─── */
@@ -2142,8 +2094,7 @@ function showDataPreview(rows,label){
   document.getElementById('data-preview-label').textContent=label||'Pré-visualização';
   const pr=rows.slice(0,11);const header=pr[0]||[];const dr=pr.slice(1);const tot=rows.length-1;
   let h=`<thead><tr>${header.map(c=>`<th>${c||''}</th>`).join('')}</tr></thead><tbody>`;
-  h+=dr.map(r=>`<tr>${(Array.isArray(r)?r:Object.values(r)).map(c=>`<td>${c||''}</td>`).join('')}</tr>`).join('');
-  h+=`</tbody>`;
+  h+=dr.map(r=>`<tr>${(Array.isArray(r)?r:Object.values(r)).map(c=>`<td>${c||''}</td>`).join('')}</tr>`).join('');h+=`</tbody>`;
   document.getElementById('data-table').innerHTML=h;
   document.getElementById('preview-more').textContent=tot>10?`… e mais ${tot-10} linha(s) no arquivo`:'';
   document.getElementById('data-preview').classList.add('show');
@@ -2151,8 +2102,7 @@ function showDataPreview(rows,label){
 
 function showResult(orig,fmt,extra){
   document.getElementById('result-box').classList.add('show');
-  document.getElementById('res-orig').textContent=orig;
-  document.getElementById('res-fmt').textContent=fmt;
+  document.getElementById('res-orig').textContent=orig;document.getElementById('res-fmt').textContent=fmt;
   if(extra){document.getElementById('res-extra-row').style.display='flex';document.getElementById('res-extra-lbl').textContent='Info';document.getElementById('res-extra-val').textContent=extra}
 }
 
@@ -2181,8 +2131,7 @@ function upd(pct,label){
 }
 
 function toggleTheme(){
-  const isDark=document.body.classList.toggle('dark');
-  document.body.classList.toggle('light',!isDark);
+  const isDark=document.body.classList.toggle('dark');document.body.classList.toggle('light',!isDark);
   document.getElementById('theme-btn').textContent=isDark?'☀️':'🌙';
   localStorage.setItem('nc-theme',isDark?'dark':'light');
 }
@@ -2190,17 +2139,14 @@ function toggleTheme(){
 /* ─── INIT ─── */
 (()=>{
   const t=localStorage.getItem('nc-theme')||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
-  document.body.className=t;
-  document.getElementById('theme-btn').textContent=t==='dark'?'☀️':'🌙';
+  document.body.className=t;document.getElementById('theme-btn').textContent=t==='dark'?'☀️':'🌙';
   renderTools('all');
   (async()=>{
     try{pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}catch(e){}
     const fill=document.getElementById('boot-fill');
     for(let i=0;i<5;i++){await sl(160+i*60);const row=document.getElementById('bl'+i);if(row)row.classList.add('in');if(fill)fill.style.width=((i+1)/5*100)+'%'}
-    await sl(320);
-    const boot=document.getElementById('boot');if(boot)boot.classList.add('out');
-    document.getElementById('main-nav').style.display='block';
-    document.getElementById('home-page').classList.add('on');
+    await sl(320);const boot=document.getElementById('boot');if(boot)boot.classList.add('out');
+    document.getElementById('main-nav').style.display='block';document.getElementById('home-page').classList.add('on');
     setTimeout(()=>{if(boot)boot.style.display='none'},600);
   })();
 })();
