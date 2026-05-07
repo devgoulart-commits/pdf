@@ -135,7 +135,7 @@ main.home-main{max-width:1440px;margin:0 auto;padding:0 2rem 6rem}
 .fc-main{display:grid;grid-template-columns:1fr 1.1fr;gap:4rem;align-items:start}
 .fc-photo-col{position:relative}
 .photo-frame{position:relative;aspect-ratio:3/4;border-radius:16px;overflow:hidden;border:1px solid rgba(255,107,107,.2);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
-.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center}
+.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;position:absolute;top:0;left:0;z-index:1}
 .photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,15,30,.95) 0%,rgba(15,15,30,.2) 50%,transparent 100%)}
 .photo-caption{position:absolute;bottom:0;left:0;right:0;padding:28px 24px}
 .photo-name{font-size:1.6rem;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:4px}
@@ -419,7 +419,7 @@ footer{border-top:1px solid rgba(255,107,107,.1);padding:2rem;max-width:1440px;m
     <div class="fc-main">
       <div class="fc-photo-col">
         <div class="photo-frame">
-          <img id="frederico-photo" src="frederico.jpg" alt="Frederico Goulart Abreu" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block">
+          <img id="frederico-photo" src="./frederico.jpg" alt="Frederico Goulart Abreu" onerror="this.style.display='none'; this.parentElement.style.background='var(--surface-light)'">
           <div class="photo-overlay"></div>
           <div class="photo-badge">FredTech Systems™</div>
           <div class="photo-caption">
