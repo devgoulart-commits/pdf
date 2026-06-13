@@ -13,10 +13,10 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0e1a;--bg1:#0f1525;--bg2:#151d30;--bg3:#1a2438;--bg4:#1f2b42;
+  --bg:#04160d;--bg1:#082416;--bg2:#0d321f;--bg3:#123d27;--bg4:#174b31;
   --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.2);
-  --indigo:#0056b3;--indigo2:#004085;--indigo-glow:rgba(0,86,179,.4);
-  --violet:#1d4ed8;--emerald:#10b981;--amber:#f59e0b;--rose:#f43f5e;
+  --indigo:#009c3b;--indigo2:#047032;--indigo-glow:rgba(0,156,59,.4);
+  --violet:#ffdf00;--emerald:#00b050;--amber:#ffdf00;--rose:#f43f5e;
   --text:#e8edf8;--muted:#4a5570;--muted2:#6b7a9a;--muted3:#9aaac4;
   --green:#10b981;--red:#f43f5e;
   --sans:"Plus Jakarta Sans",sans-serif;
@@ -25,8 +25,8 @@
 }
 
 :root.light-theme {
-  --bg:#f8fafc;--bg1:#ffffff;--bg2:#f1f5f9;--bg3:#e2e8f0;--bg4:#cbd5e1;
-  --indigo:#0056b3;--indigo2:#003366;--indigo-glow:rgba(0,86,179,.2);
+  --bg:#f7fff8;--bg1:#ffffff;--bg2:#ecf9ee;--bg3:#d8f0de;--bg4:#c1e4ca;
+  --indigo:#009c3b;--indigo2:#046b31;--indigo-glow:rgba(0,156,59,.2);
   --text:#0f172a;--muted:#64748b;--muted2:#475569;--muted3:#334155;
 }
 
@@ -36,19 +36,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
 
 .orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(100px);opacity:.15}
-.orb1{width:700px;height:700px;background:radial-gradient(circle,#0056b3,transparent);top:-250px;left:-200px}
-.orb2{width:500px;height:500px;background:radial-gradient(circle,#1d4ed8,transparent);bottom:-150px;right:-150px}
+.orb1{width:700px;height:700px;background:radial-gradient(circle,#009c3b,transparent);top:-250px;left:-200px}
+.orb2{width:500px;height:500px;background:radial-gradient(circle,#ffdf00,transparent);bottom:-150px;right:-150px}
 .orb3{width:350px;height:350px;background:radial-gradient(circle,#10b981,transparent);top:40%;left:50%;transform:translateX(-50%);opacity:.05}
 
 ::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-thumb{background:rgba(0,86,179,.3);border-radius:2px}
+::-webkit-scrollbar-thumb{background:rgba(0,156,59,.3);border-radius:2px}
 
 /* ── BOOT ── */
 #boot{position:fixed;inset:0;z-index:10000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center}
 #boot.out{animation:bootOut .5s ease forwards}
 @keyframes bootOut{to{opacity:0;transform:scale(1.04);pointer-events:none}}
-.boot-mark{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#0056b3,#1d4ed8);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px;box-shadow:0 0 40px rgba(0,86,179,.5);animation:bootPulse 1.5s ease infinite}
-@keyframes bootPulse{0%,100%{box-shadow:0 0 40px rgba(0,86,179,.5)}50%{box-shadow:0 0 70px rgba(0,86,179,.8)}}
+.boot-mark{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#009c3b,#ffdf00);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px;box-shadow:0 0 40px rgba(0,156,59,.5);animation:bootPulse 1.5s ease infinite}
+@keyframes bootPulse{0%,100%{box-shadow:0 0 40px rgba(0,156,59,.5)}50%{box-shadow:0 0 70px rgba(0,156,59,.8)}}
 .boot-name{font-size:28px;font-weight:800;color:var(--text);letter-spacing:-1px;margin-bottom:4px}
 .boot-name span{color:var(--indigo)}
 .boot-tag{font-family:var(--mono);font-size:9px;color:var(--muted2);letter-spacing:4px;text-transform:uppercase;margin-bottom:48px}
@@ -58,10 +58,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* ── LAYOUT ── */
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:64px;background:var(--bg1);backdrop-filter:blur(20px);border-right:1px solid var(--border2);display:flex;flex-direction:column;align-items:center;padding:16px 0;z-index:300;gap:4px}
-.sb-logo{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:20px;box-shadow:0 4px 20px rgba(0,86,179,.4);flex-shrink:0}
+.sb-logo{width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:20px;box-shadow:0 4px 20px rgba(0,156,59,.4);flex-shrink:0}
 .sb-ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted2);font-size:16px;cursor:pointer;transition:all .2s;text-decoration:none;position:relative}
-.sb-ico:hover,.sb-ico.on{background:rgba(0,86,179,.15);color:var(--indigo)}
-.sb-ico.on{box-shadow:0 0 0 1px rgba(0,86,179,.3)}
+.sb-ico:hover,.sb-ico.on{background:rgba(0,156,59,.15);color:var(--indigo)}
+.sb-ico.on{box-shadow:0 0 0 1px rgba(0,156,59,.3)}
 .sb-tip{position:absolute;left:52px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:5px 10px;font-size:11px;font-family:var(--mono);color:var(--text);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:400;box-shadow:0 4px 16px rgba(0,0,0,.2)}
 .sb-ico:hover .sb-tip{opacity:1}
 .sb-sep{flex:1}
@@ -73,11 +73,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .search-wrap{flex:1;max-width:340px;position:relative}
 .search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--muted);stroke-width:2;fill:none}
 .search-wrap input{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:8px 12px 8px 32px;font-size:12px;color:var(--text);outline:none;font-family:var(--mono);transition:all .2s}
-.search-wrap input:focus{border-color:rgba(0,86,179,.5);background:var(--bg3)}
+.search-wrap input:focus{border-color:rgba(0,156,59,.5);background:var(--bg3)}
 .search-wrap input::placeholder{color:var(--muted)}
 .tb-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
 .tb-btn{padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all .2s}
 .tb-btn:hover{background:var(--bg3);border-color:var(--border3)}
+.lang-switch{display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r3);padding:3px}
+.lang-btn{border:none;background:transparent;color:var(--muted2);font-family:var(--mono);font-size:9px;font-weight:700;padding:4px 8px;border-radius:var(--r3);cursor:pointer;transition:all .2s}
+.lang-btn.on{background:linear-gradient(135deg,var(--indigo),var(--violet));color:#04210f}
 .live-dot{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:9px;color:var(--muted)}
 .live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);animation:pulse 2s ease infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
@@ -87,14 +90,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* ── HERO ── */
 .hero{padding:72px 40px 40px;position:relative}
-.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(0,86,179,.1);border:1px solid rgba(0,86,179,.25);border-radius:var(--r3);padding:5px 14px;font-size:10px;font-weight:600;color:var(--indigo);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;font-family:var(--mono)}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(0,156,59,.1);border:1px solid rgba(0,156,59,.25);border-radius:var(--r3);padding:5px 14px;font-size:10px;font-weight:600;color:var(--indigo);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;font-family:var(--mono)}
 .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--indigo);animation:pulse 2s infinite}
 .hero-h1{font-size:clamp(2.8rem,5vw,5.5rem);font-weight:800;line-height:.95;letter-spacing:-2px;color:var(--text);margin-bottom:18px}
 .hero-h1 em{font-style:normal;background:linear-gradient(135deg,var(--indigo),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-p{font-size:14px;color:var(--muted2);line-height:1.8;max-width:500px;margin-bottom:30px}
 .hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}
-.btn-primary{background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;padding:11px 24px;border-radius:10px;font-weight:700;font-size:13px;border:none;cursor:pointer;box-shadow:0 0 30px rgba(0,86,179,.4);transition:all .25s}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,86,179,.6)}
+.btn-primary{background:linear-gradient(135deg,var(--indigo),var(--violet));color:white;padding:11px 24px;border-radius:10px;font-weight:700;font-size:13px;border:none;cursor:pointer;box-shadow:0 0 30px rgba(0,156,59,.4);transition:all .25s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,156,59,.6)}
 .btn-ghost{background:transparent;color:var(--text);padding:11px 22px;border-radius:10px;font-weight:600;font-size:13px;border:1px solid var(--border3);cursor:pointer;transition:all .2s}
 .btn-ghost:hover{background:var(--bg2)}
 
@@ -111,24 +114,24 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .filter-label{font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-right:6px}
 .chip{padding:6px 14px;border-radius:var(--r3);border:1px solid var(--border3);background:var(--bg1);color:var(--text);font-size:11px;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
 .chip:hover{border-color:var(--indigo);color:var(--indigo)}
-.chip.on{background:linear-gradient(135deg,var(--indigo),var(--violet));border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(0,86,179,.4)}
+.chip.on{background:linear-gradient(135deg,var(--indigo),var(--violet));border-color:transparent;color:#fff;box-shadow:0 0 16px rgba(0,156,59,.4)}
 .chip-ico{font-size:10px}
 
 /* TOOLS GRID */
 .tools-wrap{padding:0 40px 6rem}
 .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:8px}
 .tool-card{background:var(--bg1);border:1px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .22s;position:relative;display:flex;flex-direction:column;gap:12px;overflow:hidden}
-.tool-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,86,179,.05),transparent 60%);opacity:0;transition:opacity .22s}
+.tool-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,156,59,.05),transparent 60%);opacity:0;transition:opacity .22s}
 .tool-card:hover{border-color:var(--indigo);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.15)}
 .tool-card:hover::after{opacity:1}
 .card-ico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:16px;position:relative;z-index:1;flex-shrink:0}
 .card-ico.c-pdf{background:rgba(244,63,94,.12);border:1px solid rgba(244,63,94,.2)}
 .card-ico.c-image{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.2)}
 .card-ico.c-convert{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.2)}
-.card-ico.c-workflow{background:rgba(0,86,179,.12);border:1px solid rgba(0,86,179,.2)}
+.card-ico.c-workflow{background:rgba(0,156,59,.12);border:1px solid rgba(0,156,59,.2)}
 .card-ico.c-office{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.2)}
 .card-ico.c-daily{background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.2)}
-.card-ico.c-sign{background:rgba(0,86,179,.15);border:1px solid rgba(0,86,179,.35)}
+.card-ico.c-sign{background:rgba(0,156,59,.15);border:1px solid rgba(0,156,59,.35)}
 .card-body{position:relative;z-index:1}
 .card-body h3{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3}
 .card-body p{font-size:10px;color:var(--muted);font-family:var(--mono);line-height:1.45}
@@ -146,7 +149,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .tool-head p{font-size:12px;color:var(--muted2);margin-top:4px;font-family:var(--mono)}
 .divider{height:1px;background:var(--border);margin:1rem 0}
 .drop-zone{border:1px dashed var(--border3);border-radius:14px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg1);position:relative;overflow:hidden}
-.drop-zone:hover{border-color:var(--indigo);background:rgba(0,86,179,.04)}
+.drop-zone:hover{border-color:var(--indigo);background:rgba(0,156,59,.04)}
 .drop-icon{font-size:2.2rem;display:block;margin-bottom:10px;opacity:.7}
 .drop-main{font-size:13px;font-weight:600;color:var(--text)}
 .drop-sub{font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:5px}
@@ -159,7 +162,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .result-ok{display:none;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:10px;padding:12px 14px;margin-top:.8rem;font-family:var(--mono);font-size:11px;color:var(--emerald)}
 .actions{display:flex;gap:8px;margin-top:1.2rem;flex-wrap:wrap}
 .btn{background:linear-gradient(135deg,var(--indigo),var(--violet));border:none;padding:10px 22px;border-radius:10px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,86,179,.4)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,156,59,.4)}
 .btn-sec{background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-size:12px;font-weight:600;padding:10px 20px;border-radius:10px;cursor:pointer}
 
 /* ── DAILY TOOLS UI ── */
@@ -170,7 +173,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .daily-row{display:flex;gap:8px;flex-wrap:wrap}
 .daily-result{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:12px;font-family:var(--mono);font-size:12px;color:var(--text);line-height:1.7;margin-top:10px;white-space:pre-wrap;word-break:break-all}
 .daily-result:empty::before{content:'Resultado aparecerá aqui';color:var(--muted)}
-.copy-btn{background:rgba(0,86,179,.1);border:1px solid rgba(0,86,179,.25);color:var(--indigo);font-family:var(--mono);font-size:9px;padding:4px 10px;border-radius:6px;cursor:pointer;margin-top:6px}
+.copy-btn{background:rgba(0,156,59,.1);border:1px solid rgba(0,156,59,.25);color:var(--indigo);font-family:var(--mono);font-size:9px;padding:4px 10px;border-radius:6px;cursor:pointer;margin-top:6px}
 
 /* ── ASSINATURA GOV.BR ── */
 .sign-wrap{max-width:680px;margin:0 auto;padding:2rem 2rem 5rem}
@@ -187,7 +190,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .step-track{display:flex;border:1px solid var(--border2);border-radius:12px;overflow:hidden;margin-bottom:20px;background:var(--bg1)}
 .step{flex:1;padding:13px 8px;text-align:center;border-right:1px solid var(--border)}
 .step:last-child{border:none}
-.step.active{background:rgba(0,86,179,.1)}
+.step.active{background:rgba(0,156,59,.1)}
 .step.done{background:rgba(16,185,129,.06)}
 .step-n{font-size:16px;font-weight:800;color:var(--muted);font-family:var(--mono)}
 .step.active .step-n{color:var(--indigo)}
@@ -201,7 +204,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
 .method-btn{border:1px solid var(--border2);border-radius:12px;padding:16px 10px;text-align:center;cursor:pointer;background:var(--bg2)}
-.method-btn.sel{border-color:var(--indigo);background:rgba(0,86,179,.1)}
+.method-btn.sel{border-color:var(--indigo);background:rgba(0,156,59,.1)}
 .method-ico{font-size:24px;margin-bottom:6px;display:block}
 .method-lbl{font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase}
 
@@ -214,13 +217,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .canvas-hint.gone{opacity:0}
 .canvas-toolbar{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
 .c-tool-btn{padding:5px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);color:var(--text);font-family:var(--mono);font-size:9px;cursor:pointer;display:flex;align-items:center;gap:5px}
-.c-tool-btn.active{border-color:var(--indigo);background:rgba(0,86,179,.08)}
+.c-tool-btn.active{border-color:var(--indigo);background:rgba(0,156,59,.08)}
 .color-dot{width:10px;height:10px;border-radius:50%}
 
 .sign-type-input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--border2);background:#ffffff;font-size:28px;color:#1e293b;outline:none;font-family:'Dancing Script',cursive;margin-bottom:10px}
 .font-picker{display:flex;gap:8px;flex-wrap:wrap}
 .font-opt{padding:8px 16px;border-radius:8px;border:1px solid var(--border2);background:var(--bg2);cursor:pointer;font-size:18px;color:var(--text)}
-.font-opt.sel{border-color:var(--indigo);background:rgba(0,86,179,.1)}
+.font-opt.sel{border-color:var(--indigo);background:rgba(0,156,59,.1)}
 .font-opt.f1{font-family:'Dancing Script',cursive}
 .font-opt.f2{font-family:'Great Vibes',cursive}
 
@@ -244,7 +247,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .final-title{font-size:22px;font-weight:800;color:var(--emerald);margin-bottom:4px}
 .final-sub{font-family:var(--mono);font-size:9px;color:var(--muted2)}
 .final-pills{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-.final-pill{font-family:var(--mono);font-size:8px;padding:4px 10px;border-radius:var(--r3);background:rgba(0,86,179,.1);color:var(--indigo)}
+.final-pill{font-family:var(--mono);font-size:8px;padding:4px 10px;border-radius:var(--r3);background:rgba(0,156,59,.1);color:var(--indigo)}
 .final-sign-area{background:#ffffff;border:2px solid var(--border3);border-radius:12px;padding:20px;margin-bottom:12px;text-align:center}
 
 .btn-gov{background:linear-gradient(135deg,#1351b4,#0c326f);border:none;padding:11px 24px;border-radius:10px;color:#fff;font-weight:700;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
@@ -257,6 +260,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .about-grid{display:grid;grid-template-columns:340px 1fr;gap:40px}
 .brand-card{border:1px solid var(--border2);border-radius:18px;background:var(--bg1);padding:32px 24px;text-align:center;display:flex;flex-direction:column;align-items:center}
 .brand-desc{font-family:var(--mono);font-size:10px;color:var(--muted2);line-height:1.8;margin-top:10px;text-align:center}
+.about-logo{width:min(100%,280px);height:auto;object-fit:contain;margin-bottom:18px;filter:drop-shadow(0 18px 32px rgba(0,0,0,.22))}
 .history-box{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px;margin-top:12px;width:100%}
 .tl-item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
 .tl-year{font-family:var(--mono);font-size:9px;color:var(--indigo);font-weight:600}
@@ -265,8 +269,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .c-pill{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg2);text-decoration:none;color:var(--text);font-size:12px;font-weight:600;transition:all .2s;width:100%}
 .c-pill.whatsapp{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.25);color:#10b981}
 .c-pill.whatsapp:hover{background:rgba(16,185,129,0.2);transform:translateY(-1px)}
-.c-pill.email{background:rgba(0,86,179,0.1);border-color:rgba(0,86,179,0.25);color:var(--indigo)}
-.c-pill.email:hover{background:rgba(0,86,179,0.2);transform:translateY(-1px)}
+.c-pill.email{background:rgba(0,156,59,0.1);border-color:rgba(0,156,59,0.25);color:var(--indigo)}
+.c-pill.email:hover{background:rgba(0,156,59,0.2);transform:translateY(-1px)}
 
 /* Ajuste e centralização do Container do Logótipo */
 .brand-avatar-wrapper {
@@ -354,20 +358,25 @@ footer{background:var(--bg1);border-top:1px solid var(--border);margin-top:2rem}
       <input type="text" placeholder="Buscar ferramenta..." oninput="searchTools(this.value)" id="search-input">
     </div>
     <div class="tb-right">
+      <div class="lang-switch" aria-label="Idioma">
+        <button class="lang-btn on" data-lang="pt" onclick="setLang('pt')">PT</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+      </div>
       <button class="tb-btn" onclick="toggleTheme()" id="theme-btn">☀ Claro</button>
-      <div class="live-dot">Online</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:3px 9px;border-radius:var(--r3)">68 tools</div>
+      <div class="live-dot" id="online-label">Online</div>
+      <div id="tools-count-label" style="font-family:var(--mono);font-size:9px;color:var(--muted);background:var(--bg2);border:1px solid var(--border);padding:3px 9px;border-radius:var(--r3)">68 ferramentas</div>
     </div>
   </header>
 
   <div id="home-page" class="page">
     <div class="hero">
-      <div class="hero-pill"><span class="hero-dot"></span>FGA Suite · v15 · 68 ferramentas</div>
-      <h1 class="hero-h1">SEUS DOCUMENTOS<br><em>EM SEGUNDOS</em></h1>
-      <p class="hero-p">Converta, assine, proteja e automatize — tudo 100% no seu navegador, sem cadastro, sem upload externo. Seus arquivos nunca saem do dispositivo.</p>
+      <div class="hero-pill"><span class="hero-dot"></span><span id="hero-pill-text">FGA Suite · v15 · 68 ferramentas</span></div>
+      <h1 class="hero-h1" id="hero-title">SEUS DOCUMENTOS<br><em>EM SEGUNDOS</em></h1>
+      <p class="hero-p" id="hero-copy">Converta, assine, proteja e automatize — tudo 100% no seu navegador, sem cadastro, sem upload externo. Seus arquivos nunca saem do dispositivo.</p>
       <div class="hero-btns">
-        <button class="btn-primary" onclick="document.querySelector('.filter-bar').scrollIntoView({behavior:'smooth'})">Explorar ferramentas →</button>
-        <button class="btn-ghost" onclick="goAbout()">Sobre a FGA</button>
+        <button class="btn-primary" id="explore-btn" onclick="document.querySelector('.filter-bar').scrollIntoView({behavior:'smooth'})">Explorar ferramentas →</button>
+        <button class="btn-ghost" id="about-btn" onclick="goAbout()">Sobre a FGA</button>
       </div>
     </div>
     <div class="stats">
@@ -377,14 +386,14 @@ footer{background:var(--bg1);border-top:1px solid var(--border);margin-top:2rem}
       <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Sem limite</div></div>
     </div>
     <div class="filter-bar">
-      <span class="filter-label">Filtrar:</span>
-      <button class="chip on" onclick="filterTools('all',this)"><span class="chip-ico">🔍</span>Todos</button>
+      <span class="filter-label" id="filter-label">Filtrar:</span>
+      <button class="chip on" onclick="filterTools('all',this)"><span class="chip-ico">🔍</span><span id="cat-all">Todos</span></button>
       <button class="chip" onclick="filterTools('pdf',this)"><span class="chip-ico">📄</span>PDF</button>
-      <button class="chip" onclick="filterTools('image',this)"><span class="chip-ico">🖼</span>Imagem</button>
-      <button class="chip" onclick="filterTools('convert',this)"><span class="chip-ico">🔀</span>Converter</button>
+      <button class="chip" onclick="filterTools('image',this)"><span class="chip-ico">🖼</span><span id="cat-image">Imagem</span></button>
+      <button class="chip" onclick="filterTools('convert',this)"><span class="chip-ico">🔀</span><span id="cat-convert">Converter</span></button>
       <button class="chip" onclick="filterTools('workflow',this)"><span class="chip-ico">⚙️</span>Workflow</button>
       <button class="chip" onclick="filterTools('office',this)"><span class="chip-ico">📝</span>Office</button>
-      <button class="chip" onclick="filterTools('daily',this)"><span class="chip-ico">⚡</span>Dia a Dia</button>
+      <button class="chip" onclick="filterTools('daily',this)"><span class="chip-ico">⚡</span><span id="cat-daily">Dia a Dia</span></button>
     </div>
     <div class="tools-wrap"><div class="tools-grid" id="tools-grid"></div></div>
   </div>
@@ -604,14 +613,14 @@ footer{background:var(--bg1);border-top:1px solid var(--border);margin-top:2rem}
       <div class="about-grid">
         <div>
           <div class="brand-card">
-            
+            <img class="about-logo" src="fga-logo-transparente.png" alt="FGA Technologies">
             <div style="font-size: 19px; margin-bottom: 3px; font-weight: 800; letter-spacing: 0.5px; color: var(--text);">
               FGA <span style="font-weight: 400; color: var(--muted2);">TECHNOLOGIES</span>
             </div>
-            <div style="font-size: 10px; color: var(--indigo); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px;">
+            <div id="brand-tagline" style="font-size: 10px; color: var(--indigo); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px;">
               Powering the Future
             </div>
-            <div class="brand-desc" style="border-top: 1px solid var(--border); padding-top: 16px; margin-top: 12px;">
+            <div class="brand-desc" id="about-card-desc" style="border-top: 1px solid var(--border); padding-top: 16px; margin-top: 12px;">
               Suite corporativa com 68 ferramentas inteligentes voltadas para manipulação de dados, automação e segurança de documentos através de criptografia client-side.
             </div>
             
@@ -625,7 +634,7 @@ footer{background:var(--bg1);border-top:1px solid var(--border);margin-top:2rem}
             
 
 <div class="msg-box">
-<h4>Enviar Mensagem</h4>
+<h4 id="message-title">Enviar Mensagem</h4>
 <input id="nome" type="text" placeholder="Seu nome">
 <input id="email" type="email" placeholder="Seu e-mail">
 <textarea id="mensagem" rows="5" placeholder="Digite sua mensagem"></textarea>
@@ -638,13 +647,13 @@ footer{background:var(--bg1);border-top:1px solid var(--border);margin-top:2rem}
 </div>
 <div class="history-box">
 
-            <div class="tl-item"><div><div class="tl-year">2026 — Atual</div><div class="tl-text">Arquitetura modular distribuída sob processamento local protegido.</div></div></div>
+            <div class="tl-item"><div><div class="tl-year" id="timeline-year">2026 — Atual</div><div class="tl-text" id="timeline-text">Arquitetura modular distribuída sob processamento local protegido.</div></div></div>
           </div>
         </div>
         <div>
-          <h2 class="bio-h">TECNOLOGIA QUE<br><em>SIMPLIFICA</em></h2>
-          <p class="bio-p">A plataforma foi desenhada sob os mais rígidos pilares de privacidade corporativa. Todo o processamento de compressão, conversão e assinatura digital é gerado diretamente no navegador do usuário.</p>
-          <button class="btn-primary" onclick="goHome()" style="margin-top: 14px;">Explorar ferramentas →</button>
+          <h2 class="bio-h" id="about-title">TECNOLOGIA QUE<br><em>SIMPLIFICA</em></h2>
+          <p class="bio-p" id="about-copy">A plataforma foi desenhada sob os mais rígidos pilares de privacidade corporativa. Todo o processamento de compressão, conversão e assinatura digital é gerado diretamente no navegador do usuário.</p>
+          <button class="btn-primary" id="about-explore-btn" onclick="goHome()" style="margin-top: 14px;">Explorar ferramentas →</button>
         </div>
       </div>
     </div>
@@ -654,17 +663,164 @@ footer{background:var(--bg1);border-top:1px solid var(--border);margin-top:2rem}
     <div class="footer-inner">
       <div class="footer-brand">
         <div>FGA<span>Suite</span></div>
-        <p>68 ferramentas para documentos — 100% local, sem cadastro.</p>
+        <p id="footer-copy">68 ferramentas para documentos — 100% local, sem cadastro.</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 FGA Technologies®</span>
+      <span>Copyright FGA Holding</span>
       <span>v15 · Powering The Future</span>
     </div>
   </footer>
 </div>
 
 <script>
+let currentLang = 'pt';
+
+const I18N = {
+  pt: {
+    search: 'Buscar ferramenta...',
+    online: 'Online',
+    toolsCount: '68 ferramentas',
+    themeLight: '☀ Claro',
+    themeDark: '🌙 Escuro',
+    heroPill: 'FGA Suite · v15 · 68 ferramentas',
+    heroTitle: 'SEUS DOCUMENTOS<br><em>EM SEGUNDOS</em>',
+    heroCopy: 'Converta, assine, proteja e automatize — tudo 100% no seu navegador, sem cadastro, sem upload externo. Seus arquivos nunca saem do dispositivo.',
+    explore: 'Explorar ferramentas →',
+    about: 'Sobre a FGA',
+    homeTip: 'Início',
+    aboutTip: 'Sobre',
+    filter: 'Filtrar:',
+    all: 'Todos',
+    image: 'Imagem',
+    convert: 'Converter',
+    daily: 'Dia a Dia',
+    brandTagline: 'Powering the Future',
+    aboutCardDesc: 'Suite corporativa com 68 ferramentas inteligentes voltadas para manipulação de dados, automação e segurança de documentos através de criptografia client-side.',
+    messageTitle: 'Enviar Mensagem',
+    namePlaceholder: 'Seu nome',
+    emailPlaceholder: 'Seu e-mail',
+    messagePlaceholder: 'Digite sua mensagem',
+    timelineYear: '2026 — Atual',
+    timelineText: 'Arquitetura modular distribuída sob processamento local protegido.',
+    aboutTitle: 'TECNOLOGIA QUE<br><em>SIMPLIFICA</em>',
+    aboutCopy: 'A plataforma foi desenhada sob os mais rígidos pilares de privacidade corporativa. Todo o processamento de compressão, conversão e assinatura digital é gerado diretamente no navegador do usuário.',
+    footerCopy: '68 ferramentas para documentos — 100% local, sem cadastro.'
+  },
+  en: {
+    search: 'Search tool...',
+    online: 'Online',
+    toolsCount: '68 tools',
+    themeLight: '☀ Light',
+    themeDark: '🌙 Dark',
+    heroPill: 'FGA Suite · v15 · 68 tools',
+    heroTitle: 'YOUR DOCUMENTS<br><em>IN SECONDS</em>',
+    heroCopy: 'Convert, sign, protect and automate — all 100% in your browser, with no account and no external upload. Your files never leave your device.',
+    explore: 'Explore tools →',
+    about: 'About FGA',
+    homeTip: 'Home',
+    aboutTip: 'About',
+    filter: 'Filter:',
+    all: 'All',
+    image: 'Image',
+    convert: 'Convert',
+    daily: 'Daily',
+    brandTagline: 'Powering the Future',
+    aboutCardDesc: 'Corporate suite with 68 intelligent tools for data handling, automation and document security through client-side encryption.',
+    messageTitle: 'Send Message',
+    namePlaceholder: 'Your name',
+    emailPlaceholder: 'Your email',
+    messagePlaceholder: 'Type your message',
+    timelineYear: '2026 — Current',
+    timelineText: 'Distributed modular architecture with protected local processing.',
+    aboutTitle: 'TECHNOLOGY THAT<br><em>SIMPLIFIES</em>',
+    aboutCopy: 'The platform was designed around strong corporate privacy principles. All compression, conversion and digital signature processing happens directly in the user browser.',
+    footerCopy: '68 document tools — 100% local, no sign-up.'
+  },
+  es: {
+    search: 'Buscar herramienta...',
+    online: 'En línea',
+    toolsCount: '68 herramientas',
+    themeLight: '☀ Claro',
+    themeDark: '🌙 Oscuro',
+    heroPill: 'FGA Suite · v15 · 68 herramientas',
+    heroTitle: 'TUS DOCUMENTOS<br><em>EN SEGUNDOS</em>',
+    heroCopy: 'Convierte, firma, protege y automatiza — todo 100% en tu navegador, sin registro y sin carga externa. Tus archivos nunca salen de tu dispositivo.',
+    explore: 'Explorar herramientas →',
+    about: 'Sobre FGA',
+    homeTip: 'Inicio',
+    aboutTip: 'Sobre',
+    filter: 'Filtrar:',
+    all: 'Todos',
+    image: 'Imagen',
+    convert: 'Convertir',
+    daily: 'Día a Día',
+    brandTagline: 'Powering the Future',
+    aboutCardDesc: 'Suite corporativa con 68 herramientas inteligentes para manipulación de datos, automatización y seguridad documental mediante cifrado del lado del cliente.',
+    messageTitle: 'Enviar Mensaje',
+    namePlaceholder: 'Tu nombre',
+    emailPlaceholder: 'Tu e-mail',
+    messagePlaceholder: 'Escribe tu mensaje',
+    timelineYear: '2026 — Actual',
+    timelineText: 'Arquitectura modular distribuida con procesamiento local protegido.',
+    aboutTitle: 'TECNOLOGÍA QUE<br><em>SIMPLIFICA</em>',
+    aboutCopy: 'La plataforma fue diseñada sobre pilares sólidos de privacidad corporativa. Todo el procesamiento de compresión, conversión y firma digital se genera directamente en el navegador del usuario.',
+    footerCopy: '68 herramientas para documentos — 100% local, sin registro.'
+  }
+};
+
+function setText(id, value){
+  const el = document.getElementById(id);
+  if(el) el.innerHTML = value;
+}
+
+function setLang(lang){
+  currentLang = lang;
+  const t = I18N[lang] || I18N.pt;
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('on', btn.dataset.lang === lang));
+  const search = document.getElementById('search-input');
+  if(search) search.placeholder = t.search;
+  const name = document.getElementById('nome');
+  const email = document.getElementById('email');
+  const message = document.getElementById('mensagem');
+  if(name) name.placeholder = t.namePlaceholder;
+  if(email) email.placeholder = t.emailPlaceholder;
+  if(message) message.placeholder = t.messagePlaceholder;
+  setText('online-label', t.online);
+  setText('tools-count-label', t.toolsCount);
+  setText('hero-pill-text', t.heroPill);
+  setText('hero-title', t.heroTitle);
+  setText('hero-copy', t.heroCopy);
+  setText('explore-btn', t.explore);
+  setText('about-btn', t.about);
+  setText('filter-label', t.filter);
+  setText('cat-all', t.all);
+  setText('cat-image', t.image);
+  setText('cat-convert', t.convert);
+  setText('cat-daily', t.daily);
+  setText('brand-tagline', t.brandTagline);
+  setText('about-card-desc', t.aboutCardDesc);
+  setText('message-title', t.messageTitle);
+  setText('timeline-year', t.timelineYear);
+  setText('timeline-text', t.timelineText);
+  setText('about-title', t.aboutTitle);
+  setText('about-copy', t.aboutCopy);
+  setText('about-explore-btn', t.explore);
+  setText('footer-copy', t.footerCopy);
+  const tips = document.querySelectorAll('.sb-tip');
+  if(tips[0]) tips[0].textContent = t.homeTip;
+  if(tips[1]) tips[1].textContent = t.aboutTip;
+  updateThemeButton();
+}
+
+function updateThemeButton(){
+  const btn = document.getElementById('theme-btn');
+  if(!btn) return;
+  const t = I18N[currentLang] || I18N.pt;
+  btn.textContent = document.documentElement.classList.contains('light-theme') ? t.themeDark : t.themeLight;
+}
+
 const TOOLS = [
   // PDF (18)
   {name:'Comprimir PDF',cat:'pdf',icon:'📦',col:'c-pdf',desc:'Reduza o tamanho sem perder qualidade'},
@@ -752,6 +908,7 @@ let generatedSignDataUrl = "";
 window.addEventListener('DOMContentLoaded', () => {
   const fill = document.getElementById('boot-fill');
   const msg = document.getElementById('boot-msg');
+  setLang('pt');
   let p = 0;
   const iv = setInterval(() => {
     p += 10;
@@ -772,14 +929,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function toggleTheme() {
   const root = document.documentElement;
-  const btn = document.getElementById('theme-btn');
   if(root.classList.contains('light-theme')) {
     root.classList.remove('light-theme');
-    btn.textContent = "☀ Claro";
   } else {
     root.classList.add('light-theme');
-    btn.textContent = "🌙 Escuro";
   }
+  updateThemeButton();
 }
 
 function showOnly(id){
@@ -1181,5 +1336,7 @@ function enviarWhats(){
 }
 </script>
 </body>
+
+</html>
 
 </html>
