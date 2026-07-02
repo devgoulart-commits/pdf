@@ -6,6 +6,7 @@
 <title>FGA Suite · Premium Ecosystem</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -230,7 +231,7 @@ body.collapsed .main-content{margin-left:0}
     <div class="cat-item" onclick="filterCat('office',this)"><span>Contábil & Gestão</span><span class="cat-count">25</span></div>
     <div class="cat-item" onclick="filterCat('office2',this)"><span>Office IA ✨</span><span class="cat-count">6</span></div>
   </div>
-  <div class="sidebar-footer">FGA Suite v2.4.0</div>
+  <div class="sidebar-footer">FGA Suite v2.4.1</div>
 </aside>
 
 <!-- CONTEÚDO PRINCIPAL -->
@@ -264,7 +265,7 @@ body.collapsed .main-content{margin-left:0}
     <h2>Sobre a FGA Holding</h2>
     <p>A FGA Holding desenvolve ecossistemas de alta performance para gerenciamento corporativo e automação financeira estável.</p>
     <p>Nossa suíte reúne ferramentas de PDF, imagem, conversão e gestão contábil em um ambiente unificado, seguro e executável 100% no navegador — sem envio de dados a servidores externos.</p>
-    <p>A partir da versão 2.4.0, integramos motor de IA para conversão inteligente entre formatos Office (Word, Excel, PowerPoint) e PDF, com suporte multilingual (PT / EN / ES).</p>
+    <p>A partir da versão 2.4.0, integramos motor local de conversão inteligente entre formatos Office (Word, Excel, PowerPoint) e PDF, com suporte multilingual (PT / EN / ES), gerando arquivos reais nos formatos OOXML padrão.</p>
   </div>
 
   <!-- VIEW CONTATO -->
@@ -336,10 +337,10 @@ body.collapsed .main-content{margin-left:0}
     <h3>Status do Ecossistema</h3>
     <div class="status-row">
       <div class="status-ok"><div class="dot"></div> Executável Local</div>
-      <span style="font-size:11px;color:var(--dim)">v2.4.0</span>
+      <span style="font-size:11px;color:var(--dim)">v2.4.1</span>
     </div>
     <div class="status-row" style="margin-top:8px">
-      <div class="status-ok"><div class="dot" style="background:#a78bfa"></div> Motor IA Ativo</div>
+      <div class="status-ok"><div class="dot" style="background:#a78bfa"></div> Motor de Conversão Ativo</div>
       <span style="font-size:11px;color:var(--dim)">Office</span>
     </div>
   </div>
@@ -446,22 +447,22 @@ const TOOLS=[
   {id:66,name:"Dashboard de KPIs",desc:"Exibe ROE, ROI, liquidez e endividamento em painel.",cat:"office"},
   {id:67,name:"Calculadora de ROI",desc:"Calcula retorno sobre investimento com período de payback.",cat:"office"},
   {id:68,name:"Gerador de Declaração IR",desc:"Auxilia no preenchimento de informes de rendimentos.",cat:"office"},
-  // NOVOS — Office IA
-  {id:69,name:"PDF → Word (IA)",desc:"Extrai e reestrutura conteúdo do PDF em documento .docx editável via motor IA multilingual.",cat:"office2",ia:true},
-  {id:70,name:"PDF → Excel (IA)",desc:"Detecta tabelas e dados tabulares no PDF e exporta planilha .xlsx estruturada via IA.",cat:"office2",ia:true},
-  {id:71,name:"PDF → PowerPoint (IA)",desc:"Converte páginas do PDF em slides .pptx com layout e conteúdo preservados por IA.",cat:"office2",ia:true},
-  {id:72,name:"Word → PDF (IA)",desc:"Converte documentos .docx em PDF formatado com estrutura preservada pela IA.",cat:"office2",ia:true},
-  {id:73,name:"Excel → PDF (IA)",desc:"Gera PDF profissional com tabelas e dados de planilhas .xlsx via motor IA.",cat:"office2",ia:true},
-  {id:74,name:"PowerPoint → PDF (IA)",desc:"Exporta apresentações .pptx para PDF com slides em sequência via IA.",cat:"office2",ia:true},
+  // Office IA — conversores reais (OOXML / PDF)
+  {id:69,name:"PDF → Word",desc:"Extrai texto do PDF e gera um documento .docx real (OOXML), editável no Word.",cat:"office2",ia:true},
+  {id:70,name:"PDF → Excel",desc:"Detecta linhas/tabelas do PDF e exporta uma planilha .xlsx real, estruturada.",cat:"office2",ia:true},
+  {id:71,name:"PDF → PowerPoint",desc:"Converte o conteúdo do PDF em slides .pptx reais, abertos direto no PowerPoint.",cat:"office2",ia:true},
+  {id:72,name:"Word → PDF",desc:"Converte documentos .docx em PDF real formatado, gerado com pdf-lib.",cat:"office2",ia:true},
+  {id:73,name:"Excel → PDF",desc:"Gera um PDF real com as linhas e colunas da planilha .xlsx.",cat:"office2",ia:true},
+  {id:74,name:"PowerPoint → PDF",desc:"Exporta apresentações .pptx para um PDF real, um slide por página.",cat:"office2",ia:true},
 ];
 
 const CONV_TOOLS=[
-  {id:'pdf2word',icon:'📄→📝',title:'PDF → Word',desc:'Gera .docx editável via IA',accept:'.pdf',out:'docx'},
-  {id:'pdf2excel',icon:'📄→📊',title:'PDF → Excel',desc:'Exporta tabelas para .xlsx',accept:'.pdf',out:'xlsx'},
-  {id:'pdf2pptx',icon:'📄→📑',title:'PDF → PowerPoint',desc:'Converte páginas em slides .pptx',accept:'.pdf',out:'pptx'},
-  {id:'word2pdf',icon:'📝→📄',title:'Word → PDF',desc:'Converte .docx para PDF',accept:'.docx',out:'pdf'},
-  {id:'excel2pdf',icon:'📊→📄',title:'Excel → PDF',desc:'Exporta planilha .xlsx para PDF',accept:'.xlsx',out:'pdf'},
-  {id:'pptx2pdf',icon:'📑→📄',title:'PowerPoint → PDF',desc:'Exporta slides .pptx para PDF',accept:'.pptx',out:'pdf'},
+  {id:'pdf2word',icon:'📄→📝',title:'PDF → Word',desc:'Gera .docx real (OOXML)',accept:'.pdf',out:'docx'},
+  {id:'pdf2excel',icon:'📄→📊',title:'PDF → Excel',desc:'Exporta tabelas para .xlsx real',accept:'.pdf',out:'xlsx'},
+  {id:'pdf2pptx',icon:'📄→📑',title:'PDF → PowerPoint',desc:'Converte páginas em slides .pptx reais',accept:'.pdf',out:'pptx'},
+  {id:'word2pdf',icon:'📝→📄',title:'Word → PDF',desc:'Converte .docx para PDF real',accept:'.docx',out:'pdf'},
+  {id:'excel2pdf',icon:'📊→📄',title:'Excel → PDF',desc:'Exporta planilha .xlsx para PDF real',accept:'.xlsx',out:'pdf'},
+  {id:'pptx2pdf',icon:'📑→📄',title:'PowerPoint → PDF',desc:'Exporta slides .pptx para PDF real',accept:'.pptx',out:'pdf'},
 ];
 
 const TOOL_ID_MAP={69:'pdf2word',70:'pdf2excel',71:'pdf2pptx',72:'word2pdf',73:'excel2pdf',74:'pptx2pdf'};
@@ -557,7 +558,7 @@ function buildModal(id,tool){
   const body=document.getElementById('modal-body');
   body.innerHTML='';
 
-  // Conversores IA (69–74)
+  // Conversores Office (69–74)
   if(id>=69&&id<=74){
     const convToolId=TOOL_ID_MAP[id];
     body.innerHTML=buildConvHTML();
@@ -737,7 +738,7 @@ function buildModal(id,tool){
   </div>`;
 }
 
-// ── CONVERSOR IA HTML ─────────────────────────────────
+// ── CONVERSOR OFFICE HTML ─────────────────────────────
 function buildConvHTML(){
   const tools=CONV_TOOLS;
   const cardsHTML=tools.map(t=>`
@@ -767,7 +768,7 @@ function buildConvHTML(){
         <span class="conv-fi-size" id="conv-fi-size">—</span>
         <button class="conv-fi-rm" onclick="convRemoveFile()">✕</button>
       </div>
-      <div class="conv-disclaimer">🤖 <strong>Motor IA:</strong> O conteúdo é enviado à API Claude para análise e reestruturação. Não envie dados sensíveis.</div>
+      <div class="conv-disclaimer">⚙️ <strong>Motor local:</strong> a conversão roda 100% no seu navegador e gera um arquivo real no formato de saída (OOXML/PDF). Nenhum dado sai do seu computador.</div>
       <div class="conv-err" id="conv-err"></div>
       <button class="btn-exec" id="conv-btn" onclick="convStart()" disabled>Selecione um arquivo primeiro</button>
       <div class="conv-prog" id="conv-prog">
@@ -863,32 +864,50 @@ async function convStart(){
   document.getElementById('conv-log').textContent='';
   document.getElementById('conv-err').classList.remove('show');
   try{
+    if(typeof JSZip==='undefined'){throw new Error('Biblioteca JSZip não carregou. Verifique sua conexão com a internet e recarregue a página.');}
+    if(typeof PDFLib==='undefined'){throw new Error('Biblioteca PDF-lib não carregou. Verifique sua conexão com a internet e recarregue a página.');}
+
     convSetProgress(10,'Lendo arquivo...');convLog('[1/4] Lendo arquivo...');
-    await convDelay(300);
-    let fileText='';
-    convSetProgress(25,'Analisando estrutura...');convLog('[2/4] Analisando estrutura...');
-    if(convSelectedFile.name.endsWith('.pdf')){fileText=await convExtractPdf(convSelectedFile);}
-    else{fileText=await convSelectedFile.text().catch(()=>'[Arquivo binário: '+convSelectedFile.name+']');}
+    await convDelay(250);
+    let structured;
+    convSetProgress(30,'Analisando estrutura...');convLog('[2/4] Analisando estrutura do documento...');
+
+    const srcExt=convSelectedFile.name.split('.').pop().toLowerCase();
+    if(srcExt==='pdf'){ structured=await convExtractPdfStructured(convSelectedFile); }
+    else if(srcExt==='docx'){ structured=await convExtractDocxStructured(convSelectedFile); }
+    else if(srcExt==='xlsx'){ structured=await convExtractXlsxStructured(convSelectedFile); }
+    else if(srcExt==='pptx'){ structured=await convExtractPptxStructured(convSelectedFile); }
+    else { structured={paragraphs:['[Formato de origem não reconhecido: '+srcExt+']']}; }
+
     await convDelay(200);
-    convSetProgress(45,'Enviando ao motor IA...');convLog('[3/4] Enviando ao motor Claude IA...');
-    const prompt=convBuildPrompt(convActiveTool.id,fileText,convSelectedFile.name);
-    const aiResult=await convCallClaude(prompt);
-    convSetProgress(80,'Formatando resultado...');convLog('[4/4] Formatando e gerando arquivo...');
-    await convDelay(300);
+    convSetProgress(60,'Gerando arquivo de saída...');convLog('[3/4] Montando arquivo '+convActiveTool.out.toUpperCase()+' real...');
+
     convResultName=convSelectedFile.name.replace(/\.[^.]+$/,'')+'_convertido.'+convActiveTool.out;
-    if(convActiveTool.out==='pdf') convResultBlob=await convGenPDF(aiResult,convSelectedFile.name);
-    else if(convActiveTool.out==='docx') convResultBlob=convGenDocx(aiResult,convSelectedFile.name);
-    else if(convActiveTool.out==='xlsx') convResultBlob=convGenXlsx(aiResult,convSelectedFile.name);
-    else if(convActiveTool.out==='pptx') convResultBlob=convGenPptx(aiResult,convSelectedFile.name);
-    convSetProgress(100,'Conversão concluída! ✅');convLog('✅ Concluído: '+convResultName);
+    let previewText='';
+
+    if(convActiveTool.out==='pdf'){
+      const r=await convGenPDF(structured,convSelectedFile.name);
+      convResultBlob=r.blob; previewText=r.preview;
+    } else if(convActiveTool.out==='docx'){
+      const r=await convGenDocx(structured,convSelectedFile.name);
+      convResultBlob=r.blob; previewText=r.preview;
+    } else if(convActiveTool.out==='xlsx'){
+      const r=await convGenXlsx(structured,convSelectedFile.name);
+      convResultBlob=r.blob; previewText=r.preview;
+    } else if(convActiveTool.out==='pptx'){
+      const r=await convGenPptx(structured,convSelectedFile.name);
+      convResultBlob=r.blob; previewText=r.preview;
+    }
+
+    convSetProgress(100,'Conversão concluída! ✅');convLog('[4/4] ✅ Concluído: '+convResultName);
     document.getElementById('conv-rc-icon').textContent=convGetIcon(convResultName);
     document.getElementById('conv-rc-name').textContent=convResultName;
-    document.getElementById('conv-rc-meta').textContent='Pronto — '+convFmtSize(convResultBlob.size);
-    document.getElementById('conv-rc-prev').textContent=aiResult.substring(0,700)+(aiResult.length>700?'\n\n[...]':'');
+    document.getElementById('conv-rc-meta').textContent='Arquivo real '+convActiveTool.out.toUpperCase()+' — '+convFmtSize(convResultBlob.size);
+    document.getElementById('conv-rc-prev').textContent=previewText.substring(0,700)+(previewText.length>700?'\n\n[...]':'');
     document.getElementById('conv-result').classList.add('show');
   }catch(e){
     convLog('❌ Erro: '+e.message);
-    convShowErr('Erro na conversão: '+e.message+'. Verifique sua conexão.');
+    convShowErr('Erro na conversão: '+e.message);
     convSetProgress(0,'Erro');
   }finally{
     document.getElementById('conv-btn').disabled=false;
@@ -896,84 +915,285 @@ async function convStart(){
   }
 }
 
-function convBuildPrompt(toolId,text,filename){
-  const langName={pt:'português brasileiro',en:'English',es:'español'}[convLang];
-  const ps={
-    'pdf2word':`Convert the following PDF content into a well-structured Word document in ${langName}. Preserve headings ([H1], [H2]), paragraphs ([PARA]), lists ([LIST]), and tables ([TABLE]). Output clean structured text ready for .docx. File: ${filename}\n\nContent:\n${text.substring(0,6000)}`,
-    'pdf2excel':`Extract ALL tabular data, numbers and structured data from this PDF in ${langName}. Output as CSV with column headers. Mark sheets as [SHEET: Name]. File: ${filename}\n\nContent:\n${text.substring(0,6000)}`,
-    'pdf2pptx':`Convert this PDF into presentation slides in ${langName}. Mark each slide as [SLIDE N] with [TITLE] and [CONTENT]. Create 6–12 slides. File: ${filename}\n\nContent:\n${text.substring(0,6000)}`,
-    'word2pdf':`Format this Word document content for professional PDF output in ${langName}. Use [H1], [H2], [PARA], [LIST], [TABLE] markers. File: ${filename}\n\nContent:\n${text.substring(0,6000)}`,
-    'excel2pdf':`Format this spreadsheet content into a professional PDF report in ${langName} with clear section headers and tables. File: ${filename}\n\nContent:\n${text.substring(0,6000)}`,
-    'pptx2pdf':`Convert these slides into PDF format in ${langName}. Use [SLIDE N], [TITLE], [CONTENT] structure. File: ${filename}\n\nContent:\n${text.substring(0,6000)}`,
-  };
-  return ps[toolId]||`Convert document ${filename} to target format in ${langName}:\n\n${text.substring(0,6000)}`;
+// ── EXTRAÇÃO — lê o arquivo de origem e devolve uma estrutura simples ──
+// { paragraphs: [...], rows: [[...],[...]], slides: [{title,bullets:[...]}] }
+
+async function convExtractPdfStructured(file){
+  const text=await convExtractPdfText(file);
+  const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
+  const paragraphs=lines.length?lines:['[PDF com conteúdo de imagem/escaneado — '+file.name+']'];
+  // heurística simples de tabela: linhas com 2+ espaços/tabs viram linhas de planilha
+  const rows=paragraphs.map(l=>l.split(/\s{2,}|\t/).filter(Boolean));
+  // heurística simples de slides: agrupa a cada ~6 linhas
+  const slides=[];
+  for(let i=0;i<paragraphs.length;i+=6){
+    const chunk=paragraphs.slice(i,i+6);
+    slides.push({title:chunk[0]||('Slide '+(slides.length+1)),bullets:chunk.slice(1)});
+  }
+  return {paragraphs,rows,slides:slides.length?slides:[{title:file.name,bullets:paragraphs.slice(0,6)}]};
 }
 
-async function convCallClaude(prompt){
-  // Conversor local: evita falhas de CORS/API sem chave no navegador.
-  await convDelay(500);
-  const text=prompt.replace(/^[\s\S]*?Content:\s*/,'').trim();
-  return text || '[Documento processado localmente pela FGA Suite IA]';
-}
-
-async function convExtractPdf(file){
+function convExtractPdfText(file){
   return new Promise(resolve=>{
     const r=new FileReader();
     r.onload=e=>{
       const arr=new Uint8Array(e.target.result);
       let t='';
-      for(let i=0;i<Math.min(arr.length,50000);i++){
+      for(let i=0;i<Math.min(arr.length,80000);i++){
         const c=arr[i];
         if(c>=32&&c<127)t+=String.fromCharCode(c);
         else if(c===10||c===13)t+='\n';
       }
       t=t.replace(/\n{3,}/g,'\n\n').trim();
-      if(t.length<50)t='[PDF com conteúdo de imagem/escaneado — '+file.name+']';
-      resolve(t.substring(0,8000));
+      resolve(t.substring(0,10000));
     };
     r.readAsArrayBuffer(file);
   });
 }
 
-async function convGenPDF(content,origName){
-  const lines=content.split('\n');
-  let html='<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:Arial;font-size:12px;line-height:1.6;margin:40px;color:#222}h1{font-size:20px;color:#1a1a2e;border-bottom:2px solid #e5bc5c;padding-bottom:8px;margin-bottom:16px}h2{font-size:16px;color:#003366;margin:14px 0 8px}p{margin-bottom:8px}.meta{font-size:10px;color:#888;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #eee}</style></head><body>';
-  html+=`<div class="meta">Convertido por FGA Suite IA · ${new Date().toLocaleDateString('pt-BR')} · ${origName}</div>`;
-  lines.forEach(l=>{
-    if(l.startsWith('[H1]')||l.startsWith('[TITLE]'))html+=`<h1>${l.replace(/^\[H1\]|\[TITLE\]/,'').trim()}</h1>`;
-    else if(l.startsWith('[H2]'))html+=`<h2>${l.replace('[H2]','').trim()}</h2>`;
-    else if(l.trim())html+=`<p>${l.trim()}</p>`;
-  });
-  html+='</body></html>';
-  return new Blob([html],{type:'application/pdf'});
+async function convExtractDocxStructured(file){
+  const zip=await JSZip.loadAsync(await file.arrayBuffer());
+  const xml=await zip.file('word/document.xml').async('string');
+  const paras=[...xml.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)].map(m=>{
+    const texts=[...m[0].matchAll(/<w:t[^>]*>([^<]*)<\/w:t>/g)].map(t=>t[1]);
+    return texts.join('');
+  }).filter(l=>l.trim().length);
+  const paragraphs=paras.length?paras:['[Documento Word vazio ou sem texto extraível]'];
+  const rows=paragraphs.map(l=>l.split(/\s{2,}|\t/).filter(Boolean));
+  const slides=[];
+  for(let i=0;i<paragraphs.length;i+=6){
+    const chunk=paragraphs.slice(i,i+6);
+    slides.push({title:chunk[0]||('Slide '+(slides.length+1)),bullets:chunk.slice(1)});
+  }
+  return {paragraphs,rows,slides:slides.length?slides:[{title:file.name,bullets:paragraphs.slice(0,6)}]};
 }
 
-function convGenDocx(content,origName){
-  const rtf='{\\rtf1\\ansi\\deff0{\\fonttbl{\\f0 Arial;}}\\f0\\fs24\\pard\\par FGA Suite IA — '+origName.replace(/[\\{}]/g,'')+'\\par '+new Date().toLocaleDateString('pt-BR')+'\\par\\par '+content.replace(/[\\{}]/g,'\\$&').replace(/\n/g,'\\par ').substring(0,8000)+'}';
-  return new Blob([rtf],{type:'application/msword'});
+async function convExtractXlsxStructured(file){
+  const zip=await JSZip.loadAsync(await file.arrayBuffer());
+  let shared=[];
+  const sharedFile=zip.file('xl/sharedStrings.xml');
+  if(sharedFile){
+    const sxml=await sharedFile.async('string');
+    shared=[...sxml.matchAll(/<t[^>]*>([^<]*)<\/t>/g)].map(m=>m[1]);
+  }
+  const sheetFile=zip.file('xl/worksheets/sheet1.xml');
+  const rows=[];
+  if(sheetFile){
+    const sxml=await sheetFile.async('string');
+    const rowMatches=[...sxml.matchAll(/<row[^>]*>([\s\S]*?)<\/row>/g)];
+    rowMatches.forEach(rm=>{
+      const cells=[...rm[1].matchAll(/<c[^>]*(?:t="([^"]*)")?[^>]*>(?:<v>([^<]*)<\/v>)?<\/c>/g)];
+      const rowVals=cells.map(c=>{
+        const type=c[1],val=c[2]||'';
+        if(type==='s'&&shared[+val]!==undefined) return shared[+val];
+        return val;
+      });
+      if(rowVals.some(v=>v!=='')) rows.push(rowVals);
+    });
+  }
+  if(!rows.length) rows.push(['[Planilha vazia ou sem dados extraíveis]']);
+  const paragraphs=rows.map(r=>r.join('  '));
+  const slides=[];
+  for(let i=0;i<paragraphs.length;i+=10){
+    const chunk=paragraphs.slice(i,i+10);
+    slides.push({title:'Dados '+(slides.length+1),bullets:chunk});
+  }
+  return {paragraphs,rows,slides:slides.length?slides:[{title:file.name,bullets:paragraphs.slice(0,6)}]};
 }
 
-function convGenXlsx(content,origName){
-  let csv='FGA Suite IA\nArquivo: '+origName+'\nData: '+new Date().toLocaleDateString('pt-BR')+'\n\n';
-  content.split('\n').filter(l=>l.trim()).forEach(l=>{
-    csv+=l.includes(',')?l+'\n':'"'+l.replace(/"/g,'""')+'"\n';
-  });
-  return new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+async function convExtractPptxStructured(file){
+  const zip=await JSZip.loadAsync(await file.arrayBuffer());
+  const slideFiles=Object.keys(zip.files).filter(n=>/^ppt\/slides\/slide\d+\.xml$/.test(n))
+    .sort((a,b)=>(+a.match(/\d+/)[0])-(+b.match(/\d+/)[0]));
+  const slides=[];
+  for(const name of slideFiles){
+    const xml=await zip.file(name).async('string');
+    const texts=[...xml.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map(m=>m[1]).filter(Boolean);
+    slides.push({title:texts[0]||('Slide '+(slides.length+1)),bullets:texts.slice(1)});
+  }
+  if(!slides.length) slides.push({title:file.name,bullets:['[Apresentação vazia ou sem texto extraível]']});
+  const paragraphs=slides.flatMap(s=>[s.title,...s.bullets]);
+  const rows=paragraphs.map(l=>[l]);
+  return {paragraphs,rows,slides};
 }
 
-function convGenPptx(content,origName){
-  const slides=[];let cur=null;
-  content.split('\n').forEach(l=>{
-    if(l.match(/\[SLIDE\s*\d+\]/i)){if(cur)slides.push(cur);cur={title:'',content:[]};}
-    else if(l.startsWith('[TITLE]')&&cur)cur.title=l.replace('[TITLE]','').trim();
-    else if(cur&&l.trim()&&!l.startsWith('['))cur.content.push(l.trim());
+// ── GERAÇÃO — cria arquivos reais nos formatos de saída ──
+
+// PDF real via pdf-lib
+async function convGenPDF(structured,origName){
+  const pdfDoc=await PDFLib.PDFDocument.create();
+  const font=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+  const fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+  const margin=50,lineH=16,pageW=595,pageH=842;
+  let page=pdfDoc.addPage([pageW,pageH]);
+  let y=pageH-margin;
+
+  const drawHeader=()=>{
+    page.drawText('FGA Suite — Conversão Local',{x:margin,y:pageH-30,size:8,color:PDFLib.rgb(.55,.55,.55)});
+    page.drawText(origName,{x:pageW-margin-200,y:pageH-30,size:8,color:PDFLib.rgb(.55,.55,.55)});
+  };
+  drawHeader();
+  page.drawText('Documento Convertido',{x:margin,y,size:16,font:fontBold,color:PDFLib.rgb(0,0.2,0.4)});
+  y-=28;
+
+  const lines=structured.paragraphs&&structured.paragraphs.length?structured.paragraphs:['[Sem conteúdo extraído]'];
+  for(const raw of lines){
+    const text=String(raw).substring(0,500);
+    // wrap simples por largura de caracteres
+    const maxChars=95;
+    for(let i=0;i<text.length;i+=maxChars){
+      if(y<margin+20){ page=pdfDoc.addPage([pageW,pageH]); y=pageH-margin; drawHeader(); }
+      page.drawText(text.substring(i,i+maxChars),{x:margin,y,size:10,font,color:PDFLib.rgb(0,0,0)});
+      y-=lineH;
+    }
+    y-=4;
+  }
+  const bytes=await pdfDoc.save();
+  return {blob:new Blob([bytes],{type:'application/pdf'}),preview:lines.slice(0,20).join('\n')};
+}
+
+// DOCX real (OOXML) via JSZip
+async function convGenDocx(structured,origName){
+  const paras=(structured.paragraphs&&structured.paragraphs.length)?structured.paragraphs:['[Sem conteúdo extraído]'];
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const bodyParas=paras.map(p=>`<w:p><w:r><w:t xml:space="preserve">${esc(p)}</w:t></w:r></w:p>`).join('');
+
+  const documentXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+<w:body>
+<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="32"/></w:rPr><w:t xml:space="preserve">Documento Convertido — FGA Suite</w:t></w:r></w:p>
+<w:p><w:r><w:rPr><w:i/><w:sz w:val="16"/><w:color w:val="888888"/></w:rPr><w:t xml:space="preserve">Origem: ${esc(origName)}</w:t></w:r></w:p>
+<w:p/>
+${bodyParas}
+<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1417" w:right="1417" w:bottom="1417" w:left="1417"/></w:sectPr>
+</w:body>
+</w:document>`;
+
+  const zip=new JSZip();
+  zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+<Default Extension="xml" ContentType="application/xml"/>
+<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>
+</Types>`);
+  zip.folder('_rels').file('.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>
+</Relationships>`);
+  zip.folder('word').file('document.xml',documentXml);
+  zip.folder('word').folder('_rels').file('document.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"/>`);
+
+  const blob=await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+  return {blob,preview:paras.slice(0,20).join('\n')};
+}
+
+// XLSX real (OOXML) via JSZip
+async function convGenXlsx(structured,origName){
+  const rows=(structured.rows&&structured.rows.length)?structured.rows:[['Sem dados extraídos']];
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const colLetter=n=>{let s='';n++;while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;};
+
+  let sheetRows='';
+  rows.forEach((row,ri)=>{
+    const rIdx=ri+1;
+    let cells='';
+    row.forEach((val,ci)=>{
+      const ref=colLetter(ci)+rIdx;
+      cells+=`<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${esc(val)}</t></is></c>`;
+    });
+    sheetRows+=`<row r="${rIdx}">${cells}</row>`;
   });
-  if(cur)slides.push(cur);
-  if(!slides.length)slides.push({title:origName,content:content.split('\n').slice(0,6)});
-  let html=`<!DOCTYPE html><html><head><meta charset="utf-8"><style>*{box-sizing:border-box}body{font-family:Arial;margin:0;background:#1a1a2e}.slide{width:800px;min-height:450px;background:#fff;margin:20px auto;padding:48px;border-radius:6px;page-break-after:always}.sn{font-size:11px;color:#999;margin-bottom:8px}.slide h1{font-size:28px;color:#1a1a2e;border-bottom:3px solid #e5bc5c;padding-bottom:12px;margin-bottom:20px}.slide p{font-size:15px;color:#333;line-height:1.6;margin-bottom:8px}.foot{font-size:10px;color:#bbb;margin-top:20px}</style></head><body>`;
-  slides.forEach((s,i)=>{html+=`<div class="slide"><div class="sn">Slide ${i+1}/${slides.length}</div><h1>${s.title||'Slide '+(i+1)}</h1>${s.content.map(c=>`<p>${c}</p>`).join('')}<div class="foot">FGA Suite IA · ${origName}</div></div>`;});
-  html+='</body></html>';
-  return new Blob([html],{type:'text/html'});
+
+  const sheetXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+<sheetData>${sheetRows}</sheetData>
+</worksheet>`;
+
+  const zip=new JSZip();
+  zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+<Default Extension="xml" ContentType="application/xml"/>
+<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
+<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
+</Types>`);
+  zip.folder('_rels').file('.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>
+</Relationships>`);
+  zip.folder('xl').file('workbook.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+<sheets><sheet name="Dados" sheetId="1" r:id="rId1"/></sheets>
+</workbook>`);
+  zip.folder('xl').folder('_rels').file('workbook.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>
+</Relationships>`);
+  zip.folder('xl').folder('worksheets').file('sheet1.xml',sheetXml);
+
+  const blob=await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  return {blob,preview:rows.slice(0,20).map(r=>r.join('  ')).join('\n')};
+}
+
+// PPTX real (OOXML) via JSZip
+async function convGenPptx(structured,origName){
+  const slides=(structured.slides&&structured.slides.length)?structured.slides:[{title:origName,bullets:['[Sem conteúdo extraído]']}];
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  const zip=new JSZip();
+  zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+<Default Extension="xml" ContentType="application/xml"/>
+<Override PartName="/ppt/presentation.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"/>
+${slides.map((s,i)=>`<Override PartName="/ppt/slides/slide${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>`).join('\n')}
+</Types>`);
+
+  zip.folder('_rels').file('.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="ppt/presentation.xml"/>
+</Relationships>`);
+
+  zip.folder('ppt').file('presentation.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<p:presentation xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+<p:sldIdLst>${slides.map((s,i)=>`<p:sldId id="${256+i}" r:id="rId${i+1}"/>`).join('')}</p:sldIdLst>
+<p:sldSz cx="9144000" cy="6858000"/>
+</p:presentation>`);
+
+  zip.folder('ppt').folder('_rels').file('presentation.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+${slides.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide${i+1}.xml"/>`).join('\n')}
+</Relationships>`);
+
+  slides.forEach((s,i)=>{
+    const bulletShapes=s.bullets.map((b,bi)=>`
+      <a:p><a:r><a:rPr lang="pt-BR" sz="1800"/><a:t>${esc(b)}</a:t></a:r></a:p>`).join('');
+    const slideXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+<p:cSld>
+<p:spTree>
+<p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>
+<p:grpSpPr/>
+<p:sp>
+<p:nvSpPr><p:cNvPr id="2" name="Title"/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="title"/></p:nvPr></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="457200" y="274638"/><a:ext cx="8229600" cy="1143000"/></a:xfrm></p:spPr>
+<p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang="pt-BR" sz="3200" b="1"/><a:t>${esc(s.title)}</a:t></a:r></a:p></p:txBody>
+</p:sp>
+<p:sp>
+<p:nvSpPr><p:cNvPr id="3" name="Content"/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="body" idx="1"/></p:nvPr></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="457200" y="1600200"/><a:ext cx="8229600" cy="4525963"/></a:xfrm></p:spPr>
+<p:txBody><a:bodyPr/><a:lstStyle/>${bulletShapes||'<a:p><a:r><a:rPr lang="pt-BR" sz="1800"/><a:t> </a:t></a:r></a:p>'}</p:txBody>
+</p:sp>
+</p:spTree>
+</p:cSld>
+</p:sld>`;
+    zip.folder('ppt').folder('slides').file('slide'+(i+1)+'.xml',slideXml);
+  });
+
+  const blob=await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.presentationml.presentation'});
+  const preview=slides.map(s=>s.title+'\n'+s.bullets.map(b=>'  • '+b).join('\n')).join('\n\n');
+  return {blob,preview};
 }
 
 function convDownload(){
@@ -1441,7 +1661,6 @@ function genBarcode(){
   if(num.length!==13){alert('EAN-13 precisa ter 13 dígitos!');return;}
   const cv=document.getElementById('ean-canvas');cv.width=300;cv.height=100;
   const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,300,100);
-  // Desenho simplificado de barras baseado nos dígitos
   const bw=2,x0=20,h=70;
   ctx.fillStyle='#000';
   for(let i=0;i<num.length;i++){
@@ -1894,7 +2113,6 @@ async function gerarAta(){
 function calcSN(){
   const rec=+document.getElementById('sn-rec').value;
   const anx=+document.getElementById('sn-anx').value;
-  // Tabela simplificada por faixas (Resolução CGSN)
   const tabelas=[
     [[180000,4],[360000,7.3],[720000,9.5],[1800000,10.7],[3600000,14.3],[4800000,19]],
     [[180000,4.5],[360000,7.8],[720000,10],[1800000,11.2],[3600000,14.7],[4800000,30]],
@@ -1984,7 +2202,6 @@ async function gerarInformeIR(){
 }
 
 // ── INIT ──────────────────────────────────────────────
-// Fix view-about/contato initial state
 document.getElementById('view-about').style.display='none';
 document.getElementById('view-contato').style.display='none';
 renderGrid();
