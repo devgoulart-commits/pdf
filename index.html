@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FGA Suite · Premium Ecosystem</title>
+<title>Nexora System Suite · Premium Ecosystem</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500;700&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -164,25 +164,27 @@ body.collapsed .main-content{margin-left:0}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
 /* ── CONVERSORES IA ── */
-.conv-lang-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.conv-lang-label{font-size:11px;color:var(--muted);font-weight:600}
-.conv-lang-btn{padding:4px 12px;border-radius:16px;border:1px solid var(--border);background:var(--bg-card);color:var(--muted);font-size:12px;cursor:pointer;font-weight:500;transition:all .15s}
-.conv-lang-btn.active{background:var(--gold);border-color:var(--gold);color:#000;font-weight:700}
-.conv-tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;margin-bottom:16px}
-.conv-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:7px;position:relative}
-.conv-card:hover{border-color:var(--gold);background:var(--bg-hover)}
-.conv-card.conv-active{border-color:var(--gold);border-width:2px;background:rgba(229,188,92,.06)}
-.conv-card-icon{font-size:20px}
-.conv-card-title{font-size:12px;font-weight:700;color:var(--text)}
-.conv-card-desc{font-size:10px;color:var(--muted);line-height:1.4}
+.conv-lang-bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;background:linear-gradient(135deg,rgba(229,188,92,.10),rgba(229,188,92,.03));border:1px solid rgba(229,188,92,.35);border-radius:12px;padding:12px 16px}
+.conv-lang-label{font-size:13px;color:var(--text);font-weight:800}
+.conv-lang-btns{display:flex;gap:8px;flex-wrap:wrap}
+.conv-lang-btn{padding:7px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg-card);color:var(--muted);font-size:13px;cursor:pointer;font-weight:700;transition:all .15s}
+.conv-lang-btn:hover{border-color:var(--gold2)}
+.conv-lang-btn.active{background:var(--gold);border-color:var(--gold);color:#000;box-shadow:0 0 0 3px rgba(229,188,92,.22)}
+.conv-tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:20px}
+.conv-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:22px 14px 18px;cursor:pointer;transition:transform .18s,box-shadow .18s,border-color .18s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;position:relative;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.conv-card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.14);border-color:var(--gold2)}
+.conv-card.conv-active{border-color:var(--gold);border-width:2px;background:rgba(229,188,92,.07)}
+.conv-card-icon{width:58px;height:58px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.conv-card-title{font-size:13.5px;font-weight:800;color:var(--text)}
+.conv-card-desc{font-size:10.5px;color:var(--muted);line-height:1.4}
 .conv-panel{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:16px;display:none}
 .conv-panel.open{display:block}
-.conv-drop{border:1.5px dashed var(--border);border-radius:8px;padding:24px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg-card);position:relative;overflow:hidden}
-.conv-drop:hover,.conv-drop.drag{border-color:var(--gold);background:rgba(229,188,92,.05)}
+.conv-drop{border:2px dashed var(--border);border-radius:14px;padding:38px 20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg-card);position:relative;overflow:hidden}
+.conv-drop:hover,.conv-drop.drag{border-color:var(--gold);background:rgba(229,188,92,.06)}
 .conv-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.conv-drop-icon{font-size:28px;margin-bottom:8px;display:block}
-.conv-drop-text{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
-.conv-drop-sub{font-size:11px;color:var(--muted)}
+.conv-drop-icon{font-size:40px;margin-bottom:10px;display:block}
+.conv-drop-text{font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:5px}
+.conv-drop-sub{font-size:11.5px;color:var(--muted)}
 .conv-file-row{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px 14px;display:none;align-items:center;gap:10px;margin-top:8px}
 .conv-file-row.show{display:flex}
 .conv-fi-name{font-size:12px;font-weight:600;color:var(--text);flex:1}
@@ -215,7 +217,7 @@ body.collapsed .main-content{margin-left:0}
 <!-- SIDEBAR ESQUERDA -->
 <aside class="sidebar-left">
   <div class="logo-wrap">
-    <div class="logo"><span class="g">FGA</span><span class="o">SUITE</span></div>
+    <div class="logo"><span class="g">NEXORA</span><span class="o">SUITE</span></div>
   </div>
   <nav class="nav-group">
     <div class="nav-item active" onclick="showView('grid',this)">🏠 Início</div>
@@ -231,7 +233,7 @@ body.collapsed .main-content{margin-left:0}
     <div class="cat-item" onclick="filterCat('office',this)"><span>Contábil & Gestão</span><span class="cat-count">25</span></div>
     <div class="cat-item" onclick="filterCat('office2',this)"><span>Office IA ✨</span><span class="cat-count">6</span></div>
   </div>
-  <div class="sidebar-footer">FGA Suite v2.4.1</div>
+  <div class="sidebar-footer">Nexora System Suite v2.4.1</div>
 </aside>
 
 <!-- CONTEÚDO PRINCIPAL -->
@@ -252,18 +254,18 @@ body.collapsed .main-content{margin-left:0}
   <!-- VIEW GRID -->
   <div id="view-grid">
     <div class="hero">
-      <h1>FGA Premium Suite</h1>
+      <h1>Nexora System Suite</h1>
       <p>74 soluções corporativas integradas em um só ambiente — incluindo conversores Office com IA.</p>
     </div>
     <div class="sec-header"><h2>Todas as Ferramentas</h2></div>
     <div class="grid" id="tools-grid"></div>
-    <footer class="footer-txt">© 2026 FGA Holding · Premium Solution · <a href="mailto:fgatechnologies@outlook.com" style="color:var(--gold);text-decoration:none">fgatechnologies@outlook.com</a></footer>
+    <footer class="footer-txt">© 2026 Nexora Systems - FGA Holding LLC · Todos os direitos reservados · <a href="mailto:fgatechnologies@outlook.com" style="color:var(--gold);text-decoration:none">fgatechnologies@outlook.com</a></footer>
   </div>
 
   <!-- VIEW SOBRE -->
   <div id="view-about" class="view-sec">
-    <h2>Sobre a FGA Holding</h2>
-    <p>A FGA Holding desenvolve ecossistemas de alta performance para gerenciamento corporativo e automação financeira estável.</p>
+    <h2>Sobre a Nexora Systems - FGA Holding LLC</h2>
+    <p>A Nexora Systems - FGA Holding LLC desenvolve ecossistemas de alta performance para gerenciamento corporativo e automação financeira estável.</p>
     <p>Nossa suíte reúne ferramentas de PDF, imagem, conversão e gestão contábil em um ambiente unificado, seguro e executável 100% no navegador — sem envio de dados a servidores externos.</p>
     <p>A partir da versão 2.4.0, integramos motor local de conversão inteligente entre formatos Office (Word, Excel, PowerPoint) e PDF, com suporte multilingual (PT / EN / ES), gerando arquivos reais nos formatos OOXML padrão.</p>
   </div>
@@ -457,12 +459,12 @@ const TOOLS=[
 ];
 
 const CONV_TOOLS=[
-  {id:'pdf2word',icon:'📄→📝',title:'PDF → Word',desc:'Gera .docx real (OOXML)',accept:'.pdf',out:'docx'},
-  {id:'pdf2excel',icon:'📄→📊',title:'PDF → Excel',desc:'Exporta tabelas para .xlsx real',accept:'.pdf',out:'xlsx'},
-  {id:'pdf2pptx',icon:'📄→📑',title:'PDF → PowerPoint',desc:'Converte páginas em slides .pptx reais',accept:'.pdf',out:'pptx'},
-  {id:'word2pdf',icon:'📝→📄',title:'Word → PDF',desc:'Converte .docx para PDF real',accept:'.docx',out:'pdf'},
-  {id:'excel2pdf',icon:'📊→📄',title:'Excel → PDF',desc:'Exporta planilha .xlsx para PDF real',accept:'.xlsx',out:'pdf'},
-  {id:'pptx2pdf',icon:'📑→📄',title:'PowerPoint → PDF',desc:'Exporta slides .pptx para PDF real',accept:'.pptx',out:'pdf'},
+  {id:'pdf2word',icon:'📄→📝',title:'PDF → Word',desc:'Gera .docx real (OOXML)',accept:'.pdf',out:'docx',color:'#2b579a'},
+  {id:'pdf2excel',icon:'📄→📊',title:'PDF → Excel',desc:'Exporta tabelas para .xlsx real',accept:'.pdf',out:'xlsx',color:'#1d6f42'},
+  {id:'pdf2pptx',icon:'📄→📑',title:'PDF → PowerPoint',desc:'Converte páginas em slides .pptx reais',accept:'.pdf',out:'pptx',color:'#d24726'},
+  {id:'word2pdf',icon:'📝→📄',title:'Word → PDF',desc:'Converte .docx para PDF real',accept:'.docx',out:'pdf',color:'#e5322d'},
+  {id:'excel2pdf',icon:'📊→📄',title:'Excel → PDF',desc:'Exporta planilha .xlsx para PDF real',accept:'.xlsx',out:'pdf',color:'#e5322d'},
+  {id:'pptx2pdf',icon:'📑→📄',title:'PowerPoint → PDF',desc:'Exporta slides .pptx para PDF real',accept:'.pptx',out:'pdf',color:'#e5322d'},
 ];
 
 const TOOL_ID_MAP={69:'pdf2word',70:'pdf2excel',71:'pdf2pptx',72:'word2pdf',73:'excel2pdf',74:'pptx2pdf'};
@@ -477,14 +479,14 @@ function enviarMensagem(via){
   const assunto=document.getElementById('msg-assunto').value.trim();
   const corpo=document.getElementById('msg-corpo').value.trim();
   if(!nome||!corpo){alert('Preencha pelo menos o nome e a mensagem.');return;}
-  const texto=`*FGA Suite — Nova Mensagem*\n\n*Nome:* ${nome}\n*Contato:* ${contato||'Não informado'}\n*Assunto:* ${assunto||'Contato Geral'}\n\n*Mensagem:*\n${corpo}`;
+  const texto=`*Nexora System Suite — Nova Mensagem*\n\n*Nome:* ${nome}\n*Contato:* ${contato||'Não informado'}\n*Assunto:* ${assunto||'Contato Geral'}\n\n*Mensagem:*\n${corpo}`;
   if(via==='whatsapp'){
     const url='https://wa.me/5531997661377?text='+encodeURIComponent(texto);
     window.open(url,'_blank');
     document.getElementById('wa-redirect').classList.add('show');
     document.getElementById('msg-success').classList.remove('show');
   } else {
-    const subject=encodeURIComponent('[FGA Suite] '+(assunto||'Contato'));
+    const subject=encodeURIComponent('[Nexora System Suite] '+(assunto||'Contato'));
     const body=encodeURIComponent(`Nome: ${nome}\nContato: ${contato||'Não informado'}\n\nMensagem:\n${corpo}`);
     window.location.href=`mailto:fgatechnologies@outlook.com?subject=${subject}&body=${body}`;
     document.getElementById('msg-success').classList.add('show');
@@ -592,8 +594,12 @@ function buildModal(id,tool){
   if(id===6){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione 2+ PDFs para mesclar:</p><input type="file" id="merge-pdfs" accept="application/pdf" multiple class="f-input"><button class="btn-exec" onclick="mergePDFs()">🔗 Mesclar PDFs</button>`;return;}
   if(id===7){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Adiciona número no rodapé de cada página:</p><input type="file" id="num-pdf" accept="application/pdf" class="f-input"><button class="btn-exec" onclick="numberPages()">🔢 Numerar Páginas</button>`;return;}
   if(id===8){body.innerHTML=`<div class="f-row"><label class="f-label">PDF:</label><input type="file" id="wm-pdf" accept="application/pdf" class="f-input"></div><div class="f-row"><label class="f-label">Texto da marca d'água:</label><input type="text" id="wm-text" value="CONFIDENCIAL" class="f-input"></div><button class="btn-exec" onclick="addWatermark()">💧 Aplicar Marca d'Água</button>`;return;}
-  if(id===12){body.innerHTML=`<div class="f-row"><label class="f-label">PDF:</label><input type="file" id="footer-pdf" accept="application/pdf" class="f-input"></div><div class="f-row"><label class="f-label">Texto do rodapé:</label><input type="text" id="footer-text" value="FGA Holding © 2026 — Documento Corporativo Confidencial" class="f-input"></div><button class="btn-exec" onclick="addFooter()">📝 Adicionar Rodapé</button>`;return;}
+  if(id===9){body.innerHTML=`<div class="f-row"><label class="f-label">PDF:</label><input type="file" id="rot-pdf" accept="application/pdf" class="f-input"></div><div class="f-row"><label class="f-label">Ângulo de rotação:</label><select id="rot-pdf-deg" class="f-input"><option value="90">90° (sentido horário)</option><option value="180">180°</option><option value="270">270° (anti-horário)</option></select></div><button class="btn-exec" onclick="rotatePdfPages()">🔄 Girar Páginas e Baixar</button>`;return;}
+  if(id===10){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF para extrair o texto:</p><input type="file" id="extract-pdf" accept="application/pdf" class="f-input" onchange="extractPdfTextTool(this)"><div class="result-box" id="extract-result"></div><button class="btn-sm" id="extract-dl-btn" style="display:none" onclick="dlExtractedText()">⬇️ Baixar .txt</button>`;return;}
+  if(id===11){body.innerHTML=`<div class="f-row"><label class="f-label">PDF:</label><input type="file" id="prot-pdf" accept="application/pdf" class="f-input"></div><div class="f-row"><label class="f-label">Senha:</label><input type="password" id="prot-pass" class="f-input" placeholder="Digite uma senha"></div><div style="background:rgba(83,74,183,.07);border:1px solid rgba(83,74,183,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#a78bfa;line-height:1.5">🔒 Gera um arquivo <strong>.pdf.locked</strong> criptografado com AES-256 (chave derivada da senha via PBKDF2). Para reabrir o PDF original, use a opção "Desbloquear" abaixo com a mesma senha.</div><button class="btn-exec" onclick="protectPdfFile()">🔒 Proteger PDF</button><div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><label class="f-label">Já tem um arquivo protegido? Desbloqueie aqui:</label><input type="file" id="unlock-pdf" accept=".locked" class="f-input" style="margin-top:8px"><input type="password" id="unlock-pass" class="f-input" placeholder="Senha" style="margin-top:8px"><button class="btn-sm" onclick="unlockPdfFile()">🔓 Desbloquear PDF</button></div>`;return;}
+  if(id===12){body.innerHTML=`<div class="f-row"><label class="f-label">PDF:</label><input type="file" id="footer-pdf" accept="application/pdf" class="f-input"></div><div class="f-row"><label class="f-label">Texto do rodapé:</label><input type="text" id="footer-text" value="Nexora Systems - FGA Holding LLC © 2026 — Documento Corporativo Confidencial" class="f-input"></div><button class="btn-exec" onclick="addFooter()">📝 Adicionar Rodapé</button>`;return;}
   if(id===13){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Insere data e hora no canto superior direito:</p><input type="file" id="ts-pdf" accept="application/pdf" class="f-input"><button class="btn-exec" onclick="addTimestamp()">🕐 Carimbar Data/Hora</button>`;return;}
+  if(id===14){body.innerHTML=`<div class="f-row"><label class="f-label">PDF:</label><input type="file" id="split-pdf" accept="application/pdf" class="f-input"></div><div class="grid-2"><div class="f-row"><label class="f-label">Página inicial</label><input type="number" id="split-start" value="1" min="1" class="f-input"></div><div class="f-row"><label class="f-label">Página final</label><input type="number" id="split-end" value="1" min="1" class="f-input"></div></div><button class="btn-exec" onclick="splitPdfRange()">✂️ Extrair Intervalo de Páginas</button>`;return;}
   if(id===15){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF para ver propriedades:</p><input type="file" id="prop-pdf" accept="application/pdf" class="f-input" onchange="showPDFProps(this)"><div class="result-box" id="prop-result"></div>`;return;}
   if(id===16){body.innerHTML=`<input type="file" id="resize-img" accept="image/*" class="f-input"><div class="grid-2"><div class="f-row"><label class="f-label">Largura (px)</label><input type="number" id="resize-w" value="800" class="f-input"></div><div class="f-row"><label class="f-label">Altura (px)</label><input type="number" id="resize-h" value="600" class="f-input"></div></div><button class="btn-exec" onclick="resizeImage()">↔️ Redimensionar</button>`;return;}
   if(id===19){body.innerHTML=`<input type="file" id="gray-img" accept="image/*" class="f-input"><canvas id="gray-preview" style="max-width:100%;border-radius:6px;margin-top:8px;display:none"></canvas><button class="btn-exec" onclick="toGrayscale()">🖤 Converter para Cinza</button>`;return;}
@@ -622,8 +628,8 @@ function buildModal(id,tool){
   if(id===22){body.innerHTML=`<div class="f-row"><label class="f-label">Selecione a imagem:</label><input type="file" id="mir-img" accept="image/*" class="f-input"></div><div class="f-row"><label class="f-label">Direção:</label><select id="mir-dir" class="f-input"><option value="h">Horizontal (espelho)</option><option value="v">Vertical (virar)</option></select></div><button class="btn-exec" onclick="mirrorImg()">↔️ Espelhar e Baixar</button>`;return;}
   if(id===23){body.innerHTML=`<div class="f-row"><label class="f-label">Selecione a imagem:</label><input type="file" id="brd-img" accept="image/*" class="f-input"></div><div class="grid-2"><div class="f-row"><label class="f-label">Cor da borda:</label><input type="color" id="brd-color" value="#e5bc5c" class="f-input" style="height:42px"></div><div class="f-row"><label class="f-label">Espessura (px):</label><input type="number" id="brd-size" value="20" class="f-input"></div></div><button class="btn-exec" onclick="addBorder()">🖼️ Adicionar Borda e Baixar</button>`;return;}
   if(id===24){body.innerHTML=`<div class="f-row"><label class="f-label">Selecione a imagem:</label><input type="file" id="thumb-img" accept="image/*" class="f-input"></div><div class="grid-2"><div class="f-row"><label class="f-label">Largura máx. (px):</label><input type="number" id="thumb-w" value="300" class="f-input"></div><div class="f-row"><label class="f-label">Altura máx. (px):</label><input type="number" id="thumb-h" value="300" class="f-input"></div></div><button class="btn-exec" onclick="genThumbnail()">🖼️ Gerar Miniatura</button>`;return;}
-  if(id===25){body.innerHTML=`<div class="f-row"><label class="f-label">Selecione a imagem:</label><input type="file" id="wmi-img" accept="image/*" class="f-input"></div><div class="f-row"><label class="f-label">Texto da marca d'água:</label><input type="text" id="wmi-txt" value="FGA HOLDING" class="f-input"></div><div class="grid-2"><div class="f-row"><label class="f-label">Cor do texto:</label><input type="color" id="wmi-color" value="#ffffff" class="f-input" style="height:42px"></div><div class="f-row"><label class="f-label">Opacidade (%):</label><input type="number" id="wmi-op" value="40" min="5" max="100" class="f-input"></div></div><button class="btn-exec" onclick="watermarkImg()">💧 Aplicar e Baixar</button>`;return;}
-  if(id===26){body.innerHTML=`<div class="f-row"><label class="f-label">Selecione a imagem:</label><input type="file" id="txt-img" accept="image/*" class="f-input"></div><div class="f-row"><label class="f-label">Texto a inserir:</label><input type="text" id="txt-text" value="FGA Suite 2026" class="f-input"></div><div class="grid-2"><div class="f-row"><label class="f-label">Tamanho da fonte (px):</label><input type="number" id="txt-size" value="32" class="f-input"></div><div class="f-row"><label class="f-label">Cor:</label><input type="color" id="txt-color" value="#ffffff" class="f-input" style="height:42px"></div><div class="f-row"><label class="f-label">Posição X (px):</label><input type="number" id="txt-x" value="20" class="f-input"></div><div class="f-row"><label class="f-label">Posição Y (px):</label><input type="number" id="txt-y" value="40" class="f-input"></div></div><button class="btn-exec" onclick="addTextImg()">✍️ Adicionar Texto e Baixar</button>`;return;}
+  if(id===25){body.innerHTML=`<div class="f-row"><label class="f-label">Selecione a imagem:</label><input type="file" id="wmi-img" accept="image/*" class="f-input"></div><div class="f-row"><label class="f-label">Texto da marca d'água:</label><input type="text" id="wmi-txt" value="NEXORA SYSTEMS" class="f-input"></div><div class="grid-2"><div class="f-row"><label class="f-label">Cor do texto:</label><input type="color" id="wmi-color" value="#ffffff" class="f-input" style="height:42px"></div><div class="f-row"><label class="f-label">Opacidade (%):</label><input type="number" id="wmi-op" value="40" min="5" max="100" class="f-input"></div></div><button class="btn-exec" onclick="watermarkImg()">💧 Aplicar e Baixar</button>`;return;}
+  if(id===26){body.innerHTML=`<div class="f-row"><label class="f-label">Selecione a imagem:</label><input type="file" id="txt-img" accept="image/*" class="f-input"></div><div class="f-row"><label class="f-label">Texto a inserir:</label><input type="text" id="txt-text" value="Nexora System Suite 2026" class="f-input"></div><div class="grid-2"><div class="f-row"><label class="f-label">Tamanho da fonte (px):</label><input type="number" id="txt-size" value="32" class="f-input"></div><div class="f-row"><label class="f-label">Cor:</label><input type="color" id="txt-color" value="#ffffff" class="f-input" style="height:42px"></div><div class="f-row"><label class="f-label">Posição X (px):</label><input type="number" id="txt-x" value="20" class="f-input"></div><div class="f-row"><label class="f-label">Posição Y (px):</label><input type="number" id="txt-y" value="40" class="f-input"></div></div><button class="btn-exec" onclick="addTextImg()">✍️ Adicionar Texto e Baixar</button>`;return;}
 
   // ── CONVERSORES (ferramentas faltantes) ──
   if(id===35){body.innerHTML=`<div class="f-row"><label class="f-label">Número EAN-13 (13 dígitos):</label><input type="text" id="ean-num" class="f-input" placeholder="7891234567890" maxlength="13" value="7891234567890"></div><button class="btn-exec" onclick="genBarcode()">📊 Gerar Código de Barras</button><canvas id="ean-canvas" style="display:block;margin:12px auto;background:#fff;border-radius:4px"></canvas><button class="btn-sm" id="ean-dl" style="display:none" onclick="dlEAN()">⬇️ Baixar PNG</button>`;return;}
@@ -678,7 +684,7 @@ function buildModal(id,tool){
   <div class="f-row"><label class="f-label">Valor Total (R$)</label><input type="number" id="prop-val" value="15000" class="f-input"></div>
   <button class="btn-exec" onclick="gerarProposta()">📄 Gerar Proposta Comercial PDF</button>`;return;}
   if(id===57){body.innerHTML=`<div class="grid-2">
-    <div class="f-row"><label class="f-label">Contratante</label><input type="text" id="cont-a" value="FGA Holding Ecosystem LTDA" class="f-input"></div>
+    <div class="f-row"><label class="f-label">Contratante</label><input type="text" id="cont-a" value="Nexora Systems - FGA Holding LLC" class="f-input"></div>
     <div class="f-row"><label class="f-label">Contratado</label><input type="text" id="cont-b" value="Prestador de Serviços LTDA" class="f-input"></div>
     <div class="f-row"><label class="f-label">Valor Mensal (R$)</label><input type="number" id="cont-val" value="3000" class="f-input"></div>
     <div class="f-row"><label class="f-label">Duração (meses)</label><input type="number" id="cont-dur" value="12" class="f-input"></div>
@@ -686,7 +692,7 @@ function buildModal(id,tool){
   <div class="f-row"><label class="f-label">Objeto do Contrato:</label><textarea id="cont-obj" class="f-textarea" rows="3">Prestação de serviços de consultoria em tecnologia da informação e desenvolvimento de sistemas.</textarea></div>
   <button class="btn-exec" onclick="gerarContrato()">📄 Gerar Contrato PDF</button>`;return;}
   if(id===58){body.innerHTML=`<div class="grid-2">
-    <div class="f-row"><label class="f-label">Emitente</label><input type="text" id="nota-emit" value="FGA Technologies LTDA" class="f-input"></div>
+    <div class="f-row"><label class="f-label">Emitente</label><input type="text" id="nota-emit" value="Nexora Systems LTDA" class="f-input"></div>
     <div class="f-row"><label class="f-label">Destinatário</label><input type="text" id="nota-dest" value="Cliente Final" class="f-input"></div>
     <div class="f-row"><label class="f-label">Nº da Nota</label><input type="text" id="nota-num" value="001" class="f-input"></div>
     <div class="f-row"><label class="f-label">Data</label><input type="date" id="nota-data" class="f-input" value="${new Date().toISOString().split('T')[0]}"></div>
@@ -697,11 +703,11 @@ function buildModal(id,tool){
   if(id===59){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Registre despesas da viagem:</p><div class="grid-2"><div class="f-row"><label class="f-label">Colaborador</label><input type="text" id="viag-col" value="João Silva" class="f-input" style="grid-column:1/3"></div></div><div id="viag-rows"><div class="grid-2" style="gap:6px"><input type="date" class="f-input viag-data"><input type="text" class="f-input viag-desc" placeholder="Descrição"><select class="f-input viag-cat"><option>Transporte</option><option>Hospedagem</option><option>Alimentação</option><option>Outros</option></select><input type="number" class="f-input viag-val" placeholder="Valor (R$)"></div></div><button class="btn-sm" onclick="addViagRow()">+ Adicionar Despesa</button><button class="btn-exec" onclick="gerarViagem()">📋 Gerar Relatório PDF</button>`;return;}
   if(id===60){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Gerencie entradas e saídas de estoque:</p><div id="est-rows"><div class="grid-2" style="gap:6px"><input type="text" class="f-input est-prod" placeholder="Produto"><select class="f-input est-tipo"><option value="entrada">Entrada</option><option value="saida">Saída</option></select><input type="number" class="f-input est-qtd" placeholder="Qtd"><input type="number" class="f-input est-preco" placeholder="Custo unit. (R$)"></div></div><button class="btn-sm" onclick="addEstRow()">+ Adicionar</button><button class="btn-exec" onclick="calcEstoque()">📦 Calcular Estoque e CMV</button><div class="result-box" id="est-result"></div>`;return;}
   if(id===61){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Monitore contratos ativos:</p><div id="cc-rows"><div class="grid-2" style="gap:6px"><input type="text" class="f-input cc-nome" placeholder="Nome do Contrato"><input type="text" class="f-input cc-part" placeholder="Contraparte"><input type="date" class="f-input cc-ini" title="Início"><input type="date" class="f-input cc-fim" title="Vencimento"></div></div><button class="btn-sm" onclick="addCCRow()">+ Adicionar</button><button class="btn-exec" onclick="calcCC()">📋 Gerar Painel de Contratos</button><div class="result-box" id="cc-result"></div>`;return;}
-  if(id===62){body.innerHTML=`<div class="f-row"><label class="f-label">Nome do Projeto:</label><input type="text" id="proj-nome" value="Implantação ERP FGA" class="f-input"></div><div id="proj-rows"><div class="grid-2" style="gap:6px"><input type="text" class="f-input proj-task" placeholder="Tarefa"><input type="text" class="f-input proj-resp" placeholder="Responsável"><input type="date" class="f-input proj-ini" title="Início"><input type="date" class="f-input proj-fim" title="Fim"><select class="f-input proj-status" style="grid-column:1/3"><option value="nao_iniciado">Não iniciado</option><option value="em_andamento">Em andamento</option><option value="concluido">Concluído</option></select></div></div><button class="btn-sm" onclick="addProjRow()">+ Adicionar Tarefa</button><button class="btn-exec" onclick="gerarCronograma()">📊 Gerar Cronograma PDF</button>`;return;}
+  if(id===62){body.innerHTML=`<div class="f-row"><label class="f-label">Nome do Projeto:</label><input type="text" id="proj-nome" value="Implantação ERP Nexora" class="f-input"></div><div id="proj-rows"><div class="grid-2" style="gap:6px"><input type="text" class="f-input proj-task" placeholder="Tarefa"><input type="text" class="f-input proj-resp" placeholder="Responsável"><input type="date" class="f-input proj-ini" title="Início"><input type="date" class="f-input proj-fim" title="Fim"><select class="f-input proj-status" style="grid-column:1/3"><option value="nao_iniciado">Não iniciado</option><option value="em_andamento">Em andamento</option><option value="concluido">Concluído</option></select></div></div><button class="btn-sm" onclick="addProjRow()">+ Adicionar Tarefa</button><button class="btn-exec" onclick="gerarCronograma()">📊 Gerar Cronograma PDF</button>`;return;}
   if(id===63){body.innerHTML=`<div class="grid-2">
     <div class="f-row"><label class="f-label">Assunto da Reunião</label><input type="text" id="ata-ass" value="Reunião de Planejamento Estratégico" class="f-input"></div>
     <div class="f-row"><label class="f-label">Data</label><input type="date" id="ata-data" class="f-input" value="${new Date().toISOString().split('T')[0]}"></div>
-    <div class="f-row"><label class="f-label">Local/Plataforma</label><input type="text" id="ata-local" value="Google Meet / Sede FGA" class="f-input"></div>
+    <div class="f-row"><label class="f-label">Local/Plataforma</label><input type="text" id="ata-local" value="Google Meet / Sede Nexora" class="f-input"></div>
     <div class="f-row"><label class="f-label">Participantes</label><input type="text" id="ata-part" value="Frederico Abreu, João Silva, Maria Santos" class="f-input"></div>
   </div>
   <div class="f-row"><label class="f-label">Pauta:</label><textarea id="ata-pauta" class="f-textarea" rows="2">1. Revisão de metas Q2\n2. Definição de estratégia Q3\n3. Aprovação de orçamento</textarea></div>
@@ -738,29 +744,120 @@ function buildModal(id,tool){
   </div>`;
 }
 
+// ── I18N da INTERFACE do conversor (torna o seletor PT/EN/ES visível e funcional) ──
+const UI_I18N={
+  pt:{
+    langBarLabel:'🌐 Idioma do arquivo gerado:',
+    dropText:'Clique ou arraste o arquivo aqui',
+    dropSubDefault:'Máx. 10 MB',
+    dropSub:ext=>`Aceita: ${ext} — Máx. 10 MB`,
+    disclaimerStrong:'Motor local:',
+    disclaimerText:'a conversão roda 100% no seu navegador e gera um arquivo real no formato de saída (OOXML/PDF). Nenhum dado sai do seu computador.',
+    btnSelectFirst:'Selecione um arquivo primeiro',
+    btnConvertTo:ext=>`🔄 Converter → ${ext}`,
+    btnConvertAgain:'🔄 Converter novamente',
+    errTooBig:'Arquivo muito grande (máx. 10 MB).',
+    errWrongType:ext=>`Tipo incorreto. Esperado: ${ext}`,
+    errConvPrefix:'Erro na conversão: ',
+    stepReading:'Lendo arquivo...',
+    stepAnalyzing:'Analisando estrutura...',
+    stepGenerating:'Gerando arquivo de saída...',
+    stepDone:'Conversão concluída! ✅',
+    logReading:'[1/4] Lendo arquivo...',
+    logAnalyzing:'[2/4] Analisando estrutura do documento...',
+    logGenerating:ext=>`[3/4] Montando arquivo ${ext} real...`,
+    logDone:name=>`[4/4] ✅ Concluído: ${name}`,
+    logErrorPrefix:'❌ Erro: ',
+    resultMeta:(ext,size)=>`Arquivo real ${ext} — ${size}`,
+    downloadBtn:'⬇ Baixar',
+    unknownFormat:ext=>`[Formato de origem não reconhecido: ${ext}]`,
+    jszipMissing:'Biblioteca JSZip não carregou. Verifique sua conexão com a internet e recarregue a página.',
+    pdflibMissing:'Biblioteca PDF-lib não carregou. Verifique sua conexão com a internet e recarregue a página.',
+  },
+  en:{
+    langBarLabel:'🌐 Output file language:',
+    dropText:'Click or drag your file here',
+    dropSubDefault:'Max. 10 MB',
+    dropSub:ext=>`Accepts: ${ext} — Max. 10 MB`,
+    disclaimerStrong:'Local engine:',
+    disclaimerText:'the conversion runs 100% in your browser and generates a real file in the output format (OOXML/PDF). No data leaves your computer.',
+    btnSelectFirst:'Select a file first',
+    btnConvertTo:ext=>`🔄 Convert → ${ext}`,
+    btnConvertAgain:'🔄 Convert again',
+    errTooBig:'File too large (max. 10 MB).',
+    errWrongType:ext=>`Wrong file type. Expected: ${ext}`,
+    errConvPrefix:'Conversion error: ',
+    stepReading:'Reading file...',
+    stepAnalyzing:'Analyzing structure...',
+    stepGenerating:'Generating output file...',
+    stepDone:'Conversion complete! ✅',
+    logReading:'[1/4] Reading file...',
+    logAnalyzing:'[2/4] Analyzing document structure...',
+    logGenerating:ext=>`[3/4] Building real ${ext} file...`,
+    logDone:name=>`[4/4] ✅ Done: ${name}`,
+    logErrorPrefix:'❌ Error: ',
+    resultMeta:(ext,size)=>`Real ${ext} file — ${size}`,
+    downloadBtn:'⬇ Download',
+    unknownFormat:ext=>`[Unrecognized source format: ${ext}]`,
+    jszipMissing:'JSZip library failed to load. Check your internet connection and reload the page.',
+    pdflibMissing:'PDF-lib library failed to load. Check your internet connection and reload the page.',
+  },
+  es:{
+    langBarLabel:'🌐 Idioma del archivo generado:',
+    dropText:'Haz clic o arrastra tu archivo aquí',
+    dropSubDefault:'Máx. 10 MB',
+    dropSub:ext=>`Acepta: ${ext} — Máx. 10 MB`,
+    disclaimerStrong:'Motor local:',
+    disclaimerText:'la conversión se ejecuta 100% en tu navegador y genera un archivo real en el formato de salida (OOXML/PDF). Ningún dato sale de tu ordenador.',
+    btnSelectFirst:'Selecciona un archivo primero',
+    btnConvertTo:ext=>`🔄 Convertir → ${ext}`,
+    btnConvertAgain:'🔄 Convertir de nuevo',
+    errTooBig:'Archivo demasiado grande (máx. 10 MB).',
+    errWrongType:ext=>`Tipo incorrecto. Se esperaba: ${ext}`,
+    errConvPrefix:'Error de conversión: ',
+    stepReading:'Leyendo archivo...',
+    stepAnalyzing:'Analizando estructura...',
+    stepGenerating:'Generando archivo de salida...',
+    stepDone:'¡Conversión completada! ✅',
+    logReading:'[1/4] Leyendo archivo...',
+    logAnalyzing:'[2/4] Analizando estructura del documento...',
+    logGenerating:ext=>`[3/4] Generando archivo ${ext} real...`,
+    logDone:name=>`[4/4] ✅ Listo: ${name}`,
+    logErrorPrefix:'❌ Error: ',
+    resultMeta:(ext,size)=>`Archivo real ${ext} — ${size}`,
+    downloadBtn:'⬇ Descargar',
+    unknownFormat:ext=>`[Formato de origen no reconocido: ${ext}]`,
+    jszipMissing:'La librería JSZip no se cargó. Verifica tu conexión a internet y recarga la página.',
+    pdflibMissing:'La librería PDF-lib no se cargó. Verifica tu conexión a internet y recarga la página.',
+  }
+};
+function ui(){return UI_I18N[convLang]||UI_I18N.pt;}
+
 // ── CONVERSOR OFFICE HTML ─────────────────────────────
 function buildConvHTML(){
   const tools=CONV_TOOLS;
+  const u=ui();
   const cardsHTML=tools.map(t=>`
     <div class="conv-card" id="conv-card-${t.id}" onclick="convSelectTool(CONV_TOOLS.find(x=>x.id==='${t.id}'))">
-      <div class="conv-card-icon">${t.icon}</div>
+      <div class="conv-card-icon" style="background:${t.color}1f;color:${t.color}">${t.icon}</div>
       <div class="conv-card-title">${t.title}</div>
       <div class="conv-card-desc">${t.desc}</div>
     </div>`).join('');
+  const langBtns=[['pt','🇧🇷','PT'],['en','🇺🇸','EN'],['es','🇪🇸','ES']].map(([code,flag,label])=>
+    `<button class="conv-lang-btn${convLang===code?' active':''}" onclick="setConvLang('${code}',this)">${flag} ${label}</button>`
+  ).join('');
   return `
     <div class="conv-lang-bar">
-      <span class="conv-lang-label">Idioma do documento:</span>
-      <button class="conv-lang-btn active" onclick="setConvLang('pt',this)">🇧🇷 PT</button>
-      <button class="conv-lang-btn" onclick="setConvLang('en',this)">🇺🇸 EN</button>
-      <button class="conv-lang-btn" onclick="setConvLang('es',this)">🇪🇸 ES</button>
+      <span class="conv-lang-label" id="conv-lang-label">${u.langBarLabel}</span>
+      <div class="conv-lang-btns">${langBtns}</div>
     </div>
     <div class="conv-tools-grid">${cardsHTML}</div>
     <div class="conv-panel" id="conv-panel">
       <div class="conv-drop" id="conv-drop" ondragover="convDrag(event,true)" ondragleave="convDrag(event,false)" ondrop="convDrop(event)">
         <input type="file" id="conv-file-input" onchange="convHandleFile(this)">
-        <span class="conv-drop-icon" id="conv-dz-icon">📁</span>
-        <div class="conv-drop-text" id="conv-dz-text">Clique ou arraste o arquivo aqui</div>
-        <div class="conv-drop-sub" id="conv-dz-sub">Máx. 10 MB</div>
+        <span class="conv-drop-icon" id="conv-dz-icon">☁️</span>
+        <div class="conv-drop-text" id="conv-dz-text">${u.dropText}</div>
+        <div class="conv-drop-sub" id="conv-dz-sub">${u.dropSubDefault}</div>
       </div>
       <div class="conv-file-row" id="conv-file-row">
         <span id="conv-fi-icon">📄</span>
@@ -768,11 +865,11 @@ function buildConvHTML(){
         <span class="conv-fi-size" id="conv-fi-size">—</span>
         <button class="conv-fi-rm" onclick="convRemoveFile()">✕</button>
       </div>
-      <div class="conv-disclaimer">⚙️ <strong>Motor local:</strong> a conversão roda 100% no seu navegador e gera um arquivo real no formato de saída (OOXML/PDF). Nenhum dado sai do seu computador.</div>
+      <div class="conv-disclaimer" id="conv-disclaimer">⚙️ <strong>${u.disclaimerStrong}</strong> ${u.disclaimerText}</div>
       <div class="conv-err" id="conv-err"></div>
-      <button class="btn-exec" id="conv-btn" onclick="convStart()" disabled>Selecione um arquivo primeiro</button>
+      <button class="btn-exec" id="conv-btn" onclick="convStart()" disabled>${u.btnSelectFirst}</button>
       <div class="conv-prog" id="conv-prog">
-        <div class="conv-prog-label"><span id="conv-prog-text">Processando...</span><span id="conv-prog-pct">0%</span></div>
+        <div class="conv-prog-label"><span id="conv-prog-text">${u.stepReading}</span><span id="conv-prog-pct">0%</span></div>
         <div class="conv-prog-bg"><div class="conv-prog-bar" id="conv-prog-bar"></div></div>
         <div class="conv-log" id="conv-log"></div>
       </div>
@@ -781,9 +878,9 @@ function buildConvHTML(){
           <span id="conv-rc-icon" style="font-size:28px">✅</span>
           <div class="conv-rc-info">
             <div class="conv-rc-name" id="conv-rc-name">arquivo.docx</div>
-            <div class="conv-rc-meta" id="conv-rc-meta">Pronto para download</div>
+            <div class="conv-rc-meta" id="conv-rc-meta">—</div>
           </div>
-          <button class="btn-dl-conv" onclick="convDownload()">⬇ Baixar</button>
+          <button class="btn-dl-conv" id="conv-dl-btn" onclick="convDownload()">${u.downloadBtn}</button>
         </div>
         <div class="conv-rc-prev" id="conv-rc-prev"></div>
       </div>
@@ -796,24 +893,45 @@ function setConvLang(l,btn){
   convLang=l;
   document.querySelectorAll('.conv-lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  refreshConvUIText();
+}
+
+function refreshConvUIText(){
+  const u=ui();
+  const setTxt=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setTxt('conv-lang-label',u.langBarLabel);
+  setTxt('conv-dz-text',u.dropText);
+  const dzSub=document.getElementById('conv-dz-sub');
+  if(dzSub) dzSub.textContent=convActiveTool?u.dropSub(convActiveTool.accept.toUpperCase()):u.dropSubDefault;
+  const disc=document.getElementById('conv-disclaimer');
+  if(disc) disc.innerHTML=`⚙️ <strong>${u.disclaimerStrong}</strong> ${u.disclaimerText}`;
+  const dlBtn=document.getElementById('conv-dl-btn');
+  if(dlBtn) dlBtn.textContent=u.downloadBtn;
+  const btn=document.getElementById('conv-btn');
+  if(btn && !btn.disabled===false){ /* no-op guard */ }
+  if(btn){
+    if(convSelectedFile&&convActiveTool) btn.textContent=convResultBlob?u.btnConvertAgain:u.btnConvertTo(convActiveTool.out.toUpperCase());
+    else btn.textContent=u.btnSelectFirst;
+  }
 }
 
 function convSelectTool(tool){
   convActiveTool=tool;
   convSelectedFile=null;
   convResultBlob=null;
+  const u=ui();
   document.querySelectorAll('.conv-card').forEach(c=>c.classList.remove('conv-active'));
   const card=document.getElementById('conv-card-'+tool.id);
   if(card) card.classList.add('conv-active');
   document.getElementById('conv-panel').classList.add('open');
   document.getElementById('conv-file-input').accept=tool.accept;
-  document.getElementById('conv-dz-sub').textContent='Aceita: '+tool.accept.toUpperCase()+' — Máx. 10 MB';
+  document.getElementById('conv-dz-sub').textContent=u.dropSub(tool.accept.toUpperCase());
   document.getElementById('conv-file-row').classList.remove('show');
   document.getElementById('conv-prog').classList.remove('show');
   document.getElementById('conv-result').classList.remove('show');
   document.getElementById('conv-err').classList.remove('show');
   document.getElementById('conv-btn').disabled=true;
-  document.getElementById('conv-btn').textContent='Selecione um arquivo primeiro';
+  document.getElementById('conv-btn').textContent=u.btnSelectFirst;
 }
 
 function convDrag(e,on){e.preventDefault();document.getElementById('conv-drop').classList[on?'add':'remove']('drag');}
@@ -821,11 +939,12 @@ function convDrop(e){e.preventDefault();convDrag(e,false);const f=e.dataTransfer
 function convHandleFile(input){if(input.files[0])convProcess(input.files[0]);}
 
 function convProcess(file){
+  const u=ui();
   document.getElementById('conv-err').classList.remove('show');
-  if(file.size>10*1024*1024){convShowErr('Arquivo muito grande (máx. 10 MB).');return;}
+  if(file.size>10*1024*1024){convShowErr(u.errTooBig);return;}
   if(convActiveTool){
     const ext='.'+file.name.split('.').pop().toLowerCase();
-    if(ext!==convActiveTool.accept){convShowErr('Tipo incorreto. Esperado: '+convActiveTool.accept);return;}
+    if(ext!==convActiveTool.accept){convShowErr(u.errWrongType(convActiveTool.accept));return;}
   }
   convSelectedFile=file;
   const icon={pdf:'📄',docx:'📝',xlsx:'📊',pptx:'📑'}[file.name.split('.').pop().toLowerCase()]||'📁';
@@ -835,15 +954,16 @@ function convProcess(file){
   document.getElementById('conv-file-row').classList.add('show');
   document.getElementById('conv-result').classList.remove('show');
   document.getElementById('conv-btn').disabled=false;
-  document.getElementById('conv-btn').textContent='🔄 Converter → '+convActiveTool.out.toUpperCase();
+  document.getElementById('conv-btn').textContent=u.btnConvertTo(convActiveTool.out.toUpperCase());
 }
 
 function convRemoveFile(){
+  const u=ui();
   convSelectedFile=null;
   document.getElementById('conv-file-row').classList.remove('show');
   document.getElementById('conv-file-input').value='';
   document.getElementById('conv-btn').disabled=true;
-  document.getElementById('conv-btn').textContent='Selecione um arquivo primeiro';
+  document.getElementById('conv-btn').textContent=u.btnSelectFirst;
 }
 
 function convShowErr(msg){const el=document.getElementById('conv-err');el.textContent='⚠ '+msg;el.classList.add('show');}
@@ -858,29 +978,30 @@ function convLog(msg){const lb=document.getElementById('conv-log');lb.textConten
 
 async function convStart(){
   if(!convSelectedFile||!convActiveTool)return;
+  const u=ui();
   document.getElementById('conv-prog').classList.add('show');
   document.getElementById('conv-result').classList.remove('show');
   document.getElementById('conv-btn').disabled=true;
   document.getElementById('conv-log').textContent='';
   document.getElementById('conv-err').classList.remove('show');
   try{
-    if(typeof JSZip==='undefined'){throw new Error('Biblioteca JSZip não carregou. Verifique sua conexão com a internet e recarregue a página.');}
-    if(typeof PDFLib==='undefined'){throw new Error('Biblioteca PDF-lib não carregou. Verifique sua conexão com a internet e recarregue a página.');}
+    if(typeof JSZip==='undefined'){throw new Error(u.jszipMissing);}
+    if(typeof PDFLib==='undefined'){throw new Error(u.pdflibMissing);}
 
-    convSetProgress(10,'Lendo arquivo...');convLog('[1/4] Lendo arquivo...');
+    convSetProgress(10,u.stepReading);convLog(u.logReading);
     await convDelay(250);
     let structured;
-    convSetProgress(30,'Analisando estrutura...');convLog('[2/4] Analisando estrutura do documento...');
+    convSetProgress(30,u.stepAnalyzing);convLog(u.logAnalyzing);
 
     const srcExt=convSelectedFile.name.split('.').pop().toLowerCase();
     if(srcExt==='pdf'){ structured=await convExtractPdfStructured(convSelectedFile); }
     else if(srcExt==='docx'){ structured=await convExtractDocxStructured(convSelectedFile); }
     else if(srcExt==='xlsx'){ structured=await convExtractXlsxStructured(convSelectedFile); }
     else if(srcExt==='pptx'){ structured=await convExtractPptxStructured(convSelectedFile); }
-    else { structured={paragraphs:['[Formato de origem não reconhecido: '+srcExt+']']}; }
+    else { structured={paragraphs:[u.unknownFormat(srcExt)]}; }
 
     await convDelay(200);
-    convSetProgress(60,'Gerando arquivo de saída...');convLog('[3/4] Montando arquivo '+convActiveTool.out.toUpperCase()+' real...');
+    convSetProgress(60,u.stepGenerating);convLog(u.logGenerating(convActiveTool.out.toUpperCase()));
 
     convResultName=convSelectedFile.name.replace(/\.[^.]+$/,'')+'_convertido.'+convActiveTool.out;
     let previewText='';
@@ -899,21 +1020,73 @@ async function convStart(){
       convResultBlob=r.blob; previewText=r.preview;
     }
 
-    convSetProgress(100,'Conversão concluída! ✅');convLog('[4/4] ✅ Concluído: '+convResultName);
+    convSetProgress(100,u.stepDone);convLog(u.logDone(convResultName));
     document.getElementById('conv-rc-icon').textContent=convGetIcon(convResultName);
     document.getElementById('conv-rc-name').textContent=convResultName;
-    document.getElementById('conv-rc-meta').textContent='Arquivo real '+convActiveTool.out.toUpperCase()+' — '+convFmtSize(convResultBlob.size);
+    document.getElementById('conv-rc-meta').textContent=u.resultMeta(convActiveTool.out.toUpperCase(),convFmtSize(convResultBlob.size));
     document.getElementById('conv-rc-prev').textContent=previewText.substring(0,700)+(previewText.length>700?'\n\n[...]':'');
     document.getElementById('conv-result').classList.add('show');
   }catch(e){
-    convLog('❌ Erro: '+e.message);
-    convShowErr('Erro na conversão: '+e.message);
-    convSetProgress(0,'Erro');
+    convLog(u.logErrorPrefix+e.message);
+    convShowErr(u.errConvPrefix+e.message);
+    convSetProgress(0,'—');
   }finally{
     document.getElementById('conv-btn').disabled=false;
-    document.getElementById('conv-btn').textContent='🔄 Converter novamente';
+    document.getElementById('conv-btn').textContent=u.btnConvertAgain;
   }
 }
+
+// ── I18N — suporte multilingual (PT / EN / ES) do motor de conversão ──
+// Traduz os rótulos e textos padrão inseridos nos documentos gerados,
+// de acordo com o idioma escolhido no seletor 🇧🇷 PT / 🇺🇸 EN / 🇪🇸 ES.
+const I18N={
+  pt:{
+    xmlLang:'pt-BR',
+    convertedDoc:'Documento Convertido',
+    convertedBy:'Nexora System Suite — Conversão Local',
+    origin:'Origem',
+    sheetName:'Dados',
+    slideWord:'Slide',
+    dataWord:'Dados',
+    noContentPdf:'[PDF com conteúdo de imagem/escaneado — ',
+    noContentDocx:'[Documento Word vazio ou sem texto extraível]',
+    noContentXlsx:'[Planilha vazia ou sem dados extraíveis]',
+    noContentPptx:'[Apresentação vazia ou sem texto extraível]',
+    noContentGeneric:'[Sem conteúdo extraído]',
+    noDataGeneric:'[Sem dados extraídos]',
+  },
+  en:{
+    xmlLang:'en-US',
+    convertedDoc:'Converted Document',
+    convertedBy:'Nexora System Suite — Local Conversion',
+    origin:'Source',
+    sheetName:'Data',
+    slideWord:'Slide',
+    dataWord:'Data',
+    noContentPdf:'[Scanned/image PDF with no extractable text — ',
+    noContentDocx:'[Word document is empty or has no extractable text]',
+    noContentXlsx:'[Spreadsheet is empty or has no extractable data]',
+    noContentPptx:'[Presentation is empty or has no extractable text]',
+    noContentGeneric:'[No content extracted]',
+    noDataGeneric:'[No data extracted]',
+  },
+  es:{
+    xmlLang:'es-ES',
+    convertedDoc:'Documento Convertido',
+    convertedBy:'Nexora System Suite — Conversión Local',
+    origin:'Origen',
+    sheetName:'Datos',
+    slideWord:'Diapositiva',
+    dataWord:'Datos',
+    noContentPdf:'[PDF con contenido de imagen/escaneado — ',
+    noContentDocx:'[Documento Word vacío o sin texto extraíble]',
+    noContentXlsx:'[Hoja de cálculo vacía o sin datos extraíbles]',
+    noContentPptx:'[Presentación vacía o sin texto extraíble]',
+    noContentGeneric:'[Sin contenido extraído]',
+    noDataGeneric:'[Sin datos extraídos]',
+  }
+};
+function t(key){return (I18N[convLang]||I18N.pt)[key];}
 
 // ── EXTRAÇÃO — lê o arquivo de origem e devolve uma estrutura simples ──
 // { paragraphs: [...], rows: [[...],[...]], slides: [{title,bullets:[...]}] }
@@ -921,14 +1094,14 @@ async function convStart(){
 async function convExtractPdfStructured(file){
   const text=await convExtractPdfText(file);
   const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
-  const paragraphs=lines.length?lines:['[PDF com conteúdo de imagem/escaneado — '+file.name+']'];
+  const paragraphs=lines.length?lines:[t('noContentPdf')+file.name+']'];
   // heurística simples de tabela: linhas com 2+ espaços/tabs viram linhas de planilha
   const rows=paragraphs.map(l=>l.split(/\s{2,}|\t/).filter(Boolean));
   // heurística simples de slides: agrupa a cada ~6 linhas
   const slides=[];
   for(let i=0;i<paragraphs.length;i+=6){
     const chunk=paragraphs.slice(i,i+6);
-    slides.push({title:chunk[0]||('Slide '+(slides.length+1)),bullets:chunk.slice(1)});
+    slides.push({title:chunk[0]||(t('slideWord')+' '+(slides.length+1)),bullets:chunk.slice(1)});
   }
   return {paragraphs,rows,slides:slides.length?slides:[{title:file.name,bullets:paragraphs.slice(0,6)}]};
 }
@@ -958,12 +1131,12 @@ async function convExtractDocxStructured(file){
     const texts=[...m[0].matchAll(/<w:t[^>]*>([^<]*)<\/w:t>/g)].map(t=>t[1]);
     return texts.join('');
   }).filter(l=>l.trim().length);
-  const paragraphs=paras.length?paras:['[Documento Word vazio ou sem texto extraível]'];
+  const paragraphs=paras.length?paras:[t('noContentDocx')];
   const rows=paragraphs.map(l=>l.split(/\s{2,}|\t/).filter(Boolean));
   const slides=[];
   for(let i=0;i<paragraphs.length;i+=6){
     const chunk=paragraphs.slice(i,i+6);
-    slides.push({title:chunk[0]||('Slide '+(slides.length+1)),bullets:chunk.slice(1)});
+    slides.push({title:chunk[0]||(t('slideWord')+' '+(slides.length+1)),bullets:chunk.slice(1)});
   }
   return {paragraphs,rows,slides:slides.length?slides:[{title:file.name,bullets:paragraphs.slice(0,6)}]};
 }
@@ -991,12 +1164,12 @@ async function convExtractXlsxStructured(file){
       if(rowVals.some(v=>v!=='')) rows.push(rowVals);
     });
   }
-  if(!rows.length) rows.push(['[Planilha vazia ou sem dados extraíveis]']);
+  if(!rows.length) rows.push([t('noContentXlsx')]);
   const paragraphs=rows.map(r=>r.join('  '));
   const slides=[];
   for(let i=0;i<paragraphs.length;i+=10){
     const chunk=paragraphs.slice(i,i+10);
-    slides.push({title:'Dados '+(slides.length+1),bullets:chunk});
+    slides.push({title:t('dataWord')+' '+(slides.length+1),bullets:chunk});
   }
   return {paragraphs,rows,slides:slides.length?slides:[{title:file.name,bullets:paragraphs.slice(0,6)}]};
 }
@@ -1009,9 +1182,9 @@ async function convExtractPptxStructured(file){
   for(const name of slideFiles){
     const xml=await zip.file(name).async('string');
     const texts=[...xml.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map(m=>m[1]).filter(Boolean);
-    slides.push({title:texts[0]||('Slide '+(slides.length+1)),bullets:texts.slice(1)});
+    slides.push({title:texts[0]||(t('slideWord')+' '+(slides.length+1)),bullets:texts.slice(1)});
   }
-  if(!slides.length) slides.push({title:file.name,bullets:['[Apresentação vazia ou sem texto extraível]']});
+  if(!slides.length) slides.push({title:file.name,bullets:[t('noContentPptx')]});
   const paragraphs=slides.flatMap(s=>[s.title,...s.bullets]);
   const rows=paragraphs.map(l=>[l]);
   return {paragraphs,rows,slides};
@@ -1029,14 +1202,14 @@ async function convGenPDF(structured,origName){
   let y=pageH-margin;
 
   const drawHeader=()=>{
-    page.drawText('FGA Suite — Conversão Local',{x:margin,y:pageH-30,size:8,color:PDFLib.rgb(.55,.55,.55)});
+    page.drawText(t('convertedBy'),{x:margin,y:pageH-30,size:8,color:PDFLib.rgb(.55,.55,.55)});
     page.drawText(origName,{x:pageW-margin-200,y:pageH-30,size:8,color:PDFLib.rgb(.55,.55,.55)});
   };
   drawHeader();
-  page.drawText('Documento Convertido',{x:margin,y,size:16,font:fontBold,color:PDFLib.rgb(0,0.2,0.4)});
+  page.drawText(t('convertedDoc'),{x:margin,y,size:16,font:fontBold,color:PDFLib.rgb(0,0.2,0.4)});
   y-=28;
 
-  const lines=structured.paragraphs&&structured.paragraphs.length?structured.paragraphs:['[Sem conteúdo extraído]'];
+  const lines=structured.paragraphs&&structured.paragraphs.length?structured.paragraphs:[t('noContentGeneric')];
   for(const raw of lines){
     const text=String(raw).substring(0,500);
     // wrap simples por largura de caracteres
@@ -1054,15 +1227,15 @@ async function convGenPDF(structured,origName){
 
 // DOCX real (OOXML) via JSZip
 async function convGenDocx(structured,origName){
-  const paras=(structured.paragraphs&&structured.paragraphs.length)?structured.paragraphs:['[Sem conteúdo extraído]'];
+  const paras=(structured.paragraphs&&structured.paragraphs.length)?structured.paragraphs:[t('noContentGeneric')];
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const bodyParas=paras.map(p=>`<w:p><w:r><w:t xml:space="preserve">${esc(p)}</w:t></w:r></w:p>`).join('');
 
   const documentXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
 <w:body>
-<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="32"/></w:rPr><w:t xml:space="preserve">Documento Convertido — FGA Suite</w:t></w:r></w:p>
-<w:p><w:r><w:rPr><w:i/><w:sz w:val="16"/><w:color w:val="888888"/></w:rPr><w:t xml:space="preserve">Origem: ${esc(origName)}</w:t></w:r></w:p>
+<w:p><w:pPr><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:b/><w:sz w:val="32"/></w:rPr><w:t xml:space="preserve">${esc(t('convertedDoc'))} — Nexora System Suite</w:t></w:r></w:p>
+<w:p><w:r><w:rPr><w:i/><w:sz w:val="16"/><w:color w:val="888888"/></w:rPr><w:t xml:space="preserve">${esc(t('origin'))}: ${esc(origName)}</w:t></w:r></w:p>
 <w:p/>
 ${bodyParas}
 <w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1417" w:right="1417" w:bottom="1417" w:left="1417"/></w:sectPr>
@@ -1090,7 +1263,7 @@ ${bodyParas}
 
 // XLSX real (OOXML) via JSZip
 async function convGenXlsx(structured,origName){
-  const rows=(structured.rows&&structured.rows.length)?structured.rows:[['Sem dados extraídos']];
+  const rows=(structured.rows&&structured.rows.length)?structured.rows:[[t('noDataGeneric')]];
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const colLetter=n=>{let s='';n++;while(n>0){const m=(n-1)%26;s=String.fromCharCode(65+m)+s;n=Math.floor((n-1)/26);}return s;};
 
@@ -1124,7 +1297,7 @@ async function convGenXlsx(structured,origName){
 </Relationships>`);
   zip.folder('xl').file('workbook.xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
-<sheets><sheet name="Dados" sheetId="1" r:id="rId1"/></sheets>
+<sheets><sheet name="${esc(t('sheetName'))}" sheetId="1" r:id="rId1"/></sheets>
 </workbook>`);
   zip.folder('xl').folder('_rels').file('workbook.xml.rels',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
@@ -1138,8 +1311,9 @@ async function convGenXlsx(structured,origName){
 
 // PPTX real (OOXML) via JSZip
 async function convGenPptx(structured,origName){
-  const slides=(structured.slides&&structured.slides.length)?structured.slides:[{title:origName,bullets:['[Sem conteúdo extraído]']}];
+  const slides=(structured.slides&&structured.slides.length)?structured.slides:[{title:origName,bullets:[t('noContentGeneric')]}];
   const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const xmlLang=t('xmlLang');
 
   const zip=new JSZip();
   zip.file('[Content_Types].xml',`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -1168,7 +1342,7 @@ ${slides.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlfo
 
   slides.forEach((s,i)=>{
     const bulletShapes=s.bullets.map((b,bi)=>`
-      <a:p><a:r><a:rPr lang="pt-BR" sz="1800"/><a:t>${esc(b)}</a:t></a:r></a:p>`).join('');
+      <a:p><a:r><a:rPr lang="${xmlLang}" sz="1800"/><a:t>${esc(b)}</a:t></a:r></a:p>`).join('');
     const slideXml=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
 <p:cSld>
@@ -1178,12 +1352,12 @@ ${slides.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlfo
 <p:sp>
 <p:nvSpPr><p:cNvPr id="2" name="Title"/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="title"/></p:nvPr></p:nvSpPr>
 <p:spPr><a:xfrm><a:off x="457200" y="274638"/><a:ext cx="8229600" cy="1143000"/></a:xfrm></p:spPr>
-<p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang="pt-BR" sz="3200" b="1"/><a:t>${esc(s.title)}</a:t></a:r></a:p></p:txBody>
+<p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang="${xmlLang}" sz="3200" b="1"/><a:t>${esc(s.title)}</a:t></a:r></a:p></p:txBody>
 </p:sp>
 <p:sp>
 <p:nvSpPr><p:cNvPr id="3" name="Content"/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="body" idx="1"/></p:nvPr></p:nvSpPr>
 <p:spPr><a:xfrm><a:off x="457200" y="1600200"/><a:ext cx="8229600" cy="4525963"/></a:xfrm></p:spPr>
-<p:txBody><a:bodyPr/><a:lstStyle/>${bulletShapes||'<a:p><a:r><a:rPr lang="pt-BR" sz="1800"/><a:t> </a:t></a:r></a:p>'}</p:txBody>
+<p:txBody><a:bodyPr/><a:lstStyle/>${bulletShapes||`<a:p><a:r><a:rPr lang="${xmlLang}" sz="1800"/><a:t> </a:t></a:r></a:p>`}</p:txBody>
 </p:sp>
 </p:spTree>
 </p:cSld>
@@ -1332,7 +1506,7 @@ async function processRecibo(){
   pg.drawText('Data: '+new Date().toLocaleDateString('pt-BR'),{x:50,y:230,size:10,color:blk});
   pg.drawLine({start:{x:50,y:130},end:{x:260,y:130},thickness:0.5,color:blk});
   pg.drawText('Assinatura do Emitente',{x:80,y:116,size:9,color:PDFLib.rgb(.4,.4,.4)});
-  pg.drawText('FGA Technologies · fgatechnologies@outlook.com',{x:50,y:50,size:8,color:PDFLib.rgb(.5,.5,.5)});
+  pg.drawText('Nexora Systems · fgatechnologies@outlook.com',{x:50,y:50,size:8,color:PDFLib.rgb(.5,.5,.5)});
   dl(await pdfDoc.save(),'recibo_fga.pdf','application/pdf');closeModal();
 }
 
@@ -1341,7 +1515,7 @@ async function compressPDF(){
   const ab=await fi.files[0].arrayBuffer();
   const doc=await PDFLib.PDFDocument.load(ab,{ignoreEncryption:true});
   doc.setTitle('');doc.setAuthor('');doc.setSubject('');doc.setKeywords([]);
-  doc.setCreator('FGA Suite');doc.setProducer('FGA Suite');
+  doc.setCreator('Nexora System Suite');doc.setProducer('Nexora System Suite');
   const bytes=await doc.save({useObjectStreams:true});
   dl(bytes,'comprimido_fga.pdf','application/pdf');
   const orig=fi.files[0].size;
@@ -1370,6 +1544,82 @@ async function addWatermark(){
   const doc=await PDFLib.PDFDocument.load(await fi.files[0].arrayBuffer());
   doc.getPages().forEach(p=>{const {width,height}=p.getSize();p.drawText(txt,{x:width/2-80,y:height/2,size:48,color:PDFLib.rgb(.8,.8,.8),opacity:0.25,rotate:PDFLib.degrees(45)});});
   dl(await doc.save(),'marcadagua_fga.pdf','application/pdf');alert("✅ Marca d'água aplicada!");closeModal();
+}
+
+// ── NOVAS FUNÇÕES PDF (9, 10, 11, 14) ─────────────────
+async function rotatePdfPages(){
+  const fi=document.getElementById('rot-pdf');if(!fi.files.length){alert('Selecione um PDF!');return;}
+  const deg=+document.getElementById('rot-pdf-deg').value;
+  const ab=await fi.files[0].arrayBuffer();
+  const doc=await PDFLib.PDFDocument.load(ab);
+  doc.getPages().forEach(p=>{
+    const cur=p.getRotation().angle;
+    p.setRotation(PDFLib.degrees((cur+deg)%360));
+  });
+  dl(await doc.save(),'girado_nexora.pdf','application/pdf');
+  alert('✅ Páginas giradas '+deg+'°!');closeModal();
+}
+
+let extractedTextGlobal='';
+async function extractPdfTextTool(input){
+  if(!input.files.length)return;
+  const text=await convExtractPdfText(input.files[0]);
+  extractedTextGlobal=text;
+  const r=document.getElementById('extract-result');
+  r.classList.add('show');
+  r.textContent=text&&text.trim().length?text:'[Nenhum texto extraível encontrado — o PDF pode ser escaneado/imagem]';
+  document.getElementById('extract-dl-btn').style.display='inline-block';
+}
+function dlExtractedText(){
+  if(!extractedTextGlobal){alert('Nenhum texto extraído ainda.');return;}
+  const blob=new Blob([extractedTextGlobal],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='texto_extraido.txt';a.click();
+}
+
+async function protectPdfFile(){
+  const fi=document.getElementById('prot-pdf');const pass=document.getElementById('prot-pass').value;
+  if(!fi.files.length||!pass){alert('Selecione um PDF e digite uma senha!');return;}
+  try{
+    const data=await fi.files[0].arrayBuffer();
+    const salt=crypto.getRandomValues(new Uint8Array(16));
+    const iv=crypto.getRandomValues(new Uint8Array(12));
+    const keyMat=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+    const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},keyMat,{name:'AES-GCM',length:256},false,['encrypt']);
+    const enc=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,data);
+    const out=new Blob([salt,iv,new Uint8Array(enc)]);
+    const a=document.createElement('a');a.href=URL.createObjectURL(out);a.download=fi.files[0].name+'.locked';a.click();
+    alert('✅ PDF protegido gerado! Guarde a senha — ela não pode ser recuperada.');closeModal();
+  }catch(e){alert('Erro ao proteger: '+e.message);}
+}
+async function unlockPdfFile(){
+  const fi=document.getElementById('unlock-pdf');const pass=document.getElementById('unlock-pass').value;
+  if(!fi.files.length||!pass){alert('Selecione o arquivo .locked e digite a senha!');return;}
+  try{
+    const buf=new Uint8Array(await fi.files[0].arrayBuffer());
+    const salt=buf.slice(0,16),iv=buf.slice(16,28),data=buf.slice(28);
+    const keyMat=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']);
+    const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},keyMat,{name:'AES-GCM',length:256},false,['decrypt']);
+    const dec=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,data);
+    const blob=new Blob([dec],{type:'application/pdf'});
+    const name=fi.files[0].name.replace(/\.locked$/,'')||'documento_desbloqueado.pdf';
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();
+    alert('✅ PDF desbloqueado!');closeModal();
+  }catch(e){alert('❌ Senha incorreta ou arquivo inválido.');}
+}
+
+async function splitPdfRange(){
+  const fi=document.getElementById('split-pdf');if(!fi.files.length){alert('Selecione um PDF!');return;}
+  const start=+document.getElementById('split-start').value,end=+document.getElementById('split-end').value;
+  const doc=await PDFLib.PDFDocument.load(await fi.files[0].arrayBuffer());
+  const total=doc.getPageCount();
+  const s=Math.max(1,start),e=Math.min(total,end);
+  if(s>e){alert('Intervalo de páginas inválido!');return;}
+  const newDoc=await PDFLib.PDFDocument.create();
+  const idxs=[];for(let i=s-1;i<e;i++)idxs.push(i);
+  const pages=await newDoc.copyPages(doc,idxs);
+  pages.forEach(p=>newDoc.addPage(p));
+  dl(await newDoc.save(),`paginas_${s}-${e}.pdf`,'application/pdf');
+  alert(`✅ Páginas ${s}–${e} extraídas (de ${total} no total)!`);closeModal();
 }
 
 async function addFooter(){
@@ -1725,7 +1975,7 @@ function parseCNAB(){
   const fi=document.getElementById('cnab-file');if(!fi.files.length){alert('Selecione o arquivo CNAB!');return;}
   fi.files[0].text().then(txt=>{
     const lines=txt.split('\n').filter(l=>l.trim());
-    let out=`CNAB 240 — PARSER FGA Suite\nArquivo: ${fi.files[0].name}\nLinhas: ${lines.length}\n${'─'.repeat(60)}\n`;
+    let out=`CNAB 240 — PARSER Nexora System Suite\nArquivo: ${fi.files[0].name}\nLinhas: ${lines.length}\n${'─'.repeat(60)}\n`;
     lines.slice(0,20).forEach((l,i)=>{
       const tipo=l.substring(7,8);
       const seg=l.substring(13,14)||'—';
@@ -1743,7 +1993,7 @@ function parseNFe(){
     const gAll=(tag)=>{const m=txt.match(new RegExp(`<${tag}[^>]*>([^<]+)<\/${tag}>`,'gi'));return m?m.map(x=>x.replace(/<[^>]+>/g,'').trim()):[];};
     const nNF=g('nNF'),dhEmi=g('dhEmi'),vNF=g('vNF'),xNome=g('xNome'),xFant=g('xFant'),CNPJ=g('CNPJ');
     const prods=gAll('xProd'),qtds=gAll('qCom'),vals=gAll('vProd');
-    let out=`NF-e — PARSER FGA Suite\n${'─'.repeat(50)}\nNº NF-e:      ${nNF}\nEmissão:      ${dhEmi}\nEmitente:     ${xNome||xFant}\nCNPJ:         ${CNPJ}\nValor Total:  R$ ${vNF}\n\nPRODUTOS:\n`;
+    let out=`NF-e — PARSER Nexora System Suite\n${'─'.repeat(50)}\nNº NF-e:      ${nNF}\nEmissão:      ${dhEmi}\nEmitente:     ${xNome||xFant}\nCNPJ:         ${CNPJ}\nValor Total:  R$ ${vNF}\n\nPRODUTOS:\n`;
     prods.slice(0,10).forEach((p,i)=>out+=`  ${i+1}. ${p} — Qtd: ${qtds[i]||'?'} — R$ ${vals[i]||'?'}\n`);
     if(!nNF||nNF==='—')out='Arquivo XML não reconhecido como NF-e padrão.\nVerifique se é um XML de NF-e válido.';
     show('nfe-result',out);
@@ -1782,7 +2032,7 @@ function calcBP(){
   const cs=+document.getElementById('bp-cs').value,lr=+document.getElementById('bp-lr').value;
   const ta=ac+anc,tp=pc+pnc,pl=cs+lr,tppl=tp+pl;
   show('bp-result',
-    `BALANÇO PATRIMONIAL — FGA Suite\n${'─'.repeat(45)}\n`+
+    `BALANÇO PATRIMONIAL — Nexora System Suite\n${'─'.repeat(45)}\n`+
     `ATIVO\n  Circulante:          R$ ${fmt(ac)}\n  Não Circulante:      R$ ${fmt(anc)}\nTOTAL ATIVO:           R$ ${fmt(ta)}\n\n`+
     `PASSIVO\n  Circulante:          R$ ${fmt(pc)}\n  Não Circulante:      R$ ${fmt(pnc)}\nTOTAL PASSIVO:         R$ ${fmt(tp)}\n\n`+
     `PATRIMÔNIO LÍQUIDO\n  Capital Social:      R$ ${fmt(cs)}\n  Lucros Retidos:      R$ ${fmt(lr)}\nTOTAL PL:              R$ ${fmt(pl)}\n\n`+
@@ -1815,7 +2065,7 @@ function calcFGTS(){
   if(motivo==='sem_justa'){multa=saldoFGTS*0.4;aviso=sal;ferias=sal*(1/3+1);dec=sal/12*meses%12||sal/12;}
   else if(motivo==='pedido'){ferias=sal*(1/3+1);}
   show('fg-result',
-    `CÁLCULO FGTS / RESCISÃO — FGA Suite\n${'─'.repeat(45)}\n`+
+    `CÁLCULO FGTS / RESCISÃO — Nexora System Suite\n${'─'.repeat(45)}\n`+
     `Salário: R$ ${fmt(sal)} | Meses: ${meses} | Motivo: ${motivo.replace('_',' ')}\n\n`+
     `Saldo FGTS:           R$ ${fmt(saldoFGTS)}\n`+
     (motivo==='sem_justa'?`Multa 40% FGTS:       R$ ${fmt(multa)}\nAviso Prévio:         R$ ${fmt(aviso)}\nFérias + 1/3:         R$ ${fmt(ferias)}\n13º Proporcional:     R$ ${fmt(dec)}\n`:'')  +
@@ -1828,7 +2078,7 @@ function calcMC(){
   const pvs=[...document.querySelectorAll('.mc-pv')];
   const cvs=[...document.querySelectorAll('.mc-cv')];
   const qtds=[...document.querySelectorAll('.mc-qtd')];
-  let out='MARGEM DE CONTRIBUIÇÃO — FGA Suite\n'+'─'.repeat(60)+'\n';
+  let out='MARGEM DE CONTRIBUIÇÃO — Nexora System Suite\n'+'─'.repeat(60)+'\n';
   let totalMC=0,totalRec=0;
   prods.forEach((_,i)=>{
     const pv=+pvs[i].value,cv=+cvs[i].value,qtd=+qtds[i].value||1,nome=prods[i].value||'Produto '+(i+1);
@@ -1846,7 +2096,7 @@ function calcOrc(){
   const tipos=[...document.querySelectorAll('.orc-tipo')];
   const plans=[...document.querySelectorAll('.orc-plan')];
   const reals=[...document.querySelectorAll('.orc-real')];
-  let out='ORÇAMENTO EMPRESARIAL — FGA Suite\n'+'─'.repeat(65)+'\nDepartamento            Tipo       Previsto        Realizado       Var%\n'+'─'.repeat(65)+'\n';
+  let out='ORÇAMENTO EMPRESARIAL — Nexora System Suite\n'+'─'.repeat(65)+'\nDepartamento            Tipo       Previsto        Realizado       Var%\n'+'─'.repeat(65)+'\n';
   let tp=0,tr=0;
   deps.forEach((_,i)=>{
     const dep=deps[i].value||'Dep.'+(i+1),tipo=tipos[i].value==='rec'?'Receita':'Despesa';
@@ -1864,7 +2114,7 @@ function calcCP(){
   const vals=[...document.querySelectorAll('.cp-val')];
   const vencs=[...document.querySelectorAll('.cp-venc')];
   const status=[...document.querySelectorAll('.cp-status')];
-  let out='CONTAS A PAGAR — FGA Suite\n'+'─'.repeat(55)+'\n';
+  let out='CONTAS A PAGAR — Nexora System Suite\n'+'─'.repeat(55)+'\n';
   let total=0,emAberto=0;
   forns.forEach((_,i)=>{
     const v=+vals[i].value,f=forns[i].value||'Fornecedor '+(i+1),vc=vencs[i].value||'—',st=status[i].value;
@@ -1882,7 +2132,7 @@ function calcCR(){
   const vals=[...document.querySelectorAll('.cr-val')];
   const vencs=[...document.querySelectorAll('.cr-venc')];
   const status=[...document.querySelectorAll('.cr-status')];
-  let out='CONTAS A RECEBER — FGA Suite\n'+'─'.repeat(55)+'\n';
+  let out='CONTAS A RECEBER — Nexora System Suite\n'+'─'.repeat(55)+'\n';
   let total=0,pendente=0;
   clis.forEach((_,i)=>{
     const v=+vals[i].value,cl=clis[i].value||'Cliente '+(i+1),vc=vencs[i].value||'—',st=status[i].value;
@@ -1901,7 +2151,7 @@ async function gerarOS(){
   const pdfDoc=await PDFLib.PDFDocument.create();const pg=pdfDoc.addPage([595,500]);
   const blu=PDFLib.rgb(0,0.2,0.4),blk=PDFLib.rgb(0,0,0),wh=PDFLib.rgb(1,1,1);
   pg.drawRectangle({x:30,y:450,width:535,height:40,color:blu});
-  pg.drawText('ORDEM DE SERVIÇO — FGA Suite',{x:50,y:463,size:16,color:wh});
+  pg.drawText('ORDEM DE SERVIÇO — Nexora System Suite',{x:50,y:463,size:16,color:wh});
   pg.drawText(num,{x:420,y:463,size:12,color:PDFLib.rgb(.9,.8,.3)});
   pg.drawText(`Cliente: ${cli}`,{x:50,y:420,size:11,color:blk});
   pg.drawText(`Data de Abertura: ${new Date(data).toLocaleDateString('pt-BR')}`,{x:50,y:400,size:11,color:blk});
@@ -1923,7 +2173,7 @@ async function gerarProposta(){
   const pdfDoc=await PDFLib.PDFDocument.create();const pg=pdfDoc.addPage([595,650]);
   const blu=PDFLib.rgb(0,0.2,0.4),blk=PDFLib.rgb(0,0,0),wh=PDFLib.rgb(1,1,1);
   pg.drawRectangle({x:30,y:600,width:535,height:40,color:blu});
-  pg.drawText('PROPOSTA COMERCIAL — FGA Suite',{x:50,y:613,size:15,color:wh});
+  pg.drawText('PROPOSTA COMERCIAL — Nexora System Suite',{x:50,y:613,size:15,color:wh});
   pg.drawText(num,{x:410,y:613,size:11,color:PDFLib.rgb(.9,.8,.3)});
   pg.drawText(`Para: ${cli}`,{x:50,y:570,size:12,color:blk});
   pg.drawText(`Validade: ${valid?new Date(valid).toLocaleDateString('pt-BR'):'30 dias'}`,{x:50,y:550,size:10,color:blk});
@@ -1933,7 +2183,7 @@ async function gerarProposta(){
   pg.drawRectangle({x:350,y:80,width:215,height:55,borderWidth:1,borderColor:blu});
   pg.drawText('VALOR TOTAL DA PROPOSTA',{x:360,y:122,size:8,color:blu});
   pg.drawText(`R$ ${fmt(val)}`,{x:360,y:98,size:14,color:blk});
-  pg.drawText('FGA Technologies · fgatechnologies@outlook.com',{x:50,y:50,size:8,color:PDFLib.rgb(.5,.5,.5)});
+  pg.drawText('Nexora Systems - FGA Holding LLC · fgatechnologies@outlook.com',{x:50,y:50,size:8,color:PDFLib.rgb(.5,.5,.5)});
   dl(await pdfDoc.save(),'proposta_'+num+'.pdf','application/pdf');closeModal();
 }
 
@@ -2003,7 +2253,7 @@ async function gerarViagem(){
   const pdfDoc=await PDFLib.PDFDocument.create();const pg=pdfDoc.addPage([595,600]);
   const blu=PDFLib.rgb(0,0.2,0.4),blk=PDFLib.rgb(0,0,0),wh=PDFLib.rgb(1,1,1);
   pg.drawRectangle({x:30,y:555,width:535,height:35,color:blu});
-  pg.drawText('RELATÓRIO DE DESPESAS DE VIAGEM — FGA Suite',{x:50,y:566,size:12,color:wh});
+  pg.drawText('RELATÓRIO DE DESPESAS DE VIAGEM — Nexora System Suite',{x:50,y:566,size:12,color:wh});
   pg.drawText('Colaborador: '+col,{x:50,y:525,size:11,color:blk});
   pg.drawText('DATA',{x:50,y:498,size:9,color:blu});pg.drawText('CATEGORIA',{x:130,y:498,size:9,color:blu});pg.drawText('DESCRIÇÃO',{x:240,y:498,size:9,color:blu});pg.drawText('VALOR',{x:470,y:498,size:9,color:blu});
   let y=480,total=0;
@@ -2051,7 +2301,7 @@ function calcCC(){
   const inis=[...document.querySelectorAll('.cc-ini')];
   const fims=[...document.querySelectorAll('.cc-fim')];
   const hoje=new Date();
-  let out='PAINEL DE CONTRATOS — FGA Suite\n'+'─'.repeat(65)+'\n';
+  let out='PAINEL DE CONTRATOS — Nexora System Suite\n'+'─'.repeat(65)+'\n';
   nomes.forEach((_,i)=>{
     const fim=new Date(fims[i].value);const dias=Math.ceil((fim-hoje)/(1000*60*60*24));
     const status=isNaN(dias)?'—':dias<0?'🔴 VENCIDO':dias<=30?'🟡 VENCE EM '+dias+'d':'✅ ATIVO';
@@ -2072,7 +2322,7 @@ async function gerarCronograma(){
   const blu=PDFLib.rgb(0,0.2,0.4),blk=PDFLib.rgb(0,0,0),wh=PDFLib.rgb(1,1,1);
   const grn=PDFLib.rgb(0,.55,0),yel=PDFLib.rgb(.8,.6,0),red=PDFLib.rgb(.7,0,0);
   pg.drawRectangle({x:30,y:555,width:535,height:35,color:blu});
-  pg.drawText('CRONOGRAMA DE PROJETO — FGA Suite',{x:70,y:566,size:13,color:wh});
+  pg.drawText('CRONOGRAMA DE PROJETO — Nexora System Suite',{x:70,y:566,size:13,color:wh});
   pg.drawText('Projeto: '+nome,{x:50,y:525,size:11,color:blk});
   pg.drawText('TAREFA',{x:50,y:498,size:8,color:blu});pg.drawText('RESPONSÁVEL',{x:220,y:498,size:8,color:blu});pg.drawText('INÍCIO',{x:330,y:498,size:8,color:blu});pg.drawText('FIM',{x:400,y:498,size:8,color:blu});pg.drawText('STATUS',{x:460,y:498,size:8,color:blu});
   let y=480,conc=0;
@@ -2098,7 +2348,7 @@ async function gerarAta(){
   const pdfDoc=await PDFLib.PDFDocument.create();const pg=pdfDoc.addPage([595,650]);
   const blu=PDFLib.rgb(0,0.2,0.4),blk=PDFLib.rgb(0,0,0),wh=PDFLib.rgb(1,1,1);
   pg.drawRectangle({x:30,y:605,width:535,height:35,color:blu});
-  pg.drawText('ATA DE REUNIÃO — FGA Suite',{x:170,y:616,size:14,color:wh});
+  pg.drawText('ATA DE REUNIÃO — Nexora System Suite',{x:170,y:616,size:14,color:wh});
   let y=570;
   const sec=(t,txt)=>{pg.drawText(t,{x:50,y,size:11,color:blu});y-=18;txt.split('\n').forEach(l=>{pg.drawText(l.substring(0,80),{x:60,y,size:10,color:blk});y-=14;});y-=8;};
   pg.drawText('Assunto: '+ass,{x:50,y,size:12,color:blk});y-=20;
@@ -2139,7 +2389,7 @@ function calcCustos(){
     if(!mapa[c])mapa[c]={fixo:0,variavel:0,items:[]};
     mapa[c][t]+=v;mapa[c].items.push({desc:descs[i].value||'—',val:v,tipo:t});
   });
-  let out='RELATÓRIO DE CUSTOS POR CENTRO — FGA Suite\n'+'─'.repeat(60)+'\n';
+  let out='RELATÓRIO DE CUSTOS POR CENTRO — Nexora System Suite\n'+'─'.repeat(60)+'\n';
   let totalF=0,totalV=0;
   Object.entries(mapa).forEach(([centro,d])=>{
     const tot=d.fixo+d.variavel;totalF+=d.fixo;totalV+=d.variavel;
@@ -2158,7 +2408,7 @@ function calcKPIs(){
   const liqCorr=(ac/pc).toFixed(2);const endiv=(div/pl*100).toFixed(2);
   const flag=(v,ok,av)=>v>=ok?'🟢':v>=av?'🟡':'🔴';
   show('kpi-result',
-    `KPIs FINANCEIROS — FGA Suite\n${'─'.repeat(45)}\n`+
+    `KPIs FINANCEIROS — Nexora System Suite\n${'─'.repeat(45)}\n`+
     `ROE (Retorno s/ PL):       ${roe}% ${flag(+roe,15,8)}\n`+
     `ROI (Retorno s/ Invest.):  ${roi}% ${flag(+roi,12,6)}\n`+
     `Liquidez Corrente:         ${liqCorr}x ${flag(+liqCorr,1.5,1)}\n`+
@@ -2183,7 +2433,7 @@ async function gerarInformeIR(){
   const blu=PDFLib.rgb(0,0.2,0.4),blk=PDFLib.rgb(0,0,0),wh=PDFLib.rgb(1,1,1);
   const grn=PDFLib.rgb(0,.55,0),red=PDFLib.rgb(.7,0,0);
   pg.drawRectangle({x:30,y:505,width:535,height:35,color:blu});
-  pg.drawText('INFORME DE RENDIMENTOS — FGA Suite',{x:90,y:516,size:13,color:wh});
+  pg.drawText('INFORME DE RENDIMENTOS — Nexora System Suite',{x:90,y:516,size:13,color:wh});
   pg.drawText('Ano-Calendário: '+ano,{x:390,y:516,size:9,color:PDFLib.rgb(.9,.8,.3)});
   const lin=(t,v,y,c=blk)=>{pg.drawText(t,{x:50,y,size:11,color:c});pg.drawText(v,{x:400,y,size:11,color:c});};
   lin('Contribuinte:',nome,468);lin('CPF:',cpf,448);
