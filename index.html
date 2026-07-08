@@ -52,6 +52,12 @@ body.collapsed .main-content{margin-left:0}
 .theme-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:background .15s,border-color .15s}
 .theme-btn:hover{border-color:var(--gold)}
 
+/* ── SITE LANGUAGE SWITCH (global) ── */
+.site-lang-switch{display:flex;gap:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:3px}
+.site-lang-btn{padding:6px 12px;border-radius:16px;border:none;background:transparent;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.site-lang-btn:hover{color:var(--text)}
+.site-lang-btn.active{background:var(--gold);color:#000;box-shadow:0 0 0 2px rgba(229,188,92,.2)}
+
 /* ── NAV ── */
 .nav-group{display:flex;flex-direction:column;gap:4px;margin-bottom:24px}
 .nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer}
@@ -220,18 +226,18 @@ body.collapsed .main-content{margin-left:0}
     <div class="logo"><span class="g">NEXORA</span><span class="o">SUITE</span></div>
   </div>
   <nav class="nav-group">
-    <div class="nav-item active" onclick="showView('grid',this)">🏠 Início</div>
-    <div class="nav-item" onclick="showView('about',this)">ℹ️ Sobre a Empresa</div>
-    <div class="nav-item" onclick="showView('contato',this)">📬 Contato</div>
+    <div class="nav-item active" onclick="showView('grid',this)"><span id="nav-home">🏠 Início</span></div>
+    <div class="nav-item" onclick="showView('about',this)"><span id="nav-about">ℹ️ Sobre a Empresa</span></div>
+    <div class="nav-item" onclick="showView('contato',this)"><span id="nav-contact">📬 Contato</span></div>
   </nav>
-  <div class="cat-title">Categorias</div>
+  <div class="cat-title" id="cat-title-label">Categorias</div>
   <div class="nav-group">
-    <div class="cat-item active" onclick="filterCat('all',this)"><span>Todos</span><span class="cat-count">74</span></div>
-    <div class="cat-item" onclick="filterCat('pdf',this)"><span>PDF / Assinatura</span><span class="cat-count">15</span></div>
-    <div class="cat-item" onclick="filterCat('image',this)"><span>Imagens</span><span class="cat-count">12</span></div>
-    <div class="cat-item" onclick="filterCat('convert',this)"><span>Conversores / OFX</span><span class="cat-count">16</span></div>
-    <div class="cat-item" onclick="filterCat('office',this)"><span>Contábil & Gestão</span><span class="cat-count">25</span></div>
-    <div class="cat-item" onclick="filterCat('office2',this)"><span>Office IA ✨</span><span class="cat-count">6</span></div>
+    <div class="cat-item active" onclick="filterCat('all',this)"><span id="cat-label-all">Todos</span><span class="cat-count">74</span></div>
+    <div class="cat-item" onclick="filterCat('pdf',this)"><span id="cat-label-pdf">PDF / Assinatura</span><span class="cat-count">15</span></div>
+    <div class="cat-item" onclick="filterCat('image',this)"><span id="cat-label-image">Imagens</span><span class="cat-count">12</span></div>
+    <div class="cat-item" onclick="filterCat('convert',this)"><span id="cat-label-convert">Conversores / OFX</span><span class="cat-count">16</span></div>
+    <div class="cat-item" onclick="filterCat('office',this)"><span id="cat-label-office">Contábil & Gestão</span><span class="cat-count">25</span></div>
+    <div class="cat-item" onclick="filterCat('office2',this)"><span id="cat-label-office2">Office IA ✨</span><span class="cat-count">6</span></div>
   </div>
   <div class="sidebar-footer">Nexora System Suite v2.4.1</div>
 </aside>
@@ -243,10 +249,16 @@ body.collapsed .main-content{margin-left:0}
       <button class="menu-btn" onclick="document.getElementById('body').classList.toggle('collapsed')">☰</button>
       <div class="search-wrap">
         <svg viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input type="text" placeholder="Buscar ferramenta..." oninput="handleSearch(this.value)">
+        <input type="text" id="search-input" placeholder="Buscar ferramenta..." oninput="handleSearch(this.value)">
       </div>
     </div>
     <div class="header-right">
+      <span style="font-size:16px" title="Idioma / Language / Idioma">🌐</span>
+      <div class="site-lang-switch" id="site-lang-switch">
+        <button class="site-lang-btn active" onclick="setSiteLang('pt',this)">🇧🇷 PT</button>
+        <button class="site-lang-btn" onclick="setSiteLang('en',this)">🇺🇸 EN</button>
+        <button class="site-lang-btn" onclick="setSiteLang('es',this)">🇪🇸 ES</button>
+      </div>
       <button class="theme-btn" id="theme-btn" onclick="toggleTheme()">☀️ Modo Claro</button>
     </div>
   </header>
@@ -255,25 +267,25 @@ body.collapsed .main-content{margin-left:0}
   <div id="view-grid">
     <div class="hero">
       <h1>Nexora System Suite</h1>
-      <p>74 soluções corporativas integradas em um só ambiente — incluindo conversores Office com IA.</p>
+      <p id="hero-sub">74 soluções corporativas integradas em um só ambiente — incluindo conversores Office com IA.</p>
     </div>
-    <div class="sec-header"><h2>Todas as Ferramentas</h2></div>
+    <div class="sec-header"><h2 id="sec-header-title">Todas as Ferramentas</h2></div>
     <div class="grid" id="tools-grid"></div>
-    <footer class="footer-txt">© 2026 Nexora Systems - FGA Holding LLC · Todos os direitos reservados · <a href="mailto:fgatechnologies@outlook.com" style="color:var(--gold);text-decoration:none">fgatechnologies@outlook.com</a></footer>
+    <footer class="footer-txt">© 2026 Nexora Systems - FGA Holding LLC · <span id="footer-rights-text">Todos os direitos reservados</span> · <a href="mailto:fgatechnologies@outlook.com" style="color:var(--gold);text-decoration:none">fgatechnologies@outlook.com</a></footer>
   </div>
 
   <!-- VIEW SOBRE -->
   <div id="view-about" class="view-sec">
-    <h2>Sobre a Nexora Systems - FGA Holding LLC</h2>
-    <p>A Nexora Systems - FGA Holding LLC desenvolve ecossistemas de alta performance para gerenciamento corporativo e automação financeira estável.</p>
-    <p>Nossa suíte reúne ferramentas de PDF, imagem, conversão e gestão contábil em um ambiente unificado, seguro e executável 100% no navegador — sem envio de dados a servidores externos.</p>
-    <p>A partir da versão 2.4.0, integramos motor local de conversão inteligente entre formatos Office (Word, Excel, PowerPoint) e PDF, com suporte multilingual (PT / EN / ES), gerando arquivos reais nos formatos OOXML padrão.</p>
+    <h2 id="about-title">Sobre a Nexora Systems - FGA Holding LLC</h2>
+    <p id="about-p1">A Nexora Systems - FGA Holding LLC desenvolve ecossistemas de alta performance para gerenciamento corporativo e automação financeira estável.</p>
+    <p id="about-p2">Nossa suíte reúne ferramentas de PDF, imagem, conversão e gestão contábil em um ambiente unificado, seguro e executável 100% no navegador — sem envio de dados a servidores externos.</p>
+    <p id="about-p3">A partir da versão 2.4.0, integramos motor local de conversão inteligente entre formatos Office (Word, Excel, PowerPoint) e PDF, com suporte multilingual (PT / EN / ES), gerando arquivos reais nos formatos OOXML padrão.</p>
   </div>
 
   <!-- VIEW CONTATO -->
   <div id="view-contato" class="view-sec">
-    <h2>📬 Fale Conosco</h2>
-    <p>Entre em contato pela plataforma que preferir. Nossa equipe responde em até 1 dia útil.</p>
+    <h2 id="contact-title">📬 Fale Conosco</h2>
+    <p id="contact-sub">Entre em contato pela plataforma que preferir. Nossa equipe responde em até 1 dia útil.</p>
 
     <div class="contact-grid">
       <!-- WhatsApp -->
@@ -281,9 +293,9 @@ body.collapsed .main-content{margin-left:0}
         <span class="cc-icon">💬</span>
         <div class="cc-label">WhatsApp</div>
         <div class="cc-value">+55 (31) 99766-1377</div>
-        <div class="cc-sub">Atendimento seg–sex, 8h–18h (BRT)</div>
+        <div class="cc-sub" id="cc-sub-wa">Atendimento seg–sex, 8h–18h (BRT)</div>
         <a class="btn-contact btn-wa" href="https://wa.me/5531997661377" target="_blank">
-          💬 Abrir WhatsApp
+          <span id="btn-open-wa">💬 Abrir WhatsApp</span>
         </a>
       </div>
       <!-- E-mail -->
@@ -291,37 +303,37 @@ body.collapsed .main-content{margin-left:0}
         <span class="cc-icon">✉️</span>
         <div class="cc-label">E-mail</div>
         <div class="cc-value">fgatechnologies@outlook.com</div>
-        <div class="cc-sub">Suporte técnico e comercial</div>
+        <div class="cc-sub" id="cc-sub-email">Suporte técnico e comercial</div>
         <a class="btn-contact btn-email" href="mailto:fgatechnologies@outlook.com">
-          ✉️ Enviar E-mail
+          <span id="btn-send-email-contact">✉️ Enviar E-mail</span>
         </a>
       </div>
     </div>
 
     <!-- Formulário de mensagem -->
     <div class="msg-form">
-      <h3>💌 Enviar Mensagem</h3>
+      <h3 id="msg-form-title">💌 Enviar Mensagem</h3>
       <div class="mf-grid">
         <div class="mf-row">
-          <label class="mf-label">Nome completo</label>
+          <label class="mf-label" id="form-name-label">Nome completo</label>
           <input type="text" id="msg-nome" class="mf-input" placeholder="Seu nome">
         </div>
         <div class="mf-row">
-          <label class="mf-label">E-mail ou WhatsApp</label>
+          <label class="mf-label" id="form-contact-label">E-mail ou WhatsApp</label>
           <input type="text" id="msg-contato" class="mf-input" placeholder="email@exemplo.com ou (31) 9xxxx-xxxx">
         </div>
       </div>
       <div class="mf-row" style="margin-top:14px">
-        <label class="mf-label">Assunto</label>
+        <label class="mf-label" id="form-subject-label">Assunto</label>
         <input type="text" id="msg-assunto" class="mf-input" placeholder="Ex: Suporte técnico — PDF não converte">
       </div>
       <div class="mf-row" style="margin-top:14px">
-        <label class="mf-label">Mensagem</label>
+        <label class="mf-label" id="form-message-label">Mensagem</label>
         <textarea id="msg-corpo" class="mf-textarea" placeholder="Descreva sua dúvida, solicitação ou feedback em detalhes..."></textarea>
       </div>
       <div style="display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap">
-        <button class="btn-send" onclick="enviarMensagem('email')">✉️ Enviar por E-mail</button>
-        <button class="btn-send" style="background:#25d366;color:#fff" onclick="enviarMensagem('whatsapp')">💬 Enviar via WhatsApp</button>
+        <button class="btn-send" onclick="enviarMensagem('email')" id="btn-send-email-form">✉️ Enviar por E-mail</button>
+        <button class="btn-send" style="background:#25d366;color:#fff" onclick="enviarMensagem('whatsapp')" id="btn-send-wa-form">💬 Enviar via WhatsApp</button>
       </div>
       <div class="msg-success" id="msg-success">✅ Mensagem preparada! Seu cliente de e-mail foi aberto. Caso não tenha aberto, envie para <strong>fgatechnologies@outlook.com</strong></div>
       <div class="wa-redirect" id="wa-redirect">💬 Redirecionando para o WhatsApp... Caso não abra automaticamente, acesse <strong>wa.me/5531997661377</strong></div>
@@ -332,22 +344,22 @@ body.collapsed .main-content{margin-left:0}
 <!-- SIDEBAR DIREITA -->
 <aside class="sidebar-right">
   <div class="widget">
-    <h3>⭐ Recentes</h3>
+    <h3 id="widget-recent-title">⭐ Recentes</h3>
     <div class="widget-empty" id="recent-list">Nenhum histórico na sessão atual.</div>
   </div>
   <div class="widget">
-    <h3>Status do Ecossistema</h3>
+    <h3 id="widget-status-title">Status do Ecossistema</h3>
     <div class="status-row">
-      <div class="status-ok"><div class="dot"></div> Executável Local</div>
+      <div class="status-ok"><div class="dot"></div> <span id="widget-status-exec">Executável Local</span></div>
       <span style="font-size:11px;color:var(--dim)">v2.4.1</span>
     </div>
     <div class="status-row" style="margin-top:8px">
-      <div class="status-ok"><div class="dot" style="background:#a78bfa"></div> Motor de Conversão Ativo</div>
+      <div class="status-ok"><div class="dot" style="background:#a78bfa"></div> <span id="widget-status-engine">Motor de Conversão Ativo</span></div>
       <span style="font-size:11px;color:var(--dim)">Office</span>
     </div>
   </div>
   <div class="widget">
-    <h3>📬 Suporte Rápido</h3>
+    <h3 id="widget-support-title">📬 Suporte Rápido</h3>
     <a href="https://wa.me/5531997661377" target="_blank" style="display:flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:9px 12px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;margin-bottom:8px">
       💬 WhatsApp
     </a>
@@ -375,8 +387,9 @@ function toggleTheme(){
   isDark=!isDark;
   const b=document.getElementById('body');
   const btn=document.getElementById('theme-btn');
-  if(isDark){b.classList.remove('light');btn.textContent='☀️ Modo Claro';}
-  else{b.classList.add('light');btn.textContent='🌙 Modo Escuro';}
+  const s=SITE_I18N[siteLang]||SITE_I18N.pt;
+  if(isDark){b.classList.remove('light');btn.textContent=s.themeLight;}
+  else{b.classList.add('light');btn.textContent=s.themeDark;}
 }
 
 // ── FERRAMENTAS ───────────────────────────────────────
@@ -469,6 +482,133 @@ const CONV_TOOLS=[
 
 const TOOL_ID_MAP={69:'pdf2word',70:'pdf2excel',71:'pdf2pptx',72:'word2pdf',73:'excel2pdf',74:'pptx2pdf'};
 
+// ── I18N GLOBAL DO SITE (chrome da interface: nav, hero, categorias, contato, widgets) ──
+let siteLang='pt';
+const SITE_I18N={
+  pt:{
+    navHome:'🏠 Início',navAbout:'ℹ️ Sobre a Empresa',navContact:'📬 Contato',
+    catTitle:'Categorias',catAll:'Todos',catPdf:'PDF / Assinatura',catImage:'Imagens',catConvert:'Conversores / OFX',catOffice:'Contábil & Gestão',catOffice2:'Office IA ✨',
+    searchPlaceholder:'Buscar ferramenta...',
+    themeLight:'☀️ Modo Claro',themeDark:'🌙 Modo Escuro',
+    heroSub:'74 soluções corporativas integradas em um só ambiente — incluindo conversores Office com IA.',
+    secToolsTitle:'Todas as Ferramentas',
+    useToolBtn:'Usar ferramenta',
+    footerRights:'Todos os direitos reservados',
+    aboutTitle:'Sobre a Nexora Systems - FGA Holding LLC',
+    aboutP1:'A Nexora Systems - FGA Holding LLC desenvolve ecossistemas de alta performance para gerenciamento corporativo e automação financeira estável.',
+    aboutP2:'Nossa suíte reúne ferramentas de PDF, imagem, conversão e gestão contábil em um ambiente unificado, seguro e executável 100% no navegador — sem envio de dados a servidores externos.',
+    aboutP3:'A partir da versão 2.4.0, integramos motor local de conversão inteligente entre formatos Office (Word, Excel, PowerPoint) e PDF, com suporte multilingual (PT / EN / ES), gerando arquivos reais nos formatos OOXML padrão.',
+    contactTitle:'📬 Fale Conosco',
+    contactSub:'Entre em contato pela plataforma que preferir. Nossa equipe responde em até 1 dia útil.',
+    ccSubWa:'Atendimento seg–sex, 8h–18h (BRT)',btnOpenWa:'💬 Abrir WhatsApp',
+    ccSubEmail:'Suporte técnico e comercial',btnSendEmailContact:'✉️ Enviar E-mail',
+    msgFormTitle:'💌 Enviar Mensagem',
+    formNameLabel:'Nome completo',formContactLabel:'E-mail ou WhatsApp',formSubjectLabel:'Assunto',formMessageLabel:'Mensagem',
+    btnSendEmailForm:'✉️ Enviar por E-mail',btnSendWaForm:'💬 Enviar via WhatsApp',
+    widgetRecentTitle:'⭐ Recentes',widgetRecentEmpty:'Nenhum histórico na sessão atual.',
+    widgetStatusTitle:'Status do Ecossistema',widgetStatusExec:'Executável Local',widgetStatusEngine:'Motor de Conversão Ativo',
+    widgetSupportTitle:'📬 Suporte Rápido',
+    modalCloseBtn:'✕ Fechar',
+  },
+  en:{
+    navHome:'🏠 Home',navAbout:'ℹ️ About Us',navContact:'📬 Contact',
+    catTitle:'Categories',catAll:'All',catPdf:'PDF / Signature',catImage:'Images',catConvert:'Converters / OFX',catOffice:'Accounting & Management',catOffice2:'Office AI ✨',
+    searchPlaceholder:'Search tool...',
+    themeLight:'☀️ Light Mode',themeDark:'🌙 Dark Mode',
+    heroSub:'74 integrated business solutions in one place — including AI-powered Office converters.',
+    secToolsTitle:'All Tools',
+    useToolBtn:'Use tool',
+    footerRights:'All rights reserved',
+    aboutTitle:'About Nexora Systems - FGA Holding LLC',
+    aboutP1:'Nexora Systems - FGA Holding LLC builds high-performance ecosystems for corporate management and stable financial automation.',
+    aboutP2:'Our suite brings together PDF, image, conversion and accounting tools in one unified, secure environment that runs 100% in the browser — no data is sent to external servers.',
+    aboutP3:'Starting with version 2.4.0, we integrated a local smart conversion engine between Office formats (Word, Excel, PowerPoint) and PDF, with multilingual support (PT / EN / ES), generating real files in standard OOXML formats.',
+    contactTitle:'📬 Get in Touch',
+    contactSub:'Reach out on whichever platform you prefer. Our team replies within 1 business day.',
+    ccSubWa:'Support Mon–Fri, 8am–6pm (BRT)',btnOpenWa:'💬 Open WhatsApp',
+    ccSubEmail:'Technical and sales support',btnSendEmailContact:'✉️ Send Email',
+    msgFormTitle:'💌 Send a Message',
+    formNameLabel:'Full name',formContactLabel:'Email or WhatsApp',formSubjectLabel:'Subject',formMessageLabel:'Message',
+    btnSendEmailForm:'✉️ Send by Email',btnSendWaForm:'💬 Send via WhatsApp',
+    widgetRecentTitle:'⭐ Recent',widgetRecentEmpty:'No history in the current session.',
+    widgetStatusTitle:'Ecosystem Status',widgetStatusExec:'Runs Locally',widgetStatusEngine:'Conversion Engine Active',
+    widgetSupportTitle:'📬 Quick Support',
+    modalCloseBtn:'✕ Close',
+  },
+  es:{
+    navHome:'🏠 Inicio',navAbout:'ℹ️ Sobre la Empresa',navContact:'📬 Contacto',
+    catTitle:'Categorías',catAll:'Todos',catPdf:'PDF / Firma',catImage:'Imágenes',catConvert:'Conversores / OFX',catOffice:'Contabilidad y Gestión',catOffice2:'Office IA ✨',
+    searchPlaceholder:'Buscar herramienta...',
+    themeLight:'☀️ Modo Claro',themeDark:'🌙 Modo Oscuro',
+    heroSub:'74 soluciones corporativas integradas en un solo lugar — incluyendo conversores de Office con IA.',
+    secToolsTitle:'Todas las Herramientas',
+    useToolBtn:'Usar herramienta',
+    footerRights:'Todos los derechos reservados',
+    aboutTitle:'Sobre Nexora Systems - FGA Holding LLC',
+    aboutP1:'Nexora Systems - FGA Holding LLC desarrolla ecosistemas de alto rendimiento para la gestión corporativa y la automatización financiera estable.',
+    aboutP2:'Nuestra suite reúne herramientas de PDF, imagen, conversión y gestión contable en un entorno unificado, seguro y que se ejecuta 100% en el navegador — sin enviar datos a servidores externos.',
+    aboutP3:'A partir de la versión 2.4.0, integramos un motor local de conversión inteligente entre formatos de Office (Word, Excel, PowerPoint) y PDF, con soporte multilingüe (PT / EN / ES), generando archivos reales en formatos OOXML estándar.',
+    contactTitle:'📬 Contáctanos',
+    contactSub:'Ponte en contacto por la plataforma que prefieras. Nuestro equipo responde en un plazo de 1 día hábil.',
+    ccSubWa:'Atención lun–vie, 8h–18h (BRT)',btnOpenWa:'💬 Abrir WhatsApp',
+    ccSubEmail:'Soporte técnico y comercial',btnSendEmailContact:'✉️ Enviar Email',
+    msgFormTitle:'💌 Enviar Mensaje',
+    formNameLabel:'Nombre completo',formContactLabel:'Email o WhatsApp',formSubjectLabel:'Asunto',formMessageLabel:'Mensaje',
+    btnSendEmailForm:'✉️ Enviar por Email',btnSendWaForm:'💬 Enviar por WhatsApp',
+    widgetRecentTitle:'⭐ Recientes',widgetRecentEmpty:'Sin historial en la sesión actual.',
+    widgetStatusTitle:'Estado del Ecosistema',widgetStatusExec:'Ejecutable Local',widgetStatusEngine:'Motor de Conversión Activo',
+    widgetSupportTitle:'📬 Soporte Rápido',
+    modalCloseBtn:'✕ Cerrar',
+  }
+};
+
+function setSiteLang(l,btn){
+  siteLang=l;
+  convLang=l; // mantém o idioma do conversor Office IA sincronizado com o idioma do site
+  document.querySelectorAll('.site-lang-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  applySiteLang();
+  // se o painel do conversor estiver visível, sincroniza os botões PT/EN/ES dele também
+  const idx={pt:0,en:1,es:2}[l];
+  const convBtns=document.querySelectorAll('.conv-lang-btn');
+  if(convBtns.length){
+    convBtns.forEach(b=>b.classList.remove('active'));
+    if(convBtns[idx]) convBtns[idx].classList.add('active');
+  }
+  if(document.getElementById('conv-lang-label')&&typeof refreshConvUIText==='function') refreshConvUIText();
+}
+
+function applySiteLang(){
+  const s=SITE_I18N[siteLang]||SITE_I18N.pt;
+  const setTxt=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setTxt('nav-home',s.navHome);setTxt('nav-about',s.navAbout);setTxt('nav-contact',s.navContact);
+  setTxt('cat-title-label',s.catTitle);
+  setTxt('cat-label-all',s.catAll);setTxt('cat-label-pdf',s.catPdf);setTxt('cat-label-image',s.catImage);
+  setTxt('cat-label-convert',s.catConvert);setTxt('cat-label-office',s.catOffice);setTxt('cat-label-office2',s.catOffice2);
+  const searchInput=document.getElementById('search-input');
+  if(searchInput) searchInput.placeholder=s.searchPlaceholder;
+  const themeBtn=document.getElementById('theme-btn');
+  if(themeBtn) themeBtn.textContent=isDark?s.themeLight:s.themeDark;
+  setTxt('hero-sub',s.heroSub);
+  setTxt('sec-header-title',s.secToolsTitle);
+  setTxt('footer-rights-text',s.footerRights);
+  setTxt('about-title',s.aboutTitle);setTxt('about-p1',s.aboutP1);setTxt('about-p2',s.aboutP2);setTxt('about-p3',s.aboutP3);
+  setTxt('contact-title',s.contactTitle);setTxt('contact-sub',s.contactSub);
+  setTxt('cc-sub-wa',s.ccSubWa);setTxt('btn-open-wa',s.btnOpenWa);
+  setTxt('cc-sub-email',s.ccSubEmail);setTxt('btn-send-email-contact',s.btnSendEmailContact);
+  setTxt('msg-form-title',s.msgFormTitle);
+  setTxt('form-name-label',s.formNameLabel);setTxt('form-contact-label',s.formContactLabel);
+  setTxt('form-subject-label',s.formSubjectLabel);setTxt('form-message-label',s.formMessageLabel);
+  setTxt('btn-send-email-form',s.btnSendEmailForm);setTxt('btn-send-wa-form',s.btnSendWaForm);
+  setTxt('widget-recent-title',s.widgetRecentTitle);
+  setTxt('widget-status-title',s.widgetStatusTitle);setTxt('widget-status-exec',s.widgetStatusExec);setTxt('widget-status-engine',s.widgetStatusEngine);
+  setTxt('widget-support-title',s.widgetSupportTitle);
+  const recentList=document.getElementById('recent-list');
+  if(recentList&&recentIds.length===0) recentList.textContent=s.widgetRecentEmpty;
+  document.querySelectorAll('.close-btn').forEach(b=>{b.textContent=s.modalCloseBtn;});
+  renderGrid(); // re-render tool cards so "Usar ferramenta"/"Use tool"/"Usar herramienta" updates
+}
+
 let curCat='all',sigCanvas,sigCtx,sigDrawing=false,typCanvas,typCtx,activeTab='draw',recentIds=[];
 let convLang='pt',convActiveTool=null,convSelectedFile=null,convResultBlob=null,convResultName='';
 
@@ -501,6 +641,7 @@ function renderGrid(data){
   g.innerHTML='';
   const emoji={pdf:'📄',image:'🖼️',convert:'🔄',office:'📊',office2:'🤖'};
   const cls={pdf:'c-pdf',image:'c-image',convert:'c-convert',office:'c-office',office2:'c-office2'};
+  const useLabel=(SITE_I18N[siteLang]||SITE_I18N.pt).useToolBtn;
   data.forEach(t=>{
     const d=document.createElement('div');
     d.className='card';
@@ -508,7 +649,7 @@ function renderGrid(data){
       ${t.ia?'<span class="badge-ia">✨ IA</span>':''}
       <div class="icon-wrap ${cls[t.cat]}">${emoji[t.cat]}</div>
       <div class="tool-meta"><h4>${t.name}</h4><p>${t.desc}</p></div>
-      <button class="btn-use" onclick="openTool(${t.id})">Usar ferramenta</button>`;
+      <button class="btn-use" onclick="openTool(${t.id})">${useLabel}</button>`;
     g.appendChild(d);
   });
 }
@@ -572,19 +713,32 @@ function buildModal(id,tool){
   }
 
   if(id===1){
+    govAuthData=null;
     body.innerHTML=`
       <div><span class="gov-badge">🔰 ASSINADOR DIGITAL MULTIMODAL GOV.BR</span></div>
-      <div class="f-row"><label class="f-label">1. Selecione o PDF:</label><input type="file" id="gov-pdf" accept="application/pdf" class="f-input"></div>
-      <div class="sig-tabs">
-        <button class="sig-tab active" onclick="switchTab('draw',this)">✏️ Desenhar</button>
-        <button class="sig-tab" onclick="switchTab('type',this)">⌨️ Digitar Nome</button>
-        <button class="sig-tab" onclick="switchTab('upload',this)">📁 Upload Carimbo</button>
+      <div id="gov-auth-section">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:4px">Confirme sua identidade antes de assinar o documento.</p>
+        <div class="grid-2">
+          <div class="f-row"><label class="f-label">Nome completo</label><input type="text" id="gov-nome" class="f-input" placeholder="Ex: Maria da Silva Santos"></div>
+          <div class="f-row"><label class="f-label">CPF</label><input type="text" id="gov-cpf" class="f-input" placeholder="000.000.000-00" maxlength="14"></div>
+        </div>
+        <button class="btn-exec" onclick="govAutenticar()">🔐 Autenticar</button>
+        <div class="result-box" id="gov-auth-result"></div>
       </div>
-      <div id="pane-draw" class="sig-pane active"><div class="canvas-box"><canvas id="sig-canvas"></canvas></div><button class="btn-sm" onclick="clearSig()">🗑 Limpar</button></div>
-      <div id="pane-type" class="sig-pane"><label class="f-label">Nome cursivo:</label><input type="text" id="sig-name" class="f-input" placeholder="Nome completo" oninput="drawTypeSig()"><div class="canvas-box" style="margin-top:8px"><canvas id="typ-canvas"></canvas></div></div>
-      <div id="pane-upload" class="sig-pane"><label class="f-label">Imagem do carimbo (PNG):</label><input type="file" id="sig-img" accept="image/*" class="f-input"></div>
-      <button class="btn-exec" onclick="processGov()">📥 Gerar PDF Assinado</button>`;
-    requestAnimationFrame(()=>initSigCanvas());
+      <div id="gov-sign-section" style="display:none">
+        <div id="gov-auth-badge" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--green);margin-bottom:14px"></div>
+        <div class="f-row"><label class="f-label">1. Selecione o PDF:</label><input type="file" id="gov-pdf" accept="application/pdf" class="f-input"></div>
+        <div class="sig-tabs">
+          <button class="sig-tab active" onclick="switchTab('draw',this)">✏️ Desenhar</button>
+          <button class="sig-tab" onclick="switchTab('type',this)">⌨️ Digitar Nome</button>
+          <button class="sig-tab" onclick="switchTab('upload',this)">📁 Upload Carimbo</button>
+        </div>
+        <div id="pane-draw" class="sig-pane active"><div class="canvas-box"><canvas id="sig-canvas"></canvas></div><button class="btn-sm" onclick="clearSig()">🗑 Limpar</button></div>
+        <div id="pane-type" class="sig-pane"><label class="f-label">Nome cursivo:</label><input type="text" id="sig-name" class="f-input" placeholder="Nome completo" oninput="drawTypeSig()"><div class="canvas-box" style="margin-top:8px"><canvas id="typ-canvas"></canvas></div></div>
+        <div id="pane-upload" class="sig-pane"><label class="f-label">Imagem do carimbo (PNG):</label><input type="file" id="sig-img" accept="image/*" class="f-input"></div>
+        <button class="btn-exec" onclick="processGov()">📥 Gerar PDF Assinado</button>
+        <button class="btn-sm" onclick="govLogout()" style="width:100%;text-align:center">🔓 Sair / Trocar usuário</button>
+      </div>`;
     return;
   }
   if(id===2){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Arquivo <strong>.ofx</strong>:</p><input type="file" id="ofx-file" accept=".ofx,.OFX" class="f-input"><button class="btn-exec" onclick="processOFX()">📊 Converter para PDF</button>`;return;}
@@ -891,9 +1045,15 @@ function initConvListeners(){convActiveTool=null;convSelectedFile=null;convResul
 
 function setConvLang(l,btn){
   convLang=l;
+  siteLang=l; // mantém o idioma do site sincronizado com o idioma escolhido no conversor
   document.querySelectorAll('.conv-lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   refreshConvUIText();
+  const idx={pt:0,en:1,es:2}[l];
+  const siteBtns=document.querySelectorAll('.site-lang-btn');
+  siteBtns.forEach(b=>b.classList.remove('active'));
+  if(siteBtns[idx]) siteBtns[idx].classList.add('active');
+  applySiteLang();
 }
 
 function refreshConvUIText(){
@@ -1422,7 +1582,50 @@ function switchTab(tab,el){
 }
 
 // ── PDF FUNÇÕES ───────────────────────────────────────
+let govAuthData=null;
+
+function validCPFNumber(c){
+  if(c.length!==11||/^(\d)\1{10}$/.test(c)) return false;
+  let s=0;for(let i=0;i<9;i++)s+=+c[i]*(10-i);let r=(s*10)%11;if(r===10||r===11)r=0;
+  if(r!==+c[9]) return false;
+  s=0;for(let i=0;i<10;i++)s+=+c[i]*(11-i);r=(s*10)%11;if(r===10||r===11)r=0;
+  return r===+c[10];
+}
+
+function govAutenticar(){
+  const nome=document.getElementById('gov-nome').value.trim();
+  const cpfRaw=document.getElementById('gov-cpf').value.replace(/\D/g,'');
+  const r=document.getElementById('gov-auth-result');
+  r.classList.add('show');
+  if(!nome||nome.split(/\s+/).filter(Boolean).length<2){
+    r.textContent='❌ Informe o nome completo (nome e sobrenome).';
+    return;
+  }
+  if(!validCPFNumber(cpfRaw)){
+    r.textContent='❌ CPF inválido. Verifique os números digitados.';
+    return;
+  }
+  const cpfFmt=cpfRaw.slice(0,3)+'.'+cpfRaw.slice(3,6)+'.'+cpfRaw.slice(6,9)+'-'+cpfRaw.slice(9);
+  govAuthData={nome,cpf:cpfFmt};
+  r.textContent='✅ Identidade validada com sucesso!';
+  document.getElementById('gov-auth-section').style.display='none';
+  document.getElementById('gov-sign-section').style.display='block';
+  document.getElementById('gov-auth-badge').innerHTML='✅ Autenticado como <strong>'+nome+'</strong> — CPF '+cpfFmt;
+  requestAnimationFrame(()=>initSigCanvas());
+}
+
+function govLogout(){
+  govAuthData=null;
+  document.getElementById('gov-sign-section').style.display='none';
+  document.getElementById('gov-auth-section').style.display='block';
+  document.getElementById('gov-nome').value='';
+  document.getElementById('gov-cpf').value='';
+  const r=document.getElementById('gov-auth-result');
+  r.classList.remove('show');r.textContent='';
+}
+
 async function processGov(){
+  if(!govAuthData){alert('Autentique-se com nome e CPF antes de assinar!');return;}
   const fi=document.getElementById('gov-pdf');
   if(!fi||!fi.files.length){alert('Selecione um PDF!');return;}
   try{
@@ -1444,12 +1647,14 @@ async function processGov(){
     const img=await pdfDoc.embedPng(pngBytes);
     const p=pdfDoc.getPages()[0];
     const {width}=p.getSize();
-    p.drawRectangle({x:width-235,y:30,width:215,height:80,borderColor:PDFLib.rgb(0,0.27,0.50),borderWidth:1.5});
-    p.drawText('ASSINADO DIGITALMENTE',{x:width-225,y:100,size:7,color:PDFLib.rgb(0,0.27,0.50)});
-    p.drawText(new Date().toLocaleDateString('pt-BR'),{x:width-225,y:90,size:7,color:PDFLib.rgb(0.4,0.4,0.4)});
-    p.drawImage(img,{x:width-225,y:36,width:195,height:50});
+    p.drawRectangle({x:width-235,y:20,width:215,height:100,borderColor:PDFLib.rgb(0,0.27,0.50),borderWidth:1.5});
+    p.drawText('ASSINADO DIGITALMENTE',{x:width-225,y:112,size:7,color:PDFLib.rgb(0,0.27,0.50)});
+    p.drawText(new Date().toLocaleDateString('pt-BR')+' '+new Date().toLocaleTimeString('pt-BR'),{x:width-225,y:102,size:6.5,color:PDFLib.rgb(0.4,0.4,0.4)});
+    p.drawText(('Por: '+govAuthData.nome).substring(0,42),{x:width-225,y:92,size:6.5,color:PDFLib.rgb(0.2,0.2,0.2)});
+    p.drawText('CPF: '+govAuthData.cpf,{x:width-225,y:82,size:6.5,color:PDFLib.rgb(0.2,0.2,0.2)});
+    p.drawImage(img,{x:width-225,y:24,width:195,height:50});
     dl(await pdfDoc.save(),'documento_assinado_gov.pdf','application/pdf');
-    alert('✅ PDF assinado gerado!');closeModal();
+    alert('✅ PDF assinado gerado para '+govAuthData.nome+'!');closeModal();
   }catch(e){alert('Erro: '+e.message);}
 }
 
