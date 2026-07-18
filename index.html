@@ -22,12 +22,17 @@ body{
   background:var(--bg);color:var(--text);
   min-height:100vh;display:flex;overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
-/* ── TEMA LIGHT (mantido por compatibilidade, não usado por padrão) ── */
+/* ── TEMA LIGHT — "NexusTechSuite Claro" (slate + indigo) ── */
 body.light{
-  --bg:#f3efe3;--bg-sidebar:#faf7ee;--bg-card:#eae4d2;--bg-hover:#e0d8c0;
-  --border:#d3c9ab;--gold:#4f46e5;--gold2:#4338ca;
-  --text:#20241f;--muted:#5f6a5f;--dim:#8d9587;--green:#15803d;
+  --bg:#f8fafc;--bg-sidebar:#ffffff;--bg-card:#ffffff;--bg-hover:#eef2ff;
+  --border:#e2e8f0;--gold:#4f46e5;--gold2:#4338ca;
+  --text:#0f172a;--muted:#475569;--dim:#94a3b8;--green:#059669;
 }
+body.light .sidebar{box-shadow:2px 0 12px rgba(15,23,42,.05)}
+body.light .topbar{background:rgba(248,250,252,.85)}
+body.light .card{box-shadow:0 1px 3px rgba(15,23,42,.06)}
+body.light .modal-win{box-shadow:0 20px 50px rgba(15,23,42,.18)}
+body.light .logo-wrap{background:#0f172a;padding:10px 14px;border-radius:12px}
 
 /* ── TIPOGRAFIA ── */
 h1,h2,h3,.logo,.hero h1,.sec-header h2,.view-sec h2,.widget h3,.modal-head h3,.msg-form h3,.cc-value,.tool-meta h4{font-family:var(--font-display)}
@@ -41,11 +46,11 @@ body{display:flex;min-height:100vh}
   display:flex;flex-direction:column;justify-content:space-between;padding:24px 20px;position:sticky;top:0;height:100vh;overflow-y:auto}
 .sidebar-top{display:flex;flex-direction:column;gap:26px}
 .sidebar-search{position:relative}
-.sidebar-search input{width:100%;background:#020617;border:1px solid var(--border);border-radius:8px;padding:10px 14px 10px 36px;color:var(--text);font-size:12.5px;outline:none}
+.sidebar-search input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px 10px 36px;color:var(--text);font-size:12.5px;outline:none}
 .sidebar-search input:focus{border-color:var(--gold)}
 .sidebar-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--dim);fill:none;stroke-width:2}
 .sidebar-section-label{font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:10px}
-.sidebar-lang{display:flex;gap:4px;background:#020617;border:1px solid var(--border);border-radius:8px;padding:3px}
+.sidebar-lang{display:flex;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:3px}
 .sidebar-bottom{border-top:1px solid var(--border);padding-top:16px;display:flex;flex-direction:column;gap:12px}
 .theme-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background .15s,border-color .15s;width:100%}
 .theme-btn:hover{border-color:var(--gold)}
@@ -1675,30 +1680,21 @@ async function processGov(){
     const p=pdfDoc.getPages()[0];
     const {width}=p.getSize();
 
-    // ── Carimbo no padrão visual gov.br ──
-    const boxW=252,boxH=70,boxX=width-boxW-20,boxY=20;
-    const green=PDFLib.rgb(0.06,0.53,0.30);
-    const blue=PDFLib.rgb(0.05,0.20,0.42);
+    // ── Carimbo de assinatura ──
+    const boxW=252,boxH=58,boxX=width-boxW-20,boxY=20;
     const dark=PDFLib.rgb(0.08,0.10,0.16);
     const gray=PDFLib.rgb(0.42,0.45,0.50);
 
     p.drawRectangle({x:boxX,y:boxY,width:boxW,height:boxH,color:PDFLib.rgb(1,1,1),borderColor:PDFLib.rgb(.82,.84,.86),borderWidth:1});
 
-    // logo "gov.br" (verde + azul, como no modelo oficial)
-    const logoX=boxX+9,logoY=boxY+boxH-17;
-    p.drawText('gov',{x:logoX,y:logoY,size:11,font:fontBold,color:green});
-    const govW=fontBold.widthOfTextAtSize('gov',11);
-    p.drawText('.br',{x:logoX+govW,y:logoY,size:11,font:fontBold,color:blue});
-
-    p.drawText('Documento assinado digitalmente',{x:boxX+9,y:boxY+boxH-29,size:6.2,font:fontReg,color:gray});
-    p.drawText(govAuthData.nome.toUpperCase().substring(0,42),{x:boxX+9,y:boxY+boxH-41,size:7.6,font:fontBold,color:dark});
+    p.drawText('Documento assinado digitalmente',{x:boxX+9,y:boxY+boxH-14,size:6.4,font:fontReg,color:gray});
+    p.drawText(govAuthData.nome.toUpperCase().substring(0,42),{x:boxX+9,y:boxY+boxH-27,size:7.8,font:fontBold,color:dark});
     const now=new Date();
     const dataStr='Data: '+now.toLocaleDateString('pt-BR')+' '+now.toLocaleTimeString('pt-BR',{hour12:false})+'-0300';
-    p.drawText(dataStr,{x:boxX+9,y:boxY+boxH-52,size:5.8,font:fontReg,color:gray});
-    p.drawText('Verifique em https://validar.iti.gov.br',{x:boxX+9,y:boxY+boxH-61,size:5.8,font:fontReg,color:gray});
+    p.drawText(dataStr,{x:boxX+9,y:boxY+boxH-39,size:6,font:fontReg,color:gray});
+    p.drawText('Verifique em https://validar.iti.gov.br',{x:boxX+9,y:boxY+boxH-49,size:6,font:fontReg,color:gray});
 
-    // assinatura pessoal (desenhada/digitada/carimbo) acima do carimbo gov.br
-    p.drawImage(img,{x:boxX,y:boxY+boxH+6,width:boxW,height:44});
+    // (assinatura pessoal desenhada/digitada/carimbo não é mais impressa — só o carimbo gov.br abaixo)
 
     dl(await pdfDoc.save(),'documento_assinado_gov.pdf','application/pdf');
     alert('✅ PDF assinado gerado para '+govAuthData.nome+'!');closeModal();
