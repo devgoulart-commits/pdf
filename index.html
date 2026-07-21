@@ -337,6 +337,26 @@ body{display:block;min-height:100vh}
 .btn-cta-white{background:#fff;color:#4338ca;font-weight:800;padding:14px 26px;border:none;border-radius:14px;cursor:pointer;font-size:14px;transition:transform .15s}
 .btn-cta-white:hover{transform:translateY(-2px)}
 
+.history-strip-land{padding:16px 0 8px;text-align:center}
+.history-strip-land h2{font-size:20px;font-weight:800;font-family:var(--font-display);margin-bottom:4px}
+.history-strip-land p{color:var(--muted);font-size:12.5px;margin-bottom:22px}
+.history-timeline{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.history-node{display:flex;flex-direction:column;align-items:center;gap:4px;background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:14px;padding:14px 18px;min-width:140px}
+.history-node b{font-size:12.5px;color:var(--text)}
+.history-node small{color:var(--dim);font-size:10.5px}
+.history-dot{width:9px;height:9px;border-radius:50%;background:var(--dim)}
+.history-node-current{border-color:var(--gold2);background:rgba(99,102,241,.1);box-shadow:0 8px 20px -10px rgba(99,102,241,.5)}
+.history-node-current .history-dot{background:linear-gradient(100deg,#6366f1,#8b5cf6)}
+.history-node-current b{background:linear-gradient(100deg,#818cf8,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.history-arrow{color:var(--dim);font-size:16px}
+@media(max-width:780px){.history-arrow{transform:rotate(90deg)}}
+.history-more-link{color:#a5b4fc;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none}
+.history-more-link:hover{text-decoration:underline}
+.history-full-text{max-width:760px;margin:22px auto 0;text-align:left;background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:16px;padding:22px 26px}
+.history-full-text p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px}
+.history-full-text p:last-child{margin-bottom:0}
+.history-full-text strong{color:var(--text)}
+
 .site-footer-land{border-top:1px solid var(--border);margin-top:20px;padding:44px 28px 24px;background:color-mix(in srgb, var(--bg-sidebar) 60%, transparent)}
 .site-footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:28px}
 @media(max-width:780px){.site-footer-inner{grid-template-columns:1fr 1fr}}
@@ -477,6 +497,29 @@ body{display:block;min-height:100vh}
         <p>Escolha uma ferramenta abaixo e comece agora, direto do navegador.</p>
       </div>
       <button class="btn-cta-white" onclick="scrollToTools()">Ver Ferramentas →</button>
+    </section>
+
+    <!-- HISTÓRIA DA EMPRESA (timeline resumida, visível na home) -->
+    <section class="history-strip-land">
+      <h2 id="history-strip-title">Nossa História</h2>
+      <p id="history-strip-sub">Da ideia inicial até a plataforma completa de hoje.</p>
+      <div class="history-timeline">
+        <div class="history-node"><span class="history-dot"></span><b>FREDTECHsystem Suite</b><small>O início</small></div>
+        <div class="history-arrow">→</div>
+        <div class="history-node"><span class="history-dot"></span><b>Nexora Suite</b><small>Nova identidade</small></div>
+        <div class="history-arrow">→</div>
+        <div class="history-node"><span class="history-dot"></span><b>FGA Suite</b><small>FGA Holding LLC</small></div>
+        <div class="history-arrow">→</div>
+        <div class="history-node history-node-current"><span class="history-dot"></span><b>Nexus Tech Converter</b><small>Hoje</small></div>
+      </div>
+      <a class="history-more-link" onclick="showView('about', document.querySelector('[data-view=about]'))">Ler a história completa →</a>
+
+      <div class="history-full-text">
+        <p><strong>FREDTECHsystem Suite:</strong> o projeto nasceu como um conjunto simples de utilitários pessoais para conversão de arquivos.</p>
+        <p><strong>Nexora Suite:</strong> com o crescimento do catálogo de ferramentas, a marca evoluiu, ganhando identidade visual própria e mais recursos de automação.</p>
+        <p><strong>FGA Suite:</strong> em seguida, o produto passou a integrar o portfólio da FGA Suite, sob a FGA Holding LLC, unificando processos internos e reforçando o compromisso com privacidade e execução 100% local.</p>
+        <p><strong>Nexus Tech Converter:</strong> a marca atual representa a maturidade dessa trajetória — uma suíte completa e gratuita de ferramentas de PDF, imagem, conversão de Office e contabilidade, mantida hoje pela FGA Holding LLC e desenvolvida com o mesmo princípio desde o início: ferramentas rápidas, seguras e sem necessidade de instalação.</p>
+      </div>
     </section>
 
     <div class="summary-strip">
