@@ -73,9 +73,12 @@ body{display:block;min-height:100vh}
 
 @media(max-width:900px){
   .navbar-search,.navbar-right{display:none}
-  .navbar-links{display:none}
+  .navbar-links{display:flex;overflow-x:auto;flex:none;width:100%;order:3;gap:6px;padding-top:8px;margin-top:8px;border-top:1px solid var(--border);scrollbar-width:none}
+  .navbar-links::-webkit-scrollbar{display:none}
+  .navbar-links .nav-item{white-space:nowrap;flex-shrink:0}
+  .navbar-inner{flex-wrap:wrap}
   .menu-btn{display:block;margin-left:auto}
-  body.collapsed .navbar-links{display:flex;flex-direction:column;position:absolute;top:60px;left:0;right:0;background:var(--bg-sidebar);padding:16px;border-bottom:1px solid var(--border);gap:4px;z-index:99}
+  body.collapsed .navbar-right{display:flex;flex-direction:column;align-items:stretch;position:absolute;top:60px;left:0;right:0;background:var(--bg-sidebar);padding:16px;border-bottom:1px solid var(--border);gap:10px;z-index:99}
 }
 
 /* Área principal */
@@ -440,6 +443,27 @@ body{display:block;min-height:100vh}
       </div>
     </section>
 
+    <!-- HISTÓRIA DA EMPRESA (visível direto na home, sem precisar clicar) -->
+    <section class="history-strip-land">
+      <h2>Nossa História</h2>
+      <p>Da ideia inicial até a plataforma completa de hoje.</p>
+      <div class="history-timeline">
+        <div class="history-node"><span class="history-dot"></span><b>FREDTECHsystem Suite</b><small>O início</small></div>
+        <div class="history-arrow">→</div>
+        <div class="history-node"><span class="history-dot"></span><b>Nexora Suite</b><small>Nova identidade</small></div>
+        <div class="history-arrow">→</div>
+        <div class="history-node"><span class="history-dot"></span><b>FGA Suite</b><small>FGA Holding LLC</small></div>
+        <div class="history-arrow">→</div>
+        <div class="history-node history-node-current"><span class="history-dot"></span><b>Nexus Tech Converter</b><small>Hoje</small></div>
+      </div>
+      <div class="history-full-text">
+        <p><strong>FREDTECHsystem Suite:</strong> o projeto nasceu como um conjunto simples de utilitários pessoais para conversão de arquivos.</p>
+        <p><strong>Nexora Suite:</strong> com o crescimento do catálogo de ferramentas, a marca evoluiu, ganhando identidade visual própria e mais recursos de automação.</p>
+        <p><strong>FGA Suite:</strong> em seguida, o produto passou a integrar o portfólio da FGA Suite, sob a FGA Holding LLC, unificando processos internos e reforçando o compromisso com privacidade e execução 100% local.</p>
+        <p><strong>Nexus Tech Converter:</strong> a marca atual representa a maturidade dessa trajetória — uma suíte completa e gratuita de ferramentas de PDF, imagem, conversão de Office e contabilidade, mantida hoje pela FGA Holding LLC e desenvolvida com o mesmo princípio desde o início: ferramentas rápidas, seguras e sem necessidade de instalação.</p>
+      </div>
+    </section>
+
     <!-- CONVERSOES SUPORTADAS -->
     <section class="conv-strip-land">
       <h2>Conversões Office suportadas</h2>
@@ -499,28 +523,7 @@ body{display:block;min-height:100vh}
       <button class="btn-cta-white" onclick="scrollToTools()">Ver Ferramentas →</button>
     </section>
 
-    <!-- HISTÓRIA DA EMPRESA (timeline resumida, visível na home) -->
-    <section class="history-strip-land">
-      <h2 id="history-strip-title">Nossa História</h2>
-      <p id="history-strip-sub">Da ideia inicial até a plataforma completa de hoje.</p>
-      <div class="history-timeline">
-        <div class="history-node"><span class="history-dot"></span><b>FREDTECHsystem Suite</b><small>O início</small></div>
-        <div class="history-arrow">→</div>
-        <div class="history-node"><span class="history-dot"></span><b>Nexora Suite</b><small>Nova identidade</small></div>
-        <div class="history-arrow">→</div>
-        <div class="history-node"><span class="history-dot"></span><b>FGA Suite</b><small>FGA Holding LLC</small></div>
-        <div class="history-arrow">→</div>
-        <div class="history-node history-node-current"><span class="history-dot"></span><b>Nexus Tech Converter</b><small>Hoje</small></div>
-      </div>
-      <a class="history-more-link" onclick="showView('about', document.querySelector('[data-view=about]'))">Ler a história completa →</a>
 
-      <div class="history-full-text">
-        <p><strong>FREDTECHsystem Suite:</strong> o projeto nasceu como um conjunto simples de utilitários pessoais para conversão de arquivos.</p>
-        <p><strong>Nexora Suite:</strong> com o crescimento do catálogo de ferramentas, a marca evoluiu, ganhando identidade visual própria e mais recursos de automação.</p>
-        <p><strong>FGA Suite:</strong> em seguida, o produto passou a integrar o portfólio da FGA Suite, sob a FGA Holding LLC, unificando processos internos e reforçando o compromisso com privacidade e execução 100% local.</p>
-        <p><strong>Nexus Tech Converter:</strong> a marca atual representa a maturidade dessa trajetória — uma suíte completa e gratuita de ferramentas de PDF, imagem, conversão de Office e contabilidade, mantida hoje pela FGA Holding LLC e desenvolvida com o mesmo princípio desde o início: ferramentas rápidas, seguras e sem necessidade de instalação.</p>
-      </div>
-    </section>
 
     <div class="summary-strip">
       <div class="widget">
@@ -562,6 +565,7 @@ body{display:block;min-height:100vh}
     <div class="sec-header"><h2 id="sec-header-title">Todas as Ferramentas</h2></div>
     <div class="grid" id="tools-grid"></div>
 <!-- VIEW SOBRE -->
+  <!-- VIEW SOBRE -->
   <div id="view-about" class="view-sec">
     <h2 id="about-title">Sobre a Nexus Tech Converter</h2>
     <p id="about-p1">A Nexus Tech Converter desenvolve ferramentas simples e rápidas para o dia a dia: conversores de arquivos, edição de PDF e imagem, e calculadoras de contabilidade essenciais.</p>
@@ -2716,7 +2720,8 @@ async function gerarPlanilha(){
 }
 
 // ── INIT ──────────────────────────────────────────────
-document.getElementById('view-about').style.display='none';
+const _viewAbout=document.getElementById('view-about');
+if(_viewAbout) _viewAbout.style.display='none';
 document.getElementById('view-contato').style.display='none';
 renderGrid();
 </script>
