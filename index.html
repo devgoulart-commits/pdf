@@ -46,6 +46,23 @@ body.light .topbar{background:rgba(248,250,252,.85)}
 body.light .card{box-shadow:0 1px 3px rgba(15,23,42,.06)}
 body.light .modal-win{box-shadow:0 20px 50px rgba(15,23,42,.18)}
 body.light .logo-wrap{background:#0f172a;padding:10px 14px;border-radius:12px}
+/* contraste de textos indigo claros (feitos para fundo escuro) no modo claro */
+body.light .nav-item.active,body.light .nav-item:hover{color:#4338ca}
+body.light .cat-item.active{color:#4338ca;border-color:#6366f1}
+body.light .cat-item.active .cat-count{color:#4338ca}
+body.light .c-office{color:#4f46e5}
+body.light .c-office2{color:#9333ea}
+body.light .btn-use{color:#4338ca}
+body.light .badge-ia{color:#9333ea}
+body.light .pill-badge{color:#4338ca;background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.35)}
+body.light .grad-text,body.light .stat-num,body.light .history-node-current b{background:linear-gradient(100deg,#4f46e5,#7c3aed 45%,#0891b2);-webkit-background-clip:text;background-clip:text;color:transparent}
+body.light .history-more-link,body.light .footer-col a:hover{color:#4338ca}
+body.light .hero-mini-stats .hmi-orange{filter:drop-shadow(0 0 4px rgba(234,88,12,.35))}
+body.light .hero-mini-stats .hmi-green{filter:drop-shadow(0 0 4px rgba(21,128,61,.35))}
+body.light .hero-mini-stats .hmi-blue{filter:drop-shadow(0 0 4px rgba(37,99,235,.35))}
+body.light .btn-outline-lg{color:var(--text)}
+body.light .hero-drop-card,body.light .history-node,body.light .history-full-text,body.light .history-perk,body.light .conv-chip-land,body.light .feature-card-land,body.light .stats-grid-land,body.light .step-card-land{box-shadow:0 1px 4px rgba(15,23,42,.06)}
+body.light .fmt-app-pdf{border-color:#e2e8f0}
 
 /* ── TIPOGRAFIA ── */
 h1,h2,h3,.logo,.hero h1,.sec-header h2,.view-sec h2,.widget h3,.modal-head h3,.msg-form h3,.cc-value,.tool-meta h4{font-family:var(--font-display)}
@@ -114,18 +131,22 @@ body{display:block;min-height:100vh}
 
 .sec-header{margin-bottom:20px}
 .sec-header h2{font-size:16px;font-weight:600}
+.sec-header-big{text-align:center;max-width:640px;margin:0 auto 30px}
+.sec-header-big h2{font-size:26px;font-weight:800;font-family:var(--font-display);margin-bottom:8px}
+.sec-header-big p{color:var(--muted);font-size:13px;line-height:1.6}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
 .card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px;min-height:170px;transition:border-color .2s,background .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden}
 .card::after{content:'';position:absolute;inset:0;border-radius:18px;padding:1px;background:linear-gradient(135deg,rgba(99,102,241,0),rgba(99,102,241,0));pointer-events:none;transition:background .25s}
 .card:hover{border-color:var(--gold2);background:color-mix(in srgb, var(--bg-hover) 90%, transparent);transform:translateY(-3px);box-shadow:0 16px 32px -12px rgba(79,70,229,.35)}
-.icon-wrap{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;border:1px solid currentColor}
+.icon-wrap{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid currentColor;position:relative;overflow:hidden}
+.icon-wrap::after{content:'';position:absolute;top:0;right:0;width:12px;height:12px;background:currentColor;opacity:.18;clip-path:polygon(100% 0,0 0,100% 100%)}
 .c-pdf{background:rgba(244,63,94,.1);color:#fb7185}
 .c-image{background:rgba(16,185,129,.1);color:#34d399}
 .c-convert{background:rgba(245,158,11,.1);color:#fbbf24}
 .c-office{background:rgba(99,102,241,.12);color:#818cf8}
 .c-office2{background:rgba(168,85,247,.12);color:#c084fc}
-.tool-meta h4{font-size:14px;font-weight:600;margin-bottom:4px;font-family:var(--font-body);color:#e2e8f0}
-.tool-meta p{font-size:11px;color:var(--muted);line-height:1.4}
+.tool-meta h4{font-size:14.5px;font-weight:700;margin-bottom:5px;font-family:var(--font-body);color:var(--text)}
+.tool-meta p{font-size:11.5px;color:var(--muted);line-height:1.5}
 .card-top-row{display:flex;align-items:flex-start;justify-content:space-between}
 .card-protocol{font-family:var(--font-mono);font-size:9px;color:var(--dim);letter-spacing:.5px;padding-top:4px}
 .btn-use{background:transparent;border:1px solid var(--border);color:#a5b4fc;font-size:11px;font-weight:700;padding:9px 12px;border-radius:10px;cursor:pointer;margin-top:auto;transition:all .2s;font-family:var(--font-body);letter-spacing:.2px}
@@ -198,6 +219,23 @@ body{display:block;min-height:100vh}
 .canvas-box{border:1px dashed var(--border);background:#fff;border-radius:12px;width:100%;height:160px;overflow:hidden;position:relative}
 .canvas-box canvas{width:100%;height:100%;cursor:crosshair;display:block}
 .gov-badge{background:#004b82;color:#fff;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+
+/* ── POSICIONAMENTO DA ASSINATURA (arrastar sobre a página, estilo gov.br) ── */
+.gov-pos-wrap{margin-top:14px}
+.gov-pos-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:10px}
+.gov-pos-nav button{background:var(--bg-card);border:1px solid var(--border);color:var(--text);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.gov-pos-nav button:disabled{opacity:.35;cursor:not-allowed}
+.gov-pos-nav span{font-size:12px;color:var(--muted);font-weight:600;min-width:110px;text-align:center}
+.gov-page-stage{position:relative;width:100%;max-width:100%;margin:0 auto;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#525659;touch-action:none;user-select:none}
+.gov-page-stage canvas{display:block;width:100%;height:auto}
+.gov-stamp-drag{position:absolute;left:0;top:0;width:230px;background:rgba(255,255,255,.97);border:1.5px dashed #004b82;border-radius:6px;padding:6px 8px;display:flex;align-items:center;gap:7px;cursor:grab;box-shadow:0 4px 14px rgba(0,0,0,.35);touch-action:none}
+.gov-stamp-drag:active{cursor:grabbing}
+.gov-stamp-drag .gsd-icon{width:30px;height:30px;border-radius:4px;background:#eef4fb;border:1px solid #c7d7e8;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;overflow:hidden}
+.gov-stamp-drag .gsd-icon img{width:100%;height:100%;object-fit:contain}
+.gov-stamp-drag .gsd-text{line-height:1.25;overflow:hidden}
+.gov-stamp-drag .gsd-text b{display:block;font-size:8.5px;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gov-stamp-drag .gsd-text small{display:block;font-size:6.6px;color:#64748b;white-space:nowrap}
+.gov-pos-hint{font-size:11.5px;color:var(--muted);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px}
 
 /* ── INPUTS ── */
 .f-row{display:flex;flex-direction:column;gap:8px}
@@ -273,7 +311,8 @@ body{display:block;min-height:100vh}
 @media(max-width:940px){.hero-land-grid{grid-template-columns:1fr}}
 .hero-copy h1{font-size:40px;line-height:1.15;font-weight:800;font-family:var(--font-display);letter-spacing:-.02em;margin-bottom:18px}
 .hero-copy p{color:var(--muted);font-size:14.5px;line-height:1.7;max-width:560px;margin-bottom:20px}
-.trust-row{display:flex;flex-wrap:wrap;gap:18px;margin-bottom:28px}
+.trust-row{display:flex;flex-wrap:wrap;gap:22px;margin-bottom:28px}
+.trust-row-ico span{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:13px;font-weight:500}
 .trust-row span{font-size:12.5px;color:var(--muted);font-weight:600}
 .hero-cta-row{display:flex;flex-wrap:wrap;gap:14px}
 .btn-primary-lg{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;padding:14px 26px;border:none;border-radius:14px;cursor:pointer;font-size:14px;transition:all .2s;box-shadow:0 10px 26px -10px rgba(99,102,241,.65)}
@@ -281,21 +320,49 @@ body{display:block;min-height:100vh}
 .btn-outline-lg{background:transparent;color:var(--text);font-weight:700;padding:14px 26px;border:1px solid var(--border);border-radius:14px;cursor:pointer;font-size:14px;transition:all .2s}
 .btn-outline-lg:hover{border-color:var(--gold2);background:rgba(99,102,241,.08)}
 
-.hero-drop-card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:22px;padding:28px;text-align:center;box-shadow:0 20px 50px -20px rgba(0,0,0,.4)}
-.hero-drop-icons{display:flex;justify-content:center;gap:10px;margin-bottom:14px;font-size:26px}
-.hero-drop-icons span{opacity:.75}
+.hero-drop-card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:22px;padding:26px;text-align:left;box-shadow:0 20px 50px -20px rgba(0,0,0,.4)}
+.hero-drop-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:20px;flex-wrap:wrap}
 .hero-drop-card h3{font-size:17px;font-weight:700;margin-bottom:6px;font-family:var(--font-display)}
-.hero-drop-sub{color:var(--muted);font-size:12.5px;margin-bottom:18px}
-.hero-format-label{font-size:10px;font-weight:700;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase;margin:22px 0 12px;text-align:left}
+.hero-drop-sub{color:var(--muted);font-size:12px;max-width:280px}
+.hero-drop-icons{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.hero-drop-arrow{color:var(--dim);font-size:16px}
+.fmt-app-ico{width:46px;height:46px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 6px 14px -6px rgba(0,0,0,.5)}
+.fmt-app-ico span{font-size:8.5px;font-weight:700;letter-spacing:.3px;opacity:.9}
+.fmt-app-ico b{font-size:15px;line-height:1}
+.fmt-app-pdf{background:#fff;color:#e5322d;border:1px solid var(--border)}
+.fmt-app-pdf b{color:#e5322d}
+.fmt-app-pdf span{color:#94a3b8}
+.fmt-app-excel{background:#1d6f42}
+.fmt-app-word{background:#2b579a}
+.fmt-app-ppt{background:#d24726}
+.hero-dropzone{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;border:1.5px dashed var(--border);border-radius:16px;padding:16px 18px;cursor:pointer;transition:all .15s;margin-bottom:20px}
+.hero-dropzone:hover{border-color:var(--gold2);background:rgba(99,102,241,.06)}
+.hero-dropzone-left{display:flex;align-items:center;gap:12px;text-align:left}
+.hero-dropzone-cloud{font-size:22px}
+.hero-dropzone-left b{display:block;font-size:13.5px}
+.hero-dropzone-left small{color:var(--muted);font-size:11.5px}
+.hero-format-label{font-size:10px;font-weight:700;color:var(--dim);letter-spacing:1.2px;text-transform:uppercase;margin:4px 0 12px;text-align:left}
 .hero-format-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hero-format-grid-3{grid-template-columns:1fr 1fr 1fr}
 .hero-format-chip{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-radius:12px;cursor:pointer;text-align:left;transition:all .15s;background:var(--bg)}
 .hero-format-chip:hover{border-color:var(--gold2);background:rgba(99,102,241,.08);transform:translateY(-2px)}
 .hero-format-chip b{display:block;font-size:12.5px}
 .hero-format-chip small{color:var(--muted);font-size:10.5px}
+@media(max-width:520px){.hero-format-grid-3{grid-template-columns:1fr}}
 .fmt-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;flex-shrink:0}
 .fmt-word{background:#2b579a}
 .fmt-excel{background:#1d6f42}
 .fmt-ppt{background:#d24726}
+.hero-mini-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
+.hero-mini-stats div{text-align:center;border-right:1px solid var(--border);padding:0 6px}
+.hero-mini-stats div:last-child{border-right:none}
+.hero-mini-stats .hmi{font-size:17px;display:block;margin-bottom:4px}
+.hero-mini-stats .hmi-orange{filter:drop-shadow(0 0 6px rgba(251,146,60,.4))}
+.hero-mini-stats .hmi-green{filter:drop-shadow(0 0 6px rgba(74,222,128,.4))}
+.hero-mini-stats .hmi-blue{filter:drop-shadow(0 0 6px rgba(96,165,250,.4))}
+.hero-mini-stats b{display:block;font-size:13px;color:var(--text)}
+.hero-mini-stats small{color:var(--dim);font-size:9.5px}
+@media(max-width:520px){.hero-mini-stats{grid-template-columns:1fr 1fr}.hero-mini-stats div{border-right:none;border-bottom:1px solid var(--border);padding-bottom:10px}}
 
 .conv-strip-land{padding:20px 0 40px;text-align:center}
 .conv-strip-land h2{font-size:20px;font-weight:800;margin-bottom:20px;font-family:var(--font-display)}
@@ -341,21 +408,28 @@ body{display:block;min-height:100vh}
 .btn-cta-white:hover{transform:translateY(-2px)}
 
 .history-strip-land{padding:16px 0 8px;text-align:center}
-.history-strip-land h2{font-size:20px;font-weight:800;font-family:var(--font-display);margin-bottom:4px}
+.history-title-divider{display:flex;align-items:center;gap:16px;font-size:20px;font-weight:800;font-family:var(--font-display);margin-bottom:4px;color:var(--text)}
+.history-title-divider::before,.history-title-divider::after{content:'';flex:1;height:1px;background:var(--border)}
 .history-strip-land p{color:var(--muted);font-size:12.5px;margin-bottom:22px}
-.history-timeline{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.history-node{display:flex;flex-direction:column;align-items:center;gap:4px;background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:14px;padding:14px 18px;min-width:140px}
-.history-node b{font-size:12.5px;color:var(--text)}
-.history-node small{color:var(--dim);font-size:10.5px}
-.history-dot{width:9px;height:9px;border-radius:50%;background:var(--dim)}
+.history-timeline{display:flex;align-items:stretch;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.history-node{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:4px;background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:14px;padding:16px 18px;width:220px}
+.history-node b{font-size:13px;color:var(--text);margin-top:6px}
+.history-node small.history-tag{color:var(--dim);font-size:10.5px}
+.history-node small.history-desc{color:var(--muted);font-size:10.5px;line-height:1.5;margin-top:6px}
+.history-ico{font-size:20px}
 .history-node-current{border-color:var(--gold2);background:rgba(99,102,241,.1);box-shadow:0 8px 20px -10px rgba(99,102,241,.5)}
-.history-node-current .history-dot{background:linear-gradient(100deg,#6366f1,#8b5cf6)}
 .history-node-current b{background:linear-gradient(100deg,#818cf8,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
-.history-arrow{color:var(--dim);font-size:16px}
-@media(max-width:780px){.history-arrow{transform:rotate(90deg)}}
+.history-arrow{color:var(--dim);font-size:16px;align-self:center}
+@media(max-width:940px){.history-arrow{transform:rotate(90deg)}.history-node{width:100%;max-width:320px}}
 .history-more-link{color:#a5b4fc;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none}
 .history-more-link:hover{text-decoration:underline}
 .history-full-text{max-width:760px;margin:22px auto 0;text-align:left;background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:16px;padding:22px 26px}
+.history-perks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1080px;margin:26px auto 0;text-align:left}
+.history-perk{background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:16px;padding:18px;transition:all .2s}
+.history-perk:hover{border-color:var(--gold2);transform:translateY(-2px)}
+.history-perk b{display:block;font-size:13px;color:var(--text);margin:8px 0 4px}
+.history-perk p{font-size:11.5px;color:var(--muted);line-height:1.5}
+@media(max-width:780px){.history-perks-grid{grid-template-columns:1fr 1fr}}
 .history-full-text p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px}
 .history-full-text p:last-child{margin-bottom:0}
 .history-full-text strong{color:var(--text)}
@@ -417,27 +491,40 @@ body{display:block;min-height:100vh}
     <section class="hero-land">
       <div class="hero-land-grid">
         <div class="hero-copy">
-          <span class="pill-badge">🧰 SUÍTE DE FERRAMENTAS ONLINE</span>
-          <h1>Tudo que você precisa<br>para converter, editar<br><span class="grad-text">e calcular</span></h1>
-          <p id="hero-sub">58 ferramentas gratuitas de PDF, imagem, conversão de arquivos Office e contabilidade — tudo rodando localmente no seu navegador, sem enviar seus dados a servidores externos.</p>
-          <div class="trust-row">
-            <span>✅ 100% Online</span><span>🔒 Seguro e Privado</span><span>⚡ Processamento Local</span>
+          <span class="pill-badge">⚡ SUÍTE DE FERRAMENTAS ONLINE</span>
+          <h1>Todas as ferramentas<br>que você precisa<br>para <span class="grad-text">converter, editar<br>e calcular.</span></h1>
+          <p id="hero-sub">69 ferramentas gratuitas de PDF, imagem, conversão de arquivos Office e contabilidade — tudo rodando localmente no seu navegador, sem enviar seus dados a servidores externos.</p>
+          <div class="trust-row trust-row-ico">
+            <span>🛡️ 100% Online</span><span>🔒 Seguro e Privado</span><span>⚡ Processamento Local</span>
           </div>
           <div class="hero-cta-row">
-            <button class="btn-primary-lg" onclick="scrollToTools()">Ver Todas as Ferramentas ↓</button>
-            <button class="btn-outline-lg" onclick="openTool(69)">Converter PDF</button>
+            <button class="btn-primary-lg" onclick="scrollToTools()">Ver Todas as Ferramentas →</button>
+            <button class="btn-outline-lg" onclick="openTool(69)">📄 Converter PDF</button>
           </div>
         </div>
         <div class="hero-drop-card">
-          <div class="hero-drop-icons"><span>📄</span><span>📊</span><span>📑</span></div>
-          <h3>Converta PDF em segundos</h3>
-          <p class="hero-drop-sub">Word, Excel ou PowerPoint — arquivos reais, prontos para editar</p>
-          <button class="btn-primary-lg" style="width:100%" onclick="openTool(69)">Selecionar Arquivo</button>
+          <div class="hero-drop-top">
+            <div>
+              <h3>Converta PDF em segundos</h3>
+              <p class="hero-drop-sub">Word, Excel ou PowerPoint — arquivos reais, prontos para editar</p>
+            </div>
+            <div class="hero-drop-icons"><span class="fmt-app-ico fmt-app-pdf"><b>PDF</b></span><span class="hero-drop-arrow">→</span><span class="fmt-app-ico fmt-app-excel"><b>X</b><span>Excel</span></span><span class="fmt-app-ico fmt-app-word"><b>W</b><span>Word</span></span><span class="fmt-app-ico fmt-app-ppt"><b>P</b><span>PPT</span></span></div>
+          </div>
+          <div class="hero-dropzone" onclick="openTool(69)">
+            <div class="hero-dropzone-left"><span class="hero-dropzone-cloud">☁️</span><div><b>Selecionar arquivo</b><small>ou arraste e solte aqui</small></div></div>
+            <button class="btn-primary-lg" onclick="event.stopPropagation();openTool(69)">Selecionar Arquivo</button>
+          </div>
           <div class="hero-format-label">CONVERTER PARA</div>
-          <div class="hero-format-grid">
+          <div class="hero-format-grid hero-format-grid-3">
             <div class="hero-format-chip" onclick="openTool(69)"><span class="fmt-ico fmt-word">W</span><div><b>Word</b><small>.docx</small></div></div>
             <div class="hero-format-chip" onclick="openTool(70)"><span class="fmt-ico fmt-excel">X</span><div><b>Excel</b><small>.xlsx</small></div></div>
             <div class="hero-format-chip" onclick="openTool(71)"><span class="fmt-ico fmt-ppt">P</span><div><b>PowerPoint</b><small>.pptx</small></div></div>
+          </div>
+          <div class="hero-mini-stats">
+            <div><span class="hmi hmi-orange">🔧</span><b>58+</b><small>Ferramentas</small></div>
+            <div><span class="hmi hmi-green">✅</span><b>100%</b><small>Local e Seguro</small></div>
+            <div><span class="hmi hmi-orange">⚡</span><b>Rápido</b><small>Sem Limites</small></div>
+            <div><span class="hmi hmi-blue">👥</span><b>Gratuito</b><small>Para Todos</small></div>
           </div>
         </div>
       </div>
@@ -445,22 +532,29 @@ body{display:block;min-height:100vh}
 
     <!-- HISTÓRIA DA EMPRESA (visível direto na home, sem precisar clicar) -->
     <section class="history-strip-land">
-      <h2>Nossa História</h2>
+      <h2 class="history-title-divider"><span>Nossa História</span></h2>
       <p>Da ideia inicial até a plataforma completa de hoje.</p>
       <div class="history-timeline">
-        <div class="history-node"><span class="history-dot"></span><b>FREDTECHsystem Suite</b><small>O início</small></div>
+        <div class="history-node"><span class="history-ico">🚀</span><b>FREDTECHsystem Suite</b><small class="history-tag">O início</small><small class="history-desc">A ideia nasceu da necessidade de ferramentas simples e locais.</small></div>
         <div class="history-arrow">→</div>
-        <div class="history-node"><span class="history-dot"></span><b>Nexora Suite</b><small>Nova identidade</small></div>
+        <div class="history-node"><span class="history-ico">👤</span><b>Nexora Suite</b><small class="history-tag">Nova identidade</small><small class="history-desc">Crescimento do catálogo e mais recursos de automação.</small></div>
         <div class="history-arrow">→</div>
-        <div class="history-node"><span class="history-dot"></span><b>FGA Suite</b><small>FGA Holding LLC</small></div>
+        <div class="history-node"><span class="history-ico">🏢</span><b>FGA Suite</b><small class="history-tag">FGA Holding LLC</small><small class="history-desc">Integração ao portfólio da FGA, unificando tecnologia e confiança.</small></div>
         <div class="history-arrow">→</div>
-        <div class="history-node history-node-current"><span class="history-dot"></span><b>Nexus Tech Converter</b><small>Hoje</small></div>
+        <div class="history-node history-node-current"><span class="history-ico">✳️</span><b>Nexus Tech Converter</b><small class="history-tag">Hoje</small><small class="history-desc">Uma suíte completa com mais de 69 ferramentas 100% locais.</small></div>
       </div>
       <div class="history-full-text">
         <p><strong>FREDTECHsystem Suite:</strong> o projeto nasceu como um conjunto simples de utilitários pessoais para conversão de arquivos.</p>
         <p><strong>Nexora Suite:</strong> com o crescimento do catálogo de ferramentas, a marca evoluiu, ganhando identidade visual própria e mais recursos de automação.</p>
         <p><strong>FGA Suite:</strong> em seguida, o produto passou a integrar o portfólio da FGA Suite, sob a FGA Holding LLC, unificando processos internos e reforçando o compromisso com privacidade e execução 100% local.</p>
         <p><strong>Nexus Tech Converter:</strong> a marca atual representa a maturidade dessa trajetória — uma suíte completa e gratuita de ferramentas de PDF, imagem, conversão de Office e contabilidade, mantida hoje pela FGA Holding LLC e desenvolvida com o mesmo princípio desde o início: ferramentas rápidas, seguras e sem necessidade de instalação.</p>
+      </div>
+
+      <div class="history-perks-grid">
+        <div class="history-perk"><span class="history-ico">🌐</span><b>Funciona em qualquer lugar</b><p>Acesse direto do navegador, sem instalações.</p></div>
+        <div class="history-perk"><span class="history-ico">🔒</span><b>Privacidade em primeiro lugar</b><p>Seus arquivos não saem do seu dispositivo.</p></div>
+        <div class="history-perk"><span class="history-ico">🖥️</span><b>Compatível com tudo</b><p>Windows, Mac, Linux, Android e iOS.</p></div>
+        <div class="history-perk"><span class="history-ico">❤️</span><b>Feito para você</b><p>Gratuito, sem limites e sempre em evolução.</p></div>
       </div>
     </section>
 
@@ -504,7 +598,7 @@ body{display:block;min-height:100vh}
     <section class="steps-land">
       <h2>Como funciona?</h2>
       <div class="steps-grid-land">
-        <div class="step-card-land"><div class="step-num">1</div><h4>Escolha a ferramenta</h4><p>Selecione entre as 58 ferramentas disponíveis abaixo.</p></div>
+        <div class="step-card-land"><div class="step-num">1</div><h4>Escolha a ferramenta</h4><p>Selecione entre as 69 ferramentas disponíveis abaixo.</p></div>
         <div class="step-arrow">→</div>
         <div class="step-card-land"><div class="step-num">2</div><h4>Envie seu arquivo</h4><p>Arraste e solte ou clique para selecionar.</p></div>
         <div class="step-arrow">→</div>
@@ -554,18 +648,20 @@ body{display:block;min-height:100vh}
 
     <!-- FILTRO DE CATEGORIA -->
     <div class="cat-filter-row" id="tools-anchor">
-      <div class="cat-item active" data-cat="all" onclick="filterCat('all',this)"><span id="cat-label-all">📂 Todos</span><span class="cat-count">58</span></div>
-      <div class="cat-item" data-cat="pdf" onclick="filterCat('pdf',this)"><span id="cat-label-pdf">📄 PDF / Assinatura</span><span class="cat-count">15</span></div>
+      <div class="cat-item active" data-cat="all" onclick="filterCat('all',this)"><span id="cat-label-all">📂 Todos</span><span class="cat-count">69</span></div>
+      <div class="cat-item" data-cat="pdf" onclick="filterCat('pdf',this)"><span id="cat-label-pdf">📄 PDF / Assinatura</span><span class="cat-count">14</span></div>
       <div class="cat-item" data-cat="image" onclick="filterCat('image',this)"><span id="cat-label-image">🖼️ Imagens</span><span class="cat-count">12</span></div>
-      <div class="cat-item" data-cat="convert" onclick="filterCat('convert',this)"><span id="cat-label-convert">🔄 Conversores / OFX</span><span class="cat-count">17</span></div>
-      <div class="cat-item" data-cat="office" onclick="filterCat('office',this)"><span id="cat-label-office">📊 Contabilidade Útil</span><span class="cat-count">7</span></div>
+      <div class="cat-item" data-cat="convert" onclick="filterCat('convert',this)"><span id="cat-label-convert">🔄 Conversores / OFX</span><span class="cat-count">24</span></div>
+      <div class="cat-item" data-cat="office" onclick="filterCat('office',this)"><span id="cat-label-office">📊 Contabilidade Útil</span><span class="cat-count">12</span></div>
       <div class="cat-item" data-cat="office2" onclick="filterCat('office2',this)"><span id="cat-label-office2">🤖 Office IA ✨</span><span class="cat-count">7</span></div>
     </div>
 
-    <div class="sec-header"><h2 id="sec-header-title">Todas as Ferramentas</h2></div>
+    <div class="sec-header sec-header-big">
+      <h2 id="sec-header-title">Todas as Ferramentas</h2>
+      <p id="sec-header-sub">69 ferramentas gratuitas para PDF, imagem, conversão e contabilidade — escolha uma categoria ou use a busca.</p>
+    </div>
     <div class="grid" id="tools-grid"></div>
 <!-- VIEW SOBRE -->
-  <!-- VIEW SOBRE -->
   <div id="view-about" class="view-sec">
     <h2 id="about-title">Sobre a Nexus Tech Converter</h2>
     <p id="about-p1">A Nexus Tech Converter desenvolve ferramentas simples e rápidas para o dia a dia: conversores de arquivos, edição de PDF e imagem, e calculadoras de contabilidade essenciais.</p>
@@ -775,6 +871,18 @@ const TOOLS=[
   {id:74,name:"PowerPoint → PDF",desc:"Exporta apresentações .pptx para um PDF real, um slide por página.",cat:"office2",ia:true},
   {id:75,name:"Editor de Texto",desc:"Edite, formate e transforme textos: maiúsculas, remover espaços, contar palavras e mais.",cat:"convert"},
   {id:76,name:"Gerador de Planilhas",desc:"Monte uma tabela e gere uma planilha .xlsx real, pronta para baixar.",cat:"office2",ia:true},
+  // Novas ferramentas de uso diário
+  {id:77,name:"Imagens para PDF",desc:"Une várias imagens (JPG/PNG) em um único arquivo PDF, uma por página.",cat:"pdf"},
+  {id:78,name:"PDF para Imagens",desc:"Converte cada página de um PDF em uma imagem JPG, entregues em um .zip.",cat:"pdf"},
+  {id:79,name:"Calculadora de IMC",desc:"Calcula o Índice de Massa Corporal e mostra a faixa de classificação.",cat:"convert"},
+  {id:80,name:"Calculadora de Idade",desc:"Calcula idade exata em anos, meses e dias a partir da data de nascimento.",cat:"convert"},
+  {id:81,name:"Data por Extenso",desc:"Converte uma data numérica para o formato por extenso em português.",cat:"convert"},
+  {id:82,name:"Conversor de Cores HEX/RGB",desc:"Converte cores entre HEX e RGB com pré-visualização instantânea.",cat:"convert"},
+  {id:83,name:"Gerador de Lista de Tarefas",desc:"Monte uma checklist e gere um PDF pronto para imprimir.",cat:"office"},
+  {id:84,name:"Calculadora de 13º Salário",desc:"Calcula o valor proporcional do décimo terceiro salário.",cat:"office"},
+  {id:85,name:"Calculadora de Férias",desc:"Calcula valor de férias com 1/3 constitucional sobre o salário.",cat:"office"},
+  {id:86,name:"Conversor de Fuso Horário",desc:"Converte um horário entre os principais fusos horários do mundo.",cat:"convert"},
+  {id:87,name:"PDF para OFX",desc:"Extrai transações de um extrato em PDF e gera um arquivo .ofx para importar no seu sistema financeiro.",cat:"convert"},
 ];
 
 const CONV_TOOLS=[
@@ -796,7 +904,7 @@ const SITE_I18N={
     catTitle:'Categorias',catAll:'Todos',catPdf:'PDF / Assinatura',catImage:'Imagens',catConvert:'Conversores / OFX',catOffice:'Contabilidade Útil',catOffice2:'Office IA ✨',
     searchPlaceholder:'Buscar ferramenta...',
     themeLight:'☀️ Modo Claro',themeDark:'🌙 Modo Escuro',
-    heroSub:'58 ferramentas de uso do dia a dia — conversores, PDF, imagem e calculadoras de contabilidade essenciais, com conversores Office com IA.',
+    heroSub:'69 ferramentas de uso do dia a dia — conversores, PDF, imagem e calculadoras de contabilidade essenciais, com conversores Office com IA.',
     secToolsTitle:'Todas as Ferramentas',
     useToolBtn:'Usar ferramenta',
     footerRights:'Todos os direitos reservados',
@@ -825,7 +933,7 @@ const SITE_I18N={
     catTitle:'Categories',catAll:'All',catPdf:'PDF / Signature',catImage:'Images',catConvert:'Converters / OFX',catOffice:'Useful Accounting',catOffice2:'Office AI ✨',
     searchPlaceholder:'Search tool...',
     themeLight:'☀️ Light Mode',themeDark:'🌙 Dark Mode',
-    heroSub:'58 everyday tools — converters, PDF, image and essential accounting calculators, plus AI-powered Office converters.',
+    heroSub:'69 everyday tools — converters, PDF, image and essential accounting calculators, plus AI-powered Office converters.',
     secToolsTitle:'All Tools',
     useToolBtn:'Use tool',
     footerRights:'All rights reserved',
@@ -854,7 +962,7 @@ const SITE_I18N={
     catTitle:'Categorías',catAll:'Todos',catPdf:'PDF / Firma',catImage:'Imágenes',catConvert:'Conversores / OFX',catOffice:'Contabilidad Útil',catOffice2:'Office IA ✨',
     searchPlaceholder:'Buscar herramienta...',
     themeLight:'☀️ Modo Claro',themeDark:'🌙 Modo Oscuro',
-    heroSub:'58 herramientas del día a día — conversores, PDF, imagen y calculadoras de contabilidad esenciales, con conversores de Office con IA.',
+    heroSub:'69 herramientas del día a día — conversores, PDF, imagen y calculadoras de contabilidad esenciales, con conversores de Office con IA.',
     secToolsTitle:'Todas las Herramientas',
     useToolBtn:'Usar herramienta',
     footerRights:'Todos los derechos reservados',
@@ -1036,7 +1144,7 @@ function buildModal(id,tool){
   }
 
   if(id===1){
-    govAuthData=null;
+    govAuthData=null;govPdfJsDoc=null;govCurrentPage=1;govTotalPages=1;
     body.innerHTML=`
       <div><span class="gov-badge">🔰 ASSINADOR DIGITAL MULTIMODAL GOV.BR</span></div>
       <div id="gov-auth-section">
@@ -1050,7 +1158,7 @@ function buildModal(id,tool){
       </div>
       <div id="gov-sign-section" style="display:none">
         <div id="gov-auth-badge" style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--green);margin-bottom:14px"></div>
-        <div class="f-row"><label class="f-label">1. Selecione o PDF:</label><input type="file" id="gov-pdf" accept="application/pdf" class="f-input"></div>
+        <div class="f-row"><label class="f-label">1. Selecione o PDF:</label><input type="file" id="gov-pdf" accept="application/pdf" class="f-input" onchange="loadGovPdfPreview(this)"></div>
         <div class="sig-tabs">
           <button class="sig-tab active" onclick="switchTab('draw',this)">✏️ Desenhar</button>
           <button class="sig-tab" onclick="switchTab('type',this)">⌨️ Digitar Nome</button>
@@ -1058,7 +1166,27 @@ function buildModal(id,tool){
         </div>
         <div id="pane-draw" class="sig-pane active"><div class="canvas-box"><canvas id="sig-canvas"></canvas></div><button class="btn-sm" onclick="clearSig()">🗑 Limpar</button></div>
         <div id="pane-type" class="sig-pane"><label class="f-label">Nome cursivo:</label><input type="text" id="sig-name" class="f-input" placeholder="Nome completo" oninput="drawTypeSig()"><div class="canvas-box" style="margin-top:8px"><canvas id="typ-canvas"></canvas></div></div>
-        <div id="pane-upload" class="sig-pane"><label class="f-label">Imagem do carimbo (PNG):</label><input type="file" id="sig-img" accept="image/*" class="f-input"></div>
+        <div id="pane-upload" class="sig-pane"><label class="f-label">Imagem do carimbo (PNG):</label><input type="file" id="sig-img" accept="image/*" class="f-input" onchange="updateGovStampPreview()"></div>
+        <div id="gov-pos-wrap" class="gov-pos-wrap" style="display:none">
+          <label class="f-label">2. Arraste a assinatura até a posição desejada (igual ao gov.br):</label>
+          <div class="gov-pos-nav">
+            <button id="gov-page-prev" onclick="govChangePage(-1)">◀</button>
+            <span id="gov-page-label">Página 1 de 1</span>
+            <button id="gov-page-next" onclick="govChangePage(1)">▶</button>
+          </div>
+          <div class="gov-page-stage" id="gov-page-stage">
+            <canvas id="gov-page-canvas"></canvas>
+            <div class="gov-stamp-drag" id="gov-stamp-drag">
+              <div class="gsd-icon" id="gsd-icon">🖋️</div>
+              <div class="gsd-text">
+                <b>Documento assinado digitalmente</b>
+                <small id="gsd-name">—</small>
+                <small id="gsd-date">—</small>
+              </div>
+            </div>
+          </div>
+          <p class="gov-pos-hint">👆 Toque e arraste o carimbo sobre a página</p>
+        </div>
         <button class="btn-exec" onclick="processGov()">📥 Gerar PDF Assinado</button>
         <button class="btn-sm" onclick="govLogout()" style="width:100%;text-align:center">🔓 Sair / Trocar usuário</button>
       </div>`;
@@ -1171,6 +1299,36 @@ function buildModal(id,tool){
     <button class="btn-sm" onclick="addGPRow()">+ Adicionar Linha</button>
     <button class="btn-exec" onclick="gerarPlanilha()">📊 Gerar Planilha .xlsx</button>
     <div class="result-box" id="gp-result"></div>`;return;}
+
+  if(id===77){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma ou mais imagens (JPG/PNG) — a ordem de seleção define a ordem das páginas:</p><input type="file" id="i2p-imgs" accept="image/*" multiple class="f-input"><div id="i2p-list" style="font-size:11px;color:var(--muted);margin-top:8px"></div>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+      <label class="f-label" style="margin-bottom:10px;display:block">Opções de imagem para PDF</label>
+      <div class="grid-2">
+        <div class="f-row"><label class="f-label">Orientação da página</label><select id="i2p-orient" class="f-input"><option value="retrato">📱 Retrato</option><option value="paisagem">🖥️ Paisagem</option></select></div>
+        <div class="f-row"><label class="f-label">Tamanho da página</label><select id="i2p-size" class="f-input"><option value="fit">Adaptar (mesma dimensão da imagem)</option><option value="a4">A4 (297 x 210 mm)</option><option value="letter">US Letter (215.9 x 279.4 mm)</option></select></div>
+      </div>
+      <div class="f-row"><label class="f-label">Margem</label><select id="i2p-margin" class="f-input"><option value="none">Sem margem</option><option value="small">Pequena</option><option value="big">Grande</option></select></div>
+      <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:8px 0 4px"><input type="checkbox" id="i2p-merge" checked style="width:16px;height:16px"> Mesclar todas as imagens em um único arquivo PDF</label>
+    </div>
+    <button class="btn-exec" onclick="imagesToPdf()">📄 Converter para PDF</button>`;
+    document.getElementById('i2p-imgs').addEventListener('change',function(){
+      document.getElementById('i2p-list').textContent=this.files.length?[...this.files].map(f=>f.name).join(' · '):'';
+    });
+    return;}
+  if(id===78){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF para exportar cada página como imagem JPG:</p><input type="file" id="p2i-pdf" accept="application/pdf" class="f-input"><button class="btn-exec" onclick="pdfToImages()">🖼️ Converter e Baixar .zip</button><div class="result-box" id="p2i-result"></div>`;return;}
+  if(id===79){body.innerHTML=`<div class="grid-2"><div class="f-row"><label class="f-label">Peso (kg)</label><input type="number" id="imc-peso" value="70" class="f-input"></div><div class="f-row"><label class="f-label">Altura (m)</label><input type="number" id="imc-alt" value="1.70" step="0.01" class="f-input"></div></div><button class="btn-exec" onclick="calcIMC()">⚖️ Calcular IMC</button><div class="result-box" id="imc-result"></div>`;return;}
+  if(id===80){body.innerHTML=`<div class="f-row"><label class="f-label">Data de nascimento</label><input type="date" id="idade-nasc" class="f-input"></div><button class="btn-exec" onclick="calcIdade()">🎂 Calcular Idade</button><div class="result-box" id="idade-result"></div>`;return;}
+  if(id===81){body.innerHTML=`<div class="f-row"><label class="f-label">Data</label><input type="date" id="ext-data" class="f-input"></div><button class="btn-exec" onclick="dataPorExtenso()">🖊️ Converter</button><div class="result-box" id="ext-result"></div>`;return;}
+  if(id===82){body.innerHTML=`<div class="f-row"><label class="f-label">Cor HEX</label><input type="text" id="cor-hex" value="#6366F1" class="f-input" oninput="corFromHex()"></div><div class="grid-2"><div class="f-row"><label class="f-label">R</label><input type="number" id="cor-r" value="99" min="0" max="255" class="f-input" oninput="corFromRgb()"></div><div class="f-row"><label class="f-label">G</label><input type="number" id="cor-g" value="102" min="0" max="255" class="f-input" oninput="corFromRgb()"></div><div class="f-row"><label class="f-label">B</label><input type="number" id="cor-b" value="241" min="0" max="255" class="f-input" oninput="corFromRgb()"></div></div><div id="cor-preview" style="width:100%;height:60px;border-radius:8px;border:1px solid var(--border);margin-top:10px;background:#6366F1"></div><div class="result-box" id="cor-result" style="margin-top:10px"></div>`;
+    requestAnimationFrame(()=>corFromHex());return;}
+  if(id===83){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Digite um item por linha:</p><div class="f-row"><label class="f-label">Título da lista</label><input type="text" id="todo-titulo" class="f-input" value="Lista de Tarefas"></div><div class="f-row"><label class="f-label">Itens</label><textarea id="todo-itens" class="f-textarea" style="min-height:140px" placeholder="Ex:\nComprar material\nRevisar contrato\nEnviar orçamento"></textarea></div><button class="btn-exec" onclick="gerarTodoPdf()">✅ Gerar PDF da Checklist</button>`;return;}
+  if(id===84){body.innerHTML=`<div class="grid-2"><div class="f-row"><label class="f-label">Salário Bruto (R$)</label><input type="number" id="d13-sal" value="3000" class="f-input"></div><div class="f-row"><label class="f-label">Meses trabalhados no ano</label><input type="number" id="d13-meses" value="12" min="1" max="12" class="f-input"></div></div><button class="btn-exec" onclick="calc13Salario()">🎁 Calcular 13º</button><div class="result-box" id="d13-result"></div>`;return;}
+  if(id===85){body.innerHTML=`<div class="grid-2"><div class="f-row"><label class="f-label">Salário Bruto (R$)</label><input type="number" id="fer-sal" value="3000" class="f-input"></div><div class="f-row"><label class="f-label">Dias de férias</label><input type="number" id="fer-dias" value="30" min="1" max="30" class="f-input"></div></div><label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:6px 0 10px"><input type="checkbox" id="fer-vender" style="width:16px;height:16px"> Vender 1/3 das férias (abono pecuniário)</label><button class="btn-exec" onclick="calcFerias()">🏖️ Calcular Férias</button><div class="result-box" id="fer-result"></div>`;return;}
+  if(id===86){body.innerHTML=`<div class="grid-2"><div class="f-row"><label class="f-label">Horário (24h)</label><input type="time" id="fuso-hora" class="f-input" value="12:00"></div><div class="f-row"><label class="f-label">Fuso de origem</label><select id="fuso-origem" class="f-input"></select></div></div><button class="btn-exec" onclick="calcFuso()">🌍 Converter Fuso</button><div class="result-box" id="fuso-result"></div>`;
+    const zonas=[['America/Sao_Paulo','Brasília (BRT) UTC-3'],['America/New_York','Nova York (EUA) UTC-5'],['America/Los_Angeles','Los Angeles (EUA) UTC-8'],['Europe/Lisbon','Lisboa (Portugal) UTC+0'],['Europe/London','Londres (Reino Unido) UTC+0'],['Europe/Paris','Paris (França) UTC+1'],['Asia/Tokyo','Tóquio (Japão) UTC+9'],['Asia/Shanghai','Xangai (China) UTC+8'],['Australia/Sydney','Sydney (Austrália) UTC+11']];
+    document.getElementById('fuso-origem').innerHTML=zonas.map(z=>`<option value="${z[0]}">${z[1]}</option>`).join('');
+    return;}
+  if(id===87){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF de extrato bancário — as linhas com data e valor serão reconhecidas automaticamente:</p><input type="file" id="p2o-pdf" accept="application/pdf" class="f-input" onchange="pdfToOfxPreview(this)"><div class="result-box" id="p2o-result"></div><button class="btn-exec" id="p2o-dl-btn" style="display:none" onclick="downloadPdfToOfx()">💾 Baixar arquivo .OFX</button><div style="background:rgba(140,100,178,.07);border:1px solid rgba(140,100,178,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#b58fd6;line-height:1.5;margin-top:10px">⚠️ Extração heurística baseada no texto do PDF. Revise as transações e o arquivo .ofx antes de importar no seu sistema financeiro.</div>`;return;}
 
   body.innerHTML=`<div style="text-align:center;padding:24px 0">
     <div style="font-size:52px;margin-bottom:12px">${{pdf:'📄',image:'🖼️',convert:'🔄',office:'📊',office2:'🤖'}[tool.cat]}</div>
@@ -1900,9 +2058,10 @@ function initSigCanvas(){
     sigCtx.lineTo((e.clientX-r.left)*(sigCanvas.width/r.width),(e.clientY-r.top)*(sigCanvas.height/r.height));
     sigCtx.stroke();
   });
+  sigCanvas.addEventListener('mouseup',()=>updateGovStampPreview());
 }
 
-function clearSig(){if(sigCtx){sigCtx.fillStyle='#fff';sigCtx.fillRect(0,0,sigCanvas.width,sigCanvas.height);}}
+function clearSig(){if(sigCtx){sigCtx.fillStyle='#fff';sigCtx.fillRect(0,0,sigCanvas.width,sigCanvas.height);}updateGovStampPreview();}
 
 function initTypCanvas(){
   typCanvas=document.getElementById('typ-canvas');if(!typCanvas)return;
@@ -1917,6 +2076,7 @@ function drawTypeSig(){
   typCtx.fillStyle='#002b66';typCtx.font="italic 28px 'Playfair Display',serif";
   typCtx.textAlign='center';typCtx.textBaseline='middle';
   typCtx.fillText(txt,typCanvas.width/2,typCanvas.height/2);
+  updateGovStampPreview();
 }
 
 function switchTab(tab,el){
@@ -1925,6 +2085,7 @@ function switchTab(tab,el){
   document.querySelectorAll('.sig-pane').forEach(p=>p.classList.remove('active'));
   el.classList.add('active');document.getElementById('pane-'+tab).classList.add('active');
   if(tab==='type')requestAnimationFrame(()=>initTypCanvas());
+  updateGovStampPreview();
 }
 
 // ── PDF FUNÇÕES ───────────────────────────────────────
@@ -1957,7 +2118,10 @@ function govAutenticar(){
   document.getElementById('gov-auth-section').style.display='none';
   document.getElementById('gov-sign-section').style.display='block';
   document.getElementById('gov-auth-badge').innerHTML='✅ Autenticado como <strong>'+nome+'</strong> — CPF '+cpfFmt;
-  requestAnimationFrame(()=>initSigCanvas());
+  document.getElementById('gsd-name').textContent=nome.toUpperCase();
+  const nowLbl=new Date();
+  document.getElementById('gsd-date').textContent='Data: '+nowLbl.toLocaleDateString('pt-BR');
+  requestAnimationFrame(()=>{initSigCanvas();initGovDrag();});
 }
 
 function govLogout(){
@@ -1968,6 +2132,96 @@ function govLogout(){
   document.getElementById('gov-cpf').value='';
   const r=document.getElementById('gov-auth-result');
   r.classList.remove('show');r.textContent='';
+  document.getElementById('gov-pos-wrap').style.display='none';
+  govPdfJsDoc=null;
+}
+
+// ── PRÉVIA DA PÁGINA + ARRASTAR ASSINATURA (estilo gov.br) ────
+let govPdfJsDoc=null,govCurrentPage=1,govTotalPages=1,govPageViewport=null;
+let govDragging=false,govDragOffX=0,govDragOffY=0;
+
+async function loadGovPdfPreview(input){
+  if(!input.files.length)return;
+  try{
+    if(typeof pdfjsLib==='undefined')throw new Error('pdfjs indisponível');
+    const buf=await input.files[0].arrayBuffer();
+    govPdfJsDoc=await pdfjsLib.getDocument({data:buf}).promise;
+    govTotalPages=govPdfJsDoc.numPages;govCurrentPage=1;
+    document.getElementById('gov-pos-wrap').style.display='block';
+    await renderGovPage();
+    updateGovStampPreview();
+  }catch(e){
+    document.getElementById('gov-pos-wrap').style.display='none';
+    govPdfJsDoc=null;
+    alert('Não foi possível pré-visualizar este PDF, mas você ainda pode assinar (posição padrão será usada). Erro: '+e.message);
+  }
+}
+
+async function renderGovPage(){
+  if(!govPdfJsDoc)return;
+  const page=await govPdfJsDoc.getPage(govCurrentPage);
+  const stage=document.getElementById('gov-page-stage');
+  const targetW=stage.offsetWidth||520;
+  const baseVp=page.getViewport({scale:1});
+  const scale=targetW/baseVp.width;
+  govPageViewport=page.getViewport({scale});
+  const canvas=document.getElementById('gov-page-canvas');
+  canvas.width=govPageViewport.width;canvas.height=govPageViewport.height;
+  const ctx=canvas.getContext('2d');
+  await page.render({canvasContext:ctx,viewport:govPageViewport}).promise;
+  document.getElementById('gov-page-label').textContent='Página '+govCurrentPage+' de '+govTotalPages;
+  document.getElementById('gov-page-prev').disabled=govCurrentPage<=1;
+  document.getElementById('gov-page-next').disabled=govCurrentPage>=govTotalPages;
+  // reposiciona o carimbo no canto inferior direito da página renderizada
+  const drag=document.getElementById('gov-stamp-drag');
+  requestAnimationFrame(()=>{
+    drag.style.left=Math.max(4,canvas.clientWidth-drag.offsetWidth-14)+'px';
+    drag.style.top=Math.max(4,canvas.clientHeight-drag.offsetHeight-14)+'px';
+  });
+}
+
+function govChangePage(delta){
+  const np=govCurrentPage+delta;
+  if(np<1||np>govTotalPages)return;
+  govCurrentPage=np;
+  renderGovPage();
+}
+
+function updateGovStampPreview(){
+  const icon=document.getElementById('gsd-icon');
+  if(!icon)return;
+  try{
+    if(activeTab==='draw'&&sigCanvas){icon.innerHTML='<img src="'+sigCanvas.toDataURL('image/png')+'">';}
+    else if(activeTab==='type'&&typCanvas){icon.innerHTML='<img src="'+typCanvas.toDataURL('image/png')+'">';}
+    else if(activeTab==='upload'){
+      const f=(document.getElementById('sig-img')||{}).files;
+      if(f&&f[0]){const url=URL.createObjectURL(f[0]);icon.innerHTML='<img src="'+url+'">';}
+      else icon.innerHTML='🖋️';
+    }
+  }catch(e){}
+}
+
+function initGovDrag(){
+  const drag=document.getElementById('gov-stamp-drag'),stage=document.getElementById('gov-page-stage');
+  if(!drag||!stage||drag.dataset.bound)return;
+  drag.dataset.bound='1';
+  const start=(clientX,clientY)=>{
+    const r=drag.getBoundingClientRect();
+    govDragging=true;govDragOffX=clientX-r.left;govDragOffY=clientY-r.top;
+  };
+  const move=(clientX,clientY)=>{
+    if(!govDragging)return;
+    const stageR=stage.getBoundingClientRect();
+    let left=clientX-stageR.left-govDragOffX;
+    let top=clientY-stageR.top-govDragOffY;
+    left=Math.min(Math.max(0,left),stage.clientWidth-drag.offsetWidth);
+    top=Math.min(Math.max(0,top),stage.clientHeight-drag.offsetHeight);
+    drag.style.left=left+'px';drag.style.top=top+'px';
+  };
+  drag.addEventListener('pointerdown',e=>{drag.setPointerCapture(e.pointerId);start(e.clientX,e.clientY);});
+  drag.addEventListener('pointermove',e=>move(e.clientX,e.clientY));
+  drag.addEventListener('pointerup',()=>govDragging=false);
+  drag.addEventListener('pointercancel',()=>govDragging=false);
 }
 
 async function processGov(){
@@ -1990,27 +2244,42 @@ async function processGov(){
       if(!f){alert('Selecione uma imagem!');return;}
       pngBytes=new Uint8Array(await f.arrayBuffer());
     }
-    const img=await pdfDoc.embedPng(pngBytes);
+    const isJpg=activeTab==='upload'&&/\.jpe?g$/i.test(document.getElementById('sig-img').files[0].name);
+    const img=isJpg?await pdfDoc.embedJpg(pngBytes):await pdfDoc.embedPng(pngBytes);
     const fontReg=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
     const fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-    const p=pdfDoc.getPages()[0];
-    const {width}=p.getSize();
-
-    // ── Carimbo de assinatura ──
-    const boxW=252,boxH=58,boxX=width-boxW-20,boxY=20;
+    const pages=pdfDoc.getPages();
+    const pageIndex=Math.min(govCurrentPage-1,pages.length-1);
+    const p=pages[pageIndex];
+    const {width:pdfW,height:pdfH}=p.getSize();
     const dark=PDFLib.rgb(0.08,0.10,0.16);
     const gray=PDFLib.rgb(0.42,0.45,0.50);
-
-    p.drawRectangle({x:boxX,y:boxY,width:boxW,height:boxH,color:PDFLib.rgb(1,1,1),borderColor:PDFLib.rgb(.82,.84,.86),borderWidth:1});
-
-    p.drawText('Documento assinado digitalmente',{x:boxX+9,y:boxY+boxH-14,size:6.4,font:fontReg,color:gray});
-    p.drawText(govAuthData.nome.toUpperCase().substring(0,42),{x:boxX+9,y:boxY+boxH-27,size:7.8,font:fontBold,color:dark});
     const now=new Date();
     const dataStr='Data: '+now.toLocaleDateString('pt-BR')+' '+now.toLocaleTimeString('pt-BR',{hour12:false})+'-0300';
-    p.drawText(dataStr,{x:boxX+9,y:boxY+boxH-39,size:6,font:fontReg,color:gray});
-    p.drawText('Verifique em https://validar.iti.gov.br',{x:boxX+9,y:boxY+boxH-49,size:6,font:fontReg,color:gray});
 
-    // (assinatura pessoal desenhada/digitada/carimbo não é mais impressa — só o carimbo gov.br abaixo)
+    // ── posição: usa o local onde o usuário arrastou o carimbo sobre a prévia; se não houve prévia, usa canto inferior direito ──
+    let boxX,boxY,boxW,boxH;
+    const dragEl=document.getElementById('gov-stamp-drag');
+    const canvas=document.getElementById('gov-page-canvas');
+    if(govPdfJsDoc&&dragEl&&canvas&&canvas.clientWidth){
+      const scaleX=pdfW/canvas.clientWidth;
+      const scaleY=pdfH/canvas.clientHeight;
+      boxW=dragEl.offsetWidth*scaleX;
+      boxH=dragEl.offsetHeight*scaleY;
+      boxX=parseFloat(dragEl.style.left||0)*scaleX;
+      boxY=pdfH-(parseFloat(dragEl.style.top||0)+dragEl.offsetHeight)*scaleY;
+    }else{
+      boxW=230;boxH=46;boxX=pdfW-boxW-20;boxY=20;
+    }
+
+    p.drawRectangle({x:boxX,y:boxY,width:boxW,height:boxH,color:PDFLib.rgb(1,1,1),borderColor:PDFLib.rgb(.82,.84,.86),borderWidth:1});
+    const imgSide=boxH-10;
+    p.drawImage(img,{x:boxX+6,y:boxY+5,width:imgSide,height:imgSide});
+    const txtX=boxX+6+imgSide+8;
+    p.drawText('Documento assinado digitalmente',{x:txtX,y:boxY+boxH-14,size:6.4,font:fontReg,color:gray});
+    p.drawText(govAuthData.nome.toUpperCase().substring(0,32),{x:txtX,y:boxY+boxH-25,size:7.4,font:fontBold,color:dark});
+    p.drawText(dataStr,{x:txtX,y:boxY+boxH-35,size:5.6,font:fontReg,color:gray});
+    if(boxH>44)p.drawText('Verifique em https://validar.iti.gov.br',{x:txtX,y:boxY+boxH-44,size:5.2,font:fontReg,color:gray});
 
     dl(await pdfDoc.save(),'documento_assinado_gov.pdf','application/pdf');
     alert('✅ PDF assinado gerado para '+govAuthData.nome+'!');closeModal();
@@ -2717,6 +2986,340 @@ async function gerarPlanilha(){
     const a=document.createElement('a');a.href=URL.createObjectURL(r.blob);a.download=fname;a.click();
     show('gp-result','✅ Planilha gerada: '+fname+'\n\n'+r.preview.substring(0,400));
   }catch(e){show('gp-result','❌ Erro ao gerar planilha: '+e.message);}
+}
+
+// ── NOVAS FERRAMENTAS DO DIA A DIA ─────────────────────
+
+// Imagens → PDF (com opções estilo iLovePDF: orientação, tamanho, margem, mesclar)
+async function imagesToPdf(){
+  const fi=document.getElementById('i2p-imgs');
+  if(!fi.files.length){alert('Selecione ao menos uma imagem!');return;}
+  const orient=document.getElementById('i2p-orient').value; // retrato | paisagem
+  const sizeOpt=document.getElementById('i2p-size').value; // fit | a4 | letter
+  const marginOpt=document.getElementById('i2p-margin').value; // none | small | big
+  const merge=document.getElementById('i2p-merge').checked;
+  const margin={none:0,small:20,big:50}[marginOpt];
+  const fixedSizes={a4:[595.28,841.89],letter:[612,792]};
+
+  function pageDimsFor(imgW,imgH){
+    if(sizeOpt==='fit')return [imgW+margin*2,imgH+margin*2];
+    let [w,h]=fixedSizes[sizeOpt];
+    if(orient==='paisagem'&&w<h)[w,h]=[h,w];
+    if(orient==='retrato'&&w>h)[w,h]=[h,w];
+    return [w,h];
+  }
+
+  async function embedAndDraw(pdfDoc,f){
+    const bytes=new Uint8Array(await f.arrayBuffer());
+    const isJpg=/\.jpe?g$/i.test(f.name);
+    const img=isJpg?await pdfDoc.embedJpg(bytes):await pdfDoc.embedPng(bytes);
+    const [pw,ph]=pageDimsFor(img.width,img.height);
+    const page=pdfDoc.addPage([pw,ph]);
+    const availW=pw-margin*2,availH=ph-margin*2;
+    const ratio=Math.min(availW/img.width,availH/img.height,1);
+    const w=img.width*ratio,h=img.height*ratio;
+    page.drawImage(img,{x:(pw-w)/2,y:(ph-h)/2,width:w,height:h});
+  }
+
+  try{
+    if(merge){
+      const pdfDoc=await PDFLib.PDFDocument.create();
+      for(const f of fi.files)await embedAndDraw(pdfDoc,f);
+      dl(await pdfDoc.save(),'imagens_convertidas.pdf','application/pdf');
+    }else{
+      const zip=new JSZip();
+      let i=1;
+      for(const f of fi.files){
+        const pdfDoc=await PDFLib.PDFDocument.create();
+        await embedAndDraw(pdfDoc,f);
+        const bytes=await pdfDoc.save();
+        zip.file('imagem_'+String(i++).padStart(2,'0')+'.pdf',bytes);
+      }
+      const blob=await zip.generateAsync({type:'blob'});
+      const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='imagens_pdf.zip';a.click();
+    }
+    closeModal();
+  }catch(e){alert('Erro: '+e.message);}
+}
+
+// PDF → Imagens (JPG, empacotadas em .zip)
+async function pdfToImages(){
+  const fi=document.getElementById('p2i-pdf');
+  if(!fi.files.length){alert('Selecione um PDF!');return;}
+  try{
+    show('p2i-result','⏳ Renderizando páginas...');
+    if(typeof pdfjsLib==='undefined')throw new Error('pdfjs indisponível');
+    const buf=await fi.files[0].arrayBuffer();
+    const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+    const zip=new JSZip();
+    const n=Math.min(pdf.numPages,60);
+    for(let i=1;i<=n;i++){
+      const page=await pdf.getPage(i);
+      const vp=page.getViewport({scale:2});
+      const canvas=document.createElement('canvas');
+      canvas.width=vp.width;canvas.height=vp.height;
+      await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+      const b64=canvas.toDataURL('image/jpeg',0.92).split(',')[1];
+      zip.file('pagina_'+String(i).padStart(2,'0')+'.jpg',b64,{base64:true});
+    }
+    const blob=await zip.generateAsync({type:'blob'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='paginas_pdf.zip';a.click();
+    show('p2i-result','✅ '+n+' página(s) convertida(s) e baixadas em .zip');
+  }catch(e){show('p2i-result','❌ Erro: '+e.message);}
+}
+
+// Calculadora de IMC
+function calcIMC(){
+  const peso=+document.getElementById('imc-peso').value;
+  const alt=+document.getElementById('imc-alt').value;
+  if(!peso||!alt){show('imc-result','❌ Preencha peso e altura.');return;}
+  const imc=peso/(alt*alt);
+  let faixa;
+  if(imc<18.5)faixa='Abaixo do peso';
+  else if(imc<25)faixa='Peso normal';
+  else if(imc<30)faixa='Sobrepeso';
+  else if(imc<35)faixa='Obesidade Grau I';
+  else if(imc<40)faixa='Obesidade Grau II';
+  else faixa='Obesidade Grau III';
+  show('imc-result',`ÍNDICE DE MASSA CORPORAL\n${'─'.repeat(30)}\nIMC: ${imc.toFixed(2)}\nClassificação: ${faixa}\n\n⚠️ Cálculo referencial — consulte um profissional de saúde.`);
+}
+
+// Calculadora de Idade
+function calcIdade(){
+  const v=document.getElementById('idade-nasc').value;
+  if(!v){show('idade-result','❌ Informe a data de nascimento.');return;}
+  const nasc=new Date(v+'T00:00:00'),hoje=new Date();
+  let anos=hoje.getFullYear()-nasc.getFullYear();
+  let meses=hoje.getMonth()-nasc.getMonth();
+  let dias=hoje.getDate()-nasc.getDate();
+  if(dias<0){meses--;dias+=new Date(hoje.getFullYear(),hoje.getMonth(),0).getDate();}
+  if(meses<0){anos--;meses+=12;}
+  const diasTotais=Math.floor((hoje-nasc)/(1000*60*60*24));
+  show('idade-result',`IDADE EXATA\n${'─'.repeat(30)}\n${anos} ano(s), ${meses} mês(es) e ${dias} dia(s)\n\nTotal em dias: ${diasTotais.toLocaleString('pt-BR')}`);
+}
+
+// Data por Extenso
+function dataPorExtenso(){
+  const v=document.getElementById('ext-data').value;
+  if(!v){show('ext-result','❌ Informe uma data.');return;}
+  const d=new Date(v+'T00:00:00');
+  const dias=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+  const meses=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  const txt=`${dias[d.getDay()]}, ${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+  show('ext-result',txt.charAt(0).toUpperCase()+txt.slice(1));
+}
+
+// Conversor de Cores HEX/RGB
+function corFromHex(){
+  let hex=document.getElementById('cor-hex').value.trim();
+  if(!/^#?[0-9a-fA-F]{6}$/.test(hex)){show('cor-result','❌ HEX inválido. Use o formato #RRGGBB.');return;}
+  if(!hex.startsWith('#'))hex='#'+hex;
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  document.getElementById('cor-r').value=r;document.getElementById('cor-g').value=g;document.getElementById('cor-b').value=b;
+  document.getElementById('cor-preview').style.background=hex;
+  show('cor-result',`HEX: ${hex.toUpperCase()}\nRGB: rgb(${r}, ${g}, ${b})`);
+}
+function corFromRgb(){
+  const r=Math.min(255,Math.max(0,+document.getElementById('cor-r').value||0));
+  const g=Math.min(255,Math.max(0,+document.getElementById('cor-g').value||0));
+  const b=Math.min(255,Math.max(0,+document.getElementById('cor-b').value||0));
+  const hex='#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
+  document.getElementById('cor-hex').value=hex;
+  document.getElementById('cor-preview').style.background=hex;
+  show('cor-result',`HEX: ${hex.toUpperCase()}\nRGB: rgb(${r}, ${g}, ${b})`);
+}
+
+// Gerador de Lista de Tarefas em PDF
+async function gerarTodoPdf(){
+  const titulo=document.getElementById('todo-titulo').value||'Lista de Tarefas';
+  const itens=document.getElementById('todo-itens').value.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(!itens.length){alert('Adicione ao menos um item!');return;}
+  const pdfDoc=await PDFLib.PDFDocument.create();
+  let pg=pdfDoc.addPage([595,842]);
+  const fontReg=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+  const fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+  pg.drawRectangle({x:0,y:790,width:595,height:52,color:PDFLib.rgb(0.39,0.4,0.94)});
+  pg.drawText(titulo,{x:40,y:808,size:16,font:fontBold,color:PDFLib.rgb(1,1,1)});
+  let y=750;
+  for(const item of itens){
+    if(y<50){pg=pdfDoc.addPage([595,842]);y=790;}
+    pg.drawRectangle({x:40,y:y-2,width:14,height:14,borderColor:PDFLib.rgb(.3,.3,.3),borderWidth:1.2,color:PDFLib.rgb(1,1,1)});
+    pg.drawText(item.substring(0,90),{x:64,y,size:11,font:fontReg,color:PDFLib.rgb(.1,.1,.15)});
+    y-=28;
+  }
+  dl(await pdfDoc.save(),'checklist.pdf','application/pdf');closeModal();
+}
+
+// Calculadora de 13º Salário
+function calc13Salario(){
+  const sal=+document.getElementById('d13-sal').value;
+  const meses=Math.min(12,Math.max(1,+document.getElementById('d13-meses').value));
+  if(!sal){show('d13-result','❌ Informe o salário bruto.');return;}
+  const bruto=(sal/12)*meses;
+  const inss=bruto*0.09; // estimativa simplificada
+  const liquido=bruto-inss;
+  show('d13-result',`13º SALÁRIO — Estimativa\n${'─'.repeat(32)}\nMeses trabalhados: ${meses}/12\n13º Bruto:  R$ ${fmt(bruto)}\nINSS (aprox.): R$ ${fmt(inss)}\n─────────────────────────\n13º Líquido: R$ ${fmt(liquido)}\n\n⚠️ Estimativa simplificada. Consulte o RH/contador.`);
+}
+
+// Calculadora de Férias
+function calcFerias(){
+  const sal=+document.getElementById('fer-sal').value;
+  const dias=Math.min(30,Math.max(1,+document.getElementById('fer-dias').value));
+  const vender=document.getElementById('fer-vender').checked;
+  if(!sal){show('fer-result','❌ Informe o salário bruto.');return;}
+  const valorDia=sal/30;
+  const feriasBase=valorDia*dias;
+  const tercoConst=feriasBase/3;
+  let abono=0,abonoTerco=0;
+  if(vender){abono=valorDia*10;abonoTerco=abono/3;}
+  const total=feriasBase+tercoConst+abono+abonoTerco;
+  show('fer-result',`FÉRIAS — Estimativa\n${'─'.repeat(32)}\nDias de férias: ${dias}\nValor das férias: R$ ${fmt(feriasBase)}\n1/3 Constitucional: R$ ${fmt(tercoConst)}${vender?`\nAbono pecuniário (10 dias): R$ ${fmt(abono)}\n1/3 sobre abono: R$ ${fmt(abonoTerco)}`:''}\n─────────────────────────\nTOTAL: R$ ${fmt(total)}\n\n⚠️ Estimativa simplificada. Consulte o RH/contador.`);
+}
+
+// Conversor de Fuso Horário
+function calcFuso(){
+  const hora=document.getElementById('fuso-hora').value;
+  const zona=document.getElementById('fuso-origem').value;
+  if(!hora){show('fuso-result','❌ Informe um horário.');return;}
+  try{
+    const [hh,mm]=hora.split(':').map(Number);
+    const base=new Date();base.setHours(hh,mm,0,0);
+    const zonas=[['America/Sao_Paulo','Brasília'],['America/New_York','Nova York'],['America/Los_Angeles','Los Angeles'],['Europe/Lisbon','Lisboa'],['Europe/London','Londres'],['Europe/Paris','Paris'],['Asia/Tokyo','Tóquio'],['Asia/Shanghai','Xangai'],['Australia/Sydney','Sydney']];
+    const linhas=zonas.map(([tz,label])=>{
+      const str=new Intl.DateTimeFormat('pt-BR',{timeZone:tz,hour:'2-digit',minute:'2-digit',hour12:false}).format(base);
+      return (tz===zona?'➤ ':'   ')+label.padEnd(14)+str;
+    });
+    show('fuso-result',`CONVERSÃO DE FUSO HORÁRIO\n${'─'.repeat(34)}\n`+linhas.join('\n'));
+  }catch(e){show('fuso-result','❌ Erro: '+e.message);}
+}
+
+// PDF → OFX (extrai transações de um extrato em PDF por heurística e gera .ofx)
+let p2oTxs=null,p2oFileBase='extrato';
+
+function p2oParseDate(str){
+  const m=str.match(/(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/);
+  if(!m)return null;
+  let [,d,mo,y]=m;
+  if(y.length===2)y='20'+y;
+  d=d.padStart(2,'0');mo=mo.padStart(2,'0');
+  const dt=new Date(+y,+mo-1,+d);
+  if(isNaN(dt))return null;
+  return {iso:y+mo+d,label:d+'/'+mo+'/'+y,date:dt};
+}
+
+function p2oParseLine(line){
+  const dateInfo=p2oParseDate(line);
+  if(!dateInfo)return null;
+  const valMatches=line.match(/-?\d{1,3}(?:\.\d{3})*,\d{2}/g);
+  if(!valMatches||!valMatches.length)return null;
+  let valStr=valMatches[valMatches.length-1];
+  let negative=valStr.trim().startsWith('-');
+  const amount=parseFloat(valStr.replace(/\./g,'').replace(',','.').replace('-',''));
+  if(!amount&&amount!==0)return null;
+  let memo=line
+    .replace(/\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{2,4}/,'')
+    .replace(valStr,'')
+    .replace(/\(?\b[DC]\)?\s*$/i,(m)=>{ if(/D/i.test(m))negative=true; if(/C/i.test(m))negative=false; return ''; })
+    .replace(/\s{2,}/g,' ').trim();
+  if(!memo)memo='Transação';
+  const debitWords=/compra|pagamento|tarifa|saque|d[ée]bito|boleto|desconto|taxa/i;
+  if(!/[DC]\s*$/i.test(line)&&debitWords.test(memo)&&!negative)negative=true;
+  return {dateInfo,amount:negative?-Math.abs(amount):Math.abs(amount),memo:memo.substring(0,80)};
+}
+
+async function pdfToOfxPreview(input){
+  const rBox=document.getElementById('p2o-result');
+  document.getElementById('p2o-dl-btn').style.display='none';
+  p2oTxs=null;
+  if(!input.files.length)return;
+  p2oFileBase=input.files[0].name.replace(/\.pdf$/i,'')||'extrato';
+  show('p2o-result','⏳ Lendo o PDF e identificando transações...');
+  try{
+    const data=await convExtractPdfStructured(input.files[0]);
+    const txs=[];
+    (data.paragraphs||[]).forEach(line=>{
+      const tx=p2oParseLine(line);
+      if(tx)txs.push(tx);
+    });
+    if(!txs.length){
+      show('p2o-result','❌ Nenhuma transação reconhecida automaticamente neste PDF. O layout pode não ser compatível com a extração por texto (ex: extrato escaneado como imagem).');
+      return;
+    }
+    p2oTxs=txs;
+    const preview=txs.slice(0,12).map(t=>`${t.dateInfo.label}  ${(t.amount<0?'-':'+')}R$ ${Math.abs(t.amount).toFixed(2).replace('.',',')}  ${t.memo}`).join('\n');
+    const total=txs.reduce((s,t)=>s+t.amount,0);
+    show('p2o-result',`✅ ${txs.length} transação(ões) encontrada(s)\n${'─'.repeat(40)}\n${preview}${txs.length>12?'\n… e mais '+(txs.length-12)+' linha(s)':''}\n${'─'.repeat(40)}\nSaldo do período: R$ ${total.toFixed(2).replace('.',',')}`);
+    document.getElementById('p2o-dl-btn').style.display='block';
+  }catch(e){
+    show('p2o-result','❌ Erro ao ler o PDF: '+e.message);
+  }
+}
+
+function downloadPdfToOfx(){
+  if(!p2oTxs||!p2oTxs.length){alert('Nenhuma transação para exportar.');return;}
+  const now=new Date();
+  const nowStr=now.toISOString().replace(/[-:T]/g,'').substring(0,14);
+  const sorted=[...p2oTxs].sort((a,b)=>a.dateInfo.date-b.dateInfo.date);
+  const dtStart=sorted[0].dateInfo.iso,dtEnd=sorted[sorted.length-1].dateInfo.iso;
+  const total=p2oTxs.reduce((s,t)=>s+t.amount,0);
+  const stmttrns=p2oTxs.map((t,i)=>
+`<STMTTRN>
+<TRNTYPE>${t.amount<0?'DEBIT':'CREDIT'}
+<DTPOSTED>${t.dateInfo.iso}
+<TRNAMT>${t.amount.toFixed(2)}
+<FITID>${t.dateInfo.iso}${String(i+1).padStart(4,'0')}
+<MEMO>${t.memo.replace(/[<>]/g,'')}
+</STMTTRN>`).join('\n');
+  const ofx=`OFXHEADER:100
+DATA:OFXSGML
+VERSION:102
+SECURITY:NONE
+ENCODING:USASCII
+CHARSET:1252
+COMPRESSION:NONE
+OLDFILEUID:NONE
+NEWFILEUID:NONE
+
+<OFX>
+<SIGNONMSGSRSV1>
+<SONRS>
+<STATUS>
+<CODE>0
+<SEVERITY>INFO
+</STATUS>
+<DTSERVER>${nowStr}
+<LANGUAGE>POR
+</SONRS>
+</SIGNONMSGSRSV1>
+<BANKMSGSRSV1>
+<STMTTRNRS>
+<TRNUID>1
+<STATUS>
+<CODE>0
+<SEVERITY>INFO
+</STATUS>
+<STMTRS>
+<CURDEF>BRL
+<BANKACCTFROM>
+<BANKID>0000
+<ACCTID>0000000
+<ACCTTYPE>CHECKING
+</BANKACCTFROM>
+<BANKTRANLIST>
+<DTSTART>${dtStart}
+<DTEND>${dtEnd}
+${stmttrns}
+</BANKTRANLIST>
+<LEDGERBAL>
+<BALAMT>${total.toFixed(2)}
+<DTASOF>${nowStr}
+</LEDGERBAL>
+</STMTRS>
+</STMTTRNRS>
+</BANKMSGSRSV1>
+</OFX>`;
+  const blob=new Blob([ofx],{type:'application/x-ofx'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=p2oFileBase+'.ofx';a.click();
 }
 
 // ── INIT ──────────────────────────────────────────────
