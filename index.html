@@ -190,6 +190,25 @@ body{display:block;min-height:100vh}
 .tool-prog-bar{height:100%;width:0%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:99px;transition:width .25s ease;position:relative;overflow:hidden}
 .tool-prog-bar.indeterminate{width:38%!important;animation:tool-prog-slide 1.1s ease-in-out infinite}
 @keyframes tool-prog-slide{0%{transform:translateX(-100%)}50%{transform:translateX(70%)}100%{transform:translateX(220%)}}
+
+/* ── ORGANIZADOR DE IMAGENS (Imagens → PDF) ── */
+.i2p-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.i2p-toolbar .btn-sm{display:inline-flex;align-items:center;gap:6px}
+.i2p-organizer{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;padding:12px;border:1px dashed var(--border);border-radius:12px;min-height:56px}
+.i2p-card{position:relative;width:100px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:6px;cursor:grab;transition:transform .15s ease,border-color .15s ease,opacity .15s ease}
+.i2p-card:active{cursor:grabbing}
+.i2p-card.i2p-dragging{opacity:.35}
+.i2p-card.i2p-dragover{border-color:var(--gold2);transform:scale(1.05)}
+.i2p-card img{width:100%;height:76px;object-fit:cover;border-radius:6px;display:block;background:var(--bg)}
+.i2p-page-badge{position:absolute;top:4px;left:4px;background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-size:10px;font-weight:800;border-radius:6px;padding:1px 6px;line-height:1.5}
+.i2p-remove{position:absolute;top:4px;right:4px;background:rgba(15,17,26,.7);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:6px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.i2p-remove:hover{background:#ef4444;border-color:#ef4444}
+.i2p-name{font-size:9.5px;color:var(--muted);margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.i2p-movebar{display:flex;justify-content:space-between;margin-top:4px}
+.i2p-movebar button{background:none;border:1px solid var(--border);border-radius:5px;color:var(--muted);width:22px;height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.i2p-movebar button:hover{border-color:var(--gold2);color:var(--text)}
+.i2p-movebar button:disabled{opacity:.25;cursor:default}
+.i2p-empty{font-size:11.5px;color:var(--muted);text-align:center;padding:10px;width:100%}
 .cat-count{font-family:var(--font-mono);font-size:10px;background:rgba(148,163,184,.15);padding:1px 7px;border-radius:20px;color:var(--dim)}
 .cat-item.active .cat-count{background:rgba(99,102,241,.2);color:#a5b4fc}
 
@@ -1633,21 +1652,30 @@ function buildModal(id,tool){
     <button class="btn-exec" onclick="runToolProgress(this,'gerarPlanilha')">📊 Gerar Planilha .xlsx</button>
     <div class="result-box" id="gp-result"></div>`;return;}
 
-  if(id===77){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma ou mais imagens (JPG/PNG) — a ordem de seleção define a ordem das páginas:</p><input type="file" id="i2p-imgs" accept="image/*" multiple class="f-input"><div id="i2p-list" style="font-size:11px;color:var(--muted);margin-top:8px"></div>
+  if(id===77){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma ou mais imagens (JPG/PNG) e arraste os cartões para reordenar as páginas do PDF:</p>
+    <input type="file" id="i2p-imgs" accept="image/*" multiple class="f-input" style="display:none">
+    <div class="i2p-toolbar">
+      <button type="button" class="btn-sm" onclick="document.getElementById('i2p-imgs').click()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Adicionar imagens</button>
+      <button type="button" class="btn-sm" onclick="i2pClearAll()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1L5 6"/></svg> Limpar tudo</button>
+    </div>
+    <div id="i2p-organizer" class="i2p-organizer"></div>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
       <label class="f-label" style="margin-bottom:10px;display:block">Opções de imagem para PDF</label>
       <div class="grid-2">
-        <div class="f-row"><label class="f-label">Orientação da página</label><select id="i2p-orient" class="f-input"><option value="retrato">📱 Retrato</option><option value="paisagem">🖥️ Paisagem</option></select></div>
+        <div class="f-row"><label class="f-label">Orientação da página</label><select id="i2p-orient" class="f-input"><option value="retrato">Retrato</option><option value="paisagem">Paisagem</option></select></div>
         <div class="f-row"><label class="f-label">Tamanho da página</label><select id="i2p-size" class="f-input"><option value="fit">Adaptar (mesma dimensão da imagem)</option><option value="a4">A4 (297 x 210 mm)</option><option value="letter">US Letter (215.9 x 279.4 mm)</option></select></div>
       </div>
       <div class="f-row"><label class="f-label">Margem</label><select id="i2p-margin" class="f-input"><option value="none">Sem margem</option><option value="small">Pequena</option><option value="big">Grande</option></select></div>
       <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:8px 0 4px"><input type="checkbox" id="i2p-merge" checked style="width:16px;height:16px"> Mesclar todas as imagens em um único arquivo PDF</label>
     </div>
-    <button class="btn-exec" onclick="runToolProgress(this,'imagesToPdf')">📄 Converter para PDF</button>`;
+    <button class="btn-exec" onclick="runToolProgress(this,'imagesToPdf')">Converter para PDF</button>`;
+    i2pFiles=[];i2pRender();
     document.getElementById('i2p-imgs').addEventListener('change',function(){
-      document.getElementById('i2p-list').textContent=this.files.length?[...this.files].map(f=>f.name).join(' · '):'';
+      i2pAddFiles(this.files);
+      this.value='';
     });
     return;}
+
   if(id===78){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF para exportar cada página como imagem JPG:</p><input type="file" id="p2i-pdf" accept="application/pdf" class="f-input"><button class="btn-exec" onclick="runToolProgress(this,'pdfToImages')">🖼️ Converter e Baixar .zip</button><div class="result-box" id="p2i-result"></div>`;return;}
   if(id===79){body.innerHTML=`<div class="grid-2"><div class="f-row"><label class="f-label">Peso (kg)</label><input type="number" id="imc-peso" value="70" class="f-input"></div><div class="f-row"><label class="f-label">Altura (m)</label><input type="number" id="imc-alt" value="1.70" step="0.01" class="f-input"></div></div><button class="btn-exec" onclick="calcIMC()">⚖️ Calcular IMC</button><div class="result-box" id="imc-result"></div>`;return;}
   if(id===80){body.innerHTML=`<div class="f-row"><label class="f-label">Data de nascimento</label><input type="date" id="idade-nasc" class="f-input"></div><button class="btn-exec" onclick="calcIdade()">🎂 Calcular Idade</button><div class="result-box" id="idade-result"></div>`;return;}
@@ -3332,9 +3360,83 @@ const TOOLS_I18N={"en": {"1": {"name": "Gov.br Digital Signature", "desc": "Sign
 // ── NOVAS FERRAMENTAS DO DIA A DIA ─────────────────────
 
 // Imagens → PDF (com opções estilo iLovePDF: orientação, tamanho, margem, mesclar)
+// ── ORGANIZADOR DE IMAGENS (Imagens → PDF): mantém a ordem escolhida pelo usuário ──
+let i2pFiles=[];
+let i2pDragIdx=null;
+function i2pAddFiles(fileList){
+  const imgs=[...fileList].filter(f=>/^image\//.test(f.type)||/\.(png|jpe?g)$/i.test(f.name));
+  if(!imgs.length)return;
+  i2pFiles=i2pFiles.concat(imgs);
+  i2pRender();
+}
+function i2pClearAll(){
+  i2pFiles=[];
+  i2pRender();
+}
+function i2pRemove(idx){
+  i2pFiles.splice(idx,1);
+  i2pRender();
+}
+function i2pMove(idx,dir){
+  const to=idx+dir;
+  if(to<0||to>=i2pFiles.length)return;
+  const tmp=i2pFiles[idx];i2pFiles[idx]=i2pFiles[to];i2pFiles[to]=tmp;
+  i2pRender();
+}
+function i2pDragStart(e,idx){
+  i2pDragIdx=idx;
+  e.dataTransfer.effectAllowed='move';
+  e.currentTarget.classList.add('i2p-dragging');
+}
+function i2pDragEnd(e){
+  e.currentTarget.classList.remove('i2p-dragging');
+  document.querySelectorAll('.i2p-card').forEach(c=>c.classList.remove('i2p-dragover'));
+}
+function i2pDragOver(e,idx){
+  e.preventDefault();
+  e.currentTarget.classList.add('i2p-dragover');
+}
+function i2pDragLeave(e){
+  e.currentTarget.classList.remove('i2p-dragover');
+}
+function i2pDrop(e,idx){
+  e.preventDefault();
+  e.currentTarget.classList.remove('i2p-dragover');
+  if(i2pDragIdx===null||i2pDragIdx===idx)return;
+  const moved=i2pFiles.splice(i2pDragIdx,1)[0];
+  i2pFiles.splice(idx,0,moved);
+  i2pDragIdx=null;
+  i2pRender();
+}
+function i2pRender(){
+  const box=document.getElementById('i2p-organizer');
+  if(!box)return;
+  if(!i2pFiles.length){
+    box.innerHTML='<div class="i2p-empty">Nenhuma imagem adicionada ainda. Clique em "Adicionar imagens" para começar.</div>';
+    return;
+  }
+  box.innerHTML=i2pFiles.map((f,idx)=>{
+    const url=URL.createObjectURL(f);
+    return `<div class="i2p-card" draggable="true"
+      ondragstart="i2pDragStart(event,${idx})" ondragend="i2pDragEnd(event)"
+      ondragover="i2pDragOver(event,${idx})" ondragleave="i2pDragLeave(event)" ondrop="i2pDrop(event,${idx})"
+      title="Arraste para reordenar">
+      <span class="i2p-page-badge">${idx+1}</span>
+      <button type="button" class="i2p-remove" onclick="i2pRemove(${idx})" title="Remover">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <img src="${url}" alt="${f.name.replace(/"/g,'')}" onload="URL.revokeObjectURL(this.src)">
+      <div class="i2p-name">${f.name.replace(/</g,'&lt;')}</div>
+      <div class="i2p-movebar">
+        <button type="button" onclick="i2pMove(${idx},-1)" ${idx===0?'disabled':''} title="Mover para trás"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" onclick="i2pMove(${idx},1)" ${idx===i2pFiles.length-1?'disabled':''} title="Mover para frente"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 async function imagesToPdf(){
-  const fi=document.getElementById('i2p-imgs');
-  if(!fi.files.length){toast('Selecione ao menos uma imagem!');return;}
+  if(!i2pFiles.length){toast('Selecione ao menos uma imagem!');return;}
   const orient=document.getElementById('i2p-orient').value; // retrato | paisagem
   const sizeOpt=document.getElementById('i2p-size').value; // fit | a4 | letter
   const marginOpt=document.getElementById('i2p-margin').value; // none | small | big
@@ -3365,19 +3467,22 @@ async function imagesToPdf(){
   try{
     if(merge){
       const pdfDoc=await PDFLib.PDFDocument.create();
-      for(const f of fi.files)await embedAndDraw(pdfDoc,f);
+      for(const f of i2pFiles)await embedAndDraw(pdfDoc,f);
       dl(await pdfDoc.save(),'imagens_convertidas.pdf','application/pdf');
+      toast('✅ PDF gerado com '+i2pFiles.length+' página(s) na ordem definida.');
     }else{
       const zip=new JSZip();
       let i=1;
-      for(const f of fi.files){
+      for(const f of i2pFiles){
         const pdfDoc=await PDFLib.PDFDocument.create();
         await embedAndDraw(pdfDoc,f);
         const bytes=await pdfDoc.save();
         zip.file('imagem_'+String(i++).padStart(2,'0')+'.pdf',bytes);
       }
       const blob=await zip.generateAsync({type:'blob'});
+      logConversion('imagens_pdf.zip');
       const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='imagens_pdf.zip';a.click();
+      toast('✅ '+i2pFiles.length+' PDF(s) gerado(s) e compactado(s) em .zip.');
     }
     closeModal();
   }catch(e){toast('Erro: '+e.message);}
