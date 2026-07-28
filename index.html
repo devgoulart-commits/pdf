@@ -33,6 +33,12 @@ body{
   --text:#f1f5f9;--muted:#94a3b8;--dim:#64748b;--green:#34d399;
   --wa:#25d366;--wa-dark:#128c3b;
   --font-display:"Exo 2",sans-serif;--font-body:"Plus Jakarta Sans",sans-serif;--font-mono:"JetBrains Mono",monospace;
+  /* ── DESIGN SYSTEM TOKENS ── */
+  --icon-color:#94a3b8;--icon-hover:#8b5cf6;--icon-bg-hover:rgba(139,92,246,.12);
+  --r-sm:8px;--r-md:12px;--r-lg:18px;--r-xl:22px;--r-pill:99px;
+  --sp-1:4px;--sp-2:8px;--sp-3:12px;--sp-4:16px;--sp-5:20px;--sp-6:28px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.25);--shadow-md:0 10px 24px -10px rgba(0,0,0,.4);--shadow-lg:0 20px 45px -18px rgba(0,0,0,.5);
+  --ease:cubic-bezier(.22,1,.36,1);
   font-family:var(--font-body);
   background:var(--bg);color:var(--text);
   min-height:100vh;display:flex;overflow-x:hidden;-webkit-font-smoothing:antialiased;
@@ -42,6 +48,8 @@ body.light{
   --bg:#f8fafc;--bg-sidebar:#ffffff;--bg-card:#ffffff;--bg-hover:#eef2ff;
   --border:#e2e8f0;--gold:#4f46e5;--gold2:#4338ca;
   --text:#0f172a;--muted:#475569;--dim:#94a3b8;--green:#059669;
+  --icon-color:#64748b;--icon-hover:#7c3aed;--icon-bg-hover:rgba(124,58,237,.1);
+  --shadow-sm:0 1px 3px rgba(15,23,42,.06);--shadow-md:0 10px 24px -12px rgba(15,23,42,.12);--shadow-lg:0 20px 45px -20px rgba(15,23,42,.16);
 }
 body.light .sidebar{box-shadow:2px 0 12px rgba(15,23,42,.05)}
 body.light .topbar{background:rgba(248,250,252,.85)}
@@ -69,6 +77,60 @@ body.light .fmt-app-pdf{border-color:#e2e8f0}
 /* ── TIPOGRAFIA ── */
 h1,h2,h3,.logo,.hero h1,.sec-header h2,.view-sec h2,.widget h3,.modal-head h3,.msg-form h3,.cc-value,.tool-meta h4{font-family:var(--font-display)}
 .cat-count,.result-box,.f-textarea,.conv-log,.conv-rc-prev{font-family:var(--font-mono)}
+h1,.hero h1{letter-spacing:-.02em;line-height:1.08;font-weight:800}
+h2,.sec-header-big h2,.view-sec h2{letter-spacing:-.015em;line-height:1.2;font-weight:700}
+h3,h4,.tool-meta h4,.feature-card-land h4{letter-spacing:-.005em;line-height:1.3;font-weight:700}
+body{line-height:1.5;font-feature-settings:"kern" 1;text-rendering:optimizeLegibility}
+.sec-header-big p,.tool-meta p,.feature-card-land p{line-height:1.6}
+.eyebrow{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);opacity:.85}
+/* Números tabulares para dados que mudam (estatísticas, valores) evitam "jitter" de largura */
+.stat-num,.dsc-num,.hmi-orange+b,.hero-mini-stats b,.cat-count,.dash-stat-card .dsc-num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.tool-meta h4{font-size:14.5px}
+.tool-meta p{font-size:12px;color:var(--muted)}
+
+/* ── ÍCONES (Heroicons-style, outline p/ navegação, solid p/ ações e cards) ── */
+.hicon{width:20px;height:20px;flex-shrink:0;stroke:var(--icon-color);fill:none;stroke-width:1.6;transition:stroke .18s var(--ease)}
+.hicon-solid{width:20px;height:20px;flex-shrink:0;fill:var(--icon-color);transition:fill .18s var(--ease)}
+.icon-badge{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--icon-bg-hover);flex-shrink:0;transition:transform .18s var(--ease),background .18s var(--ease)}
+.nav-item .hicon{width:17px;height:17px}
+.nav-item{transition:background .18s var(--ease),color .18s var(--ease)}
+.nav-item:hover .hicon,.nav-item.active .hicon{stroke:var(--gold2)}
+.cat-item .hicon{width:15px;height:15px;margin-right:2px}
+.cat-item span{display:inline-flex;align-items:center;gap:6px}
+.cat-item.active .hicon,.cat-item:hover .hicon{stroke:#a5b4fc}
+body.light .cat-item.active .hicon,body.light .cat-item:hover .hicon{stroke:#4338ca}
+.feature-ico.icon-badge .hicon-solid{width:22px;height:22px;fill:var(--gold2)}
+.feature-card-land:hover .icon-badge{transform:scale(1.08) rotate(-4deg);background:rgba(99,102,241,.18)}
+
+/* ── ANIMAÇÕES SUAVES (reveal on scroll + microinterações) ── */
+@keyframes reveal-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0}
+.reveal.in-view{animation:reveal-up .55s var(--ease) forwards}
+@keyframes view-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.view-fade-in{animation:view-fade .38s var(--ease)}
+.card,.feature-card-land,.hero-drop-card,.step-card-land,.stats-grid-land>*{will-change:transform}
+.card:active{transform:translateY(-1px) scale(.99)}
+.btn-use:active,.btn-nav-cta:active,.btn-exec:active,.theme-btn:active{transform:scale(.96)}
+.btn-nav-cta,.btn-exec,.theme-btn{transition:transform .12s var(--ease),background .18s,box-shadow .18s,border-color .18s}
+.fav-star{transition:transform .18s var(--ease),color .18s}
+.fav-star.active{animation:star-pop .32s var(--ease)}
+@keyframes star-pop{0%{transform:scale(1)}45%{transform:scale(1.35)}100%{transform:scale(1)}}
+.cat-item{transition:background .18s var(--ease),border-color .18s var(--ease),color .18s var(--ease),transform .12s var(--ease)}
+.cat-item:active{transform:scale(.97)}
+
+/* ── GLASSMORPHISM (sutil, consistente) ── */
+.card,.hero-drop-card,.feature-card-land,.conv-chip-land,.stats-grid-land,.step-card-land,.history-node,.dash-history-item,.conv-result-card,.gov-auth-badge{backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%)}
+
+/* ── DRAG & DROP aprimorado ── */
+.hero-dropzone,.conv-drop{position:relative}
+.hero-dropzone.dragover,.conv-drop.drag{animation:dnd-pulse 1.1s var(--ease) infinite}
+@keyframes dnd-pulse{0%,100%{box-shadow:0 0 0 4px rgba(99,102,241,.12)}50%{box-shadow:0 0 0 8px rgba(99,102,241,.05)}}
+.hero-dropzone-cloud.icon-badge{width:44px;height:44px}
+.hero-dropzone-cloud.icon-badge .hicon{width:22px;height:22px;stroke:var(--gold2)}
+.hero-dropzone.dragover .hero-dropzone-cloud,.conv-drop.drag .conv-drop-icon{animation:dnd-bounce .7s var(--ease) infinite}
+@keyframes dnd-bounce{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.08)}}
+.conv-drop-text,.conv-drop-sub{transition:color .2s var(--ease)}
+.conv-drop.drag .conv-drop-text{color:#a5b4fc}
 
 /* ── LAYOUT (navbar fixa no topo + conteúdo em coluna única) ── */
 body{display:block;min-height:100vh}
@@ -82,24 +144,11 @@ body{display:block;min-height:100vh}
 .navbar-search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--dim);fill:none;stroke-width:2}
 .navbar-links{display:flex;align-items:center;gap:2px;flex:1}
 .navbar-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-
-/* ── LOGIN COM GOOGLE ── */
-.auth-area{display:flex;align-items:center}
-.btn-google-login{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);color:var(--text);font-weight:600;font-size:12.5px;padding:8px 14px 8px 10px;border-radius:10px;cursor:pointer;white-space:nowrap;transition:border-color .15s,transform .15s}
-.btn-google-login:hover{border-color:#8b5cf6;transform:translateY(-1px)}
-.btn-google-login .google-g-ico{width:18px;height:18px;flex-shrink:0}
-.btn-google-login.loading{opacity:.6;pointer-events:none}
-.user-chip{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:5px 8px 5px 5px}
-.user-avatar{width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#6366f1}
-.user-name{font-size:12px;font-weight:600;color:var(--text);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.user-logout-btn{background:none;border:none;color:var(--dim);cursor:pointer;padding:2px;display:flex;align-items:center;transition:color .15s}
-.user-logout-btn:hover{color:#f87171}
-@media(max-width:900px){.auth-area{width:100%}.btn-google-login{width:100%;justify-content:center}.user-chip{width:100%;justify-content:space-between}}
 .sidebar-lang{display:flex;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:3px}
 .theme-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background .15s,border-color .15s}
 .theme-btn:hover{border-color:var(--gold)}
 .theme-btn-nav{padding:8px 10px}
-.btn-nav-cta{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;font-size:12.5px;padding:9px 18px;border:none;border-radius:10px;cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;box-shadow:0 6px 16px -6px rgba(99,102,241,.55)}
+.btn-nav-cta{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;font-size:12.5px;padding:9px 18px;border:none;border-radius:var(--r-md);cursor:pointer;white-space:nowrap;transition:transform .15s,box-shadow .15s;box-shadow:0 6px 16px -6px rgba(99,102,241,.55)}
 .btn-nav-cta:hover{transform:translateY(-1px)}
 .menu-btn{display:none;background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:8px;cursor:pointer;font-size:16px;line-height:1}
 
@@ -144,26 +193,26 @@ body{display:block;min-height:100vh}
 .search-kbd-hint{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:var(--bg);border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-size:11px;color:var(--dim);font-family:inherit;pointer-events:none}
 @media(max-width:600px){.search-kbd-hint{display:none}}
 .search-result-count{text-align:center;font-size:12px;color:var(--muted);min-height:18px;margin-bottom:18px}
+.search-hl{background:rgba(99,102,241,.28);color:var(--text);border-radius:3px;padding:0 1px;font-weight:700}
+body.light .search-hl{background:rgba(79,70,229,.18)}
 
 /* ── ESTRELA DE FAVORITO ── */
-.fav-star{background:none;border:none;font-size:17px;line-height:1;color:var(--dim);cursor:pointer;padding:2px;transition:transform .12s,color .12s}
-.fav-star:hover{transform:scale(1.18);color:#fbbf24}
-.fav-star.active{color:#fbbf24}
+.fav-star{background:none;border:none;line-height:1;color:var(--dim);cursor:pointer;padding:2px;display:inline-flex;align-items:center;justify-content:center;transition:transform .12s,color .12s}
+.fav-star:hover{transform:scale(1.18)}
+.fav-star:hover .hicon{stroke:#fbbf24}
 
 /* ── TOASTS MODERNOS ── */
 .toast-stack{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;max-width:340px;width:calc(100% - 40px)}
-.toast{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:10px;padding:12px 12px 12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;transform:translateX(24px);transition:opacity .22s ease,transform .22s ease}
-.toast.show{opacity:1;transform:translateX(0)}
+.toast{display:flex;align-items:flex-start;gap:10px;background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:10px;padding:12px 12px 12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;transform:translateX(24px) scale(.98);transition:opacity .25s var(--ease),transform .25s var(--ease)}
+.toast.show{opacity:1;transform:translateX(0) scale(1)}
 .toast-success{border-left-color:#4ade80}
 .toast-error{border-left-color:#f87171}
 .toast-msg{font-size:12.5px;color:var(--text);line-height:1.45;flex:1;white-space:pre-line}
-.toast-close{background:none;border:none;color:var(--dim);cursor:pointer;font-size:12px;padding:0;line-height:1;flex-shrink:0}
+.toast-close{background:none;border:none;color:var(--dim);cursor:pointer;padding:2px;line-height:1;flex-shrink:0;display:flex;transition:color .15s}
 .toast-close:hover{color:var(--text)}
+.toast-close .hicon{stroke:currentColor}
 @media(max-width:520px){.toast-stack{right:10px;left:10px;bottom:10px;max-width:none}}
-.toast-ico{font-size:15px;line-height:1.3;flex-shrink:0}
-.toast-success .toast-ico{color:#4ade80}
-.toast-error .toast-ico{color:#f87171}
-.toast-info .toast-ico{color:var(--gold)}
+.toast-ico{line-height:1;flex-shrink:0;display:flex;align-items:center;margin-top:1px}
 
 /* ── PWA / OFFLINE BADGE ── */
 .pwa-badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--green);background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.3);border-radius:999px;padding:3px 10px;margin-left:8px;white-space:nowrap}
@@ -180,7 +229,8 @@ body{display:block;min-height:100vh}
 /* ── DASHBOARD / PAINEL DE ESTATÍSTICAS ── */
 .dash-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0 28px}
 @media(max-width:820px){.dash-stats-grid{grid-template-columns:1fr 1fr}}
-.dash-stat-card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:14px;padding:18px}
+.dash-stat-card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);border:1px solid var(--border);border-radius:14px;padding:18px;transition:transform .25s var(--ease),border-color .25s var(--ease)}
+.dash-stat-card:hover{transform:translateY(-2px);border-color:var(--gold2)}
 .dash-stat-card .dsc-ico{font-size:20px}
 .dash-stat-card .dsc-num{font-family:var(--font-display);font-size:26px;font-weight:800;margin:6px 0 2px;background:linear-gradient(100deg,#818cf8,#c084fc);-webkit-background-clip:text;background-clip:text;color:transparent}
 .dash-stat-card .dsc-label{font-size:11.5px;color:var(--muted)}
@@ -189,11 +239,15 @@ body{display:block;min-height:100vh}
 .btn-clear-history{background:none;border:1px solid var(--border);color:var(--muted);font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:8px;cursor:pointer}
 .btn-clear-history:hover{border-color:#f87171;color:#f87171}
 .dash-history-list{display:flex;flex-direction:column;gap:6px;max-height:420px;overflow-y:auto}
-.dash-history-item{display:flex;align-items:center;gap:10px;background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:12.5px}
+.dash-history-item{display:flex;align-items:center;gap:10px;background:color-mix(in srgb, var(--bg-card) 85%, transparent);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:12.5px;transition:border-color .2s var(--ease),transform .2s var(--ease)}
+.dash-history-item:hover{border-color:var(--gold2)}
 .dash-history-item .dhi-ico{font-size:16px;flex-shrink:0}
 .dash-history-item .dhi-name{flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dash-history-item .dhi-time{color:var(--dim);font-size:11px;flex-shrink:0}
-.dash-empty{text-align:center;padding:36px 20px;color:var(--muted);font-size:12.5px;border:1px dashed var(--border);border-radius:14px}
+.dash-empty{display:flex;flex-direction:column;align-items:center;text-align:center;padding:30px 20px 26px;color:var(--muted);font-size:12.5px;border:1px dashed var(--border);border-radius:14px;background:color-mix(in srgb, var(--bg-card) 60%, transparent)}
+.dash-empty .empty-illust{width:120px;height:90px;margin-bottom:10px}
+.dash-empty b{display:block;color:var(--text);font-size:13px;font-weight:700;margin-bottom:3px}
+.dash-empty small{color:var(--muted);font-size:11.5px;max-width:260px;line-height:1.5}
 
 /* ── BARRA DE PROGRESSO COMPARTILHADA (ferramentas PDF/imagem/etc) ── */
 .tool-prog{display:none;padding:10px 22px 4px}
@@ -203,6 +257,25 @@ body{display:block;min-height:100vh}
 .tool-prog-bar{height:100%;width:0%;background:linear-gradient(90deg,#6366f1,#8b5cf6);border-radius:99px;transition:width .25s ease;position:relative;overflow:hidden}
 .tool-prog-bar.indeterminate{width:38%!important;animation:tool-prog-slide 1.1s ease-in-out infinite}
 @keyframes tool-prog-slide{0%{transform:translateX(-100%)}50%{transform:translateX(70%)}100%{transform:translateX(220%)}}
+
+/* ── ORGANIZADOR DE IMAGENS (Imagens → PDF) ── */
+.i2p-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.i2p-toolbar .btn-sm{display:inline-flex;align-items:center;gap:6px}
+.i2p-organizer{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;padding:12px;border:1px dashed var(--border);border-radius:12px;min-height:56px}
+.i2p-card{position:relative;width:100px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:6px;cursor:grab;transition:transform .15s ease,border-color .15s ease,opacity .15s ease}
+.i2p-card:active{cursor:grabbing}
+.i2p-card.i2p-dragging{opacity:.35}
+.i2p-card.i2p-dragover{border-color:var(--gold2);transform:scale(1.05)}
+.i2p-card img{width:100%;height:76px;object-fit:cover;border-radius:6px;display:block;background:var(--bg)}
+.i2p-page-badge{position:absolute;top:4px;left:4px;background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-size:10px;font-weight:800;border-radius:6px;padding:1px 6px;line-height:1.5}
+.i2p-remove{position:absolute;top:4px;right:4px;background:rgba(15,17,26,.7);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:6px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.i2p-remove:hover{background:#ef4444;border-color:#ef4444}
+.i2p-name{font-size:9.5px;color:var(--muted);margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.i2p-movebar{display:flex;justify-content:space-between;margin-top:4px}
+.i2p-movebar button{background:none;border:1px solid var(--border);border-radius:5px;color:var(--muted);width:22px;height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.i2p-movebar button:hover{border-color:var(--gold2);color:var(--text)}
+.i2p-movebar button:disabled{opacity:.25;cursor:default}
+.i2p-empty{font-size:11.5px;color:var(--muted);text-align:center;padding:10px;width:100%}
 .cat-count{font-family:var(--font-mono);font-size:10px;background:rgba(148,163,184,.15);padding:1px 7px;border-radius:20px;color:var(--dim)}
 .cat-item.active .cat-count{background:rgba(99,102,241,.2);color:#a5b4fc}
 
@@ -218,11 +291,14 @@ body{display:block;min-height:100vh}
 .sec-header-big h2{font-size:26px;font-weight:800;font-family:var(--font-display);margin-bottom:8px}
 .sec-header-big p{color:var(--muted);font-size:13px;line-height:1.6}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-.card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px;min-height:170px;transition:border-color .2s,background .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(10px) saturate(140%);-webkit-backdrop-filter:blur(10px) saturate(140%);border:1px solid var(--border);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px;min-height:170px;transition:border-color .25s var(--ease),background .25s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;inset:0;border-radius:18px;background:radial-gradient(120px 90px at var(--mx,50%) var(--my,0%),rgba(99,102,241,.14),transparent 70%);opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
+.card:hover::before{opacity:1}
 .card::after{content:'';position:absolute;inset:0;border-radius:18px;padding:1px;background:linear-gradient(135deg,rgba(99,102,241,0),rgba(99,102,241,0));pointer-events:none;transition:background .25s}
-.card:hover{border-color:var(--gold2);background:color-mix(in srgb, var(--bg-hover) 90%, transparent);transform:translateY(-3px);box-shadow:0 16px 32px -12px rgba(79,70,229,.35)}
-.icon-wrap{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid currentColor;position:relative;overflow:hidden}
+.card:hover{border-color:var(--gold2);background:color-mix(in srgb, var(--bg-hover) 90%, transparent);transform:translateY(-4px);box-shadow:0 18px 36px -14px rgba(79,70,229,.4)}
+.icon-wrap{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid currentColor;position:relative;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 .icon-wrap::after{content:'';position:absolute;top:0;right:0;width:12px;height:12px;background:currentColor;opacity:.18;clip-path:polygon(100% 0,0 0,100% 100%)}
+.card:hover .icon-wrap{transform:scale(1.08) rotate(-3deg);box-shadow:0 6px 16px -4px currentColor}
 .c-pdf{background:rgba(244,63,94,.1);color:#fb7185}
 .c-image{background:rgba(16,185,129,.1);color:#34d399}
 .c-convert{background:rgba(245,158,11,.1);color:#fbbf24}
@@ -232,7 +308,7 @@ body{display:block;min-height:100vh}
 .tool-meta p{font-size:11.5px;color:var(--muted);line-height:1.5}
 .card-top-row{display:flex;align-items:flex-start;justify-content:space-between}
 .card-protocol{font-family:var(--font-mono);font-size:9px;color:var(--dim);letter-spacing:.5px;padding-top:4px}
-.btn-use{background:transparent;border:1px solid var(--border);color:#a5b4fc;font-size:11px;font-weight:700;padding:9px 12px;border-radius:10px;cursor:pointer;margin-top:auto;transition:all .2s;font-family:var(--font-body);letter-spacing:.2px}
+.btn-use{background:transparent;border:1px solid var(--border);color:#a5b4fc;font-size:11px;font-weight:700;padding:9px 12px;border-radius:var(--r-md);cursor:pointer;margin-top:auto;transition:all .2s;font-family:var(--font-body);letter-spacing:.2px}
 .card:hover .btn-use{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;border-color:transparent;box-shadow:0 6px 16px -4px rgba(99,102,241,.55)}
 .badge-ia{font-size:9px;font-weight:700;padding:3px 7px;border-radius:10px;background:rgba(168,85,247,.15);color:#c084fc;border:1px solid rgba(168,85,247,.3);font-family:var(--font-mono);letter-spacing:.3px;height:fit-content}
 
@@ -288,7 +364,8 @@ body{display:block;min-height:100vh}
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(2,6,23,.65);backdrop-filter:blur(6px);z-index:1000;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex;animation:modal-fade .18s ease}
 @keyframes modal-fade{from{opacity:0}to{opacity:1}}
-.modal-win{background:color-mix(in srgb, var(--bg-sidebar) 92%, transparent);backdrop-filter:blur(20px);border:1px solid var(--border);width:90%;max-width:680px;border-radius:20px;display:flex;flex-direction:column;overflow:hidden;max-height:92vh;box-shadow:0 30px 70px -20px rgba(0,0,0,.55)}
+.modal-win{background:color-mix(in srgb, var(--bg-sidebar) 92%, transparent);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);border:1px solid var(--border);width:90%;max-width:680px;border-radius:20px;display:flex;flex-direction:column;overflow:hidden;max-height:92vh;box-shadow:0 30px 70px -20px rgba(0,0,0,.55);animation:modal-pop .28s var(--ease)}
+@keyframes modal-pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 .modal-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
 .modal-head h3{font-size:15px;font-weight:600}
 .modal-body{padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:16px}
@@ -326,9 +403,11 @@ body{display:block;min-height:100vh}
 .f-input::placeholder{color:var(--dim)}
 .f-textarea{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:12px;font-size:12px;font-family:"JetBrains Mono",monospace;min-height:100px;resize:vertical;outline:none;width:100%}
 .f-label{font-size:12px;font-weight:600;color:var(--muted)}
-.btn-exec{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;width:100%;padding:12px;border:none;border-radius:12px;cursor:pointer;font-size:13px;margin-top:8px;transition:all .2s;box-shadow:0 8px 20px -8px rgba(99,102,241,.6)}
+.btn-exec{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;width:100%;padding:12px;border:none;border-radius:var(--r-md);cursor:pointer;font-size:13px;margin-top:8px;transition:all .2s var(--ease);box-shadow:0 8px 20px -8px rgba(99,102,241,.6)}
 .btn-exec:hover{transform:translateY(-1px);box-shadow:0 10px 24px -6px rgba(99,102,241,.7)}
-.btn-sm{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:12px;font-size:12px;cursor:pointer;margin-top:6px}
+.btn-exec:hover{transform:translateY(-1px);box-shadow:0 10px 24px -6px rgba(99,102,241,.7)}
+.btn-sm{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:var(--r-md);font-size:12px;cursor:pointer;margin-top:6px;transition:border-color .15s var(--ease),color .15s var(--ease)}
+.btn-sm:hover{border-color:var(--gold2);color:#a5b4fc}
 .result-box{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-size:13px;line-height:1.8;font-family:"JetBrains Mono",monospace;white-space:pre-wrap;display:none}
 .result-box.show{display:block}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -349,10 +428,11 @@ body{display:block;min-height:100vh}
 .conv-card-desc{font-size:10.5px;color:var(--muted);line-height:1.4}
 .conv-panel{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:16px;display:none}
 .conv-panel.open{display:block}
-.conv-drop{border:2px dashed var(--border);border-radius:16px;padding:38px 20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg-card);position:relative;overflow:hidden}
-.conv-drop:hover,.conv-drop.drag{border-color:var(--gold);background:rgba(99,102,241,.08)}
+.conv-drop{border:2px dashed var(--border);border-radius:16px;padding:38px 20px;text-align:center;cursor:pointer;transition:all .2s var(--ease);background:var(--bg-card);position:relative;overflow:hidden}
+.conv-drop:hover{border-color:var(--gold);background:rgba(99,102,241,.08);transform:translateY(-1px)}
+.conv-drop.drag{border-color:var(--gold);background:rgba(99,102,241,.14);transform:scale(1.012)}
 .conv-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.conv-drop-icon{font-size:40px;margin-bottom:10px;display:block}
+.conv-drop-icon{margin:0 auto 12px;width:52px;height:52px}
 .conv-drop-text{font-size:14.5px;font-weight:700;color:var(--text);margin-bottom:5px}
 .conv-drop-sub{font-size:11.5px;color:var(--muted)}
 .conv-file-row{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;display:none;align-items:center;gap:10px;margin-top:8px}
@@ -376,9 +456,8 @@ body{display:block;min-height:100vh}
 .conv-rc-name{font-size:13px;font-weight:600;color:var(--text)}
 .conv-rc-meta{font-size:11px;color:var(--muted);margin-top:2px}
 .conv-rc-prev{margin-top:10px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px;font-size:11px;color:var(--muted);font-family:"JetBrains Mono",monospace;white-space:pre-wrap;max-height:160px;overflow-y:auto;line-height:1.6}
-.btn-dl-conv{padding:7px 16px;background:linear-gradient(100deg,#6366f1,#8b5cf6);border:none;border-radius:12px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .15s}
-.btn-dl-conv:hover{transform:translateY(-1px)}
-.btn-dl-conv:hover{opacity:.85}
+.btn-dl-conv{padding:7px 16px;background:linear-gradient(100deg,#6366f1,#8b5cf6);border:none;border-radius:var(--r-md);color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .15s var(--ease),opacity .15s}
+.btn-dl-conv:hover{transform:translateY(-1px);opacity:.92}
 
 .footer-txt{text-align:center;font-size:11px;color:var(--dim);margin-top:40px;padding-top:16px;border-top:1px solid var(--border)}
 /* ══════════════════════════════════════════════
@@ -398,9 +477,9 @@ body{display:block;min-height:100vh}
 .trust-row-ico span{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:13px;font-weight:500}
 .trust-row span{font-size:12.5px;color:var(--muted);font-weight:600}
 .hero-cta-row{display:flex;flex-wrap:wrap;gap:14px}
-.btn-primary-lg{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;padding:14px 26px;border:none;border-radius:14px;cursor:pointer;font-size:14px;transition:all .2s;box-shadow:0 10px 26px -10px rgba(99,102,241,.65)}
+.btn-primary-lg{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;font-weight:700;padding:14px 26px;border:none;border-radius:var(--r-lg);cursor:pointer;font-size:14px;transition:all .2s var(--ease);box-shadow:0 10px 26px -10px rgba(99,102,241,.65)}
 .btn-primary-lg:hover{transform:translateY(-2px);box-shadow:0 14px 30px -8px rgba(99,102,241,.75)}
-.btn-outline-lg{background:transparent;color:var(--text);font-weight:700;padding:14px 26px;border:1px solid var(--border);border-radius:14px;cursor:pointer;font-size:14px;transition:all .2s}
+.btn-outline-lg{background:transparent;color:var(--text);font-weight:700;padding:14px 26px;border:1px solid var(--border);border-radius:var(--r-lg);cursor:pointer;font-size:14px;transition:all .2s var(--ease)}
 .btn-outline-lg:hover{border-color:var(--gold2);background:rgba(99,102,241,.08)}
 
 .hero-drop-card{background:color-mix(in srgb, var(--bg-card) 85%, transparent);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:22px;padding:26px;text-align:left;box-shadow:0 20px 50px -20px rgba(0,0,0,.4)}
@@ -529,132 +608,6 @@ body{display:block;min-height:100vh}
 .footer-bottom-land{max-width:1280px;margin:32px auto 0;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--dim)}
 .footer-bottom-land a{color:var(--gold);text-decoration:none}
 </style>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
-  import {
-    getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect,
-    getRedirectResult, signOut, onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-  import { getStorage } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
-  const firebaseConfig = {
-    apiKey: "AIzaSyBhEKlFYRjyiJnDy0lRDHhGw-9fJaRQrZE",
-    authDomain: "nexus-tech-converter.firebaseapp.com",
-    projectId: "nexus-tech-converter",
-    storageBucket: "nexus-tech-converter.firebasestorage.app",
-    messagingSenderId: "83703666449",
-    appId: "1:83703666449:web:4bfad22acc003993bb5eb0",
-    measurementId: "G-LJXSYNK9J6"
-  };
-  // Inicializa o Firebase
-  const app = initializeApp(firebaseConfig);
-  // Inicializa os serviços
-  let analytics = null;
-  try { analytics = getAnalytics(app); } catch (e) { console.warn("Analytics indisponível:", e); }
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const storage = getStorage(app);
-  // Disponibiliza globalmente
-  window.firebaseApp = app;
-  window.analytics = analytics;
-  window.auth = auth;
-  window.db = db;
-  window.storage = storage;
-
-  // ── LOGIN COM GOOGLE ──
-  const googleProvider = new GoogleAuthProvider();
-  googleProvider.setCustomParameters({ prompt: "select_account" });
-
-  function friendlyAuthError(err) {
-    const code = (err && err.code) || "";
-    if (location.protocol === "file:") {
-      return "Este login só funciona quando o site está hospedado em um servidor (http/https) — não abrindo o arquivo .html diretamente.";
-    }
-    const map = {
-      "auth/unauthorized-domain": "Este domínio não está autorizado no Firebase. Adicione-o em Authentication → Settings → Authorized domains.",
-      "auth/operation-not-supported-in-this-environment": "Este ambiente (ex: iframe ou navegador embutido) não suporta login com popup.",
-      "auth/popup-blocked": "O navegador bloqueou o popup de login. Permita popups para este site e tente novamente.",
-      "auth/popup-closed-by-user": null,
-      "auth/cancelled-popup-request": null,
-      "auth/network-request-failed": "Falha de conexão. Verifique sua internet e tente novamente.",
-      "auth/internal-error": "Erro interno do Firebase. Verifique se o provedor Google está habilitado em Authentication → Sign-in method.",
-      "auth/configuration-not-found": "O provedor Google não está habilitado neste projeto Firebase (Authentication → Sign-in method → Google)."
-    };
-    if (code in map) return map[code];
-    return "Não foi possível entrar com o Google (" + (code || "erro desconhecido") + "). Veja o console (F12) para detalhes.";
-  }
-
-  window.loginWithGoogle = async function () {
-    if (location.protocol === "file:") {
-      const e = new Error("file-protocol");
-      e.code = "app/file-protocol";
-      throw { code: "app/file-protocol", message: friendlyAuthError(e) };
-    }
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      return result.user;
-    } catch (err) {
-      console.error("Erro ao entrar com Google (popup):", err.code, err.message, err);
-      if (err && (err.code === "auth/popup-blocked" || err.code === "auth/operation-not-supported-in-this-environment")) {
-        try {
-          await signInWithRedirect(auth, googleProvider);
-          return null; // a página vai recarregar após o redirect
-        } catch (err2) {
-          console.error("Erro ao entrar com Google (redirect):", err2.code, err2.message, err2);
-          throw { code: err2.code, message: friendlyAuthError(err2) };
-        }
-      }
-      throw { code: err.code, message: friendlyAuthError(err) };
-    }
-  };
-
-  window.logoutUser = async function () {
-    try {
-      await signOut(auth);
-    } catch (err) {
-      console.error("Erro ao sair da conta:", err);
-      throw err;
-    }
-  };
-
-  // Resultado de login via redirect (fallback quando popup é bloqueado)
-  getRedirectResult(auth).catch((err) => {
-    if (err) console.error("Erro no retorno do redirect de login:", err.code, err.message, err);
-  });
-
-  // ── SINCRONIZAÇÃO DE HISTÓRICO/FAVORITOS POR CONTA (Firestore) ──
-  window.loadUserCloudData = async function (uid) {
-    try {
-      const snap = await getDoc(doc(db, "userData", uid));
-      return snap.exists() ? snap.data() : null;
-    } catch (err) {
-      console.warn("Não foi possível carregar dados da conta (verifique as regras do Firestore):", err.code || err.message);
-      return null;
-    }
-  };
-
-  window.saveUserCloudData = async function (uid, data) {
-    try {
-      await setDoc(doc(db, "userData", uid), data, { merge: true });
-      return true;
-    } catch (err) {
-      console.warn("Não foi possível salvar dados da conta (verifique as regras do Firestore):", err.code || err.message);
-      return false;
-    }
-  };
-
-  // Observa mudanças de login/logout e avisa o app (script clássico) sempre que o estado mudar
-  onAuthStateChanged(auth, (user) => {
-    window.currentUser = user || null;
-    if (typeof window.onAuthStateChangedUI === "function") {
-      window.onAuthStateChangedUI(user || null);
-    }
-  });
-
-  console.log("Firebase inicializado com sucesso!");
-</script>
 </head>
 <body id="body">
 <div class="bg-orbs"><span></span><span></span><span></span></div>
@@ -672,36 +625,23 @@ body{display:block;min-height:100vh}
     </div>
 
     <nav class="navbar-links" id="navbar-links">
-      <div class="nav-item active" data-view="grid" onclick="showView('grid',this)"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg></span><span id="nav-home">Início</span></div>
+      <div class="nav-item active" data-view="grid" onclick="showView('grid',this)"><span id="nav-home">Início</span></div>
       <div class="nav-item" onclick="scrollToTools()"><span>Ferramentas</span></div>
-      <div class="nav-item" data-view="dashboard" onclick="showView('dashboard',this)"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></span><span id="nav-dashboard">Painel</span></div>
-      <div class="nav-item" data-view="about" onclick="showView('about',this)"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><circle cx="12" cy="12" r="9" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25h.75v5.25h.75M12 7.5h.008v.008H12V7.5z"/></svg></span><span id="nav-about">Sobre</span></div>
-      <div class="nav-item" data-view="contato" onclick="showView('contato',this)"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></span><span id="nav-contact">Contato</span></div>
+      <div class="nav-item" data-view="dashboard" onclick="showView('dashboard',this)"><span id="nav-dashboard"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg> Painel</span></div>
+      <div class="nav-item" data-view="about" onclick="showView('about',this)"><span id="nav-about">Sobre</span></div>
+      <div class="nav-item" data-view="contato" onclick="showView('contato',this)"><span id="nav-contact">Contato</span></div>
     </nav>
 
     <div class="navbar-right">
       <div class="sidebar-lang" id="site-lang-switch">
-        <button class="site-lang-btn active" onclick="setSiteLang('pt',this)">PT</button>
-        <button class="site-lang-btn" onclick="setSiteLang('en',this)">EN</button>
-        <button class="site-lang-btn" onclick="setSiteLang('es',this)">ES</button>
+        <button class="site-lang-btn active" onclick="setSiteLang('pt',this)">🇧🇷 PT</button>
+        <button class="site-lang-btn" onclick="setSiteLang('en',this)">🇺🇸 EN</button>
+        <button class="site-lang-btn" onclick="setSiteLang('es',this)">🇪🇸 ES</button>
       </div>
-      <button class="theme-btn theme-btn-nav" id="theme-btn" onclick="toggleTheme()" title="Alternar tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg></button>
-      <div class="auth-area" id="auth-area">
-        <button class="btn-google-login" id="btn-google-login" onclick="loginWithGoogleUI()">
-          <svg viewBox="0 0 48 48" class="google-g-ico"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0124 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 01-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
-          <span id="btn-google-login-label">Entrar com Google</span>
-        </button>
-        <div class="user-chip" id="user-chip" style="display:none">
-          <img id="user-avatar" class="user-avatar" src="" alt="">
-          <span id="user-name" class="user-name"></span>
-          <button class="user-logout-btn" id="btn-logout" onclick="logoutUserUI()" title="Sair da conta">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/></svg>
-          </button>
-        </div>
-      </div>
+      <button class="theme-btn theme-btn-nav" id="theme-btn" onclick="toggleTheme()" title="Alternar tema">☀️</button>
       <button class="btn-nav-cta" onclick="scrollToTools()">Ver Ferramentas</button>
     </div>
-    <button class="menu-btn" onclick="document.getElementById('body').classList.toggle('collapsed')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
+    <button class="menu-btn" onclick="document.getElementById('body').classList.toggle('collapsed')"><svg class="hicon" style="width:18px;height:18px;stroke:var(--text)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"/></svg></button>
   </div>
 </header>
 
@@ -714,15 +654,15 @@ body{display:block;min-height:100vh}
     <section class="hero-land">
       <div class="hero-land-grid">
         <div class="hero-copy">
-          <span class="pill-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg> SUÍTE DE FERRAMENTAS ONLINE</span>
+          <span class="pill-badge"><svg class="hicon-solid" style="width:12px;height:12px;fill:#a5b4fc" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z"/></svg> SUÍTE DE FERRAMENTAS ONLINE</span>
           <h1>Sua central completa de<br><span class="grad-text">documentos, imagens<br>e contabilidade.</span></h1>
           <p id="hero-sub">69 ferramentas gratuitas de PDF, imagem, conversão de arquivos Office e contabilidade — tudo em um só lugar, sem cadastro e rodando localmente no seu navegador.</p>
           <div class="trust-row trust-row-ico">
-            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><circle cx="12" cy="12" r="9" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636l12.728 12.728"/></svg> Sem Cadastro</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg> Seguro e Privado</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg> Processamento Local</span>
+            <span><svg class="hicon" style="width:13px;height:13px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"/></svg> Sem Cadastro</span><span><svg class="hicon" style="width:13px;height:13px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 12.06 12.06 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.248-8.25-3.286z"/></svg> Seguro e Privado</span><span><svg class="hicon-solid" style="width:13px;height:13px;fill:var(--muted)" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z"/></svg> Processamento Local</span>
           </div>
           <div class="hero-cta-row">
             <button class="btn-primary-lg" onclick="scrollToTools()">Ver Todas as Ferramentas →</button>
-            <button class="btn-outline-lg" onclick="openTool(69)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg> Converter PDF</button>
+            <button class="btn-outline-lg" onclick="openTool(69)"><svg class="hicon" style="width:14px;height:14px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9z"/></svg> Converter PDF</button>
           </div>
         </div>
         <div class="hero-drop-card">
@@ -734,7 +674,7 @@ body{display:block;min-height:100vh}
             <div class="hero-drop-icons"><span class="fmt-app-ico fmt-app-pdf"><b>PDF</b></span><span class="hero-drop-arrow">→</span><span class="fmt-app-ico fmt-app-excel"><b>X</b><span>Excel</span></span><span class="fmt-app-ico fmt-app-word"><b>W</b><span>Word</span></span><span class="fmt-app-ico fmt-app-ppt"><b>P</b><span>PPT</span></span></div>
           </div>
           <div class="hero-dropzone" onclick="openTool(69)">
-            <div class="hero-dropzone-left"><span class="hero-dropzone-cloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l-3 3m3-3l3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z"/></svg></span><div><b>Selecionar arquivo</b><small>ou arraste e solte aqui</small></div></div>
+            <div class="hero-dropzone-left"><span class="hero-dropzone-cloud icon-badge"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3.75 3.75 0 0 1 4.157 3.958A4.5 4.5 0 0 1 18 19.5H6.75z"/></svg></span><div><b>Selecionar arquivo</b><small>ou arraste e solte aqui</small></div></div>
             <button class="btn-primary-lg" onclick="event.stopPropagation();openTool(69)">Selecionar Arquivo</button>
           </div>
           <div class="hero-format-label">CONVERTER PARA</div>
@@ -744,10 +684,10 @@ body{display:block;min-height:100vh}
             <div class="hero-format-chip" onclick="openTool(71)"><span class="fmt-ico fmt-ppt">P</span><div><b>PowerPoint</b><small>.pptx</small></div></div>
           </div>
           <div class="hero-mini-stats">
-            <div><span class="hmi hmi-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 11-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 016.336-4.486l-3.276 3.276a3.004 3.004 0 002.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852z"/></svg></span><b>69+</b><small>Ferramentas</small></div>
-            <div><span class="hmi hmi-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><b>100%</b><small>Local e Seguro</small></div>
-            <div><span class="hmi hmi-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></span><b>Rápido</b><small>Sem Limites</small></div>
-            <div><span class="hmi hmi-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg></span><b>Gratuito</b><small>Para Todos</small></div>
+            <div><span class="hmi hmi-orange"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.35-.264.746-.454 1.187-.548a2.51 2.51 0 0 1 3.114 2.83l-2.36 2.36m-1.941-4.643 1.941 4.643"/></svg></span><b>58+</b><small>Ferramentas</small></div>
+            <div><span class="hmi hmi-green"><svg class="hicon-solid" style="width:16px;height:16px;fill:#4ade80" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.089l3.75-5.25z"/></svg></span><b>100%</b><small>Local e Seguro</small></div>
+            <div><span class="hmi hmi-orange"><svg class="hicon-solid" style="width:16px;height:16px;fill:#fbbf24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z"/></svg></span><b>Rápido</b><small>Sem Limites</small></div>
+            <div><span class="hmi hmi-blue"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0z"/></svg></span><b>Gratuito</b><small>Para Todos</small></div>
           </div>
         </div>
       </div>
@@ -758,13 +698,13 @@ body{display:block;min-height:100vh}
       <h2 class="history-title-divider"><span>Nossa História</span></h2>
       <p>Da ideia inicial até a plataforma completa de hoje.</p>
       <div class="history-timeline">
-        <div class="history-node"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84"/><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/></svg></span><b>FREDTECHsystem Suite</b><small class="history-tag">O início</small><small class="history-desc">A ideia nasceu da necessidade de ferramentas simples e locais.</small></div>
+        <div class="history-node"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.63 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></span><b>FREDTECHsystem Suite</b><small class="history-tag">O início</small><small class="history-desc">A ideia nasceu da necessidade de ferramentas simples e locais.</small></div>
         <div class="history-arrow">→</div>
-        <div class="history-node"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span><b>Nexora Suite</b><small class="history-tag">Nova identidade</small><small class="history-desc">Crescimento do catálogo e mais recursos de automação.</small></div>
+        <div class="history-node"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg></span><b>Nexora Suite</b><small class="history-tag">Nova identidade</small><small class="history-desc">Crescimento do catálogo e mais recursos de automação.</small></div>
         <div class="history-arrow">→</div>
-        <div class="history-node"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h.008v.008H9V6.75zm0 3h.008v.008H9V9.75zm0 3h.008v.008H9v-.008zm3-6h.008v.008H12V6.75zm0 3h.008v.008H12V9.75zm0 3h.008v.008H12v-.008zm3-6h.008v.008H15V6.75zm0 3h.008v.008H15V9.75zm0 3h.008v.008H15v-.008z"/></svg></span><b>FGA Suite</b><small class="history-tag">FGA Holding LLC</small><small class="history-desc">Integração ao portfólio da FGA, unificando tecnologia e confiança.</small></div>
+        <div class="history-node"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg></span><b>FGA Suite</b><small class="history-tag">FGA Holding LLC</small><small class="history-desc">Integração ao portfólio da FGA, unificando tecnologia e confiança.</small></div>
         <div class="history-arrow">→</div>
-        <div class="history-node history-node-current"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg></span><b>Nexus Tech Converter</b><small class="history-tag">Hoje</small><small class="history-desc">Uma suíte completa com mais de 69 ferramentas 100% locais.</small></div>
+        <div class="history-node history-node-current"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5z"/></svg></span><b>Nexus Tech Converter</b><small class="history-tag">Hoje</small><small class="history-desc">Uma suíte completa com mais de 69 ferramentas 100% locais.</small></div>
       </div>
       <div class="history-full-text">
         <p><strong>FREDTECHsystem Suite:</strong> o projeto nasceu como um conjunto simples de utilitários pessoais para conversão de arquivos.</p>
@@ -774,10 +714,10 @@ body{display:block;min-height:100vh}
       </div>
 
       <div class="history-perks-grid">
-        <div class="history-perk"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg></span><b>Funciona em qualquer lugar</b><p>Acesse direto do navegador, sem instalações.</p></div>
-        <div class="history-perk"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></span><b>Privacidade em primeiro lugar</b><p>Seus arquivos não saem do seu dispositivo.</p></div>
-        <div class="history-perk"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/></svg></span><b>Compatível com tudo</b><p>Windows, Mac, Linux, Android e iOS.</p></div>
-        <div class="history-perk"><span class="history-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg></span><b>Feito para você</b><p>Gratuito, sem limites e sempre em evolução.</p></div>
+        <div class="history-perk"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/></svg></span><b>Funciona em qualquer lugar</b><p>Acesse direto do navegador, sem instalações.</p></div>
+        <div class="history-perk"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z"/></svg></span><b>Privacidade em primeiro lugar</b><p>Seus arquivos não saem do seu dispositivo.</p></div>
+        <div class="history-perk"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25"/></svg></span><b>Compatível com tudo</b><p>Windows, Mac, Linux, Android e iOS.</p></div>
+        <div class="history-perk"><span class="history-ico"><svg class="hicon-solid" style="width:16px;height:16px;fill:#fb7185" viewBox="0 0 24 24"><path d="M11.645 20.91a.75.75 0 0 0 .71 0c3.68-1.938 6.313-4.114 7.973-6.309C21.981 12.4 22.75 10.42 22.75 8.5c0-3.176-2.526-5.75-5.646-5.75-1.996 0-3.756 1.055-4.854 2.65a.375.375 0 0 1-.5 0C10.652 3.805 8.892 2.75 6.896 2.75 3.776 2.75 1.25 5.324 1.25 8.5c0 1.92.769 3.9 2.422 6.101 1.66 2.195 4.293 4.371 7.973 6.309z"/></svg></span><b>Feito para você</b><p>Gratuito, sem limites e sempre em evolução.</p></div>
       </div>
     </section>
 
@@ -797,12 +737,12 @@ body{display:block;min-height:100vh}
     <!-- FEATURES -->
     <section class="features-land">
       <div class="features-grid-land">
-        <div class="feature-card-land"><div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg></div><h4>Seguro e Privado</h4><p>Seus arquivos são processados no seu navegador e nunca saem do seu computador.</p></div>
-        <div class="feature-card-land"><div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div><h4>Rápido e Eficiente</h4><p>Conversões em segundos, sem fila de upload nem servidor externo.</p></div>
-        <div class="feature-card-land"><div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/></svg></div><h4>100% Online</h4><p>Não precisa instalar nada. Funciona em qualquer navegador moderno.</p></div>
-        <div class="feature-card-land"><div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg></div><h4>3 Idiomas</h4><p>Interface e arquivos gerados em Português, Inglês ou Espanhol.</p></div>
-        <div class="feature-card-land"><div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.72 2.25 12 2.25c2.28 0 4.544.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0"/></svg></div><h4>Alta Qualidade</h4><p>Arquivos .docx, .xlsx e .pptx reais no padrão OOXML, prontos para editar.</p></div>
-        <div class="feature-card-land"><div class="feature-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h4>Sem Limites</h4><p>Use quantas vezes quiser, quando quiser. Sem cadastro, sem cobrança.</p></div>
+        <div class="feature-card-land"><div class="feature-ico icon-badge"><svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5c-1.64 2.02-4.53 3.09-7.5 3.09v6.87c0 5.1 3.24 9.6 7.5 10.94 4.26-1.34 7.5-5.84 7.5-10.94V4.59c-2.97 0-5.86-1.07-7.5-3.09zm3.53 8.03-4.25 4.25a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47 3.72-3.72a.75.75 0 1 1 1.06 1.06z"/></svg></div><h4>Seguro e Privado</h4><p>Seus arquivos são processados no seu navegador e nunca saem do seu computador.</p></div>
+        <div class="feature-card-land"><div class="feature-ico icon-badge"><svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z"/></svg></div><h4>Rápido e Eficiente</h4><p>Conversões em segundos, sem fila de upload nem servidor externo.</p></div>
+        <div class="feature-card-land"><div class="feature-ico icon-badge"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3.75 3.75 0 0 1 4.157 3.958A4.5 4.5 0 0 1 18 19.5H6.75z"/></svg></div><h4>100% Online</h4><p>Não precisa instalar nada. Funciona em qualquer navegador moderno.</p></div>
+        <div class="feature-card-land"><div class="feature-ico icon-badge"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3.6 9h16.8M3.6 15h16.8M12 3a14.5 14.5 0 0 1 0 18M12 3a14.5 14.5 0 0 0 0 18"/></svg></div><h4>3 Idiomas</h4><p>Interface e arquivos gerados em Português, Inglês ou Espanhol.</p></div>
+        <div class="feature-card-land"><div class="feature-ico icon-badge"><svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.49 4.49 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.49 4.49 0 0 1-1.307 3.497 4.49 4.49 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.089l3.75-5.25z"/></svg></div><h4>Alta Qualidade</h4><p>Arquivos .docx, .xlsx e .pptx reais no padrão OOXML, prontos para editar.</p></div>
+        <div class="feature-card-land"><div class="feature-ico icon-badge"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.5 8.5a3.5 3.5 0 1 0 0 7c1.6 0 2.75-1 3.5-2.2m4 0c.75 1.2 1.9 2.2 3.5 2.2a3.5 3.5 0 1 0 0-7c-1.6 0-2.75 1-3.5 2.2m-4 0c-.4-.65-.9-1.2-1.5-1.6m5.5 1.6c.4-.65.9-1.2 1.5-1.6"/></svg></div><h4>Sem Limites</h4><p>Use quantas vezes quiser, quando quiser. Sem cadastro, sem cobrança.</p></div>
       </div>
     </section>
 
@@ -844,7 +784,7 @@ body{display:block;min-height:100vh}
 
     <div class="summary-strip">
       <div class="widget">
-        <h3 id="widget-recent-title"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.5.04.703.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.562.562 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg></span> Recentes</h3>
+        <h3 id="widget-recent-title"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m11.48 3.5 2.02 4.11a.6.6 0 0 0 .45.33l4.53.66c.49.07.69.68.33 1.02l-3.28 3.2a.6.6 0 0 0-.17.53l.77 4.51c.09.49-.43.86-.87.63l-4.05-2.13a.6.6 0 0 0-.56 0l-4.05 2.13c-.44.23-.95-.14-.87-.63l.77-4.51a.6.6 0 0 0-.17-.53l-3.28-3.2c-.36-.34-.16-.95.33-1.02l4.53-.66a.6.6 0 0 0 .45-.33l2.02-4.11c.22-.45.85-.45 1.07 0z"/></svg> Recentes</h3>
         <div class="widget-empty" id="recent-list">Nenhum histórico na sessão atual.</div>
       </div>
       <div class="widget">
@@ -859,25 +799,25 @@ body{display:block;min-height:100vh}
         </div>
       </div>
       <div class="widget">
-        <h3 id="widget-support-title">📬 Suporte Rápido</h3>
+        <h3 id="widget-support-title"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg> Suporte Rápido</h3>
         <a href="https://wa.me/5531997661377" target="_blank" style="display:flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:9px 12px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none;margin-bottom:8px">
-          💬 WhatsApp
+          <svg class="hicon" style="width:15px;height:15px;stroke:#fff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.5-1.185C3.64 16.464 3 14.598 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg> WhatsApp
         </a>
         <a href="mailto:fgaholdingllc@gmail.com" style="display:flex;align-items:center;gap:8px;background:var(--gold);color:#000;padding:9px 12px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none">
-          ✉️ E-mail
+          <svg class="hicon" style="width:15px;height:15px;stroke:#000" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg> E-mail
         </a>
       </div>
     </div>
 
     <!-- FILTRO DE CATEGORIA -->
     <div class="cat-filter-row" id="tools-anchor">
-      <div class="cat-item active" data-cat="all" onclick="filterCat('all',this)"><span id="cat-label-all"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v6.75a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0018 4.5h-2.625a1.5 1.5 0 01-1.242-.658L12.868 2.42a1.5 1.5 0 00-1.242-.657H4.5A2.25 2.25 0 002.25 4.5v10.5"/></svg></span> Todos</span><span class="cat-count">69</span></div>
-      <div class="cat-item" data-cat="fav" onclick="filterCat('fav',this)"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.5.04.703.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.562.562 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg> Favoritos</span></div>
-      <div class="cat-item" data-cat="pdf" onclick="filterCat('pdf',this)"><span id="cat-label-pdf"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg></span> PDF / Assinatura</span><span class="cat-count">14</span></div>
-      <div class="cat-item" data-cat="image" onclick="filterCat('image',this)"><span id="cat-label-image"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/></svg></span> Imagens</span><span class="cat-count">12</span></div>
-      <div class="cat-item" data-cat="convert" onclick="filterCat('convert',this)"><span id="cat-label-convert"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></span> Conversores / OFX</span><span class="cat-count">24</span></div>
-      <div class="cat-item" data-cat="office" onclick="filterCat('office',this)"><span id="cat-label-office"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg></span> Contabilidade Útil</span><span class="cat-count">12</span></div>
-      <div class="cat-item" data-cat="office2" onclick="filterCat('office2',this)"><span id="cat-label-office2"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg></span> Office IA <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg></span><span class="cat-count">7</span></div>
+      <div class="cat-item active" data-cat="all" onclick="filterCat('all',this)"><span id="cat-label-all"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V6a2.25 2.25 0 0 1 2.25-2.25h4.5l2.25 2.25h8.25A2.25 2.25 0 0 1 21.75 8.25v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25z"/></svg>Todos</span><span class="cat-count">69</span></div>
+      <div class="cat-item" data-cat="fav" onclick="filterCat('fav',this)"><span><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m11.48 3.5 2.02 4.11a.6.6 0 0 0 .45.33l4.53.66c.49.07.69.68.33 1.02l-3.28 3.2a.6.6 0 0 0-.17.53l.77 4.51c.09.49-.43.86-.87.63l-4.05-2.13a.6.6 0 0 0-.56 0l-4.05 2.13c-.44.23-.95-.14-.87-.63l.77-4.51a.6.6 0 0 0-.17-.53l-3.28-3.2c-.36-.34-.16-.95.33-1.02l4.53-.66a.6.6 0 0 0 .45-.33l2.02-4.11c.22-.45.85-.45 1.07 0z"/></svg>Favoritos</span></div>
+      <div class="cat-item" data-cat="pdf" onclick="filterCat('pdf',this)"><span id="cat-label-pdf"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9z"/></svg>PDF / Assinatura</span><span class="cat-count">14</span></div>
+      <div class="cat-item" data-cat="image" onclick="filterCat('image',this)"><span id="cat-label-image"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3 16.5V6.75A2.25 2.25 0 0 1 5.25 4.5h13.5A2.25 2.25 0 0 1 21 6.75v10.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25v-.75z"/></svg>Imagens</span><span class="cat-count">12</span></div>
+      <div class="cat-item" data-cat="convert" onclick="filterCat('convert',this)"><span id="cat-label-convert"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-4.99M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>Conversores / OFX</span><span class="cat-count">24</span></div>
+      <div class="cat-item" data-cat="office" onclick="filterCat('office',this)"><span id="cat-label-office"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg>Contabilidade Útil</span><span class="cat-count">12</span></div>
+      <div class="cat-item" data-cat="office2" onclick="filterCat('office2',this)"><span id="cat-label-office2"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M15.75 3v1.5M8.25 19.5V21M15.75 19.5V21M3 8.25h1.5M3 15.75h1.5M19.5 8.25H21M19.5 15.75H21M6.75 19.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 17.25 4.5H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25zM9 9h6v6H9V9z"/></svg>Office IA <svg class="hicon-solid" style="width:13px;height:13px;fill:#c084fc" viewBox="0 0 24 24"><path d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5z"/></svg></span><span class="cat-count">7</span></div>
     </div>
 
     <div class="sec-search-box">
@@ -906,53 +846,53 @@ body{display:block;min-height:100vh}
 
   <!-- VIEW PAINEL / DASHBOARD DE ESTATÍSTICAS + HISTÓRICO -->
   <div id="view-dashboard" class="view-sec" style="display:none">
-    <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg> Painel de Estatísticas <span class="pwa-badge" title="Funciona offline após o primeiro acesso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.75 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/></svg> Pronto para offline</span> <span class="pwa-badge" id="dash-sync-badge">Salvo apenas neste navegador</span></h2>
-    <p style="color:var(--muted);font-size:12.5px;margin-top:4px">Este é o seu histórico de conversões e ferramentas favoritas. Sem login, ele fica salvo só neste navegador; entrando com o Google, ele é sincronizado com a sua conta.</p>
+    <h2><svg class="hicon" style="width:18px;height:18px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg> Painel de Estatísticas <span class="pwa-badge" title="Funciona offline após o primeiro acesso"><svg class="hicon" style="width:12px;height:12px;stroke:var(--green)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 0 1 7.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12 18.75l.01.01M12 15.75l.01.01"/></svg> Pronto para offline</span></h2>
+    <p style="color:var(--muted);font-size:12.5px;margin-top:4px">Tudo é calculado localmente a partir do seu histórico salvo neste navegador. Nada é enviado para servidores.</p>
     <div class="dash-stats-grid" id="dash-stats-grid"></div>
 
     <div class="dash-section-head">
-      <h3><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span> <span id="dash-hist-title">Histórico de Conversões</span></h3>
-      <button class="btn-clear-history" onclick="clearHistory()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg> Limpar histórico</button>
+      <h3 id="dash-hist-title"><svg class="hicon" style="width:15px;height:15px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg> Histórico de Conversões</h3>
+      <button class="btn-clear-history" onclick="clearHistory()"><svg class="hicon" style="width:14px;height:14px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg> Limpar histórico</button>
     </div>
     <div class="dash-history-list" id="dash-history-list"></div>
 
     <div class="dash-section-head">
-      <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.5.04.703.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.562.562 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg> Favoritos</h3>
+      <h3><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m11.48 3.5 2.02 4.11a.6.6 0 0 0 .45.33l4.53.66c.49.07.69.68.33 1.02l-3.28 3.2a.6.6 0 0 0-.17.53l.77 4.51c.09.49-.43.86-.87.63l-4.05-2.13a.6.6 0 0 0-.56 0l-4.05 2.13c-.44.23-.95-.14-.87-.63l.77-4.51a.6.6 0 0 0-.17-.53l-3.28-3.2c-.36-.34-.16-.95.33-1.02l4.53-.66a.6.6 0 0 0 .45-.33l2.02-4.11c.22-.45.85-.45 1.07 0z"/></svg> Favoritos</h3>
     </div>
     <div class="dash-history-list" id="dash-fav-list"></div>
   </div>
 
   <!-- VIEW CONTATO -->
   <div id="view-contato" class="view-sec">
-    <h2><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></span> <span id="contact-title">Fale Conosco</span></h2>
+    <h2 id="contact-title"><svg class="hicon" style="width:20px;height:20px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg> Fale Conosco</h2>
     <p id="contact-sub">Entre em contato pela plataforma que preferir. Nossa equipe responde em até 1 dia útil.</p>
 
     <div class="contact-grid">
       <!-- WhatsApp -->
       <div class="contact-card">
-        <span class="cc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg></span>
+        <span class="cc-icon icon-badge" style="width:44px;height:44px"><svg class="hicon" style="width:22px;height:22px;stroke:var(--gold2)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.5-1.185C3.64 16.464 3 14.598 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg></span>
         <div class="cc-label">WhatsApp</div>
         <div class="cc-value">+55 (31) 99766-1377</div>
         <div class="cc-sub" id="cc-sub-wa">Atendimento seg–sex, 8h–18h (BRT)</div>
         <a class="btn-contact btn-wa" href="https://wa.me/5531997661377" target="_blank">
-          <span id="btn-open-wa"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg></span> Abrir WhatsApp</span>
+          <span id="btn-open-wa"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.5-1.185C3.64 16.464 3 14.598 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg> Abrir WhatsApp</span>
         </a>
       </div>
       <!-- E-mail -->
       <div class="contact-card">
-        <span class="cc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></span>
+        <span class="cc-icon icon-badge" style="width:44px;height:44px"><svg class="hicon" style="width:20px;height:20px;stroke:var(--gold2)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg></span>
         <div class="cc-label">E-mail</div>
         <div class="cc-value">fgaholdingllc@gmail.com</div>
         <div class="cc-sub" id="cc-sub-email">Suporte técnico e comercial</div>
         <a class="btn-contact btn-email" href="mailto:fgaholdingllc@gmail.com">
-          <span id="btn-send-email-contact"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></span> Enviar E-mail</span>
+          <span id="btn-send-email-contact"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg> Enviar E-mail</span>
         </a>
       </div>
     </div>
 
     <!-- Formulário de mensagem -->
     <div class="msg-form">
-      <h3 id="msg-form-title"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></span> Enviar Mensagem</h3>
+      <h3 id="msg-form-title"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg> Enviar Mensagem</h3>
       <div class="mf-grid">
         <div class="mf-row">
           <label class="mf-label" id="form-name-label">Nome completo</label>
@@ -972,11 +912,11 @@ body{display:block;min-height:100vh}
         <textarea id="msg-corpo" class="mf-textarea" placeholder="Descreva sua dúvida, solicitação ou feedback em detalhes..."></textarea>
       </div>
       <div style="display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap">
-        <button class="btn-send" onclick="enviarMensagem('email')" id="btn-send-email-form"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg></span> Enviar por E-mail</button>
-        <button class="btn-send" style="background:#25d366;color:#fff" onclick="enviarMensagem('whatsapp')" id="btn-send-wa-form"><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg></span> Enviar via WhatsApp</button>
+        <button class="btn-send" onclick="enviarMensagem('email')" id="btn-send-email-form"><svg class="hicon" style="width:15px;height:15px;stroke:currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg> Enviar por E-mail</button>
+        <button class="btn-send" style="background:#25d366;color:#fff" onclick="enviarMensagem('whatsapp')" id="btn-send-wa-form"><svg class="hicon" style="width:15px;height:15px;stroke:#fff" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.5-1.185C3.64 16.464 3 14.598 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg> Enviar via WhatsApp</button>
       </div>
-      <div class="msg-success" id="msg-success"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Mensagem preparada! Seu cliente de e-mail foi aberto. Caso não tenha aberto, envie para <strong>fgaholdingllc@gmail.com</strong></div>
-      <div class="wa-redirect" id="wa-redirect"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg> Redirecionando para o WhatsApp... Caso não abra automaticamente, acesse <strong>wa.me/5531997661377</strong></div>
+      <div class="msg-success" id="msg-success"><svg class="hicon-solid" style="width:16px;height:16px;fill:#4ade80" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.089l3.75-5.25z"/></svg> Mensagem preparada! Seu cliente de e-mail foi aberto. Caso não tenha aberto, envie para <strong>fgaholdingllc@gmail.com</strong></div>
+      <div class="wa-redirect" id="wa-redirect"><svg class="hicon" style="width:15px;height:15px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.5-1.185C3.64 16.464 3 14.598 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg> Redirecionando para o WhatsApp... Caso não abra automaticamente, acesse <strong>wa.me/5531997661377</strong></div>
     </div>
   </div>
 </main>
@@ -1020,7 +960,7 @@ body{display:block;min-height:100vh}
   <div class="modal-win">
     <div class="modal-head">
       <h3 id="modal-title">Ferramenta</h3>
-      <button class="close-btn" onclick="closeModal()">✕ Fechar</button>
+      <button class="close-btn" onclick="closeModal()"><svg class="hicon" style="width:13px;height:13px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg> Fechar</button>
     </div>
     <div class="tool-prog" id="tool-prog">
       <div class="tool-prog-top"><span id="tool-prog-label">Processando…</span><span id="tool-prog-pct">0%</span></div>
@@ -1031,6 +971,42 @@ body{display:block;min-height:100vh}
 </div>
 
 <script>
+// ── SISTEMA DE ÍCONES (Heroicons v2, 24px) — usado em toda a interface ──
+const ICONS={
+  dashboard:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg>',
+  folder:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V6a2.25 2.25 0 0 1 2.25-2.25h4.5l2.25 2.25h8.25A2.25 2.25 0 0 1 21.75 8.25v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25z"/></svg>',
+  star:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m11.48 3.5 2.02 4.11a.6.6 0 0 0 .45.33l4.53.66c.49.07.69.68.33 1.02l-3.28 3.2a.6.6 0 0 0-.17.53l.77 4.51c.09.49-.43.86-.87.63l-4.05-2.13a.6.6 0 0 0-.56 0l-4.05 2.13c-.44.23-.95-.14-.87-.63l.77-4.51a.6.6 0 0 0-.17-.53l-3.28-3.2c-.36-.34-.16-.95.33-1.02l4.53-.66a.6.6 0 0 0 .45-.33l2.02-4.11c.22-.45.85-.45 1.07 0z"/></svg>',
+  starSolid:'<svg class="hicon-solid" style="fill:#fbbf24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.48 3.5a.562.562 0 0 1 1.04 0l2.12 4.11a.563.563 0 0 0 .43.31l4.54.66c.5.07.7.69.34 1.04l-3.29 3.2a.563.563 0 0 0-.16.5l.77 4.52c.09.5-.44.88-.89.65L12.5 16.35a.563.563 0 0 0-.52 0l-4.06 2.14c-.45.23-.98-.15-.89-.65l.77-4.52a.563.563 0 0 0-.16-.5l-3.29-3.2c-.36-.35-.16-.97.34-1.04l4.54-.66a.563.563 0 0 0 .43-.31z"/></svg>',
+  mail:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>',
+  chat:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.76 9.76 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.5-1.185C3.64 16.464 3 14.598 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>',
+  clock:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>',
+  trash:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>',
+  close:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>',
+  sparkles:'<svg class="hicon-solid" style="fill:#c084fc" viewBox="0 0 24 24"><path d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5z"/></svg>',
+  sun:'<svg class="hicon" style="stroke:currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1.5m0 15V21m8.25-9H21M3 12h1.5m13.06-6.56-1.06 1.06M6.5 17.5l-1.06 1.06m0-13.12L6.5 6.5m11.94 11.94-1.06-1.06M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z"/></svg>',
+  moon:'<svg class="hicon" style="stroke:currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.598.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998z"/></svg>',
+  trophy:'<svg class="hicon-solid" style="fill:#fbbf24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.5 18.75h-9a.75.75 0 0 0-.53 1.28l1.72 1.72h6.62l1.72-1.72a.75.75 0 0 0-.53-1.28zM12 15.75a5.25 5.25 0 0 0 5.25-5.25V4.5a.75.75 0 0 0-.75-.75H7.5a.75.75 0 0 0-.75.75v6a5.25 5.25 0 0 0 5.25 5.25zM4.5 6h1.53a.75.75 0 0 1 .75.75v.75a3 3 0 0 1-3 3H3v-3A1.5 1.5 0 0 1 4.5 6zm15 0h-1.53a.75.75 0 0 0-.75.75v.75a3 3 0 0 0 3 3H21v-3a1.5 1.5 0 0 0-1.5-1.5z"/></svg>',
+  checkCircle:'<svg class="hicon-solid" style="fill:#4ade80" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.089l3.75-5.25z"/></svg>',
+  warning:'<svg class="hicon-solid" style="fill:#f87171" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z"/></svg>',
+  info:'<svg class="hicon-solid" style="fill:#818cf8" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 0 1-.671-1.34l.041-.022zM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5z"/></svg>',
+  shield:'<svg class="hicon-solid" style="fill:#a5b4fc" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 1.5c.276 0 .55.045.812.135l6.75 2.363a2.25 2.25 0 0 1 1.5 2.121v6.507c0 5.13-4.36 8.812-8.28 10.208a1.75 1.75 0 0 1-1.164 0C7.698 21.438 3.34 17.756 3.34 12.626V6.119a2.25 2.25 0 0 1 1.5-2.121l6.75-2.363c.26-.09.535-.135.81-.135zm3.03 8.03a.75.75 0 0 0-1.06-1.06l-3.72 3.72-1.72-1.72a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.06 0l4.25-4.25z"/></svg>',
+  cloudArrow:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3.75 3.75 0 0 1 4.157 3.958A4.5 4.5 0 0 1 18 19.5H6.75z"/></svg>',
+  docPdf:'<svg class="hicon-solid" style="fill:#f87171" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625zM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15zm.75 2.25a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5h-7.5z"/><path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .621.504 1.125 1.125 1.125H17.25a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.212-8.688A9.847 9.847 0 0 0 12.971 1.816z"/></svg>',
+  docWord:'<svg class="hicon-solid" style="fill:#60a5fa" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625zM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15zm.75 2.25a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5h-7.5z"/><path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .621.504 1.125 1.125 1.125H17.25a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.212-8.688A9.847 9.847 0 0 0 12.971 1.816z"/></svg>',
+  docSheet:'<svg class="hicon-solid" style="fill:#34d399" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625zM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15zm.75 2.25a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5h-7.5z"/><path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .621.504 1.125 1.125 1.125H17.25a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.212-8.688A9.847 9.847 0 0 0 12.971 1.816z"/></svg>',
+  docSlide:'<svg class="hicon-solid" style="fill:#fb923c" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625zM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15zm.75 2.25a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5h-7.5z"/><path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .621.504 1.125 1.125 1.125H17.25a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.212-8.688A9.847 9.847 0 0 0 12.971 1.816z"/></svg>',
+  docImage:'<svg class="hicon-solid" style="fill:#c084fc" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6zm3 9v.75c0 .414.336.75.75.75h13.5a.75.75 0 0 0 .75-.75V15l-2.47-2.47a.75.75 0 0 0-1.06 0l-1.97 1.97-3.97-3.97a.75.75 0 0 0-1.06 0L4.5 15zm3-6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>',
+  docZip:'<svg class="hicon-solid" style="fill:#94a3b8" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 3.75A2.25 2.25 0 0 1 8.25 1.5h7.5A2.25 2.25 0 0 1 18 3.75v16.5a2.25 2.25 0 0 1-2.25 2.25h-7.5A2.25 2.25 0 0 1 6 20.25V3.75zm5.25 0v1.5h1.5v-1.5h-1.5zm0 3v1.5h1.5v-1.5h-1.5zm0 3v1.5h1.5v-1.5h-1.5zm0 3v1.5h1.5v-1.5h-1.5z"/></svg>',
+  docGeneric:'<svg class="hicon-solid" style="fill:var(--icon-color)" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625z"/></svg>',
+  search:'<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>',
+};
+function fileTypeIcon(name,size){
+  const ext=(name||'').split('.').pop().toLowerCase();
+  const map={pdf:'docPdf',docx:'docWord',doc:'docWord',xlsx:'docSheet',xls:'docSheet',pptx:'docSlide',ppt:'docSlide',png:'docImage',jpg:'docImage',jpeg:'docImage',webp:'docImage',zip:'docZip',ofx:'docGeneric',txt:'docGeneric'};
+  return ic(map[ext]||'docGeneric',size);
+}
+function ic(name,size){return (ICONS[name]||'').replace('<svg ',`<svg style="width:${size||16}px;height:${size||16}px;flex-shrink:0" `);}
+
 // ── PDF.js worker (extração real de texto de PDFs) ──
 if(typeof pdfjsLib!=='undefined'){
   pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -1058,99 +1034,12 @@ function systemPrefersDark(){
 }
 const savedTheme=localStorage.getItem('ntc_theme'); // 'dark' | 'light' | null (segue o sistema)
 let isDark=savedTheme?savedTheme==='dark':systemPrefersDark();
-// ── LOGIN COM GOOGLE (ponte entre a UI e o módulo Firebase) ──
-function loginWithGoogleUI(){
-  if(typeof window.loginWithGoogle!=='function'){
-    toast('❌ Login ainda carregando, tente novamente em instantes.');
-    return;
-  }
-  const btn=document.getElementById('btn-google-login');
-  if(btn)btn.classList.add('loading');
-  window.loginWithGoogle()
-    .then(user=>{ if(user)toast('✅ Bem-vindo, '+(user.displayName||user.email)+'!'); })
-    .catch(err=>{
-      if(err && (err.code==='auth/popup-closed-by-user'||err.code==='auth/cancelled-popup-request'))return;
-      console.error('Login com Google falhou:',err);
-      toast('❌ '+(err && err.message?err.message:'Não foi possível entrar com o Google.'));
-    })
-    .finally(()=>{ if(btn)btn.classList.remove('loading'); });
-}
-
-function logoutUserUI(){
-  if(typeof window.logoutUser!=='function')return;
-  window.logoutUser()
-    .then(()=>toast('✅ Sessão encerrada.'))
-    .catch(()=>toast('❌ Não foi possível sair da conta.'));
-}
-
-// ── SINCRONIZAÇÃO DO PAINEL/HISTÓRICO COM A CONTA GOOGLE ──
-let cloudSyncActive=false;
-function updateDashSyncBadge(user){
-  const el=document.getElementById('dash-sync-badge');
-  if(!el)return;
-  el.textContent=user?('Sincronizado com '+(user.displayName||user.email)):'Salvo apenas neste navegador';
-}
-async function pushCloudData(){
-  if(!cloudSyncActive||!window.currentUser||typeof window.saveUserCloudData!=='function')return;
-  await window.saveUserCloudData(window.currentUser.uid,{
-    history:lsGet('ntc_history'),
-    favorites:favIds,
-    updatedAt:Date.now()
-  });
-}
-async function syncOnLogin(user){
-  if(typeof window.loadUserCloudData!=='function')return;
-  const cloud=await window.loadUserCloudData(user.uid);
-  if(cloud){
-    // Mescla: mantém tudo que já existe localmente + o que veio da nuvem, sem duplicar
-    const localHist=lsGet('ntc_history');
-    const cloudHist=Array.isArray(cloud.history)?cloud.history:[];
-    const mergedHist=[...localHist,...cloudHist]
-      .sort((a,b)=>b.ts-a.ts)
-      .filter((h,i,arr)=>arr.findIndex(x=>x.ts===h.ts&&x.name===h.name)===i)
-      .slice(0,300);
-    lsSet('ntc_history',mergedHist);
-    const cloudFav=Array.isArray(cloud.favorites)?cloud.favorites:[];
-    favIds=[...new Set([...favIds,...cloudFav])];
-    lsSet('ntc_favorites',favIds);
-  }
-  cloudSyncActive=true;
-  await pushCloudData();
-  renderGrid();
-  if(document.getElementById('dash-stats-grid'))renderDashboard();
-  updateDashSyncBadge(user);
-}
-
-// Chamado pelo módulo Firebase sempre que o estado de login mudar
-window.onAuthStateChangedUI=function(user){
-  const loginBtn=document.getElementById('btn-google-login');
-  const chip=document.getElementById('user-chip');
-  if(loginBtn&&chip){
-    if(user){
-      loginBtn.style.display='none';
-      chip.style.display='flex';
-      document.getElementById('user-avatar').src=user.photoURL||'';
-      document.getElementById('user-avatar').alt=user.displayName||user.email||'Usuário';
-      document.getElementById('user-name').textContent=user.displayName||user.email||'Usuário';
-    }else{
-      loginBtn.style.display='flex';
-      chip.style.display='none';
-    }
-  }
-  if(user){
-    syncOnLogin(user);
-  }else{
-    cloudSyncActive=false;
-    updateDashSyncBadge(null);
-  }
-};
-
 function applyTheme(){
   const b=document.getElementById('body');
   const btn=document.getElementById('theme-btn');
   const s=SITE_I18N[siteLang]||SITE_I18N.pt;
-  if(isDark){b.classList.remove('light');if(btn)btn.textContent=s.themeLight;}
-  else{b.classList.add('light');if(btn)btn.textContent=s.themeDark;}
+  if(isDark){b.classList.remove('light');if(btn)btn.innerHTML=ic('sun',15)+' '+s.themeLight;}
+  else{b.classList.add('light');if(btn)btn.innerHTML=ic('moon',15)+' '+s.themeDark;}
 }
 function toggleTheme(){
   isDark=!isDark;
@@ -1253,10 +1142,10 @@ const TOOL_ID_MAP={69:'pdf2word',70:'pdf2excel',71:'pdf2pptx',72:'word2pdf',73:'
 let siteLang='pt';
 const SITE_I18N={
   pt:{
-    navHome:'Início',navAbout:'Sobre a Empresa',navContact:'Contato',navDashboard:'Painel',dashHistTitle:'Histórico de Conversões',googleLoginLabel:'Entrar com Google',
-    catTitle:'Categorias',catAll:'Todos',catPdf:'PDF / Assinatura',catImage:'Imagens',catConvert:'Conversores / OFX',catOffice:'Contabilidade Útil',catOffice2:'Office IA ✨',
+    navHome:'Início',navAbout:'Sobre a Empresa',navContact:'Contato',navDashboard:'Painel',dashHistTitle:'Histórico de Conversões',
+    catTitle:'Categorias',catAll:'Todos',catPdf:'PDF / Assinatura',catImage:'Imagens',catConvert:'Conversores / OFX',catOffice:'Contabilidade Útil',catOffice2:'Office IA',
     searchPlaceholder:'Buscar ferramenta...',
-    themeLight:'☀️ Modo Claro',themeDark:'🌙 Modo Escuro',
+    themeLight:'Modo Claro',themeDark:'Modo Escuro',
     heroSub:'69 ferramentas de uso do dia a dia — conversores, PDF, imagem e calculadoras de contabilidade essenciais, com conversores Office com IA.',
     secToolsTitle:'Todas as Ferramentas',
     useToolBtn:'Usar ferramenta',
@@ -1271,21 +1160,21 @@ const SITE_I18N={
     aboutHistoryP3:'Hoje a Nexus Tech Converter é mantida pela FGA Holding LLC e continua sendo desenvolvida com o mesmo princípio desde o início: ferramentas rápidas, seguras e sem necessidade de instalação.',
     contactTitle:'Fale Conosco',
     contactSub:'Entre em contato pela plataforma que preferir. Nossa equipe responde em até 1 dia útil.',
-    ccSubWa:'Atendimento seg–sex, 8h–18h (BRT)',btnOpenWa:'💬 Abrir WhatsApp',
-    ccSubEmail:'Suporte técnico e comercial',btnSendEmailContact:'✉️ Enviar E-mail',
-    msgFormTitle:'💌 Enviar Mensagem',
+    ccSubWa:'Atendimento seg–sex, 8h–18h (BRT)',btnOpenWa:'Abrir WhatsApp',
+    ccSubEmail:'Suporte técnico e comercial',btnSendEmailContact:'Enviar E-mail',
+    msgFormTitle:'Enviar Mensagem',
     formNameLabel:'Nome completo',formContactLabel:'E-mail ou WhatsApp',formSubjectLabel:'Assunto',formMessageLabel:'Mensagem',
-    btnSendEmailForm:'✉️ Enviar por E-mail',btnSendWaForm:'💬 Enviar via WhatsApp',
-    widgetRecentTitle:'⭐ Recentes',widgetRecentEmpty:'Nenhum histórico na sessão atual.',
+    btnSendEmailForm:'Enviar por E-mail',btnSendWaForm:'Enviar via WhatsApp',
+    widgetRecentTitle:'Recentes',widgetRecentEmpty:'Nenhum histórico na sessão atual.',
     widgetStatusTitle:'Status do Ecossistema',widgetStatusExec:'Executável Local',widgetStatusEngine:'Motor de Conversão Ativo',
-    widgetSupportTitle:'📬 Suporte Rápido',
-    modalCloseBtn:'✕ Fechar',
+    widgetSupportTitle:'Suporte Rápido',
+    modalCloseBtn:'Fechar',
   },
   en:{
-    navHome:'Home',navAbout:'About Us',navContact:'Contact',navDashboard:'Dashboard',dashHistTitle:'Conversion History',googleLoginLabel:'Sign in with Google',
-    catTitle:'Categories',catAll:'All',catPdf:'PDF / Signature',catImage:'Images',catConvert:'Converters / OFX',catOffice:'Useful Accounting',catOffice2:'Office AI ✨',
+    navHome:'Home',navAbout:'About Us',navContact:'Contact',navDashboard:'Dashboard',dashHistTitle:'Conversion History',
+    catTitle:'Categories',catAll:'All',catPdf:'PDF / Signature',catImage:'Images',catConvert:'Converters / OFX',catOffice:'Useful Accounting',catOffice2:'Office AI',
     searchPlaceholder:'Search tool...',
-    themeLight:'☀️ Light Mode',themeDark:'🌙 Dark Mode',
+    themeLight:'Light Mode',themeDark:'Dark Mode',
     heroSub:'69 everyday tools — converters, PDF, image and essential accounting calculators, plus AI-powered Office converters.',
     secToolsTitle:'All Tools',
     useToolBtn:'Use tool',
@@ -1300,21 +1189,21 @@ const SITE_I18N={
     aboutHistoryP3:'Today Nexus Tech Converter is maintained by FGA Holding LLC and keeps being developed on the same principle since day one: fast, secure tools that need no installation.',
     contactTitle:'Get in Touch',
     contactSub:'Reach out on whichever platform you prefer. Our team replies within 1 business day.',
-    ccSubWa:'Support Mon–Fri, 8am–6pm (BRT)',btnOpenWa:'💬 Open WhatsApp',
-    ccSubEmail:'Technical and sales support',btnSendEmailContact:'✉️ Send Email',
-    msgFormTitle:'💌 Send a Message',
+    ccSubWa:'Support Mon–Fri, 8am–6pm (BRT)',btnOpenWa:'Open WhatsApp',
+    ccSubEmail:'Technical and sales support',btnSendEmailContact:'Send Email',
+    msgFormTitle:'Send a Message',
     formNameLabel:'Full name',formContactLabel:'Email or WhatsApp',formSubjectLabel:'Subject',formMessageLabel:'Message',
-    btnSendEmailForm:'✉️ Send by Email',btnSendWaForm:'💬 Send via WhatsApp',
-    widgetRecentTitle:'⭐ Recent',widgetRecentEmpty:'No history in the current session.',
+    btnSendEmailForm:'Send by Email',btnSendWaForm:'Send via WhatsApp',
+    widgetRecentTitle:'Recent',widgetRecentEmpty:'No history in the current session.',
     widgetStatusTitle:'Ecosystem Status',widgetStatusExec:'Runs Locally',widgetStatusEngine:'Conversion Engine Active',
-    widgetSupportTitle:'📬 Quick Support',
-    modalCloseBtn:'✕ Close',
+    widgetSupportTitle:'Quick Support',
+    modalCloseBtn:'Close',
   },
   es:{
-    navHome:'Inicio',navAbout:'Sobre la Empresa',navContact:'Contacto',navDashboard:'Panel',dashHistTitle:'Historial de Conversiones',googleLoginLabel:'Iniciar sesión con Google',
-    catTitle:'Categorías',catAll:'Todos',catPdf:'PDF / Firma',catImage:'Imágenes',catConvert:'Conversores / OFX',catOffice:'Contabilidad Útil',catOffice2:'Office IA ✨',
+    navHome:'Inicio',navAbout:'Sobre la Empresa',navContact:'Contacto',navDashboard:'Panel',dashHistTitle:'Historial de Conversiones',
+    catTitle:'Categorías',catAll:'Todos',catPdf:'PDF / Firma',catImage:'Imágenes',catConvert:'Conversores / OFX',catOffice:'Contabilidad Útil',catOffice2:'Office IA',
     searchPlaceholder:'Buscar herramienta...',
-    themeLight:'☀️ Modo Claro',themeDark:'🌙 Modo Oscuro',
+    themeLight:'Modo Claro',themeDark:'Modo Oscuro',
     heroSub:'69 herramientas del día a día — conversores, PDF, imagen y calculadoras de contabilidad esenciales, con conversores de Office con IA.',
     secToolsTitle:'Todas las Herramientas',
     useToolBtn:'Usar herramienta',
@@ -1329,15 +1218,15 @@ const SITE_I18N={
     aboutHistoryP3:'Hoy Nexus Tech Converter es mantenida por FGA Holding LLC y sigue desarrollándose con el mismo principio desde el inicio: herramientas rápidas, seguras y sin necesidad de instalación.',
     contactTitle:'Contáctanos',
     contactSub:'Ponte en contacto por la plataforma que prefieras. Nuestro equipo responde en un plazo de 1 día hábil.',
-    ccSubWa:'Atención lun–vie, 8h–18h (BRT)',btnOpenWa:'💬 Abrir WhatsApp',
-    ccSubEmail:'Soporte técnico y comercial',btnSendEmailContact:'✉️ Enviar Email',
-    msgFormTitle:'💌 Enviar Mensaje',
+    ccSubWa:'Atención lun–vie, 8h–18h (BRT)',btnOpenWa:'Abrir WhatsApp',
+    ccSubEmail:'Soporte técnico y comercial',btnSendEmailContact:'Enviar Email',
+    msgFormTitle:'Enviar Mensaje',
     formNameLabel:'Nombre completo',formContactLabel:'Email o WhatsApp',formSubjectLabel:'Asunto',formMessageLabel:'Mensaje',
-    btnSendEmailForm:'✉️ Enviar por Email',btnSendWaForm:'💬 Enviar por WhatsApp',
-    widgetRecentTitle:'⭐ Recientes',widgetRecentEmpty:'Sin historial en la sesión actual.',
+    btnSendEmailForm:'Enviar por Email',btnSendWaForm:'Enviar por WhatsApp',
+    widgetRecentTitle:'Recientes',widgetRecentEmpty:'Sin historial en la sesión actual.',
     widgetStatusTitle:'Estado del Ecosistema',widgetStatusExec:'Ejecutable Local',widgetStatusEngine:'Motor de Conversión Activo',
-    widgetSupportTitle:'📬 Soporte Rápido',
-    modalCloseBtn:'✕ Cerrar',
+    widgetSupportTitle:'Soporte Rápido',
+    modalCloseBtn:'Cerrar',
   }
 };
 
@@ -1360,36 +1249,42 @@ function setSiteLang(l,btn){
 function applySiteLang(){
   const s=SITE_I18N[siteLang]||SITE_I18N.pt;
   const setTxt=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
-  setTxt('nav-home',s.navHome);setTxt('nav-about',s.navAbout);setTxt('nav-contact',s.navContact);setTxt('nav-dashboard',s.navDashboard);setTxt('dash-hist-title',s.dashHistTitle);setTxt('btn-google-login-label',s.googleLoginLabel);
+  const setHtml=(id,val)=>{const el=document.getElementById(id);if(el)el.innerHTML=val;};
+  setTxt('nav-home',s.navHome);setTxt('nav-about',s.navAbout);setTxt('nav-contact',s.navContact);
+  setHtml('nav-dashboard',ic('dashboard',17)+' '+s.navDashboard);
+  setHtml('dash-hist-title',ic('clock',15)+' '+s.dashHistTitle);
   setTxt('cat-title-label',s.catTitle);
-  setTxt('cat-label-all',s.catAll);setTxt('cat-label-pdf',s.catPdf);setTxt('cat-label-image',s.catImage);
-  setTxt('cat-label-convert',s.catConvert);setTxt('cat-label-office',s.catOffice);setTxt('cat-label-office2',s.catOffice2);
+  setHtml('cat-label-all',ic('folder',15)+s.catAll);
+  setHtml('cat-label-pdf','<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9z"/></svg>'+s.catPdf);
+  setHtml('cat-label-image','<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3 16.5V6.75A2.25 2.25 0 0 1 5.25 4.5h13.5A2.25 2.25 0 0 1 21 6.75v10.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25v-.75z"/></svg>'+s.catImage);
+  setHtml('cat-label-convert','<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-4.99M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>'+s.catConvert);
+  setHtml('cat-label-office',ic('dashboard',15)+s.catOffice);
+  setHtml('cat-label-office2','<svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M15.75 3v1.5M8.25 19.5V21M15.75 19.5V21M3 8.25h1.5M3 15.75h1.5M19.5 8.25H21M19.5 15.75H21M6.75 19.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 17.25 4.5H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25zM9 9h6v6H9V9z"/></svg>'+s.catOffice2+' '+ic('sparkles',13));
   const searchInput=document.getElementById('search-input');
   if(searchInput) searchInput.placeholder=s.searchPlaceholder;
   const searchInputSec=document.getElementById('search-input-sec');
   if(searchInputSec) searchInputSec.placeholder=s.searchPlaceholder;
   const themeBtn=document.getElementById('theme-btn');
-  if(themeBtn) themeBtn.textContent=isDark?s.themeLight:s.themeDark;
+  if(themeBtn) themeBtn.innerHTML=(isDark?ic('sun',15):ic('moon',15))+' '+(isDark?s.themeLight:s.themeDark);
   setTxt('hero-sub',s.heroSub);
   setTxt('sec-header-title',s.secToolsTitle);
   setTxt('footer-rights-text',s.footerRights);
   setTxt('about-title',s.aboutTitle);setTxt('about-p1',s.aboutP1);setTxt('about-p2',s.aboutP2);setTxt('about-p3',s.aboutP3);
   setTxt('about-history-title',s.aboutHistoryTitle);
-  const setHtml=(id,val)=>{const el=document.getElementById(id);if(el)el.innerHTML=val;};
   setHtml('about-history-p1',s.aboutHistoryP1);setHtml('about-history-p2',s.aboutHistoryP2);setHtml('about-history-p3',s.aboutHistoryP3);
-  setTxt('contact-title',s.contactTitle);setTxt('contact-sub',s.contactSub);
-  setTxt('cc-sub-wa',s.ccSubWa);setTxt('btn-open-wa',s.btnOpenWa);
-  setTxt('cc-sub-email',s.ccSubEmail);setTxt('btn-send-email-contact',s.btnSendEmailContact);
-  setTxt('msg-form-title',s.msgFormTitle);
+  setHtml('contact-title',ic('mail',18)+' '+s.contactTitle);setTxt('contact-sub',s.contactSub);
+  setTxt('cc-sub-wa',s.ccSubWa);setHtml('btn-open-wa',ic('chat',15)+' '+s.btnOpenWa);
+  setTxt('cc-sub-email',s.ccSubEmail);setHtml('btn-send-email-contact',ic('mail',15)+' '+s.btnSendEmailContact);
+  setHtml('msg-form-title',ic('mail',16)+' '+s.msgFormTitle);
   setTxt('form-name-label',s.formNameLabel);setTxt('form-contact-label',s.formContactLabel);
   setTxt('form-subject-label',s.formSubjectLabel);setTxt('form-message-label',s.formMessageLabel);
-  setTxt('btn-send-email-form',s.btnSendEmailForm);setTxt('btn-send-wa-form',s.btnSendWaForm);
-  setTxt('widget-recent-title',s.widgetRecentTitle);
+  setHtml('btn-send-email-form',ic('mail',15)+' '+s.btnSendEmailForm);setHtml('btn-send-wa-form',ic('chat',15)+' '+s.btnSendWaForm);
+  setHtml('widget-recent-title',ic('star',15)+' '+s.widgetRecentTitle);
   setTxt('widget-status-title',s.widgetStatusTitle);setTxt('widget-status-exec',s.widgetStatusExec);setTxt('widget-status-engine',s.widgetStatusEngine);
-  setTxt('widget-support-title',s.widgetSupportTitle);
+  setHtml('widget-support-title',ic('mail',15)+' '+s.widgetSupportTitle);
   const recentList=document.getElementById('recent-list');
   if(recentList)renderRecentWidget();
-  document.querySelectorAll('.close-btn').forEach(b=>{b.textContent=s.modalCloseBtn;});
+  document.querySelectorAll('.close-btn').forEach(b=>{b.innerHTML=ic('close',13)+' '+s.modalCloseBtn;});
   renderGrid(); // re-render tool cards so "Usar ferramenta"/"Use tool"/"Usar herramienta" updates
 }
 
@@ -1411,13 +1306,11 @@ function logConversion(fileName,toolLabel){
     h.unshift({name:fileName||'arquivo',tool:toolLabel||'—',ts:Date.now()});
     if(h.length>300)h.length=300;
     lsSet('ntc_history',h);
-    pushCloudData();
   }catch(e){}
 }
 function clearHistory(){
   lsSet('ntc_history',[]);
   renderDashboard();
-  pushCloudData();
   toast('✅ Histórico de conversões limpo.');
 }
 function dashTimeAgo(ts){
@@ -1443,30 +1336,44 @@ function renderDashboard(){
   Object.keys(counts).forEach(k=>{if(counts[k]>topCount){topCount=counts[k];topName=k;}});
   const lastLabel=total?dashTimeAgo(history[0].ts):'—';
   grid.innerHTML=`
-    <div class="dash-stat-card"><div class="dsc-ico">🔄</div><div class="dsc-num">${total}</div><div class="dsc-label">Conversões realizadas</div></div>
-    <div class="dash-stat-card"><div class="dsc-ico">⭐</div><div class="dsc-num">${favIds.length}</div><div class="dsc-label">Ferramentas favoritas</div></div>
-    <div class="dash-stat-card"><div class="dsc-ico">🏆</div><div class="dsc-num" style="font-size:14px;line-height:1.5" title="${topName}">${topCount?topName.length>18?topName.slice(0,16)+'…':topName:'—'}</div><div class="dsc-label">Arquivo mais recorrente</div></div>
-    <div class="dash-stat-card"><div class="dsc-ico">🕓</div><div class="dsc-num" style="font-size:16px">${lastLabel}</div><div class="dsc-label">Última conversão</div></div>`;
+    <div class="dash-stat-card"><div class="dsc-ico">${ic('cloudArrow',22)}</div><div class="dsc-num">${total}</div><div class="dsc-label">Conversões realizadas</div></div>
+    <div class="dash-stat-card"><div class="dsc-ico">${ic('starSolid',22)}</div><div class="dsc-num">${favIds.length}</div><div class="dsc-label">Ferramentas favoritas</div></div>
+    <div class="dash-stat-card"><div class="dsc-ico">${ic('trophy',22)}</div><div class="dsc-num" style="font-size:14px;line-height:1.5" title="${topName}">${topCount?topName.length>18?topName.slice(0,16)+'…':topName:'—'}</div><div class="dsc-label">Arquivo mais recorrente</div></div>
+    <div class="dash-stat-card"><div class="dsc-ico">${ic('clock',22)}</div><div class="dsc-num" style="font-size:16px">${lastLabel}</div><div class="dsc-label">Última conversão</div></div>`;
 
   histList.innerHTML=total?history.slice(0,60).map(h=>`
     <div class="dash-history-item">
-      <span class="dhi-ico">${convGetIcon2(h.name)}</span>
+      <span class="dhi-ico">${fileTypeIcon(h.name,18)}</span>
       <span class="dhi-name">${(h.name||'').replace(/</g,'&lt;')}</span>
       <span class="dhi-time">${dashTimeAgo(h.ts)}</span>
-    </div>`).join(''):'<div class="dash-empty">🕓 Nenhuma conversão ainda.<br>O histórico aparece aqui automaticamente após baixar um arquivo convertido.</div>';
+    </div>`).join(''):emptyState('clock','Nenhuma conversão ainda.','O histórico aparece aqui automaticamente após baixar um arquivo convertido.');
 
   favList.innerHTML=favIds.length?favIds.map(id=>{
     const t=TOOLS.find(x=>x.id===id);
-    return t?`<div class="dash-history-item" style="cursor:pointer" onclick="openTool(${id})"><span class="dhi-ico">⭐</span><span class="dhi-name">${toolDisplayName(t)}</span></div>`:'';
-  }).join(''):'<div class="dash-empty">⭐ Você ainda não tem favoritos.</div>';
+    return t?`<div class="dash-history-item" style="cursor:pointer" onclick="openTool(${id})"><span class="dhi-ico">${ic('starSolid',18)}</span><span class="dhi-name">${toolDisplayName(t)}</span></div>`:'';
+  }).join(''):emptyState('star','Você ainda não tem favoritos.','Clique na estrela de qualquer ferramenta para salvá-la aqui.');
 }
-function convGetIcon2(name){const ext=(name||'').split('.').pop().toLowerCase();return{pdf:'📄',docx:'📝',xlsx:'📊',pptx:'📑',png:'🖼️',jpg:'🖼️',jpeg:'🖼️',zip:'🗜️',ofx:'🏦',txt:'📃'}[ext]||'📁';}
+// ── ILUSTRAÇÃO EXCLUSIVA para estados vazios (dashboard, favoritos, busca) ──
+function emptyState(iconName,title,sub){
+  return `<div class="dash-empty">
+    <svg class="empty-illust" viewBox="0 0 120 90" fill="none">
+      <ellipse cx="60" cy="78" rx="38" ry="6" fill="var(--gold2)" opacity=".08"/>
+      <rect x="27" y="26" width="66" height="46" rx="10" fill="var(--bg)" stroke="var(--border)" stroke-width="1.5"/>
+      <path d="M27 46h66" stroke="var(--border)" stroke-width="1.5"/>
+      <circle cx="60" cy="46" r="15" fill="var(--icon-bg-hover)"/>
+      <g transform="translate(48,34)">${ic(iconName,24).replace('class="hicon"','style="stroke:var(--gold2)"').replace('class="hicon-solid"','style="fill:var(--gold2)"')}</g>
+      <circle cx="34" cy="34" r="2" fill="var(--gold2)" opacity=".5"/>
+      <circle cx="86" cy="64" r="2.5" fill="#c084fc" opacity=".5"/>
+      <circle cx="90" cy="34" r="1.6" fill="var(--gold2)" opacity=".4"/>
+    </svg>
+    <b>${title}</b><small>${sub}</small>
+  </div>`;
+}
 function toggleFavorite(id,ev){
   if(ev)ev.stopPropagation();
   favIds=isFav(id)?favIds.filter(x=>x!==id):[id,...favIds];
   lsSet('ntc_favorites',favIds);
   renderGrid();
-  pushCloudData();
 }
 
 // ── CONTATO ───────────────────────────────────────────
@@ -1496,29 +1403,50 @@ function renderGrid(data){
   if(!data) data=curCat==='all'?TOOLS:curCat==='fav'?TOOLS.filter(t=>isFav(t.id)):TOOLS.filter(t=>t.cat===curCat);
   const g=document.getElementById('tools-grid');
   g.innerHTML='';
-  const emoji={pdf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>',image:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"/></svg>',convert:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>',office:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>',office2:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>'};
+  const ICON_SOLID={
+    pdf:'<svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625zM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15zm.75 2.25a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5h-7.5z"/><path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .621.504 1.125 1.125 1.125H17.25a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.212-8.688A9.847 9.847 0 0 0 12.971 1.816z"/></svg>',
+    image:'<svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6zm3 9v.75c0 .414.336.75.75.75h13.5a.75.75 0 0 0 .75-.75V15l-2.47-2.47a.75.75 0 0 0-1.06 0l-1.97 1.97-3.97-3.97a.75.75 0 0 0-1.06 0L4.5 15zm3-6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>',
+    convert:'<svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 0 1-9.201 2.466l-.312-.311h2.433a.75.75 0 0 0 0-1.5H3.989a.75.75 0 0 0-.75.75v4.242a.75.75 0 0 0 1.5 0v-2.43l.31.31a7 7 0 0 0 11.712-3.138.75.75 0 0 0-1.449-.39zm1.23-3.723a.75.75 0 0 0 .219-.53V2.929a.75.75 0 0 0-1.5 0v2.43l-.31-.31A7 7 0 0 0 3.239 8.188a.75.75 0 1 0 1.448.389A5.5 5.5 0 0 1 13.89 6.11l.312.311h-2.433a.75.75 0 0 0 0 1.5h4.243a.75.75 0 0 0 .53-.219z"/></svg>',
+    office:'<svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M3 6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6zm4.5 7.5a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V14.25a.75.75 0 0 1 .75-.75zm3.75-3a.75.75 0 0 0-1.5 0v5.25a.75.75 0 0 0 1.5 0V10.5zm3.75-1.5a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 .75-.75z"/></svg>',
+    office2:'<svg class="hicon-solid" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5zM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5z"/></svg>',
+  };
   const cls={pdf:'c-pdf',image:'c-image',convert:'c-convert',office:'c-office',office2:'c-office2'};
+  const starOutline='<svg class="hicon" style="width:16px;height:16px;stroke:var(--dim)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m11.48 3.5 2.02 4.11a.6.6 0 0 0 .45.33l4.53.66c.49.07.69.68.33 1.02l-3.28 3.2a.6.6 0 0 0-.17.53l.77 4.51c.09.49-.43.86-.87.63l-4.05-2.13a.6.6 0 0 0-.56 0l-4.05 2.13c-.44.23-.95-.14-.87-.63l.77-4.51a.6.6 0 0 0-.17-.53l-3.28-3.2c-.36-.34-.16-.95.33-1.02l4.53-.66a.6.6 0 0 0 .45-.33l2.02-4.11c.22-.45.85-.45 1.07 0z"/></svg>';
+  const starSolid='<svg class="hicon-solid" style="width:16px;height:16px;fill:#fbbf24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.48 3.5a.562.562 0 0 1 1.04 0l2.12 4.11a.563.563 0 0 0 .43.31l4.54.66c.5.07.7.69.34 1.04l-3.29 3.2a.563.563 0 0 0-.16.5l.77 4.52c.09.5-.44.88-.89.65L12.5 16.35a.563.563 0 0 0-.52 0l-4.06 2.14c-.45.23-.98-.15-.89-.65l.77-4.52a.563.563 0 0 0-.16-.5l-3.29-3.2c-.36-.35-.16-.97.34-1.04l4.54-.66a.563.563 0 0 0 .43-.31z"/></svg>';
+  const iaSpark='<svg class="hicon-solid" style="width:11px;height:11px;fill:#c084fc" viewBox="0 0 24 24"><path d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5z"/></svg>';
   const useLabel=(SITE_I18N[siteLang]||SITE_I18N.pt).useToolBtn;
   if(curCat==='fav'&&!data.length){
-    g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 20px;color:var(--muted);font-size:13px">⭐ Você ainda não tem favoritos.<br>Clique na estrela de qualquer ferramenta para salvá-la aqui.</div>';
+    g.innerHTML=`<div class="reveal in-view" style="grid-column:1/-1">${emptyState('star','Você ainda não tem favoritos.','Clique na estrela de qualquer ferramenta para salvá-la aqui.')}</div>`;
     return;
   }
-  data.forEach(t=>{
+  if(curSearchQuery&&data&&!data.length){
+    g.innerHTML=`<div class="reveal in-view" style="grid-column:1/-1">${emptyState('search',`Nada encontrado para "${curSearchQuery}"`,'Tente outro termo ou explore as categorias acima.')}</div>`;
+    return;
+  }
+  data.forEach((t,i)=>{
     const tr=(siteLang!=='pt'&&typeof TOOLS_I18N!=='undefined'&&TOOLS_I18N[siteLang]&&TOOLS_I18N[siteLang][t.id])||null;
-    const dispName=tr?tr.name:t.name, dispDesc=tr?tr.desc:t.desc;
+    let dispName=tr?tr.name:t.name, dispDesc=tr?tr.desc:t.desc;
+    if(curSearchQuery){dispName=highlightMatch(dispName,curSearchQuery);dispDesc=highlightMatch(dispDesc,curSearchQuery);}
     const d=document.createElement('div');
-    d.className='card';
+    d.className='card reveal';
+    d.style.animationDelay=Math.min(i*30,300)+'ms';
     d.innerHTML=`
       <div class="card-top-row">
-        <div class="icon-wrap ${cls[t.cat]}">${emoji[t.cat]}</div>
+        <div class="icon-wrap ${cls[t.cat]}">${ICON_SOLID[t.cat]}</div>
         <div style="display:flex;align-items:center;gap:6px">
-          ${t.ia?'<span class="badge-ia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg> IA</span>':`<span class="card-protocol">Nº ${String(t.id).padStart(3,'0')}</span>`}
-          <button class="fav-star ${isFav(t.id)?'active':''}" onclick="toggleFavorite(${t.id},event)" title="${isFav(t.id)?'Remover dos favoritos':'Adicionar aos favoritos'}">${isFav(t.id)?`<svg viewBox="0 0 24 24" fill="none" fill="currentColor" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.5.04.703.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.562.562 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.5.04.703.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.562.562 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>`}</button>
+          ${t.ia?`<span class="badge-ia">${iaSpark} IA</span>`:`<span class="card-protocol">Nº ${String(t.id).padStart(3,'0')}</span>`}
+          <button class="fav-star ${isFav(t.id)?'active':''}" onclick="toggleFavorite(${t.id},event)" title="${isFav(t.id)?'Remover dos favoritos':'Adicionar aos favoritos'}">${isFav(t.id)?starSolid:starOutline}</button>
         </div>
       </div>
       <div class="tool-meta"><h4>${dispName}</h4><p>${dispDesc}</p></div>
       <button class="btn-use" onclick="openTool(${t.id})">${useLabel}</button>`;
+    d.addEventListener('mousemove',e=>{
+      const r=d.getBoundingClientRect();
+      d.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+      d.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+    });
     g.appendChild(d);
+    requestAnimationFrame(()=>d.classList.add('in-view'));
   });
 }
 
@@ -1559,13 +1487,20 @@ function toolSearchText(t){
   return txt.toLowerCase();
 }
 
+let curSearchQuery='';
+let _searchDebounceTimer=null;
 function handleSearch(q,fromEl){
-  // mantém os dois campos de busca (navbar e seção) sincronizados
+  // mantém os dois campos de busca (navbar e seção) sincronizados em tempo real
   ['search-input','search-input-sec'].forEach(id=>{
     const el=document.getElementById(id);
     if(el&&el!==fromEl)el.value=q;
   });
+  clearTimeout(_searchDebounceTimer);
+  _searchDebounceTimer=setTimeout(()=>runSearch(q),160);
+}
+function runSearch(q){
   const query=q.toLowerCase().trim();
+  curSearchQuery=query;
   if(query){
     document.querySelectorAll('.cat-item').forEach(e=>e.classList.remove('active'));
     document.querySelector('.cat-item[data-cat="all"]')?.classList.add('active');
@@ -1579,9 +1514,20 @@ function handleSearch(q,fromEl){
   renderGrid(results);
   const counter=document.getElementById('search-result-count');
   if(counter){
-    if(query)counter.textContent=results.length?`🔎 ${results.length} ferramenta(s) encontrada(s) para "${q}"`:`😕 Nenhuma ferramenta encontrada para "${q}"`;
+    if(query)counter.innerHTML=results.length?`<span style="display:inline-flex;align-items:center;gap:5px"><svg class="hicon" style="width:14px;height:14px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>${results.length} ferramenta(s) encontrada(s) para "${q}"</span>`:`<span style="display:inline-flex;align-items:center;gap:5px"><svg class="hicon" style="width:14px;height:14px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75c0-1.03.94-1.87 2.1-1.87s2.1.84 2.1 1.87c0 .77-.5 1.28-1.13 1.7-.6.4-.97.94-.97 1.55m0 2.63h.01M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/></svg>Nenhuma ferramenta encontrada para "${q}"</span>`;
     else counter.textContent='';
   }
+}
+// destaca o termo buscado dentro do nome/descrição do card (busca inteligente com feedback visual)
+function highlightMatch(text,query){
+  if(!query)return text;
+  const terms=query.split(/\s+/).filter(w=>w.length>1).sort((a,b)=>b.length-a.length);
+  let out=text;
+  terms.forEach(term=>{
+    const esc=term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    out=out.replace(new RegExp('('+esc+')','ig'),'<mark class="search-hl">$1</mark>');
+  });
+  return out;
 }
 
 function focusSearch(){
@@ -1591,6 +1537,7 @@ function focusSearch(){
 
 function filterCat(cat,el){
   curCat=cat;
+  curSearchQuery='';
   document.querySelectorAll('.cat-item').forEach(e=>e.classList.remove('active'));
   el.classList.add('active');
   ['search-input','search-input-sec'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
@@ -1604,14 +1551,17 @@ function showView(v,el){
     const el2=document.getElementById('view-'+id);
     if(el2) el2.style.display='none';
   });
-  document.getElementById('view-'+v).style.display='block';
+  const target=document.getElementById('view-'+v);
+  target.style.display='block';
+  target.classList.remove('view-fade-in');
+  requestAnimationFrame(()=>target.classList.add('view-fade-in'));
   document.querySelectorAll('.nav-item').forEach(e=>e.classList.remove('active'));
   el.classList.add('active');
   if(v==='contato'){
     document.getElementById('msg-success').classList.remove('show');
     document.getElementById('wa-redirect').classList.remove('show');
   }
-  if(v==='dashboard'){renderDashboard();updateDashSyncBadge(window.currentUser||null);}
+  if(v==='dashboard'){renderDashboard();}
 }
 
 // ── MODAL ─────────────────────────────────────────────
@@ -1662,10 +1612,10 @@ function toast(msg,duration){
   if(/^✅/.test(clean)){type='success';clean=clean.replace(/^✅\s*/,'');}
   else if(/^(❌|⚠️|😕)/.test(clean)){type='error';clean=clean.replace(/^(❌|⚠️|😕)\s*/,'');}
   else if(/\berro\b/i.test(clean.slice(0,20)))type='error';
-  const ico={success:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>',error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-8.25 3.75h.008v.008h-.008v-.008z"/></svg>',info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><circle cx="12" cy="12" r="9" stroke-linecap="round" stroke-linejoin="round"/><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25h.75v5.25h.75M12 7.5h.008v.008H12V7.5z"/></svg>'}[type];
+  const ico=ic({success:'checkCircle',error:'warning',info:'info'}[type],18);
   const el=document.createElement('div');
   el.className='toast toast-'+type;
-  el.innerHTML=`<span class="toast-ico">${ico}</span><span class="toast-msg">${clean.replace(/</g,'&lt;')}</span><button class="toast-close" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+  el.innerHTML=`<span class="toast-ico">${ico}</span><span class="toast-msg">${clean.replace(/</g,'&lt;')}</span><button class="toast-close" aria-label="Fechar">${ic('close',12)}</button>`;
   box.appendChild(el);
   requestAnimationFrame(()=>el.classList.add('show'));
   const remove=()=>{el.classList.remove('show');setTimeout(()=>el.remove(),250);};
@@ -1721,7 +1671,7 @@ function buildModal(id,tool){
   if(id===1){
     govAuthData=null;govPdfJsDoc=null;govCurrentPage=1;govTotalPages=1;
     body.innerHTML=`
-      <div><span class="gov-badge">🔰 ASSINADOR DIGITAL MULTIMODAL GOV.BR</span></div>
+      <div><span class="gov-badge">${ic('shield',14).replace('style="fill:#a5b4fc"','style="fill:#fff"')} ASSINADOR DIGITAL MULTIMODAL GOV.BR</span></div>
       <div id="gov-auth-section">
         <p style="font-size:13px;color:var(--muted);margin-bottom:4px">Confirme sua identidade antes de assinar o documento.</p>
         <div class="grid-2">
@@ -1875,21 +1825,30 @@ function buildModal(id,tool){
     <button class="btn-exec" onclick="runToolProgress(this,'gerarPlanilha')">📊 Gerar Planilha .xlsx</button>
     <div class="result-box" id="gp-result"></div>`;return;}
 
-  if(id===77){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma ou mais imagens (JPG/PNG) — a ordem de seleção define a ordem das páginas:</p><input type="file" id="i2p-imgs" accept="image/*" multiple class="f-input"><div id="i2p-list" style="font-size:11px;color:var(--muted);margin-top:8px"></div>
+  if(id===77){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma ou mais imagens (JPG/PNG) e arraste os cartões para reordenar as páginas do PDF:</p>
+    <input type="file" id="i2p-imgs" accept="image/*" multiple class="f-input" style="display:none">
+    <div class="i2p-toolbar">
+      <button type="button" class="btn-sm" onclick="document.getElementById('i2p-imgs').click()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Adicionar imagens</button>
+      <button type="button" class="btn-sm" onclick="i2pClearAll()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1L5 6"/></svg> Limpar tudo</button>
+    </div>
+    <div id="i2p-organizer" class="i2p-organizer"></div>
     <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
       <label class="f-label" style="margin-bottom:10px;display:block">Opções de imagem para PDF</label>
       <div class="grid-2">
-        <div class="f-row"><label class="f-label">Orientação da página</label><select id="i2p-orient" class="f-input"><option value="retrato">📱 Retrato</option><option value="paisagem">🖥️ Paisagem</option></select></div>
+        <div class="f-row"><label class="f-label">Orientação da página</label><select id="i2p-orient" class="f-input"><option value="retrato">Retrato</option><option value="paisagem">Paisagem</option></select></div>
         <div class="f-row"><label class="f-label">Tamanho da página</label><select id="i2p-size" class="f-input"><option value="fit">Adaptar (mesma dimensão da imagem)</option><option value="a4">A4 (297 x 210 mm)</option><option value="letter">US Letter (215.9 x 279.4 mm)</option></select></div>
       </div>
       <div class="f-row"><label class="f-label">Margem</label><select id="i2p-margin" class="f-input"><option value="none">Sem margem</option><option value="small">Pequena</option><option value="big">Grande</option></select></div>
       <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:8px 0 4px"><input type="checkbox" id="i2p-merge" checked style="width:16px;height:16px"> Mesclar todas as imagens em um único arquivo PDF</label>
     </div>
-    <button class="btn-exec" onclick="runToolProgress(this,'imagesToPdf')">📄 Converter para PDF</button>`;
+    <button class="btn-exec" onclick="runToolProgress(this,'imagesToPdf')">Converter para PDF</button>`;
+    i2pFiles=[];i2pRender();
     document.getElementById('i2p-imgs').addEventListener('change',function(){
-      document.getElementById('i2p-list').textContent=this.files.length?[...this.files].map(f=>f.name).join(' · '):'';
+      i2pAddFiles(this.files);
+      this.value='';
     });
     return;}
+
   if(id===78){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF para exportar cada página como imagem JPG:</p><input type="file" id="p2i-pdf" accept="application/pdf" class="f-input"><button class="btn-exec" onclick="runToolProgress(this,'pdfToImages')">🖼️ Converter e Baixar .zip</button><div class="result-box" id="p2i-result"></div>`;return;}
   if(id===79){body.innerHTML=`<div class="grid-2"><div class="f-row"><label class="f-label">Peso (kg)</label><input type="number" id="imc-peso" value="70" class="f-input"></div><div class="f-row"><label class="f-label">Altura (m)</label><input type="number" id="imc-alt" value="1.70" step="0.01" class="f-input"></div></div><button class="btn-exec" onclick="calcIMC()">⚖️ Calcular IMC</button><div class="result-box" id="imc-result"></div>`;return;}
   if(id===80){body.innerHTML=`<div class="f-row"><label class="f-label">Data de nascimento</label><input type="date" id="idade-nasc" class="f-input"></div><button class="btn-exec" onclick="calcIdade()">🎂 Calcular Idade</button><div class="result-box" id="idade-result"></div>`;return;}
@@ -1906,10 +1865,10 @@ function buildModal(id,tool){
   if(id===87){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF de extrato bancário — as linhas com data e valor serão reconhecidas automaticamente:</p><input type="file" id="p2o-pdf" accept="application/pdf" class="f-input" onchange="pdfToOfxPreview(this)"><div class="result-box" id="p2o-result"></div><button class="btn-exec" id="p2o-dl-btn" style="display:none" onclick="downloadPdfToOfx()">💾 Baixar arquivo .OFX</button><div style="background:rgba(140,100,178,.07);border:1px solid rgba(140,100,178,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#b58fd6;line-height:1.5;margin-top:10px">⚠️ Extração heurística baseada no texto do PDF. Revise as transações e o arquivo .ofx antes de importar no seu sistema financeiro.</div>`;return;}
 
   body.innerHTML=`<div style="text-align:center;padding:24px 0">
-    <div style="font-size:52px;margin-bottom:12px">${{pdf:'📄',image:'🖼️',convert:'🔄',office:'📊',office2:'🤖'}[tool.cat]}</div>
+    <div class="icon-badge" style="width:64px;height:64px;margin:0 auto 14px;background:var(--icon-bg-hover)">${ic({pdf:'docPdf',image:'docImage',convert:'cloudArrow',office:'dashboard',office2:'sparkles'}[tool.cat]||'docGeneric',30)}</div>
     <h3 style="font-size:16px;font-weight:700;margin-bottom:8px">${tool.name}</h3>
     <p style="font-size:13px;color:var(--muted);margin-bottom:20px">${tool.desc}</p>
-    <div style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);border-radius:8px;padding:14px;font-size:12px;color:var(--gold)">⚙️ Interface em desenvolvimento</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);border-radius:8px;padding:14px;font-size:12px;color:var(--gold)">${ic('info',14)} Interface em desenvolvimento</div>
   </div>`;
 }
 
@@ -2024,12 +1983,12 @@ function buildConvHTML(){
     <div class="conv-panel" id="conv-panel">
       <div class="conv-drop" id="conv-drop" ondragover="convDrag(event,true)" ondragleave="convDrag(event,false)" ondrop="convDrop(event)">
         <input type="file" id="conv-file-input" onchange="convHandleFile(this)">
-        <span class="conv-drop-icon" id="conv-dz-icon">☁️</span>
+        <span class="conv-drop-icon icon-badge" id="conv-dz-icon">${ic('cloudArrow',24).replace('class="hicon"','style="stroke:var(--gold2)"')}</span>
         <div class="conv-drop-text" id="conv-dz-text">${u.dropText}</div>
         <div class="conv-drop-sub" id="conv-dz-sub">${u.dropSubDefault}</div>
       </div>
       <div class="conv-file-row" id="conv-file-row">
-        <span id="conv-fi-icon">📄</span>
+        <span id="conv-fi-icon">${ic('docGeneric',20)}</span>
         <span class="conv-fi-name" id="conv-fi-name">—</span>
         <span class="conv-fi-size" id="conv-fi-size">—</span>
         <button class="conv-fi-rm" onclick="convRemoveFile()">✕</button>
@@ -2122,8 +2081,7 @@ function convProcess(file){
     if(ext!==convActiveTool.accept){convShowErr(u.errWrongType(convActiveTool.accept));return;}
   }
   convSelectedFile=file;
-  const icon={pdf:'📄',docx:'📝',xlsx:'📊',pptx:'📑'}[file.name.split('.').pop().toLowerCase()]||'📁';
-  document.getElementById('conv-fi-icon').textContent=icon;
+  document.getElementById('conv-fi-icon').innerHTML=fileTypeIcon(file.name,20);
   document.getElementById('conv-fi-name').textContent=file.name;
   document.getElementById('conv-fi-size').textContent=convFmtSize(file.size);
   document.getElementById('conv-file-row').classList.add('show');
@@ -2201,7 +2159,7 @@ async function convStart(){
     }
 
     convSetProgress(100,u.stepDone);convLog(u.logDone(convResultName));
-    document.getElementById('conv-rc-icon').textContent=convGetIcon(convResultName);
+    document.getElementById('conv-rc-icon').innerHTML=fileTypeIcon(convResultName,26);
     document.getElementById('conv-rc-name').textContent=convResultName;
     document.getElementById('conv-rc-meta').textContent=u.resultMeta(convActiveTool.out.toUpperCase(),convFmtSize(convResultBlob.size));
     document.getElementById('conv-rc-prev').textContent=previewText.substring(0,700)+(previewText.length>700?'\n\n[...]':'');
@@ -2620,7 +2578,7 @@ function convDownload(){
   const a=document.createElement('a');a.href=URL.createObjectURL(convResultBlob);a.download=convResultName;a.click();
 }
 
-function convGetIcon(name){return{pdf:'📄',docx:'📝',xlsx:'📊',pptx:'📑'}[name.split('.').pop()]||'📁';}
+
 function convFmtSize(b){if(b<1024)return b+' B';if(b<1024*1024)return(b/1024).toFixed(1)+' KB';return(b/1024/1024).toFixed(2)+' MB';}
 function convDelay(ms){return new Promise(r=>setTimeout(r,ms));}
 
@@ -3574,9 +3532,83 @@ const TOOLS_I18N={"en": {"1": {"name": "Gov.br Digital Signature", "desc": "Sign
 // ── NOVAS FERRAMENTAS DO DIA A DIA ─────────────────────
 
 // Imagens → PDF (com opções estilo iLovePDF: orientação, tamanho, margem, mesclar)
+// ── ORGANIZADOR DE IMAGENS (Imagens → PDF): mantém a ordem escolhida pelo usuário ──
+let i2pFiles=[];
+let i2pDragIdx=null;
+function i2pAddFiles(fileList){
+  const imgs=[...fileList].filter(f=>/^image\//.test(f.type)||/\.(png|jpe?g)$/i.test(f.name));
+  if(!imgs.length)return;
+  i2pFiles=i2pFiles.concat(imgs);
+  i2pRender();
+}
+function i2pClearAll(){
+  i2pFiles=[];
+  i2pRender();
+}
+function i2pRemove(idx){
+  i2pFiles.splice(idx,1);
+  i2pRender();
+}
+function i2pMove(idx,dir){
+  const to=idx+dir;
+  if(to<0||to>=i2pFiles.length)return;
+  const tmp=i2pFiles[idx];i2pFiles[idx]=i2pFiles[to];i2pFiles[to]=tmp;
+  i2pRender();
+}
+function i2pDragStart(e,idx){
+  i2pDragIdx=idx;
+  e.dataTransfer.effectAllowed='move';
+  e.currentTarget.classList.add('i2p-dragging');
+}
+function i2pDragEnd(e){
+  e.currentTarget.classList.remove('i2p-dragging');
+  document.querySelectorAll('.i2p-card').forEach(c=>c.classList.remove('i2p-dragover'));
+}
+function i2pDragOver(e,idx){
+  e.preventDefault();
+  e.currentTarget.classList.add('i2p-dragover');
+}
+function i2pDragLeave(e){
+  e.currentTarget.classList.remove('i2p-dragover');
+}
+function i2pDrop(e,idx){
+  e.preventDefault();
+  e.currentTarget.classList.remove('i2p-dragover');
+  if(i2pDragIdx===null||i2pDragIdx===idx)return;
+  const moved=i2pFiles.splice(i2pDragIdx,1)[0];
+  i2pFiles.splice(idx,0,moved);
+  i2pDragIdx=null;
+  i2pRender();
+}
+function i2pRender(){
+  const box=document.getElementById('i2p-organizer');
+  if(!box)return;
+  if(!i2pFiles.length){
+    box.innerHTML='<div class="i2p-empty">Nenhuma imagem adicionada ainda. Clique em "Adicionar imagens" para começar.</div>';
+    return;
+  }
+  box.innerHTML=i2pFiles.map((f,idx)=>{
+    const url=URL.createObjectURL(f);
+    return `<div class="i2p-card" draggable="true"
+      ondragstart="i2pDragStart(event,${idx})" ondragend="i2pDragEnd(event)"
+      ondragover="i2pDragOver(event,${idx})" ondragleave="i2pDragLeave(event)" ondrop="i2pDrop(event,${idx})"
+      title="Arraste para reordenar">
+      <span class="i2p-page-badge">${idx+1}</span>
+      <button type="button" class="i2p-remove" onclick="i2pRemove(${idx})" title="Remover">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <img src="${url}" alt="${f.name.replace(/"/g,'')}" onload="URL.revokeObjectURL(this.src)">
+      <div class="i2p-name">${f.name.replace(/</g,'&lt;')}</div>
+      <div class="i2p-movebar">
+        <button type="button" onclick="i2pMove(${idx},-1)" ${idx===0?'disabled':''} title="Mover para trás"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" onclick="i2pMove(${idx},1)" ${idx===i2pFiles.length-1?'disabled':''} title="Mover para frente"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 async function imagesToPdf(){
-  const fi=document.getElementById('i2p-imgs');
-  if(!fi.files.length){toast('Selecione ao menos uma imagem!');return;}
+  if(!i2pFiles.length){toast('Selecione ao menos uma imagem!');return;}
   const orient=document.getElementById('i2p-orient').value; // retrato | paisagem
   const sizeOpt=document.getElementById('i2p-size').value; // fit | a4 | letter
   const marginOpt=document.getElementById('i2p-margin').value; // none | small | big
@@ -3607,19 +3639,22 @@ async function imagesToPdf(){
   try{
     if(merge){
       const pdfDoc=await PDFLib.PDFDocument.create();
-      for(const f of fi.files)await embedAndDraw(pdfDoc,f);
+      for(const f of i2pFiles)await embedAndDraw(pdfDoc,f);
       dl(await pdfDoc.save(),'imagens_convertidas.pdf','application/pdf');
+      toast('✅ PDF gerado com '+i2pFiles.length+' página(s) na ordem definida.');
     }else{
       const zip=new JSZip();
       let i=1;
-      for(const f of fi.files){
+      for(const f of i2pFiles){
         const pdfDoc=await PDFLib.PDFDocument.create();
         await embedAndDraw(pdfDoc,f);
         const bytes=await pdfDoc.save();
         zip.file('imagem_'+String(i++).padStart(2,'0')+'.pdf',bytes);
       }
       const blob=await zip.generateAsync({type:'blob'});
+      logConversion('imagens_pdf.zip');
       const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='imagens_pdf.zip';a.click();
+      toast('✅ '+i2pFiles.length+' PDF(s) gerado(s) e compactado(s) em .zip.');
     }
     closeModal();
   }catch(e){toast('Erro: '+e.message);}
