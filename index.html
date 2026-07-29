@@ -1,6 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR" id="root">
 <head>
+<script>
+window.addEventListener('error',function(e){
+  try{
+    var box=document.createElement('div');
+    box.style.cssText='position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#c0392b;color:#fff;padding:10px 16px;font:13px/1.5 monospace;white-space:pre-wrap;max-height:45vh;overflow:auto;box-shadow:0 2px 10px rgba(0,0,0,.4)';
+    box.textContent='⚠️ Erro JS capturado: '+e.message+'\narquivo: '+(e.filename||'?')+' linha:'+(e.lineno||'?')+' coluna:'+(e.colno||'?')+(e.error&&e.error.stack?('\n\n'+e.error.stack):'');
+    document.documentElement.appendChild(box);
+  }catch(err){}
+});
+window.addEventListener('unhandledrejection',function(e){
+  try{
+    var box=document.createElement('div');
+    box.style.cssText='position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#b8860b;color:#fff;padding:10px 16px;font:13px/1.5 monospace;white-space:pre-wrap;max-height:45vh;overflow:auto;box-shadow:0 2px 10px rgba(0,0,0,.4)';
+    box.textContent='⚠️ Promise rejeitada: '+(e.reason&&e.reason.message?e.reason.message:e.reason);
+    document.documentElement.appendChild(box);
+  }catch(err){}
+});
+window.addEventListener('securitypolicyviolation',function(e){
+  try{
+    var box=document.createElement('div');
+    box.style.cssText='position:fixed;top:0;left:0;right:0;z-index:2147483647;background:#7d3c98;color:#fff;padding:10px 16px;font:13px/1.5 monospace;white-space:pre-wrap;max-height:45vh;overflow:auto;box-shadow:0 2px 10px rgba(0,0,0,.4)';
+    box.textContent='⚠️ Bloqueio de CSP: '+e.violatedDirective+' | '+e.blockedURI+' | '+(e.sourceFile||'')+':'+(e.lineNumber||'');
+    document.documentElement.appendChild(box);
+  }catch(err){}
+});
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[onclick]');
+  if(el){
+    window.__lastClickTarget=(el.id||el.className||el.tagName);
+  }
+},true);
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexus Tech Converter · Ferramentas PDF, Office & Gestão</title>
@@ -669,7 +701,7 @@ body{display:block;min-height:100vh}
       <div class="nav-item active" data-view="grid" onclick="showView('grid',this)"><span id="nav-home">Início</span></div>
       <div class="nav-item" onclick="scrollToTools()"><span>Ferramentas</span></div>
       <div class="nav-item" data-view="dashboard" onclick="showView('dashboard',this)"><span id="nav-dashboard"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg> Painel</span></div>
-      <div class="nav-item" data-view="about" onclick="showView('about',this)"><span id="nav-about">Sobre</span></div>
+      <div class="nav-item" data-view="about" onclick="showView('about',this)"><span id="nav-about">Nossa História</span></div>
       <div class="nav-item" data-view="contato" onclick="showView('contato',this)"><span id="nav-contact">Contato</span></div>
     </nav>
 
@@ -874,13 +906,10 @@ body{display:block;min-height:100vh}
       <p id="sec-header-sub">69 ferramentas gratuitas para PDF, imagem, conversão e contabilidade — escolha uma categoria ou use a busca.</p>
     </div>
     <div class="grid" id="tools-grid"></div>
+  </div>
 <!-- VIEW SOBRE -->
   <div id="view-about" class="view-sec">
-    <h2 id="about-title">Sobre a Nexus Tech Converter</h2>
-    <p id="about-p1">A Nexus Tech Converter desenvolve ferramentas simples e rápidas para o dia a dia: conversores de arquivos, edição de PDF e imagem, e calculadoras de contabilidade essenciais.</p>
-    <p id="about-p2">Nossa suíte reúne ferramentas de PDF, imagem, conversão e cálculos de contabilidade pessoais/pequenas empresas em um ambiente unificado, seguro e executável 100% no navegador — sem envio de dados a servidores externos.</p>
-    <p id="about-p3">A partir da versão 2.4.0, integramos motor local de conversão inteligente entre formatos Office (Word, Excel, PowerPoint) e PDF, com suporte multilingual (PT / EN / ES), gerando arquivos reais nos formatos OOXML padrão.</p>
-    <h2 id="about-history-title" style="margin-top:28px">Nossa História</h2>
+    <h2 id="about-title">Nossa História</h2>
     <p id="about-history-p1">O projeto nasceu como <strong>FREDTECHsystem Suite</strong>, um conjunto simples de utilitários pessoais para conversão de arquivos. Com o crescimento do catálogo de ferramentas, a marca evoluiu para <strong>Nexora Suite</strong>, ganhando identidade visual própria e mais recursos de automação.</p>
     <p id="about-history-p2">Em seguida, o produto passou a integrar o portfólio da <strong>FGA Suite</strong>, sob a FGA Holding LLC, unificando processos internos e reforçando o compromisso com privacidade e execução 100% local. A marca atual, <strong>Nexus Tech Converter</strong>, representa a maturidade dessa trajetória: uma suíte completa e gratuita de ferramentas de PDF, imagem, conversão de Office e contabilidade.</p>
     <p id="about-history-p3">Hoje a Nexus Tech Converter é mantida pela FGA Holding LLC e continua sendo desenvolvida com o mesmo princípio desde o início: ferramentas rápidas, seguras e sem necessidade de instalação.</p>
@@ -988,8 +1017,8 @@ body{display:block;min-height:100vh}
     </div>
     <div class="footer-col">
       <h5>Empresa</h5>
-      <a onclick="goToView('about')">Sobre Nós</a>
-      <a onclick="goToView('contato')">Contato</a>
+      <a onclick="goToView('about')" data-goto-view="about">Nossa História</a>
+      <a onclick="goToView('contato')" data-goto-view="contato">Contato</a>
       <a href="mailto:fgaholdingllc@gmail.com">E-mail</a>
       <a href="https://wa.me/5531997661377" target="_blank">WhatsApp</a>
     </div>
@@ -1110,7 +1139,8 @@ function goToView(v){
 function systemPrefersDark(){
   return typeof window.matchMedia==='function'?window.matchMedia('(prefers-color-scheme: dark)').matches:true;
 }
-const savedTheme=localStorage.getItem('ntc_theme'); // 'dark' | 'light' | null (segue o sistema)
+let savedTheme=null;
+try{savedTheme=localStorage.getItem('ntc_theme');}catch(e){} // 'dark' | 'light' | null (segue o sistema)
 let isDark=savedTheme?savedTheme==='dark':systemPrefersDark();
 function applyTheme(){
   const b=document.getElementById('body');
@@ -1121,12 +1151,13 @@ function applyTheme(){
 }
 function toggleTheme(){
   isDark=!isDark;
-  localStorage.setItem('ntc_theme',isDark?'dark':'light');
+  try{localStorage.setItem('ntc_theme',isDark?'dark':'light');}catch(e){}
   applyTheme();
 }
 if(typeof window.matchMedia==='function'){
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{
-    if(!localStorage.getItem('ntc_theme')){isDark=e.matches;applyTheme();}
+    let t=null;try{t=localStorage.getItem('ntc_theme');}catch(err){}
+    if(!t){isDark=e.matches;applyTheme();}
   });
 }
 
@@ -4112,6 +4143,21 @@ ${stmttrns}
 }
 
 // ── INIT ──────────────────────────────────────────────
+// Religação redundante da navegação principal via addEventListener.
+// Alguns ambientes (políticas de segurança, extensões, zonas do Windows)
+// podem bloquear atributos onclick="" inline sem gerar erro visível.
+// addEventListener registrado aqui dentro do <script> não sofre esse bloqueio.
+document.querySelectorAll('.nav-item[data-view]').forEach(function(navEl2){
+  navEl2.addEventListener('click',function(){
+    showView(navEl2.getAttribute('data-view'),navEl2);
+  });
+});
+document.querySelectorAll('[data-goto-view]').forEach(function(elx){
+  elx.addEventListener('click',function(){
+    goToView(elx.getAttribute('data-goto-view'));
+  });
+});
+
 const _viewAbout=document.getElementById('view-about');
 if(_viewAbout) _viewAbout.style.display='none';
 document.getElementById('view-contato').style.display='none';
