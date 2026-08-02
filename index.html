@@ -36,6 +36,20 @@ document.addEventListener('click',function(e){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexus Tech Converter · Ferramentas PDF, Office & Gestão</title>
+<meta name="description" content="83 ferramentas gratuitas para PDF, imagens, conversão de arquivos Office e contabilidade. Processamento 100% local no navegador — nada é enviado a servidores.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://nexustechconverter.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nexus Tech Converter · Ferramentas PDF, Office & Gestão">
+<meta property="og:description" content="83 ferramentas gratuitas para PDF, imagens, conversão de arquivos Office e contabilidade. Processamento 100% local no navegador.">
+<meta property="og:url" content="https://nexustechconverter.com/">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nexus Tech Converter · Ferramentas PDF, Office & Gestão">
+<meta name="twitter:description" content="83 ferramentas gratuitas para PDF, imagens, conversão de arquivos Office e contabilidade.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Nexus Tech Converter","applicationCategory":"Utility","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"},"description":"83 ferramentas gratuitas para PDF, imagens, conversão de arquivos Office e contabilidade, com processamento 100% local no navegador."}
+</script>
 <link rel="manifest" href="./manifest.json">
 <meta name="theme-color" content="#020617">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -43,6 +57,9 @@ document.addEventListener('click',function(e){
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 *::-webkit-scrollbar{width:9px;height:9px}
@@ -316,6 +333,15 @@ body{display:block;min-height:100vh}
 .i2p-remove:hover{background:#ef4444;border-color:#ef4444}
 .i2p-name{font-size:9.5px;color:var(--muted);margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .i2p-movebar{display:flex;justify-content:space-between;margin-top:4px}
+
+/* ── ORGANIZADOR DE PÁGINAS (PDF) ── */
+.org-pages-grid{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0;padding:12px;border:1px dashed var(--border);border-radius:12px;min-height:56px}
+.org-page-card{position:relative;width:100px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:6px;cursor:grab;transition:transform .15s ease,border-color .15s ease}
+.org-page-card:active{cursor:grabbing}
+.org-page-card img{width:100%;height:auto;border-radius:6px;display:block;background:var(--bg);pointer-events:none}
+.org-page-num{font-size:9.5px;color:var(--muted);margin-top:5px;text-align:center}
+.org-page-del{position:absolute;top:4px;right:4px;background:rgba(15,17,26,.7);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:6px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px}
+.org-page-del:hover{background:#ef4444;border-color:#ef4444}
 .i2p-movebar button{background:none;border:1px solid var(--border);border-radius:5px;color:var(--muted);width:22px;height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .i2p-movebar button:hover{border-color:var(--gold2);color:var(--text)}
 .i2p-movebar button:disabled{opacity:.25;cursor:default}
@@ -650,7 +676,7 @@ body{display:block;min-height:100vh}
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
   import { getAuth } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
   import { getStorage } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
   const firebaseConfig = {
@@ -677,6 +703,27 @@ body{display:block;min-height:100vh}
   window.analytics = analytics;
   window.auth = auth;
   window.db = db;
+
+  // ── SINCRONIZAÇÃO DE CONTA (histórico, favoritos e configurações) ──
+  function cloudKey(email){return (email||'').trim().toLowerCase();}
+  window.loadUserCloudData = async function (email) {
+    try {
+      const snap = await getDoc(doc(db, "userData", cloudKey(email)));
+      return snap.exists() ? snap.data() : null;
+    } catch (err) {
+      console.warn("Não foi possível carregar dados da conta:", err.code || err.message);
+      return null;
+    }
+  };
+  window.saveUserCloudData = async function (email, data) {
+    try {
+      await setDoc(doc(db, "userData", cloudKey(email)), data, { merge: true });
+      return true;
+    } catch (err) {
+      console.warn("Não foi possível salvar dados da conta:", err.code || err.message);
+      return false;
+    }
+  };
   window.storage = storage;
 
   console.log("Firebase inicializado com sucesso!");
@@ -730,7 +777,7 @@ body{display:block;min-height:100vh}
         <div class="hero-copy">
           <span class="pill-badge"><svg class="hicon-solid" style="width:12px;height:12px;fill:#a5b4fc" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z"/></svg> SUÍTE DE FERRAMENTAS ONLINE</span>
           <h1>Sua central completa de<br><span class="grad-text">documentos, imagens<br>e contabilidade.</span></h1>
-          <p id="hero-sub">69 ferramentas gratuitas de PDF, imagem, conversão de arquivos Office e contabilidade — tudo em um só lugar, rodando localmente no seu navegador.</p>
+          <p id="hero-sub">83 ferramentas gratuitas de PDF, imagem, conversão de arquivos Office e contabilidade — tudo em um só lugar, rodando localmente no seu navegador.</p>
           <div class="trust-row trust-row-ico">
             <span><svg class="hicon" style="width:13px;height:13px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 12.06 12.06 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.248-8.25-3.286z"/></svg> Seguro e Privado</span><span><svg class="hicon-solid" style="width:13px;height:13px;fill:var(--muted)" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z"/></svg> Processamento Local</span>
           </div>
@@ -758,7 +805,7 @@ body{display:block;min-height:100vh}
             <div class="hero-format-chip" onclick="openTool(71)"><span class="fmt-ico fmt-ppt">P</span><div><b>PowerPoint</b><small>.pptx</small></div></div>
           </div>
           <div class="hero-mini-stats">
-            <div><span class="hmi hmi-orange"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.35-.264.746-.454 1.187-.548a2.51 2.51 0 0 1 3.114 2.83l-2.36 2.36m-1.941-4.643 1.941 4.643"/></svg></span><b>69+</b><small>Ferramentas</small></div>
+            <div><span class="hmi hmi-orange"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.35-.264.746-.454 1.187-.548a2.51 2.51 0 0 1 3.114 2.83l-2.36 2.36m-1.941-4.643 1.941 4.643"/></svg></span><b>83+</b><small>Ferramentas</small></div>
             <div><span class="hmi hmi-green"><svg class="hicon-solid" style="width:16px;height:16px;fill:#4ade80" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.089l3.75-5.25z"/></svg></span><b>100%</b><small>Local e Seguro</small></div>
             <div><span class="hmi hmi-orange"><svg class="hicon-solid" style="width:16px;height:16px;fill:#fbbf24" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.615 1.595a.75.75 0 0 1 .359.852L12.982 9.75h7.268a.75.75 0 0 1 .548 1.262l-10.5 11.25a.75.75 0 0 1-1.272-.71l1.992-7.302H3.75a.75.75 0 0 1-.548-1.262l10.5-11.25a.75.75 0 0 1 .913-.143z"/></svg></span><b>Rápido</b><small>Sem Limites</small></div>
             <div><span class="hmi hmi-blue"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0z"/></svg></span><b>Gratuito</b><small>Para Todos</small></div>
@@ -778,7 +825,7 @@ body{display:block;min-height:100vh}
         <div class="history-arrow">→</div>
         <div class="history-node"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg></span><b>FGA Suite</b><small class="history-tag">FGA Holding LLC</small><small class="history-desc">Integração ao portfólio da FGA, unificando tecnologia e confiança.</small></div>
         <div class="history-arrow">→</div>
-        <div class="history-node history-node-current"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5z"/></svg></span><b>Nexus Tech Converter</b><small class="history-tag">Hoje</small><small class="history-desc">Uma suíte completa com mais de 69 ferramentas 100% locais.</small></div>
+        <div class="history-node history-node-current"><span class="history-ico"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5z"/></svg></span><b>Nexus Tech Converter</b><small class="history-tag">Hoje</small><small class="history-desc">Uma suíte completa com mais de 83 ferramentas 100% locais.</small></div>
       </div>
       <div class="history-full-text">
         <p><strong>FREDTECHsystem Suite:</strong> o projeto nasceu como um conjunto simples de utilitários pessoais para conversão de arquivos.</p>
@@ -835,7 +882,7 @@ body{display:block;min-height:100vh}
     <section class="steps-land">
       <h2>Como funciona?</h2>
       <div class="steps-grid-land">
-        <div class="step-card-land"><div class="step-num">1</div><h4>Escolha a ferramenta</h4><p>Selecione entre as 69 ferramentas disponíveis abaixo.</p></div>
+        <div class="step-card-land"><div class="step-num">1</div><h4>Escolha a ferramenta</h4><p>Selecione entre as 83 ferramentas disponíveis abaixo.</p></div>
         <div class="step-arrow">→</div>
         <div class="step-card-land"><div class="step-num">2</div><h4>Envie seu arquivo</h4><p>Arraste e solte ou clique para selecionar.</p></div>
         <div class="step-arrow">→</div>
@@ -885,12 +932,12 @@ body{display:block;min-height:100vh}
 
     <!-- FILTRO DE CATEGORIA -->
     <div class="cat-filter-row" id="tools-anchor">
-      <div class="cat-item active" data-cat="all" onclick="filterCat('all',this)"><span id="cat-label-all"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V6a2.25 2.25 0 0 1 2.25-2.25h4.5l2.25 2.25h8.25A2.25 2.25 0 0 1 21.75 8.25v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25z"/></svg>Todos</span><span class="cat-count">69</span></div>
+      <div class="cat-item active" data-cat="all" onclick="filterCat('all',this)"><span id="cat-label-all"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V6a2.25 2.25 0 0 1 2.25-2.25h4.5l2.25 2.25h8.25A2.25 2.25 0 0 1 21.75 8.25v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25z"/></svg>Todos</span><span class="cat-count">83</span></div>
       <div class="cat-item" data-cat="fav" onclick="filterCat('fav',this)"><span><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m11.48 3.5 2.02 4.11a.6.6 0 0 0 .45.33l4.53.66c.49.07.69.68.33 1.02l-3.28 3.2a.6.6 0 0 0-.17.53l.77 4.51c.09.49-.43.86-.87.63l-4.05-2.13a.6.6 0 0 0-.56 0l-4.05 2.13c-.44.23-.95-.14-.87-.63l.77-4.51a.6.6 0 0 0-.17-.53l-3.28-3.2c-.36-.34-.16-.95.33-1.02l4.53-.66a.6.6 0 0 0 .45-.33l2.02-4.11c.22-.45.85-.45 1.07 0z"/></svg>Favoritos</span></div>
-      <div class="cat-item" data-cat="pdf" onclick="filterCat('pdf',this)"><span id="cat-label-pdf"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9z"/></svg>PDF / Assinatura</span><span class="cat-count">14</span></div>
-      <div class="cat-item" data-cat="image" onclick="filterCat('image',this)"><span id="cat-label-image"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3 16.5V6.75A2.25 2.25 0 0 1 5.25 4.5h13.5A2.25 2.25 0 0 1 21 6.75v10.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25v-.75z"/></svg>Imagens</span><span class="cat-count">12</span></div>
-      <div class="cat-item" data-cat="convert" onclick="filterCat('convert',this)"><span id="cat-label-convert"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-4.99M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>Conversores / OFX</span><span class="cat-count">24</span></div>
-      <div class="cat-item" data-cat="office" onclick="filterCat('office',this)"><span id="cat-label-office"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg>Contabilidade Útil</span><span class="cat-count">12</span></div>
+      <div class="cat-item" data-cat="pdf" onclick="filterCat('pdf',this)"><span id="cat-label-pdf"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9z"/></svg>PDF / Assinatura</span><span class="cat-count">17</span></div>
+      <div class="cat-item" data-cat="image" onclick="filterCat('image',this)"><span id="cat-label-image"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909M3 16.5V6.75A2.25 2.25 0 0 1 5.25 4.5h13.5A2.25 2.25 0 0 1 21 6.75v10.5A2.25 2.25 0 0 1 18.75 19.5H5.25A2.25 2.25 0 0 1 3 17.25v-.75z"/></svg>Imagens</span><span class="cat-count">15</span></div>
+      <div class="cat-item" data-cat="convert" onclick="filterCat('convert',this)"><span id="cat-label-convert"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-4.99M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182"/></svg>Conversores / OFX</span><span class="cat-count">30</span></div>
+      <div class="cat-item" data-cat="office" onclick="filterCat('office',this)"><span id="cat-label-office"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg>Contabilidade Útil</span><span class="cat-count">14</span></div>
       <div class="cat-item" data-cat="office2" onclick="filterCat('office2',this)"><span id="cat-label-office2"><svg class="hicon" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M15.75 3v1.5M8.25 19.5V21M15.75 19.5V21M3 8.25h1.5M3 15.75h1.5M19.5 8.25H21M19.5 15.75H21M6.75 19.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 17.25 4.5H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25zM9 9h6v6H9V9z"/></svg>Office IA <svg class="hicon-solid" style="width:13px;height:13px;fill:#c084fc" viewBox="0 0 24 24"><path d="M9 4.5a.75.75 0 0 1 .72.54l.82 2.85a3.75 3.75 0 0 0 2.57 2.57l2.85.82a.75.75 0 0 1 0 1.44l-2.85.82a3.75 3.75 0 0 0-2.57 2.57l-.82 2.85a.75.75 0 0 1-1.44 0l-.82-2.85a3.75 3.75 0 0 0-2.57-2.57l-2.85-.82a.75.75 0 0 1 0-1.44l2.85-.82a3.75 3.75 0 0 0 2.57-2.57l.82-2.85A.75.75 0 0 1 9 4.5z"/></svg></span><span class="cat-count">7</span></div>
     </div>
 
@@ -903,7 +950,7 @@ body{display:block;min-height:100vh}
 
     <div class="sec-header sec-header-big">
       <h2 id="sec-header-title">Todas as Ferramentas</h2>
-      <p id="sec-header-sub">69 ferramentas gratuitas para PDF, imagem, conversão e contabilidade — escolha uma categoria ou use a busca.</p>
+      <p id="sec-header-sub">83 ferramentas gratuitas para PDF, imagem, conversão e contabilidade — escolha uma categoria ou use a busca.</p>
     </div>
     <div class="grid" id="tools-grid"></div>
   </div>
@@ -917,8 +964,8 @@ body{display:block;min-height:100vh}
 
   <!-- VIEW PAINEL / DASHBOARD DE ESTATÍSTICAS + HISTÓRICO -->
   <div id="view-dashboard" class="view-sec" style="display:none">
-    <h2><svg class="hicon" style="width:18px;height:18px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg> Painel de Estatísticas</h2>
-    <p style="color:var(--muted);font-size:12.5px;margin-top:4px">Tudo é calculado localmente a partir do seu histórico salvo neste navegador. Nada é enviado para servidores.</p>
+    <h2><svg class="hicon" style="width:18px;height:18px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.5h6V21H3v-7.5zM15 3h6v6.75h-6V3zM3 3h6v6.75H3V3zM15 12.75h6V21h-6v-8.25z"/></svg> Painel de Estatísticas <span class="pwa-badge" id="sync-status-badge" style="display:none"></span></h2>
+    <p style="color:var(--muted);font-size:12.5px;margin-top:4px">Seu histórico e favoritos. Entre com sua conta para manter tudo sincronizado entre dispositivos.</p>
     <div class="dash-stats-grid" id="dash-stats-grid"></div>
 
     <div class="dash-section-head">
@@ -1153,6 +1200,7 @@ function toggleTheme(){
   isDark=!isDark;
   try{localStorage.setItem('ntc_theme',isDark?'dark':'light');}catch(e){}
   applyTheme();
+  if(typeof pushCloudData==='function')pushCloudData();
 }
 if(typeof window.matchMedia==='function'){
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',e=>{
@@ -1234,6 +1282,20 @@ const TOOLS=[
   {id:85,name:"Calculadora de Férias",desc:"Calcula valor de férias com 1/3 constitucional sobre o salário.",cat:"office"},
   {id:86,name:"Conversor de Fuso Horário",desc:"Converte um horário entre os principais fusos horários do mundo.",cat:"convert"},
   {id:87,name:"PDF para OFX",desc:"Extrai transações de um extrato em PDF e gera um arquivo .ofx para importar no seu sistema financeiro.",cat:"convert"},
+  {id:88,name:"CSV para Excel",desc:"Converte um arquivo CSV em uma planilha .xlsx real, detectando o separador automaticamente.",cat:"convert"},
+  {id:89,name:"Excel para CSV",desc:"Extrai a primeira aba de uma planilha .xlsx e gera um arquivo CSV.",cat:"convert"},
+  {id:90,name:"JSON para Excel",desc:"Converte uma lista de objetos JSON em uma planilha .xlsx com colunas automáticas.",cat:"convert"},
+  {id:91,name:"Excel para JSON",desc:"Converte a primeira aba de uma planilha .xlsx em uma lista de objetos JSON.",cat:"convert"},
+  {id:92,name:"Markdown para PDF",desc:"Converte texto em Markdown (títulos, listas, negrito) em um PDF formatado.",cat:"convert"},
+  {id:93,name:"HTML para PDF",desc:"Renderiza um trecho de HTML/CSS e gera um PDF com a aparência visual da página.",cat:"convert"},
+  {id:94,name:"SVG para PNG",desc:"Converte uma imagem vetorial SVG em PNG, com escala ajustável.",cat:"image"},
+  {id:95,name:"Leitor de QR Code",desc:"Lê o conteúdo de um QR Code a partir de uma imagem enviada.",cat:"image"},
+  {id:96,name:"Comparar PDFs",desc:"Compara o texto de dois PDFs e destaca as linhas que mudaram, foram adicionadas ou removidas.",cat:"pdf"},
+  {id:97,name:"Organizador de Páginas PDF",desc:"Arraste para reordenar ou excluir páginas de um PDF antes de salvar.",cat:"pdf"},
+  {id:98,name:"Texto para Voz",desc:"Lê qualquer texto em voz alta usando as vozes do seu navegador/sistema.",cat:"office"},
+  {id:99,name:"Voz para Texto",desc:"Transcreve o que você fala ao microfone em texto, em tempo real.",cat:"office"},
+  {id:100,name:"OCR — Imagem para Texto",desc:"Reconhece texto dentro de fotos e imagens escaneadas usando OCR real no navegador.",cat:"image"},
+  {id:101,name:"OCR — PDF Escaneado para Texto",desc:"Extrai o texto de PDFs escaneados (sem camada de texto) usando reconhecimento óptico de caracteres.",cat:"pdf"},
 ];
 
 const CONV_TOOLS=[
@@ -1255,7 +1317,7 @@ const SITE_I18N={
     catTitle:'Categorias',catAll:'Todos',catPdf:'PDF / Assinatura',catImage:'Imagens',catConvert:'Conversores / OFX',catOffice:'Contabilidade Útil',catOffice2:'Office IA',
     searchPlaceholder:'Buscar ferramenta...',
     themeLight:'Modo Claro',themeDark:'Modo Escuro',
-    heroSub:'69 ferramentas de uso do dia a dia — conversores, PDF, imagem e calculadoras de contabilidade essenciais, com conversores Office com IA.',
+    heroSub:'83 ferramentas de uso do dia a dia — conversores, PDF, imagem e calculadoras de contabilidade essenciais, com conversores Office com IA.',
     secToolsTitle:'Todas as Ferramentas',
     useToolBtn:'Usar ferramenta',
     footerRights:'Todos os direitos reservados',
@@ -1284,7 +1346,7 @@ const SITE_I18N={
     catTitle:'Categories',catAll:'All',catPdf:'PDF / Signature',catImage:'Images',catConvert:'Converters / OFX',catOffice:'Useful Accounting',catOffice2:'Office AI',
     searchPlaceholder:'Search tool...',
     themeLight:'Light Mode',themeDark:'Dark Mode',
-    heroSub:'69 everyday tools — converters, PDF, image and essential accounting calculators, plus AI-powered Office converters.',
+    heroSub:'83 everyday tools — converters, PDF, image and essential accounting calculators, plus AI-powered Office converters.',
     secToolsTitle:'All Tools',
     useToolBtn:'Use tool',
     footerRights:'All rights reserved',
@@ -1313,7 +1375,7 @@ const SITE_I18N={
     catTitle:'Categorías',catAll:'Todos',catPdf:'PDF / Firma',catImage:'Imágenes',catConvert:'Conversores / OFX',catOffice:'Contabilidad Útil',catOffice2:'Office IA',
     searchPlaceholder:'Buscar herramienta...',
     themeLight:'Modo Claro',themeDark:'Modo Oscuro',
-    heroSub:'69 herramientas del día a día — conversores, PDF, imagen y calculadoras de contabilidad esenciales, con conversores de Office con IA.',
+    heroSub:'83 herramientas del día a día — conversores, PDF, imagen y calculadoras de contabilidad esenciales, con conversores de Office con IA.',
     secToolsTitle:'Todas las Herramientas',
     useToolBtn:'Usar herramienta',
     footerRights:'Todos los derechos reservados',
@@ -1343,8 +1405,10 @@ function setSiteLang(l,btn){
   siteLang=l;
   convLang=l; // mantém o idioma do conversor Office IA sincronizado com o idioma do site
   document.querySelectorAll('.site-lang-btn').forEach(b=>b.classList.remove('active'));
+  if(!btn){const idx0={pt:0,en:1,es:2}[l];const btns=document.querySelectorAll('.site-lang-btn');btn=btns[idx0];}
   if(btn) btn.classList.add('active');
   applySiteLang();
+  if(typeof pushCloudData==='function')pushCloudData();
   // se o painel do conversor estiver visível, sincroniza os botões PT/EN/ES dele também
   const idx={pt:0,en:1,es:2}[l];
   const convBtns=document.querySelectorAll('.conv-lang-btn');
@@ -1502,11 +1566,14 @@ function loginSuccess(user){
   authSessionSet(user);
   renderAuthUI();
   toast('✅ Bem-vindo(a), '+user.name.split(' ')[0]+'!');
+  syncOnLogin(user);
 }
 function logoutUser(){
   authSessionSet(null);
+  cloudSyncActive=false;
   document.getElementById('auth-user-dropdown').classList.remove('open');
   renderAuthUI();
+  updateSyncBadge(null);
   if(typeof google!=='undefined'&&google.accounts&&google.accounts.id)try{google.accounts.id.disableAutoSelect();}catch(e){}
   toast('Você saiu da sua conta.');
 }
@@ -1540,6 +1607,51 @@ let recentIds=lsGet('ntc_recent');
 
 function isFav(id){return favIds.includes(id);}
 
+// ── SINCRONIZAÇÃO NA NUVEM (histórico, favoritos e configurações da conta) ──
+let cloudSyncActive=false;
+function updateSyncBadge(user){
+  const el=document.getElementById('sync-status-badge');
+  if(!el)return;
+  el.textContent=user?('☁ Sincronizado com '+(user.email||user.name)):'💾 Salvo apenas neste navegador';
+  el.style.display='inline-flex';
+}
+async function pushCloudData(){
+  const user=authSessionGet();
+  if(!cloudSyncActive||!user||typeof window.saveUserCloudData!=='function')return;
+  await window.saveUserCloudData(user.email,{
+    history:lsGet('ntc_history'),
+    favorites:favIds,
+    settings:{lang:siteLang,theme:isDark?'dark':'light'},
+    updatedAt:Date.now()
+  });
+}
+async function syncOnLogin(user){
+  if(typeof window.loadUserCloudData!=='function'||!user||!user.email)return;
+  const cloud=await window.loadUserCloudData(user.email);
+  if(cloud){
+    const localHist=lsGet('ntc_history');
+    const cloudHist=Array.isArray(cloud.history)?cloud.history:[];
+    const mergedHist=[...localHist,...cloudHist]
+      .sort((a,b)=>b.ts-a.ts)
+      .filter((h,i,arr)=>arr.findIndex(x=>x.ts===h.ts&&x.name===h.name)===i)
+      .slice(0,300);
+    lsSet('ntc_history',mergedHist);
+    const cloudFav=Array.isArray(cloud.favorites)?cloud.favorites:[];
+    favIds=[...new Set([...favIds,...cloudFav])];
+    lsSet('ntc_favorites',favIds);
+    if(cloud.settings&&cloud.settings.lang&&cloud.settings.lang!==siteLang){
+      setSiteLang(cloud.settings.lang);
+    }
+  }
+  cloudSyncActive=true;
+  await pushCloudData();
+  renderGrid();
+  if(document.getElementById('dash-stats-grid'))renderDashboard();
+  updateSyncBadge(user);
+}
+// se a sessão já estava aberta antes de recarregar a página, sincroniza de novo
+{const _u=authSessionGet();if(_u)syncOnLogin(_u);}
+
 // ── HISTÓRICO REAL DE CONVERSÕES (persistido em localStorage) ──
 function logConversion(fileName,toolLabel){
   try{
@@ -1547,11 +1659,13 @@ function logConversion(fileName,toolLabel){
     h.unshift({name:fileName||'arquivo',tool:toolLabel||'—',ts:Date.now()});
     if(h.length>300)h.length=300;
     lsSet('ntc_history',h);
+    pushCloudData();
   }catch(e){}
 }
 function clearHistory(){
   lsSet('ntc_history',[]);
   renderDashboard();
+  pushCloudData();
   toast('✅ Histórico de conversões limpo.');
 }
 function dashTimeAgo(ts){
@@ -1600,6 +1714,7 @@ function toggleFavorite(id,ev){
   favIds=isFav(id)?favIds.filter(x=>x!==id):[id,...favIds];
   lsSet('ntc_favorites',favIds);
   renderGrid();
+  pushCloudData();
 }
 
 // ── CONTATO ───────────────────────────────────────────
@@ -1755,7 +1870,7 @@ function showView(v,el){
     document.getElementById('msg-success').classList.remove('show');
     document.getElementById('wa-redirect').classList.remove('show');
   }
-  if(v==='dashboard'){renderDashboard();}
+  if(v==='dashboard'){renderDashboard();updateSyncBadge(authSessionGet());}
 }
 
 // ── MODAL ─────────────────────────────────────────────
@@ -1783,6 +1898,30 @@ function toolProgHide(){
   _toolProgBtn=null;_toolProgBtnText=null;
   if(_toolProgTimeout){clearTimeout(_toolProgTimeout);_toolProgTimeout=null;}
 }
+// ── SEGURANÇA: limite de tamanho e bloqueio de extensões perigosas em qualquer upload do site ──
+const MAX_FILE_SIZE_MB = 300; // configurável — arquivos maiores são rejeitados antes de processar
+const BLOCKED_EXTENSIONS = ['exe','bat','cmd','sh','msi','scr','com','ps1','vbs','jar','app'];
+function validateSelectedFiles(fileList){
+  for(const f of fileList){
+    const ext=(f.name.split('.').pop()||'').toLowerCase();
+    if(BLOCKED_EXTENSIONS.includes(ext)){
+      toast('❌ Por segurança, arquivos .'+ext+' não são aceitos.');
+      return false;
+    }
+    if(f.size>MAX_FILE_SIZE_MB*1024*1024){
+      toast('❌ "'+f.name+'" tem '+(f.size/1024/1024).toFixed(1)+' MB — o limite atual é '+MAX_FILE_SIZE_MB+' MB.');
+      return false;
+    }
+  }
+  return true;
+}
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t&&t.tagName==='INPUT'&&t.type==='file'&&t.files&&t.files.length){
+    if(!validateSelectedFiles(t.files))t.value='';
+  }
+},true);
+
 async function runToolProgress(btn,fnName,label){
   _toolProgBtn=btn;_toolProgBtnText=btn?btn.textContent:null;
   if(btn)btn.disabled=true;
@@ -2057,6 +2196,31 @@ function buildModal(id,tool){
     document.getElementById('fuso-origem').innerHTML=zonas.map(z=>`<option value="${z[0]}">${z[1]}</option>`).join('');
     return;}
   if(id===87){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF de extrato bancário — as linhas com data e valor serão reconhecidas automaticamente:</p><input type="file" id="p2o-pdf" accept="application/pdf" class="f-input" onchange="pdfToOfxPreview(this)"><div class="result-box" id="p2o-result"></div><button class="btn-exec" id="p2o-dl-btn" style="display:none" onclick="downloadPdfToOfx()">💾 Baixar arquivo .OFX</button><div style="background:rgba(140,100,178,.07);border:1px solid rgba(140,100,178,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#b58fd6;line-height:1.5;margin-top:10px">⚠️ Extração heurística baseada no texto do PDF. Revise as transações e o arquivo .ofx antes de importar no seu sistema financeiro.</div>`;return;}
+
+  if(id===88){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um arquivo CSV:</p><input type="file" id="c2x-file" accept=".csv,text/csv" class="f-input"><label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:10px 0"><input type="checkbox" id="c2x-header" checked style="width:16px;height:16px"> Primeira linha é cabeçalho</label><button class="btn-exec" onclick="runToolProgress(this,'csvToExcel')">Converter para Excel</button><div class="result-box" id="c2x-result"></div>`;return;}
+  if(id===89){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma planilha .xlsx (primeira aba será usada):</p><input type="file" id="x2c-file" accept=".xlsx" class="f-input"><button class="btn-exec" onclick="runToolProgress(this,'excelToCsv')">Converter para CSV</button><div class="result-box" id="x2c-result"></div>`;return;}
+  if(id===90){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Cole uma lista de objetos JSON (array):</p><textarea id="j2x-input" class="f-textarea" style="min-height:180px;font-family:monospace;font-size:12px" placeholder='[{"nome":"Ana","idade":30},{"nome":"Bruno","idade":25}]'></textarea><button class="btn-exec" onclick="runToolProgress(this,'jsonToExcel')">Converter para Excel</button><div class="result-box" id="j2x-result"></div>`;return;}
+  if(id===91){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma planilha .xlsx (primeira aba será usada):</p><input type="file" id="x2j-file" accept=".xlsx" class="f-input"><button class="btn-exec" onclick="runToolProgress(this,'excelToJson')">Converter para JSON</button><div class="result-box" id="x2j-result" style="max-height:300px;overflow:auto;white-space:pre-wrap;font-family:monospace;font-size:11px"></div><button class="btn-sm" id="x2j-dl-btn" style="display:none;width:100%;margin-top:8px" onclick="downloadJsonResult()">Baixar .json</button>`;return;}
+  if(id===92){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Escreva em Markdown (# título, ## subtítulo, **negrito**, *itálico*, - listas, \`código\`, > citação):</p><textarea id="md2p-input" class="f-textarea" style="min-height:220px;font-family:monospace;font-size:12px" placeholder="# Meu documento
+
+## Introdução
+Texto **importante** e *em itálico*.
+
+- Item 1
+- Item 2
+
+> Uma citação"></textarea><button class="btn-exec" onclick="runToolProgress(this,'markdownToPdf')">Gerar PDF</button>`;return;}
+  if(id===93){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Cole o HTML (com estilos inline ou &lt;style&gt;) que deseja transformar em PDF:</p><textarea id="h2p-input" class="f-textarea" style="min-height:200px;font-family:monospace;font-size:12px" placeholder="<div style=&quot;font-family:sans-serif;padding:20px&quot;><h1>Título</h1><p>Um parágrafo de exemplo.</p></div>"></textarea><button class="btn-exec" onclick="runToolProgress(this,'htmlToPdf')">Gerar PDF</button><div style="background:rgba(140,100,178,.07);border:1px solid rgba(140,100,178,.2);border-radius:6px;padding:10px 12px;font-size:11px;color:#b58fd6;line-height:1.5;margin-top:10px">Observação: o PDF é gerado como uma imagem de alta resolução da página renderizada — visual fiel, mas o texto não é selecionável.</div>`;return;}
+  if(id===94){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um arquivo SVG:</p><input type="file" id="s2p-file" accept=".svg,image/svg+xml" class="f-input"><div class="f-row"><label class="f-label">Escala</label><select id="s2p-scale" class="f-input"><option value="1">1x</option><option value="2" selected>2x</option><option value="4">4x</option><option value="8">8x</option></select></div><button class="btn-exec" onclick="runToolProgress(this,'svgToPng')">Converter para PNG</button>`;return;}
+  if(id===95){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma imagem contendo um QR Code:</p><input type="file" id="qrr-file" accept="image/*" class="f-input" onchange="lerQrCode(this)"><div class="result-box" id="qrr-result"></div>`;return;}
+  if(id===96){body.innerHTML=`<div class="grid-2"><div class="f-row"><label class="f-label">PDF A</label><input type="file" id="cmp-pdf-a" accept="application/pdf" class="f-input"></div><div class="f-row"><label class="f-label">PDF B</label><input type="file" id="cmp-pdf-b" accept="application/pdf" class="f-input"></div></div><button class="btn-exec" onclick="runToolProgress(this,'compararPdfs')">Comparar</button><div class="result-box" id="cmp-result" style="max-height:340px;overflow:auto"></div>`;return;}
+  if(id===97){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione o PDF — as páginas aparecem abaixo para você arrastar, reordenar ou excluir:</p><input type="file" id="org-pdf" accept="application/pdf" class="f-input" onchange="orgLoadPdf(this)"><div class="org-pages-grid" id="org-pages-grid"></div><button class="btn-exec" id="org-save-btn" style="display:none" onclick="orgSavePdf()">Salvar PDF reorganizado</button>`;return;}
+  if(id===98){body.innerHTML=`<div class="f-row"><label class="f-label">Texto</label><textarea id="tts-input" class="f-textarea" style="min-height:160px" placeholder="Digite ou cole o texto que deseja ouvir..."></textarea></div><div class="grid-2"><div class="f-row"><label class="f-label">Voz</label><select id="tts-voice" class="f-input"></select></div><div class="f-row"><label class="f-label">Velocidade</label><input type="range" id="tts-rate" min="0.5" max="2" step="0.1" value="1" style="width:100%"></div></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn-exec" style="flex:1" onclick="ttsPlay()">▶ Ouvir</button><button class="btn-sm" onclick="ttsPause()">⏸ Pausar</button><button class="btn-sm" onclick="ttsStop()">⏹ Parar</button></div><p style="font-size:11px;color:var(--dim);margin-top:10px">Usa as vozes já instaladas no seu navegador/sistema — a lista varia por dispositivo.</p>`;
+    requestAnimationFrame(populateTtsVoices);
+    return;}
+  if(id===99){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Clique em "Iniciar" e fale — a transcrição aparece abaixo em tempo real. Funciona apenas em navegadores baseados em Chromium (Chrome, Edge).</p><div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn-exec" style="flex:1" id="stt-start-btn" onclick="sttStart()">🎙 Iniciar</button><button class="btn-sm" onclick="sttStop()">⏹ Parar</button></div><textarea id="stt-output" class="f-textarea" style="min-height:180px" placeholder="A transcrição aparece aqui..."></textarea><button class="btn-sm" style="width:100%;margin-top:8px" onclick="sttDownload()">Baixar .txt</button>`;return;}
+  if(id===100){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione uma foto ou imagem escaneada — o texto será reconhecido inteiramente no seu navegador (nada é enviado a servidores):</p><input type="file" id="ocr-img-file" accept="image/*" class="f-input"><div class="f-row"><label class="f-label">Idioma do texto</label><select id="ocr-img-lang" class="f-input"><option value="por">Português</option><option value="eng">Inglês</option><option value="spa">Espanhol</option></select></div><button class="btn-exec" onclick="ocrImageToText()">🔎 Reconhecer Texto</button><div class="tool-prog" id="ocr-img-prog" style="display:none"><div class="tool-prog-top"><span id="ocr-img-prog-label">Carregando OCR…</span><span id="ocr-img-prog-pct">0%</span></div><div class="tool-prog-track"><div class="tool-prog-bar" id="ocr-img-prog-bar" style="width:0%"></div></div></div><textarea id="ocr-img-output" class="f-textarea" style="min-height:180px;display:none" placeholder="O texto reconhecido aparece aqui..."></textarea><button class="btn-sm" id="ocr-img-dl" style="width:100%;margin-top:8px;display:none" onclick="ocrDownloadTxt('ocr-img-output')">Baixar .txt</button>`;return;}
+  if(id===101){body.innerHTML=`<p style="font-size:13px;color:var(--muted)">Selecione um PDF escaneado (sem camada de texto selecionável) — cada página será reconhecida por OCR:</p><input type="file" id="ocr-pdf-file" accept="application/pdf" class="f-input"><div class="f-row"><label class="f-label">Idioma do texto</label><select id="ocr-pdf-lang" class="f-input"><option value="por">Português</option><option value="eng">Inglês</option><option value="spa">Espanhol</option></select></div><button class="btn-exec" onclick="ocrPdfToText()">🔎 Reconhecer Texto do PDF</button><div class="tool-prog" id="ocr-pdf-prog" style="display:none"><div class="tool-prog-top"><span id="ocr-pdf-prog-label">Carregando OCR…</span><span id="ocr-pdf-prog-pct">0%</span></div><div class="tool-prog-track"><div class="tool-prog-bar" id="ocr-pdf-prog-bar" style="width:0%"></div></div></div><textarea id="ocr-pdf-output" class="f-textarea" style="min-height:180px;display:none" placeholder="O texto reconhecido aparece aqui..."></textarea><button class="btn-sm" id="ocr-pdf-dl" style="width:100%;margin-top:8px;display:none" onclick="ocrDownloadTxt('ocr-pdf-output')">Baixar .txt</button>`;return;}
 
   body.innerHTML=`<div style="text-align:center;padding:24px 0">
     <div style="font-size:52px;margin-bottom:12px">${{pdf:'📄',image:'🖼️',convert:'🔄',office:'📊',office2:'🤖'}[tool.cat]}</div>
@@ -3728,7 +3892,7 @@ async function gerarPlanilha(){
   }catch(e){show('gp-result','❌ Erro ao gerar planilha: '+e.message);}
 }
 
-const TOOLS_I18N={"en": {"1": {"name": "Gov.br Digital Signature", "desc": "Sign PDFs by drawing your signature, typing your name in cursive, or uploading a stamp image."}, "2": {"name": "OFX to PDF Converter", "desc": "Parses bank OFX files and generates a structured PDF statement."}, "3": {"name": "Income Statement (DRE)", "desc": "Calculates revenue, deductions and profit, generating an accounting PDF report."}, "4": {"name": "Receipt Generator", "desc": "Issues formatted payment receipts ready to download."}, "5": {"name": "PDF Compressor", "desc": "Reduces PDF size by removing metadata and optimizing internal structure."}, "6": {"name": "Merge PDFs", "desc": "Combines two or more PDF files into a single ordered document."}, "7": {"name": "PDF Page Numbering", "desc": "Automatically adds page numbers to the footer of every page."}, "8": {"name": "PDF Watermark", "desc": "Inserts custom text as a diagonal watermark on PDF documents."}, "9": {"name": "Rotate PDF Pages", "desc": "Rotates pages by 90°, 180° or 270° before saving the document."}, "10": {"name": "Extract Text from PDF", "desc": "Extracts all text content from a PDF for use in editors."}, "11": {"name": "Password-Protect PDF", "desc": "Applies AES encryption and an opening password to confidential documents."}, "12": {"name": "Add Footer to PDF", "desc": "Inserts custom footer text on every page of the document."}, "13": {"name": "Date/Time Stamp", "desc": "Adds an automatic timestamp with date and time to corporate PDFs."}, "14": {"name": "Split PDF by Pages", "desc": "Separates page ranges of a PDF into individual files."}, "15": {"name": "PDF Properties Report", "desc": "Lists metadata, page count, size and PDF version."}, "16": {"name": "Resize Image", "desc": "Changes the width and height of PNG/JPG images while keeping proportion."}, "17": {"name": "Convert Image Format", "desc": "Converts images between PNG, JPG and WebP directly in the browser."}, "18": {"name": "Compress Image", "desc": "Reduces JPEG file size by adjusting quality without visible loss."}, "19": {"name": "Grayscale", "desc": "Converts color images to professional black and white."}, "20": {"name": "Invert Colors", "desc": "Applies a negative effect by inverting all color channels of the image."}, "21": {"name": "Rotate Image", "desc": "Rotates images by any multiple of 90° with precision."}, "22": {"name": "Flip Image", "desc": "Flips images horizontally or vertically."}, "23": {"name": "Add Border", "desc": "Adds a colored, customizable-width border to any image."}, "24": {"name": "Thumbnail Generator", "desc": "Creates reduced-size versions of images for catalogs and previews."}, "25": {"name": "Image Watermark", "desc": "Applies semi-transparent text over photos and illustrations."}, "26": {"name": "Add Text to Image", "desc": "Inserts custom captions and text over images."}, "27": {"name": "Base64 Converter", "desc": "Encodes images to a Base64 string for use in HTML/CSS."}, "28": {"name": "Compound Interest Calculator", "desc": "Calculates returns based on rate, term and monthly contribution."}, "29": {"name": "QR Code Generator", "desc": "Generates QR codes for URLs, text and contact information."}, "30": {"name": "CPF Validator", "desc": "Checks the mathematical validity of Brazilian CPF numbers and formats them automatically."}, "31": {"name": "CNPJ Validator", "desc": "Validates and formats Brazilian CNPJ numbers, showing check digits."}, "32": {"name": "ICMS Tax Calculator", "desc": "Calculates ICMS, tax base and net value by rate."}, "33": {"name": "Currency Converter", "desc": "Converts amounts between BRL, USD, EUR and other currencies with a manual rate."}, "34": {"name": "Discount Calculator", "desc": "Calculates the final price with a percentage or fixed-value discount."}, "35": {"name": "Barcode Generator", "desc": "Generates a visual barcode representation for products."}, "36": {"name": "Business Days Calculator", "desc": "Calculates business days between two dates, excluding weekends."}, "37": {"name": "Unit Converter", "desc": "Converts kg/lb, km/mi, liters/gallons and other units."}, "38": {"name": "CNAB 240 Extractor", "desc": "Parses CNAB 240 files and displays payment records."}, "39": {"name": "NFe XML Parser", "desc": "Extracts tax data from Brazilian Electronic Invoice (NFe) XML files."}, "40": {"name": "PIS/COFINS Calculator", "desc": "Calculates PIS and COFINS on gross revenue by tax regime."}, "41": {"name": "INSS Calculator", "desc": "Calculates the social security contribution by 2026 salary bracket."}, "42": {"name": "IRRF Calculator", "desc": "Calculates income tax withheld at source on salaries."}, "43": {"name": "Strong Password Generator", "desc": "Generates random passwords with letters, numbers and symbols."}, "47": {"name": "Loan Simulator", "desc": "Calculates SAC and Price Table installments with interest and amortization."}, "48": {"name": "Payroll Calculator", "desc": "Calculates gross salary, INSS, IRRF and net salary."}, "49": {"name": "FGTS Calculation", "desc": "Calculates FGTS balance, termination penalty and withdrawal amounts."}, "64": {"name": "Simples Nacional Tax", "desc": "Estimates the Simples Nacional tax by bracket and annex."}, "67": {"name": "ROI Calculator", "desc": "Calculates return on investment with payback period."}, "68": {"name": "Income Tax Statement Helper", "desc": "Helps fill out income statement declarations."}, "46": {"name": "Depreciation Calculation", "desc": "Calculates straight-line depreciation of fixed assets."}, "69": {"name": "PDF → Word", "desc": "Extracts text from the PDF and generates a real editable .docx document (OOXML)."}, "70": {"name": "PDF → Excel", "desc": "Detects rows/tables in the PDF and exports a real structured .xlsx spreadsheet."}, "71": {"name": "PDF → PowerPoint", "desc": "Converts PDF content into real .pptx slides, opened directly in PowerPoint."}, "72": {"name": "Word → PDF", "desc": "Converts .docx documents into a real formatted PDF, generated with pdf-lib."}, "73": {"name": "Excel → PDF", "desc": "Generates a real PDF with the rows and columns of the .xlsx spreadsheet."}, "74": {"name": "PowerPoint → PDF", "desc": "Exports .pptx presentations to a real PDF, one slide per page."}, "75": {"name": "Text Editor", "desc": "Edit, format and transform text: uppercase, trim spaces, word count and more."}, "76": {"name": "Spreadsheet Generator", "desc": "Build a table and generate a real .xlsx spreadsheet, ready to download."}, "77": {"name": "Images to PDF", "desc": "Combines several images (JPG/PNG) into a single PDF file, one per page."}, "78": {"name": "PDF to Images", "desc": "Converts each PDF page into a JPG image, delivered in a .zip file."}, "79": {"name": "BMI Calculator", "desc": "Calculates Body Mass Index and shows the classification range."}, "80": {"name": "Age Calculator", "desc": "Calculates exact age in years, months and days from the birth date."}, "81": {"name": "Date in Full Words", "desc": "Converts a numeric date into full written form."}, "82": {"name": "HEX/RGB Color Converter", "desc": "Converts colors between HEX and RGB with instant preview."}, "83": {"name": "To-Do List Generator", "desc": "Build a checklist and generate a print-ready PDF."}, "84": {"name": "13th Salary Calculator", "desc": "Calculates the proportional value of the year-end bonus salary."}, "85": {"name": "Vacation Pay Calculator", "desc": "Calculates vacation pay including the constitutional 1/3 bonus."}, "86": {"name": "Time Zone Converter", "desc": "Converts a time between the world's main time zones."}, "87": {"name": "PDF to OFX", "desc": "Extracts transactions from a bank statement PDF and generates an .ofx file to import into your financial software."}}, "es": {"1": {"name": "Firma Digital Gov.br", "desc": "Firma PDFs dibujando tu firma, escribiendo tu nombre en cursiva o subiendo una imagen de sello."}, "2": {"name": "Conversor OFX a PDF", "desc": "Interpreta archivos OFX bancarios y genera un extracto en PDF estructurado."}, "3": {"name": "DRE — Estado de Resultados", "desc": "Calcula ingresos, deducciones y ganancia, generando un informe contable en PDF."}, "4": {"name": "Generador de Recibos", "desc": "Emite recibos de pago formateados y listos para descargar."}, "5": {"name": "Compresor de PDF", "desc": "Reduce el tamaño de los PDF eliminando metadatos y optimizando la estructura interna."}, "6": {"name": "Combinar PDFs", "desc": "Une dos o más archivos PDF en un único documento ordenado."}, "7": {"name": "Numeración de Páginas PDF", "desc": "Agrega numeración automática en el pie de todas las páginas del PDF."}, "8": {"name": "Marca de Agua en PDF", "desc": "Inserta texto personalizado como marca de agua diagonal en documentos PDF."}, "9": {"name": "Girar Páginas PDF", "desc": "Rota páginas en 90°, 180° o 270° antes de guardar el documento."}, "10": {"name": "Extraer Texto de PDF", "desc": "Extrae todo el contenido de texto de un PDF para usar en editores."}, "11": {"name": "Proteger PDF con Contraseña", "desc": "Aplica cifrado AES y contraseña de apertura a documentos confidenciales."}, "12": {"name": "Agregar Pie de Página a PDF", "desc": "Inserta texto de pie de página personalizado en todas las páginas."}, "13": {"name": "Sello de Fecha/Hora", "desc": "Agrega una marca de tiempo automática con fecha y hora a PDFs corporativos."}, "14": {"name": "Dividir PDF por Páginas", "desc": "Separa rangos de páginas de un PDF en archivos individuales."}, "15": {"name": "Informe de Propiedades PDF", "desc": "Lista metadatos, número de páginas, tamaño y versión del PDF."}, "16": {"name": "Redimensionar Imagen", "desc": "Cambia el ancho y alto de imágenes PNG/JPG manteniendo la proporción."}, "17": {"name": "Convertir Formato de Imagen", "desc": "Convierte imágenes entre PNG, JPG y WebP directamente en el navegador."}, "18": {"name": "Comprimir Imagen", "desc": "Reduce el peso de imágenes JPEG ajustando la calidad sin pérdida visible."}, "19": {"name": "Escala de Grises", "desc": "Convierte imágenes a color en blanco y negro profesional."}, "20": {"name": "Invertir Colores", "desc": "Aplica un efecto negativo invirtiendo todos los canales de color de la imagen."}, "21": {"name": "Rotar Imagen", "desc": "Rota imágenes en cualquier múltiplo de 90° con precisión."}, "22": {"name": "Voltear Imagen", "desc": "Voltea imágenes horizontal o verticalmente."}, "23": {"name": "Agregar Borde", "desc": "Agrega un borde de color y grosor personalizable a cualquier imagen."}, "24": {"name": "Generador de Miniaturas", "desc": "Crea versiones reducidas de imágenes para catálogos y vistas previas."}, "25": {"name": "Marca de Agua en Imagen", "desc": "Aplica texto semitransparente sobre fotos e ilustraciones."}, "26": {"name": "Agregar Texto a la Imagen", "desc": "Inserta leyendas y texto personalizado sobre imágenes."}, "27": {"name": "Conversor a Base64", "desc": "Codifica imágenes a una cadena Base64 para usar en HTML/CSS."}, "28": {"name": "Calculadora de Interés Compuesto", "desc": "Calcula el rendimiento según tasa, plazo y aporte mensual."}, "29": {"name": "Generador de Códigos QR", "desc": "Genera códigos QR para URLs, textos e información de contacto."}, "30": {"name": "Validador de CPF", "desc": "Verifica la validez matemática de números CPF brasileños y los formatea automáticamente."}, "31": {"name": "Validador de CNPJ", "desc": "Valida y formatea números CNPJ brasileños, mostrando los dígitos verificadores."}, "32": {"name": "Calculadora de ICMS", "desc": "Calcula el ICMS, la base de cálculo y el valor neto según la alícuota."}, "33": {"name": "Conversor de Monedas", "desc": "Convierte valores entre BRL, USD, EUR y otras monedas con una tasa manual."}, "34": {"name": "Calculadora de Descuento", "desc": "Calcula el precio final con un descuento porcentual o de valor fijo."}, "35": {"name": "Generador de Código de Barras", "desc": "Genera una representación visual de código de barras para productos."}, "36": {"name": "Calculadora de Plazos", "desc": "Calcula días hábiles entre dos fechas, excluyendo fines de semana."}, "37": {"name": "Conversor de Unidades", "desc": "Convierte kg/lb, km/mi, litros/galones y otras unidades."}, "38": {"name": "Extractor CNAB 240", "desc": "Interpreta archivos CNAB 240 y muestra los registros de pagos."}, "39": {"name": "Analizador de XML NFe", "desc": "Extrae datos fiscales de archivos XML de Factura Electrónica (NFe)."}, "40": {"name": "Calculadora de PIS/COFINS", "desc": "Calcula el PIS y el COFINS sobre los ingresos brutos según el régimen tributario."}, "41": {"name": "Calculadora de INSS", "desc": "Calcula la contribución previsional según el tramo salarial 2026."}, "42": {"name": "Calculadora de IRRF", "desc": "Calcula el impuesto a la renta retenido en la fuente sobre los salarios."}, "43": {"name": "Generador de Contraseñas Seguras", "desc": "Genera contraseñas aleatorias con letras, números y símbolos."}, "47": {"name": "Simulador de Financiamiento", "desc": "Calcula cuotas del sistema SAC y Tabla Price con interés y amortización."}, "48": {"name": "Nómina de Pago", "desc": "Calcula el salario bruto, INSS, IRRF y el salario neto."}, "49": {"name": "Cálculo de FGTS", "desc": "Calcula el saldo de FGTS, la multa por rescisión y los montos de retiro."}, "64": {"name": "Simples Nacional", "desc": "Estima el impuesto del Simples Nacional según el tramo y el anexo."}, "67": {"name": "Calculadora de ROI", "desc": "Calcula el retorno sobre la inversión con el período de recuperación."}, "68": {"name": "Generador de Declaración de IR", "desc": "Ayuda a completar las declaraciones de ingresos."}, "46": {"name": "Cálculo de Depreciación", "desc": "Calcula la depreciación lineal de bienes del activo fijo."}, "69": {"name": "PDF → Word", "desc": "Extrae el texto del PDF y genera un documento .docx real (OOXML), editable en Word."}, "70": {"name": "PDF → Excel", "desc": "Detecta filas/tablas del PDF y exporta una hoja de cálculo .xlsx real y estructurada."}, "71": {"name": "PDF → PowerPoint", "desc": "Convierte el contenido del PDF en diapositivas .pptx reales, abiertas directamente en PowerPoint."}, "72": {"name": "Word → PDF", "desc": "Convierte documentos .docx en un PDF real formateado, generado con pdf-lib."}, "73": {"name": "Excel → PDF", "desc": "Genera un PDF real con las filas y columnas de la hoja de cálculo .xlsx."}, "74": {"name": "PowerPoint → PDF", "desc": "Exporta presentaciones .pptx a un PDF real, una diapositiva por página."}, "75": {"name": "Editor de Texto", "desc": "Edita, formatea y transforma texto: mayúsculas, quitar espacios, contar palabras y más."}, "76": {"name": "Generador de Hojas de Cálculo", "desc": "Arma una tabla y genera una hoja de cálculo .xlsx real, lista para descargar."}, "77": {"name": "Imágenes a PDF", "desc": "Une varias imágenes (JPG/PNG) en un único archivo PDF, una por página."}, "78": {"name": "PDF a Imágenes", "desc": "Convierte cada página de un PDF en una imagen JPG, entregadas en un .zip."}, "79": {"name": "Calculadora de IMC", "desc": "Calcula el Índice de Masa Corporal y muestra el rango de clasificación."}, "80": {"name": "Calculadora de Edad", "desc": "Calcula la edad exacta en años, meses y días a partir de la fecha de nacimiento."}, "81": {"name": "Fecha en Letras", "desc": "Convierte una fecha numérica al formato escrito completo."}, "82": {"name": "Conversor de Colores HEX/RGB", "desc": "Convierte colores entre HEX y RGB con vista previa instantánea."}, "83": {"name": "Generador de Lista de Tareas", "desc": "Arma una lista de verificación y genera un PDF listo para imprimir."}, "84": {"name": "Calculadora de Aguinaldo (13º)", "desc": "Calcula el valor proporcional del salario adicional de fin de año."}, "85": {"name": "Calculadora de Vacaciones", "desc": "Calcula el valor de las vacaciones con el 1/3 constitucional sobre el salario."}, "86": {"name": "Conversor de Zona Horaria", "desc": "Convierte un horario entre las principales zonas horarias del mundo."}, "87": {"name": "PDF a OFX", "desc": "Extrae transacciones de un extracto bancario en PDF y genera un archivo .ofx para importar en tu sistema financiero."}}};
+const TOOLS_I18N={"en": {"1": {"name": "Gov.br Digital Signature", "desc": "Sign PDFs by drawing your signature, typing your name in cursive, or uploading a stamp image."}, "2": {"name": "OFX to PDF Converter", "desc": "Parses bank OFX files and generates a structured PDF statement."}, "3": {"name": "Income Statement (DRE)", "desc": "Calculates revenue, deductions and profit, generating an accounting PDF report."}, "4": {"name": "Receipt Generator", "desc": "Issues formatted payment receipts ready to download."}, "5": {"name": "PDF Compressor", "desc": "Reduces PDF size by removing metadata and optimizing internal structure."}, "6": {"name": "Merge PDFs", "desc": "Combines two or more PDF files into a single ordered document."}, "7": {"name": "PDF Page Numbering", "desc": "Automatically adds page numbers to the footer of every page."}, "8": {"name": "PDF Watermark", "desc": "Inserts custom text as a diagonal watermark on PDF documents."}, "9": {"name": "Rotate PDF Pages", "desc": "Rotates pages by 90°, 180° or 270° before saving the document."}, "10": {"name": "Extract Text from PDF", "desc": "Extracts all text content from a PDF for use in editors."}, "11": {"name": "Password-Protect PDF", "desc": "Applies AES encryption and an opening password to confidential documents."}, "12": {"name": "Add Footer to PDF", "desc": "Inserts custom footer text on every page of the document."}, "13": {"name": "Date/Time Stamp", "desc": "Adds an automatic timestamp with date and time to corporate PDFs."}, "14": {"name": "Split PDF by Pages", "desc": "Separates page ranges of a PDF into individual files."}, "15": {"name": "PDF Properties Report", "desc": "Lists metadata, page count, size and PDF version."}, "16": {"name": "Resize Image", "desc": "Changes the width and height of PNG/JPG images while keeping proportion."}, "17": {"name": "Convert Image Format", "desc": "Converts images between PNG, JPG and WebP directly in the browser."}, "18": {"name": "Compress Image", "desc": "Reduces JPEG file size by adjusting quality without visible loss."}, "19": {"name": "Grayscale", "desc": "Converts color images to professional black and white."}, "20": {"name": "Invert Colors", "desc": "Applies a negative effect by inverting all color channels of the image."}, "21": {"name": "Rotate Image", "desc": "Rotates images by any multiple of 90° with precision."}, "22": {"name": "Flip Image", "desc": "Flips images horizontally or vertically."}, "23": {"name": "Add Border", "desc": "Adds a colored, customizable-width border to any image."}, "24": {"name": "Thumbnail Generator", "desc": "Creates reduced-size versions of images for catalogs and previews."}, "25": {"name": "Image Watermark", "desc": "Applies semi-transparent text over photos and illustrations."}, "26": {"name": "Add Text to Image", "desc": "Inserts custom captions and text over images."}, "27": {"name": "Base64 Converter", "desc": "Encodes images to a Base64 string for use in HTML/CSS."}, "28": {"name": "Compound Interest Calculator", "desc": "Calculates returns based on rate, term and monthly contribution."}, "29": {"name": "QR Code Generator", "desc": "Generates QR codes for URLs, text and contact information."}, "30": {"name": "CPF Validator", "desc": "Checks the mathematical validity of Brazilian CPF numbers and formats them automatically."}, "31": {"name": "CNPJ Validator", "desc": "Validates and formats Brazilian CNPJ numbers, showing check digits."}, "32": {"name": "ICMS Tax Calculator", "desc": "Calculates ICMS, tax base and net value by rate."}, "33": {"name": "Currency Converter", "desc": "Converts amounts between BRL, USD, EUR and other currencies with a manual rate."}, "34": {"name": "Discount Calculator", "desc": "Calculates the final price with a percentage or fixed-value discount."}, "35": {"name": "Barcode Generator", "desc": "Generates a visual barcode representation for products."}, "36": {"name": "Business Days Calculator", "desc": "Calculates business days between two dates, excluding weekends."}, "37": {"name": "Unit Converter", "desc": "Converts kg/lb, km/mi, liters/gallons and other units."}, "38": {"name": "CNAB 240 Extractor", "desc": "Parses CNAB 240 files and displays payment records."}, "39": {"name": "NFe XML Parser", "desc": "Extracts tax data from Brazilian Electronic Invoice (NFe) XML files."}, "40": {"name": "PIS/COFINS Calculator", "desc": "Calculates PIS and COFINS on gross revenue by tax regime."}, "41": {"name": "INSS Calculator", "desc": "Calculates the social security contribution by 2026 salary bracket."}, "42": {"name": "IRRF Calculator", "desc": "Calculates income tax withheld at source on salaries."}, "43": {"name": "Strong Password Generator", "desc": "Generates random passwords with letters, numbers and symbols."}, "47": {"name": "Loan Simulator", "desc": "Calculates SAC and Price Table installments with interest and amortization."}, "48": {"name": "Payroll Calculator", "desc": "Calculates gross salary, INSS, IRRF and net salary."}, "49": {"name": "FGTS Calculation", "desc": "Calculates FGTS balance, termination penalty and withdrawal amounts."}, "64": {"name": "Simples Nacional Tax", "desc": "Estimates the Simples Nacional tax by bracket and annex."}, "67": {"name": "ROI Calculator", "desc": "Calculates return on investment with payback period."}, "68": {"name": "Income Tax Statement Helper", "desc": "Helps fill out income statement declarations."}, "46": {"name": "Depreciation Calculation", "desc": "Calculates straight-line depreciation of fixed assets."}, "69": {"name": "PDF → Word", "desc": "Extracts text from the PDF and generates a real editable .docx document (OOXML)."}, "70": {"name": "PDF → Excel", "desc": "Detects rows/tables in the PDF and exports a real structured .xlsx spreadsheet."}, "71": {"name": "PDF → PowerPoint", "desc": "Converts PDF content into real .pptx slides, opened directly in PowerPoint."}, "72": {"name": "Word → PDF", "desc": "Converts .docx documents into a real formatted PDF, generated with pdf-lib."}, "73": {"name": "Excel → PDF", "desc": "Generates a real PDF with the rows and columns of the .xlsx spreadsheet."}, "74": {"name": "PowerPoint → PDF", "desc": "Exports .pptx presentations to a real PDF, one slide per page."}, "75": {"name": "Text Editor", "desc": "Edit, format and transform text: uppercase, trim spaces, word count and more."}, "76": {"name": "Spreadsheet Generator", "desc": "Build a table and generate a real .xlsx spreadsheet, ready to download."}, "77": {"name": "Images to PDF", "desc": "Combines several images (JPG/PNG) into a single PDF file, one per page."}, "78": {"name": "PDF to Images", "desc": "Converts each PDF page into a JPG image, delivered in a .zip file."}, "79": {"name": "BMI Calculator", "desc": "Calculates Body Mass Index and shows the classification range."}, "80": {"name": "Age Calculator", "desc": "Calculates exact age in years, months and days from the birth date."}, "81": {"name": "Date in Full Words", "desc": "Converts a numeric date into full written form."}, "82": {"name": "HEX/RGB Color Converter", "desc": "Converts colors between HEX and RGB with instant preview."}, "83": {"name": "To-Do List Generator", "desc": "Build a checklist and generate a print-ready PDF."}, "84": {"name": "13th Salary Calculator", "desc": "Calculates the proportional value of the year-end bonus salary."}, "85": {"name": "Vacation Pay Calculator", "desc": "Calculates vacation pay including the constitutional 1/3 bonus."}, "86": {"name": "Time Zone Converter", "desc": "Converts a time between the world's main time zones."}, "87": {"name": "PDF to OFX", "desc": "Extracts transactions from a bank statement PDF and generates an .ofx file to import into your financial software."}, "100": {"name": "OCR — Image to Text", "desc": "Recognizes text inside photos and scanned images using real OCR in the browser."}, "101": {"name": "OCR — Scanned PDF to Text", "desc": "Extracts text from scanned PDFs (with no text layer) using optical character recognition."}}, "es": {"1": {"name": "Firma Digital Gov.br", "desc": "Firma PDFs dibujando tu firma, escribiendo tu nombre en cursiva o subiendo una imagen de sello."}, "2": {"name": "Conversor OFX a PDF", "desc": "Interpreta archivos OFX bancarios y genera un extracto en PDF estructurado."}, "3": {"name": "DRE — Estado de Resultados", "desc": "Calcula ingresos, deducciones y ganancia, generando un informe contable en PDF."}, "4": {"name": "Generador de Recibos", "desc": "Emite recibos de pago formateados y listos para descargar."}, "5": {"name": "Compresor de PDF", "desc": "Reduce el tamaño de los PDF eliminando metadatos y optimizando la estructura interna."}, "6": {"name": "Combinar PDFs", "desc": "Une dos o más archivos PDF en un único documento ordenado."}, "7": {"name": "Numeración de Páginas PDF", "desc": "Agrega numeración automática en el pie de todas las páginas del PDF."}, "8": {"name": "Marca de Agua en PDF", "desc": "Inserta texto personalizado como marca de agua diagonal en documentos PDF."}, "9": {"name": "Girar Páginas PDF", "desc": "Rota páginas en 90°, 180° o 270° antes de guardar el documento."}, "10": {"name": "Extraer Texto de PDF", "desc": "Extrae todo el contenido de texto de un PDF para usar en editores."}, "11": {"name": "Proteger PDF con Contraseña", "desc": "Aplica cifrado AES y contraseña de apertura a documentos confidenciales."}, "12": {"name": "Agregar Pie de Página a PDF", "desc": "Inserta texto de pie de página personalizado en todas las páginas."}, "13": {"name": "Sello de Fecha/Hora", "desc": "Agrega una marca de tiempo automática con fecha y hora a PDFs corporativos."}, "14": {"name": "Dividir PDF por Páginas", "desc": "Separa rangos de páginas de un PDF en archivos individuales."}, "15": {"name": "Informe de Propiedades PDF", "desc": "Lista metadatos, número de páginas, tamaño y versión del PDF."}, "16": {"name": "Redimensionar Imagen", "desc": "Cambia el ancho y alto de imágenes PNG/JPG manteniendo la proporción."}, "17": {"name": "Convertir Formato de Imagen", "desc": "Convierte imágenes entre PNG, JPG y WebP directamente en el navegador."}, "18": {"name": "Comprimir Imagen", "desc": "Reduce el peso de imágenes JPEG ajustando la calidad sin pérdida visible."}, "19": {"name": "Escala de Grises", "desc": "Convierte imágenes a color en blanco y negro profesional."}, "20": {"name": "Invertir Colores", "desc": "Aplica un efecto negativo invirtiendo todos los canales de color de la imagen."}, "21": {"name": "Rotar Imagen", "desc": "Rota imágenes en cualquier múltiplo de 90° con precisión."}, "22": {"name": "Voltear Imagen", "desc": "Voltea imágenes horizontal o verticalmente."}, "23": {"name": "Agregar Borde", "desc": "Agrega un borde de color y grosor personalizable a cualquier imagen."}, "24": {"name": "Generador de Miniaturas", "desc": "Crea versiones reducidas de imágenes para catálogos y vistas previas."}, "25": {"name": "Marca de Agua en Imagen", "desc": "Aplica texto semitransparente sobre fotos e ilustraciones."}, "26": {"name": "Agregar Texto a la Imagen", "desc": "Inserta leyendas y texto personalizado sobre imágenes."}, "27": {"name": "Conversor a Base64", "desc": "Codifica imágenes a una cadena Base64 para usar en HTML/CSS."}, "28": {"name": "Calculadora de Interés Compuesto", "desc": "Calcula el rendimiento según tasa, plazo y aporte mensual."}, "29": {"name": "Generador de Códigos QR", "desc": "Genera códigos QR para URLs, textos e información de contacto."}, "30": {"name": "Validador de CPF", "desc": "Verifica la validez matemática de números CPF brasileños y los formatea automáticamente."}, "31": {"name": "Validador de CNPJ", "desc": "Valida y formatea números CNPJ brasileños, mostrando los dígitos verificadores."}, "32": {"name": "Calculadora de ICMS", "desc": "Calcula el ICMS, la base de cálculo y el valor neto según la alícuota."}, "33": {"name": "Conversor de Monedas", "desc": "Convierte valores entre BRL, USD, EUR y otras monedas con una tasa manual."}, "34": {"name": "Calculadora de Descuento", "desc": "Calcula el precio final con un descuento porcentual o de valor fijo."}, "35": {"name": "Generador de Código de Barras", "desc": "Genera una representación visual de código de barras para productos."}, "36": {"name": "Calculadora de Plazos", "desc": "Calcula días hábiles entre dos fechas, excluyendo fines de semana."}, "37": {"name": "Conversor de Unidades", "desc": "Convierte kg/lb, km/mi, litros/galones y otras unidades."}, "38": {"name": "Extractor CNAB 240", "desc": "Interpreta archivos CNAB 240 y muestra los registros de pagos."}, "39": {"name": "Analizador de XML NFe", "desc": "Extrae datos fiscales de archivos XML de Factura Electrónica (NFe)."}, "40": {"name": "Calculadora de PIS/COFINS", "desc": "Calcula el PIS y el COFINS sobre los ingresos brutos según el régimen tributario."}, "41": {"name": "Calculadora de INSS", "desc": "Calcula la contribución previsional según el tramo salarial 2026."}, "42": {"name": "Calculadora de IRRF", "desc": "Calcula el impuesto a la renta retenido en la fuente sobre los salarios."}, "43": {"name": "Generador de Contraseñas Seguras", "desc": "Genera contraseñas aleatorias con letras, números y símbolos."}, "47": {"name": "Simulador de Financiamiento", "desc": "Calcula cuotas del sistema SAC y Tabla Price con interés y amortización."}, "48": {"name": "Nómina de Pago", "desc": "Calcula el salario bruto, INSS, IRRF y el salario neto."}, "49": {"name": "Cálculo de FGTS", "desc": "Calcula el saldo de FGTS, la multa por rescisión y los montos de retiro."}, "64": {"name": "Simples Nacional", "desc": "Estima el impuesto del Simples Nacional según el tramo y el anexo."}, "67": {"name": "Calculadora de ROI", "desc": "Calcula el retorno sobre la inversión con el período de recuperación."}, "68": {"name": "Generador de Declaración de IR", "desc": "Ayuda a completar las declaraciones de ingresos."}, "46": {"name": "Cálculo de Depreciación", "desc": "Calcula la depreciación lineal de bienes del activo fijo."}, "69": {"name": "PDF → Word", "desc": "Extrae el texto del PDF y genera un documento .docx real (OOXML), editable en Word."}, "70": {"name": "PDF → Excel", "desc": "Detecta filas/tablas del PDF y exporta una hoja de cálculo .xlsx real y estructurada."}, "71": {"name": "PDF → PowerPoint", "desc": "Convierte el contenido del PDF en diapositivas .pptx reales, abiertas directamente en PowerPoint."}, "72": {"name": "Word → PDF", "desc": "Convierte documentos .docx en un PDF real formateado, generado con pdf-lib."}, "73": {"name": "Excel → PDF", "desc": "Genera un PDF real con las filas y columnas de la hoja de cálculo .xlsx."}, "74": {"name": "PowerPoint → PDF", "desc": "Exporta presentaciones .pptx a un PDF real, una diapositiva por página."}, "75": {"name": "Editor de Texto", "desc": "Edita, formatea y transforma texto: mayúsculas, quitar espacios, contar palabras y más."}, "76": {"name": "Generador de Hojas de Cálculo", "desc": "Arma una tabla y genera una hoja de cálculo .xlsx real, lista para descargar."}, "77": {"name": "Imágenes a PDF", "desc": "Une varias imágenes (JPG/PNG) en un único archivo PDF, una por página."}, "78": {"name": "PDF a Imágenes", "desc": "Convierte cada página de un PDF en una imagen JPG, entregadas en un .zip."}, "79": {"name": "Calculadora de IMC", "desc": "Calcula el Índice de Masa Corporal y muestra el rango de clasificación."}, "80": {"name": "Calculadora de Edad", "desc": "Calcula la edad exacta en años, meses y días a partir de la fecha de nacimiento."}, "81": {"name": "Fecha en Letras", "desc": "Convierte una fecha numérica al formato escrito completo."}, "82": {"name": "Conversor de Colores HEX/RGB", "desc": "Convierte colores entre HEX y RGB con vista previa instantánea."}, "83": {"name": "Generador de Lista de Tareas", "desc": "Arma una lista de verificación y genera un PDF listo para imprimir."}, "84": {"name": "Calculadora de Aguinaldo (13º)", "desc": "Calcula el valor proporcional del salario adicional de fin de año."}, "85": {"name": "Calculadora de Vacaciones", "desc": "Calcula el valor de las vacaciones con el 1/3 constitucional sobre el salario."}, "86": {"name": "Conversor de Zona Horaria", "desc": "Convierte un horario entre las principales zonas horarias del mundo."}, "87": {"name": "PDF a OFX", "desc": "Extrae transacciones de un extracto bancario en PDF y genera un archivo .ofx para importar en tu sistema financiero."}, "100": {"name": "OCR — Imagen a Texto", "desc": "Reconoce texto dentro de fotos e imágenes escaneadas usando OCR real en el navegador."}, "101": {"name": "OCR — PDF Escaneado a Texto", "desc": "Extrae el texto de PDFs escaneados (sin capa de texto) usando reconocimiento óptico de caracteres."}}};
 // ── NOVAS FERRAMENTAS DO DIA A DIA ─────────────────────
 
 // Imagens → PDF (com opções estilo iLovePDF: orientação, tamanho, margem, mesclar)
@@ -4140,6 +4304,610 @@ ${stmttrns}
   const blob=new Blob([ofx],{type:'application/x-ofx'});
   logConversion(p2oFileBase+'.ofx');
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=p2oFileBase+'.ofx';a.click();
+}
+
+// ══════════════════════════════════════════════════════
+// NOVAS FERRAMENTAS — LEVA 2 (2026)
+// ══════════════════════════════════════════════════════
+
+// ── Parser CSV robusto (lida com aspas, vírgula/ponto-e-vírgula, quebras dentro de aspas) ──
+function parseCsv(text){
+  const rows=[];
+  let row=[],field='',inQuotes=false;
+  const delim=(text.slice(0,1000).split(';').length>text.slice(0,1000).split(',').length)?';':',';
+  for(let i=0;i<text.length;i++){
+    const c=text[i],next=text[i+1];
+    if(inQuotes){
+      if(c==='"'&&next==='"'){field+='"';i++;}
+      else if(c==='"'){inQuotes=false;}
+      else field+=c;
+    }else{
+      if(c==='"')inQuotes=true;
+      else if(c===delim){row.push(field);field='';}
+      else if(c==='\r'){/*ignora*/}
+      else if(c==='\n'){row.push(field);rows.push(row);row=[];field='';}
+      else field+=c;
+    }
+  }
+  if(field.length||row.length){row.push(field);rows.push(row);}
+  return rows.filter(r=>r.some(c=>c!==''));
+}
+function toCsvValue(v){
+  const s=String(v??'');
+  return /[",\n;]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;
+}
+
+// ── CSV → Excel ──
+async function csvToExcel(){
+  const fi=document.getElementById('c2x-file');
+  if(!fi.files.length){toast('Selecione um arquivo CSV!');return;}
+  const text=await fi.files[0].text();
+  const rows=parseCsv(text);
+  if(!rows.length){toast('❌ Não foi possível ler nenhuma linha deste CSV.');return;}
+  const name=fi.files[0].name.replace(/\.csv$/i,'');
+  const r=await convGenXlsx({rows},name);
+  const fname=name+'.xlsx';
+  logConversion(fname);
+  const a=document.createElement('a');a.href=URL.createObjectURL(r.blob);a.download=fname;a.click();
+  show('c2x-result','✅ '+rows.length+' linha(s) convertida(s) para '+fname);
+}
+
+// ── Leitor mínimo de .xlsx (lê a primeira aba; suporta inlineStr e sharedStrings) ──
+async function readXlsxFirstSheet(file){
+  const buf=await file.arrayBuffer();
+  const zip=await JSZip.loadAsync(buf);
+  const sheetFile=zip.file('xl/worksheets/sheet1.xml');
+  if(!sheetFile)throw new Error('Não foi possível localizar a primeira aba dentro do arquivo .xlsx.');
+  const sheetXml=await sheetFile.async('string');
+  let shared=[];
+  const sharedFile=zip.file('xl/sharedStrings.xml');
+  if(sharedFile){
+    const sharedXml=await sharedFile.async('string');
+    const siRe=/<si>([\s\S]*?)<\/si>/g;
+    let m;
+    while((m=siRe.exec(sharedXml))){
+      const text=[...m[1].matchAll(/<t[^>]*>([\s\S]*?)<\/t>/g)].map(x=>x[1]).join('');
+      shared.push(decodeXmlEntities(text));
+    }
+  }
+  const rowsMap={};
+  const rowRe=/<row[^>]*r="(\d+)"[^>]*>([\s\S]*?)<\/row>/g;
+  let rm;
+  while((rm=rowRe.exec(sheetXml))){
+    const rIdx=+rm[1];
+    const cellRe=/<c[^>]*r="([A-Z]+)(\d+)"[^>]*?(?:\st="([^"]*)")?[^>]*>(?:<v>([\s\S]*?)<\/v>|<is>([\s\S]*?)<\/is>)?<\/c>/g;
+    let cm;
+    const cells={};
+    while((cm=cellRe.exec(rm[2]))){
+      const col=cm[1],type=cm[3],vRaw=cm[4],isRaw=cm[5];
+      const colIdx=colToIndex(col);
+      let val='';
+      if(isRaw!==undefined){
+        val=[...isRaw.matchAll(/<t[^>]*>([\s\S]*?)<\/t>/g)].map(x=>x[1]).join('');
+        val=decodeXmlEntities(val);
+      }else if(vRaw!==undefined){
+        val=(type==='s')?(shared[+vRaw]||''):decodeXmlEntities(vRaw);
+      }
+      cells[colIdx]=val;
+    }
+    const maxCol=Math.max(-1,...Object.keys(cells).map(Number));
+    const rowArr=[];
+    for(let i=0;i<=maxCol;i++)rowArr.push(cells[i]!==undefined?cells[i]:'');
+    rowsMap[rIdx]=rowArr;
+  }
+  const maxRow=Math.max(0,...Object.keys(rowsMap).map(Number));
+  const rows=[];
+  for(let i=1;i<=maxRow;i++)rows.push(rowsMap[i]||[]);
+  return rows;
+}
+function colToIndex(col){let n=0;for(let i=0;i<col.length;i++)n=n*26+(col.charCodeAt(i)-64);return n-1;}
+function decodeXmlEntities(s){return s.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,'&');}
+
+// ── Excel → CSV ──
+async function excelToCsv(){
+  const fi=document.getElementById('x2c-file');
+  if(!fi.files.length){toast('Selecione uma planilha .xlsx!');return;}
+  const rows=await readXlsxFirstSheet(fi.files[0]);
+  if(!rows.length){toast('❌ A planilha parece estar vazia.');return;}
+  const csv=rows.map(r=>r.map(toCsvValue).join(',')).join('\r\n');
+  const name=fi.files[0].name.replace(/\.xlsx$/i,'');
+  const fname=name+'.csv';
+  logConversion(fname);
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;a.click();
+  show('x2c-result','✅ '+rows.length+' linha(s) exportada(s) para '+fname);
+}
+
+// ── JSON → Excel ──
+async function jsonToExcel(){
+  const raw=document.getElementById('j2x-input').value.trim();
+  if(!raw){toast('Cole um JSON válido!');return;}
+  let data;
+  try{ data=JSON.parse(raw); }catch(e){ toast('❌ JSON inválido: '+e.message); return; }
+  if(!Array.isArray(data)){
+    if(typeof data==='object'&&data)data=[data];
+    else{toast('❌ O JSON precisa ser um array de objetos (ou um único objeto).');return;}
+  }
+  const headerSet=[];
+  data.forEach(obj=>Object.keys(obj||{}).forEach(k=>{if(!headerSet.includes(k))headerSet.push(k);}));
+  const rows=[headerSet,...data.map(obj=>headerSet.map(h=>{
+    const v=obj?obj[h]:'';
+    return (v===null||v===undefined)?'':(typeof v==='object'?JSON.stringify(v):String(v));
+  }))];
+  const r=await convGenXlsx({rows},'dados_json');
+  const fname='dados_json.xlsx';
+  logConversion(fname);
+  const a=document.createElement('a');a.href=URL.createObjectURL(r.blob);a.download=fname;a.click();
+  show('j2x-result','✅ '+data.length+' registro(s) convertido(s) para '+fname);
+}
+
+// ── Excel → JSON ──
+let x2jResultJson=null;
+async function excelToJson(){
+  const fi=document.getElementById('x2j-file');
+  if(!fi.files.length){toast('Selecione uma planilha .xlsx!');return;}
+  const rows=await readXlsxFirstSheet(fi.files[0]);
+  if(rows.length<1){toast('❌ A planilha parece estar vazia.');return;}
+  const header=rows[0];
+  const data=rows.slice(1).map(row=>{
+    const obj={};
+    header.forEach((h,i)=>{obj[h||('coluna_'+(i+1))]=row[i]!==undefined?row[i]:'';});
+    return obj;
+  });
+  x2jResultJson=JSON.stringify(data,null,2);
+  document.getElementById('x2j-result').textContent=x2jResultJson;
+  document.getElementById('x2j-dl-btn').style.display='block';
+  logConversion(fi.files[0].name.replace(/\.xlsx$/i,'')+'.json');
+}
+function downloadJsonResult(){
+  if(!x2jResultJson)return;
+  const blob=new Blob([x2jResultJson],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dados.json';a.click();
+}
+
+// ── Markdown → PDF (subconjunto: #, ##, ###, **negrito**, *itálico*, listas, `código`, > citação, ---) ──
+async function markdownToPdf(){
+  const src=document.getElementById('md2p-input').value;
+  if(!src.trim()){toast('Escreva algum conteúdo em Markdown!');return;}
+  const pdfDoc=await PDFLib.PDFDocument.create();
+  const fontReg=await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+  const fontBold=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+  const fontItalic=await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaOblique);
+  const fontMono=await pdfDoc.embedFont(PDFLib.StandardFonts.Courier);
+  const margin=50,pageW=595,pageH=842,maxW=pageW-margin*2;
+  let page=pdfDoc.addPage([pageW,pageH]),y=pageH-margin;
+  function newPageIfNeeded(need){
+    if(y-need<margin){page=pdfDoc.addPage([pageW,pageH]);y=pageH-margin;}
+  }
+  function wrapText(text,font,size,width){
+    const words=text.split(/\s+/);
+    const lines=[];let cur='';
+    for(const w of words){
+      const test=cur?cur+' '+w:w;
+      if(font.widthOfTextAtSize(test,size)>width&&cur){lines.push(cur);cur=w;}
+      else cur=test;
+    }
+    if(cur)lines.push(cur);
+    return lines;
+  }
+  function drawInline(text,x,yy,size,font){
+    // negrito/itálico simples: **bold** e *italic*
+    const tokens=text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g).filter(Boolean);
+    let cx=x;
+    tokens.forEach(tok=>{
+      let f=font,val=tok;
+      if(/^\*\*[^*]+\*\*$/.test(tok)){f=fontBold;val=tok.slice(2,-2);}
+      else if(/^\*[^*]+\*$/.test(tok)){f=fontItalic;val=tok.slice(1,-1);}
+      else if(/^`[^`]+`$/.test(tok)){f=fontMono;val=tok.slice(1,-1);}
+      page.drawText(val,{x:cx,y:yy,size,font:f,color:PDFLib.rgb(.1,.1,.15)});
+      cx+=f.widthOfTextAtSize(val,size);
+    });
+  }
+  const lines=src.split('\n');
+  for(let raw of lines){
+    const line=raw.replace(/\r$/,'');
+    if(!line.trim()){y-=10;continue;}
+    if(/^---+$/.test(line.trim())){
+      newPageIfNeeded(14);
+      page.drawLine({start:{x:margin,y},end:{x:pageW-margin,y},thickness:1,color:PDFLib.rgb(.8,.8,.82)});
+      y-=14;continue;
+    }
+    let m;
+    if((m=line.match(/^#\s+(.*)/))){
+      newPageIfNeeded(30);y-=6;
+      wrapText(m[1],fontBold,20,maxW).forEach(l=>{page.drawText(l,{x:margin,y,size:20,font:fontBold,color:PDFLib.rgb(.05,.05,.1)});y-=24;});
+      continue;
+    }
+    if((m=line.match(/^##\s+(.*)/))){
+      newPageIfNeeded(24);y-=4;
+      wrapText(m[1],fontBold,15,maxW).forEach(l=>{page.drawText(l,{x:margin,y,size:15,font:fontBold,color:PDFLib.rgb(.08,.08,.14)});y-=19;});
+      continue;
+    }
+    if((m=line.match(/^###\s+(.*)/))){
+      newPageIfNeeded(20);
+      wrapText(m[1],fontBold,12.5,maxW).forEach(l=>{page.drawText(l,{x:margin,y,size:12.5,font:fontBold,color:PDFLib.rgb(.1,.1,.16)});y-=16;});
+      continue;
+    }
+    if((m=line.match(/^(\s*)[-*]\s+(.*)/))){
+      newPageIfNeeded(16);
+      const bx=margin+((m[1]||'').length/2)*10;
+      page.drawText('•',{x:bx,y,size:10.5,font:fontReg,color:PDFLib.rgb(.3,.3,.4)});
+      wrapText(m[2],fontReg,10.5,maxW-bx+margin-14).forEach((l,i)=>{
+        newPageIfNeeded(15);
+        drawInline(l,bx+14,y,10.5,fontReg);y-=14;
+      });
+      continue;
+    }
+    if((m=line.match(/^(\d+)\.\s+(.*)/))){
+      newPageIfNeeded(16);
+      page.drawText(m[1]+'.',{x:margin,y,size:10.5,font:fontReg,color:PDFLib.rgb(.3,.3,.4)});
+      wrapText(m[2],fontReg,10.5,maxW-30).forEach(l=>{newPageIfNeeded(15);drawInline(l,margin+24,y,10.5,fontReg);y-=14;});
+      continue;
+    }
+    if((m=line.match(/^>\s?(.*)/))){
+      newPageIfNeeded(16);
+      page.drawLine({start:{x:margin+2,y:y+9},end:{x:margin+2,y:y-2},thickness:2,color:PDFLib.rgb(.55,.4,.7)});
+      wrapText(m[1],fontItalic,10.5,maxW-20).forEach(l=>{newPageIfNeeded(15);page.drawText(l,{x:margin+14,y,size:10.5,font:fontItalic,color:PDFLib.rgb(.35,.35,.4)});y-=14;});
+      continue;
+    }
+    // parágrafo normal
+    wrapText(line,fontReg,11,maxW).forEach(l=>{newPageIfNeeded(16);drawInline(l,margin,y,11,fontReg);y-=15;});
+  }
+  const bytes=await pdfDoc.save();
+  logConversion('documento_markdown.pdf');
+  dl(bytes,'documento_markdown.pdf','application/pdf');
+  closeModal();
+}
+
+// ── HTML → PDF (rasteriza com html2canvas e monta páginas no pdf-lib) ──
+async function htmlToPdf(){
+  const html=document.getElementById('h2p-input').value;
+  if(!html.trim()){toast('Cole algum HTML!');return;}
+  if(typeof html2canvas==='undefined'){toast('❌ Biblioteca de renderização indisponível neste momento.');return;}
+  const holder=document.createElement('div');
+  holder.style.cssText='position:fixed;left:-99999px;top:0;width:794px;background:#fff;';
+  holder.innerHTML=html;
+  document.body.appendChild(holder);
+  try{
+    const canvas=await html2canvas(holder,{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    const pdfDoc=await PDFLib.PDFDocument.create();
+    const pageW=595,pageH=842;
+    const scale=pageW/canvas.width;
+    const pxPerPage=Math.floor(pageH/scale);
+    let offsetPx=0;
+    while(offsetPx<canvas.height){
+      const sliceH=Math.min(pxPerPage,canvas.height-offsetPx);
+      const sliceCanvas=document.createElement('canvas');
+      sliceCanvas.width=canvas.width;
+      sliceCanvas.height=sliceH;
+      sliceCanvas.getContext('2d').drawImage(canvas,0,offsetPx,canvas.width,sliceH,0,0,canvas.width,sliceH);
+      const imgData=sliceCanvas.toDataURL('image/png').split(',')[1];
+      const imgBytes=Uint8Array.from(atob(imgData),c=>c.charCodeAt(0));
+      const img=await pdfDoc.embedPng(imgBytes);
+      const page=pdfDoc.addPage([pageW,pageH]);
+      const drawH=sliceH*scale;
+      page.drawImage(img,{x:0,y:pageH-drawH,width:canvas.width*scale,height:drawH});
+      offsetPx+=sliceH;
+    }
+    const bytes=await pdfDoc.save();
+    logConversion('pagina_html.pdf');
+    dl(bytes,'pagina_html.pdf','application/pdf');
+    closeModal();
+  }finally{
+    document.body.removeChild(holder);
+  }
+}
+
+// ── SVG → PNG ──
+async function svgToPng(){
+  const fi=document.getElementById('s2p-file');
+  if(!fi.files.length){toast('Selecione um arquivo SVG!');return;}
+  const scale=+document.getElementById('s2p-scale').value;
+  const text=await fi.files[0].text();
+  const blob=new Blob([text],{type:'image/svg+xml'});
+  const url=URL.createObjectURL(blob);
+  const img=new Image();
+  await new Promise((res,rej)=>{img.onload=res;img.onerror=()=>rej(new Error('Não foi possível ler este SVG.'));img.src=url;});
+  const w=(img.width||300)*scale,h=(img.height||150)*scale;
+  const canvas=document.createElement('canvas');
+  canvas.width=w;canvas.height=h;
+  const ctx=canvas.getContext('2d');
+  ctx.drawImage(img,0,0,w,h);
+  URL.revokeObjectURL(url);
+  const pngUrl=canvas.toDataURL('image/png');
+  const fname=fi.files[0].name.replace(/\.svg$/i,'')+'.png';
+  logConversion(fname);
+  const a=document.createElement('a');a.href=pngUrl;a.download=fname;a.click();
+  closeModal();
+}
+
+// ── Leitor de QR Code ──
+function lerQrCode(input){
+  const rBox=document.getElementById('qrr-result');
+  if(!input.files.length)return;
+  if(typeof jsQR==='undefined'){show('qrr-result','❌ Biblioteca de leitura de QR indisponível.');return;}
+  show('qrr-result','⏳ Lendo imagem...');
+  const img=new Image();
+  const url=URL.createObjectURL(input.files[0]);
+  img.onload=()=>{
+    const canvas=document.createElement('canvas');
+    canvas.width=img.width;canvas.height=img.height;
+    const ctx=canvas.getContext('2d');
+    ctx.drawImage(img,0,0);
+    const imgData=ctx.getImageData(0,0,canvas.width,canvas.height);
+    const code=jsQR(imgData.data,imgData.width,imgData.height);
+    URL.revokeObjectURL(url);
+    if(code){
+      logConversion('qrcode_lido.txt');
+      show('qrr-result','✅ Conteúdo encontrado:\n\n'+code.data);
+    }else{
+      show('qrr-result','😕 Nenhum QR Code foi encontrado nesta imagem. Tente uma foto mais nítida e bem enquadrada.');
+    }
+  };
+  img.onerror=()=>show('qrr-result','❌ Não foi possível carregar esta imagem.');
+  img.src=url;
+}
+
+// ── Comparar PDFs (diff de texto por linha) ──
+function diffLines(a,b){
+  const n=a.length,m=b.length;
+  const dp=Array.from({length:n+1},()=>new Array(m+1).fill(0));
+  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)
+    dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+  const out=[];let i=0,j=0;
+  while(i<n&&j<m){
+    if(a[i]===b[j]){out.push({t:'same',v:a[i]});i++;j++;}
+    else if(dp[i+1][j]>=dp[i][j+1]){out.push({t:'del',v:a[i]});i++;}
+    else{out.push({t:'add',v:b[j]});j++;}
+  }
+  while(i<n){out.push({t:'del',v:a[i]});i++;}
+  while(j<m){out.push({t:'add',v:b[j]});j++;}
+  return out;
+}
+async function compararPdfs(){
+  const fa=document.getElementById('cmp-pdf-a').files[0],fb=document.getElementById('cmp-pdf-b').files[0];
+  if(!fa||!fb){toast('Selecione os dois arquivos PDF!');return;}
+  show('cmp-result','⏳ Extraindo texto dos dois PDFs...');
+  const [textA,textB]=await Promise.all([convExtractPdfText(fa),convExtractPdfText(fb)]);
+  const linesA=textA.split('\n').map(l=>l.trim()).filter(Boolean);
+  const linesB=textB.split('\n').map(l=>l.trim()).filter(Boolean);
+  const diff=diffLines(linesA,linesB);
+  const added=diff.filter(d=>d.t==='add').length,removed=diff.filter(d=>d.t==='del').length;
+  const rBox=document.getElementById('cmp-result');
+  rBox.innerHTML='';
+  const summary=document.createElement('div');
+  summary.style.cssText='font-size:12px;color:var(--muted);margin-bottom:8px';
+  summary.textContent=(added||removed)?`${added} linha(s) adicionada(s), ${removed} linha(s) removida(s)/alterada(s).`:'Nenhuma diferença de texto encontrada entre os dois PDFs.';
+  rBox.appendChild(summary);
+  diff.forEach(d=>{
+    if(d.t==='same')return;
+    const row=document.createElement('div');
+    row.style.cssText='font-family:monospace;font-size:11.5px;padding:3px 8px;border-radius:4px;margin-bottom:2px;white-space:pre-wrap;'+
+      (d.t==='add'?'background:rgba(74,222,128,.12);color:#4ade80':'background:rgba(248,113,113,.12);color:#f87171;text-decoration:line-through');
+    row.textContent=(d.t==='add'?'+ ':'- ')+d.v;
+    rBox.appendChild(row);
+  });
+  logConversion('comparacao_pdfs.txt');
+}
+
+// ── Organizador de Páginas de PDF (arrastar para reordenar/excluir) ──
+let orgPdfBytes=null,orgOrder=[],orgDragIdx=null,orgFileBase='documento';
+async function orgLoadPdf(input){
+  if(!input.files.length)return;
+  orgFileBase=input.files[0].name.replace(/\.pdf$/i,'');
+  orgPdfBytes=await input.files[0].arrayBuffer();
+  const grid=document.getElementById('org-pages-grid');
+  grid.innerHTML='<p style="font-size:12px;color:var(--muted)">Gerando miniaturas...</p>';
+  const pdf=await pdfjsLib.getDocument({data:orgPdfBytes.slice(0)}).promise;
+  orgOrder=[];
+  grid.innerHTML='';
+  for(let i=1;i<=pdf.numPages;i++){
+    const page=await pdf.getPage(i);
+    const vp=page.getViewport({scale:0.35});
+    const canvas=document.createElement('canvas');
+    canvas.width=vp.width;canvas.height=vp.height;
+    await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+    orgOrder.push({original:i,thumb:canvas.toDataURL('image/png')});
+  }
+  orgRenderGrid();
+  document.getElementById('org-save-btn').style.display='block';
+}
+function orgRenderGrid(){
+  const grid=document.getElementById('org-pages-grid');
+  grid.innerHTML=orgOrder.map((p,idx)=>`
+    <div class="org-page-card" draggable="true" data-idx="${idx}"
+      ondragstart="orgDragIdx=${idx}" ondragover="event.preventDefault()"
+      ondrop="orgDrop(${idx})">
+      <img src="${p.thumb}">
+      <div class="org-page-num">Pág. ${p.original}</div>
+      <button class="org-page-del" onclick="orgRemove(${idx})" title="Excluir página">✕</button>
+    </div>`).join('');
+}
+function orgDrop(idx){
+  if(orgDragIdx===null||orgDragIdx===idx)return;
+  const item=orgOrder.splice(orgDragIdx,1)[0];
+  orgOrder.splice(idx,0,item);
+  orgDragIdx=null;
+  orgRenderGrid();
+}
+function orgRemove(idx){
+  orgOrder.splice(idx,1);
+  orgRenderGrid();
+}
+async function orgSavePdf(){
+  if(!orgOrder.length){toast('Não há páginas para salvar!');return;}
+  const srcDoc=await PDFLib.PDFDocument.load(orgPdfBytes);
+  const newDoc=await PDFLib.PDFDocument.create();
+  const pages=await newDoc.copyPages(srcDoc,orgOrder.map(p=>p.original-1));
+  pages.forEach(p=>newDoc.addPage(p));
+  const bytes=await newDoc.save();
+  const fname=orgFileBase+'_reorganizado.pdf';
+  logConversion(fname);
+  dl(bytes,fname,'application/pdf');
+  closeModal();
+}
+
+// ── Texto para Voz (Web Speech API) ──
+let ttsVoices=[];
+function populateTtsVoices(){
+  const sel=document.getElementById('tts-voice');
+  if(!sel||typeof speechSynthesis==='undefined')return;
+  const load=()=>{
+    ttsVoices=speechSynthesis.getVoices();
+    const ptVoices=ttsVoices.filter(v=>/^pt/i.test(v.lang));
+    const others=ttsVoices.filter(v=>!/^pt/i.test(v.lang));
+    sel.innerHTML=[...ptVoices,...others].map((v,i)=>`<option value="${ttsVoices.indexOf(v)}">${v.name} (${v.lang})</option>`).join('')||'<option>Nenhuma voz encontrada</option>';
+  };
+  load();
+  if(speechSynthesis.onvoiceschanged!==undefined)speechSynthesis.onvoiceschanged=load;
+}
+function ttsPlay(){
+  if(typeof speechSynthesis==='undefined'){toast('❌ Seu navegador não suporta síntese de voz.');return;}
+  const text=document.getElementById('tts-input').value;
+  if(!text.trim()){toast('Digite algum texto primeiro!');return;}
+  speechSynthesis.cancel();
+  const utter=new SpeechSynthesisUtterance(text);
+  const voiceIdx=document.getElementById('tts-voice').value;
+  if(voiceIdx!==''&&ttsVoices[voiceIdx])utter.voice=ttsVoices[voiceIdx];
+  utter.rate=+document.getElementById('tts-rate').value;
+  speechSynthesis.speak(utter);
+}
+function ttsPause(){
+  if(typeof speechSynthesis==='undefined')return;
+  if(speechSynthesis.speaking&&!speechSynthesis.paused)speechSynthesis.pause();
+  else if(speechSynthesis.paused)speechSynthesis.resume();
+}
+function ttsStop(){ if(typeof speechSynthesis!=='undefined')speechSynthesis.cancel(); }
+
+// ── Voz para Texto (Web Speech API) ──
+let sttRecognizer=null,sttActive=false;
+function sttStart(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast('❌ Seu navegador não suporta reconhecimento de voz (use Chrome ou Edge).');return;}
+  if(sttActive)return;
+  sttRecognizer=new SR();
+  sttRecognizer.lang='pt-BR';
+  sttRecognizer.continuous=true;
+  sttRecognizer.interimResults=true;
+  const out=document.getElementById('stt-output');
+  let finalText=out.value?out.value+' ':'';
+  sttRecognizer.onresult=(e)=>{
+    let interim='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const res=e.results[i];
+      if(res.isFinal)finalText+=res[0].transcript+' ';
+      else interim+=res[0].transcript;
+    }
+    out.value=finalText+interim;
+  };
+  sttRecognizer.onerror=(e)=>{ toast('❌ Erro no reconhecimento de voz: '+e.error); };
+  sttRecognizer.onend=()=>{ if(sttActive)sttRecognizer.start(); }; // reinicia automaticamente enquanto ativo
+  sttRecognizer.start();
+  sttActive=true;
+  document.getElementById('stt-start-btn').textContent='🎙 Ouvindo...';
+}
+function sttStop(){
+  sttActive=false;
+  if(sttRecognizer)sttRecognizer.stop();
+  const btn=document.getElementById('stt-start-btn');
+  if(btn)btn.textContent='🎙 Iniciar';
+}
+function sttDownload(){
+  const text=document.getElementById('stt-output').value;
+  if(!text.trim()){toast('Nada para baixar ainda!');return;}
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='transcricao.txt';a.click();
+  logConversion('transcricao.txt');
+}
+
+// ── OCR REAL (Tesseract.js, 100% no navegador) ──
+function ocrDownloadTxt(textareaId){
+  const text=document.getElementById(textareaId).value;
+  if(!text.trim()){toast('Nada para baixar ainda!');return;}
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='texto_ocr.txt';a.click();
+  logConversion('texto_ocr.txt','OCR');
+}
+
+function ocrUpdateProgress(prefix,label,pct){
+  const wrap=document.getElementById(prefix+'-prog');
+  const lbl=document.getElementById(prefix+'-prog-label');
+  const bar=document.getElementById(prefix+'-prog-bar');
+  const pctEl=document.getElementById(prefix+'-prog-pct');
+  if(wrap)wrap.style.display='block';
+  if(lbl)lbl.textContent=label;
+  if(bar)bar.style.width=pct+'%';
+  if(pctEl)pctEl.textContent=pct+'%';
+}
+
+async function ocrRecognizeImageData(imgSource,lang,prefix){
+  if(typeof Tesseract==='undefined')throw new Error('Biblioteca de OCR não carregou. Verifique sua conexão e tente novamente.');
+  const {data}=await Tesseract.recognize(imgSource,lang,{
+    logger:m=>{
+      if(m.status==='recognizing text'){
+        ocrUpdateProgress(prefix,'Reconhecendo texto…',Math.round((m.progress||0)*100));
+      }else if(m.status){
+        ocrUpdateProgress(prefix,m.status.charAt(0).toUpperCase()+m.status.slice(1)+'…',Math.round((m.progress||0)*100));
+      }
+    }
+  });
+  return data.text;
+}
+
+async function ocrImageToText(){
+  const fi=document.getElementById('ocr-img-file');
+  if(!fi.files.length){toast('❌ Selecione uma imagem!');return;}
+  const lang=document.getElementById('ocr-img-lang').value;
+  const out=document.getElementById('ocr-img-output');
+  const dlBtn=document.getElementById('ocr-img-dl');
+  out.style.display='none';dlBtn.style.display='none';
+  ocrUpdateProgress('ocr-img','Carregando OCR…',0);
+  try{
+    const text=await ocrRecognizeImageData(fi.files[0],lang,'ocr-img');
+    out.value=text.trim()||'(Nenhum texto foi reconhecido nesta imagem.)';
+    out.style.display='block';dlBtn.style.display='block';
+    document.getElementById('ocr-img-prog').style.display='none';
+    toast('✅ Texto reconhecido com sucesso!');
+    logConversion(fi.files[0].name,'OCR Imagem');
+  }catch(e){
+    document.getElementById('ocr-img-prog').style.display='none';
+    toast('❌ '+e.message);
+  }
+}
+
+async function ocrPdfToText(){
+  const fi=document.getElementById('ocr-pdf-file');
+  if(!fi.files.length){toast('❌ Selecione um PDF!');return;}
+  const lang=document.getElementById('ocr-pdf-lang').value;
+  const out=document.getElementById('ocr-pdf-output');
+  const dlBtn=document.getElementById('ocr-pdf-dl');
+  out.style.display='none';dlBtn.style.display='none';
+  ocrUpdateProgress('ocr-pdf','Lendo páginas do PDF…',0);
+  try{
+    if(typeof pdfjsLib==='undefined')throw new Error('pdfjs indisponível');
+    const buf=await fi.files[0].arrayBuffer();
+    const pdf=await pdfjsLib.getDocument({data:buf}).promise;
+    const n=Math.min(pdf.numPages,30); // limite de segurança para não travar o navegador
+    let fullText='';
+    for(let i=1;i<=n;i++){
+      ocrUpdateProgress('ocr-pdf',`Renderizando página ${i}/${n}…`,Math.round(((i-1)/n)*100));
+      const page=await pdf.getPage(i);
+      const vp=page.getViewport({scale:2.2});
+      const canvas=document.createElement('canvas');
+      canvas.width=vp.width;canvas.height=vp.height;
+      await page.render({canvasContext:canvas.getContext('2d'),viewport:vp}).promise;
+      const pageText=await ocrRecognizeImageData(canvas,lang,'ocr-pdf');
+      fullText+=`\n\n── Página ${i} ──\n`+pageText.trim();
+    }
+    out.value=fullText.trim()||'(Nenhum texto foi reconhecido neste PDF.)';
+    out.style.display='block';dlBtn.style.display='block';
+    document.getElementById('ocr-pdf-prog').style.display='none';
+    toast('✅ '+n+' página(s) reconhecida(s) com sucesso!');
+    logConversion(fi.files[0].name,'OCR PDF');
+  }catch(e){
+    document.getElementById('ocr-pdf-prog').style.display='none';
+    toast('❌ '+e.message);
+  }
 }
 
 // ── INIT ──────────────────────────────────────────────
