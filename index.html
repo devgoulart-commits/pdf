@@ -51,7 +51,7 @@ document.addEventListener('click',function(e){
 {"@context":"https://schema.org","@type":"WebApplication","name":"Nexus Tech Converter","applicationCategory":"Utility","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"},"description":"113 ferramentas gratuitas para PDF, imagens, conversão de arquivos Office e contabilidade, com processamento 100% local no navegador."}
 </script>
 <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#020617">
+<meta name="theme-color" content="#000000">
 <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -78,9 +78,9 @@ body.light .bg-orbs span{opacity:.16}
 
 /* ── TEMA DARK — "NexusTechSuite" (slate + indigo) ── */
 body{
-  --bg:#020617;--bg-sidebar:#0f172a;--bg-card:#0f172a99;--bg-hover:#1e293b66;
-  --border:#1e293b99;--gold:#6366f1;--gold2:#4f46e5;
-  --text:#f1f5f9;--muted:#94a3b8;--dim:#64748b;--green:#34d399;
+  --bg:#000000;--bg-sidebar:#0a0a0a;--bg-card:#111111d9;--bg-hover:#1a1a1a66;
+  --border:#26262699;--gold:#6366f1;--gold2:#4f46e5;
+  --text:#f5f5f5;--muted:#a3a3a3;--dim:#737373;--green:#34d399;
   --wa:#25d366;--wa-dark:#128c3b;
   --font-display:"Exo 2",sans-serif;--font-body:"Plus Jakarta Sans",sans-serif;--font-mono:"JetBrains Mono",monospace;
   /* ── DESIGN SYSTEM TOKENS ── */
@@ -457,7 +457,7 @@ body{display:block;min-height:100vh}
 .dot{width:6px;height:6px;background:var(--green);border-radius:50%}
 
 /* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(2,6,23,.65);backdrop-filter:blur(6px);z-index:1000;align-items:center;justify-content:center}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);z-index:1000;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex;animation:modal-fade .18s ease}
 @keyframes modal-fade{from{opacity:0}to{opacity:1}}
 .modal-win{background:color-mix(in srgb, var(--bg-sidebar) 92%, transparent);backdrop-filter:blur(20px);border:1px solid var(--border);width:90%;max-width:680px;border-radius:20px;display:flex;flex-direction:column;overflow:hidden;max-height:92vh;box-shadow:0 30px 70px -20px rgba(0,0,0,.55)}
@@ -909,7 +909,7 @@ body{display:block;min-height:100vh}
     <!-- STATS -->
     <section class="stats-land">
       <div class="stats-grid-land">
-        <div class="stat-item-land"><div class="stat-num">69</div><div class="stat-label">Ferramentas</div></div>
+        <div class="stat-item-land"><div class="stat-num">113</div><div class="stat-label">Ferramentas</div></div>
         <div class="stat-item-land"><div class="stat-num">6</div><div class="stat-label">Conversores Office IA</div></div>
         <div class="stat-item-land"><div class="stat-num">3</div><div class="stat-label">Idiomas</div></div>
         <div class="stat-item-land"><div class="stat-num">100%</div><div class="stat-label">Local e Privado</div></div>
@@ -1237,8 +1237,8 @@ function systemPrefersDark(){
   return typeof window.matchMedia==='function'?window.matchMedia('(prefers-color-scheme: dark)').matches:true;
 }
 let savedTheme=null;
-try{savedTheme=localStorage.getItem('ntc_theme');}catch(e){} // 'dark' | 'light' | null (segue o sistema)
-let isDark=savedTheme?savedTheme==='dark':systemPrefersDark();
+try{savedTheme=localStorage.getItem('ntc_theme');}catch(e){} // 'dark' | 'light' | null (padrão: escuro)
+let isDark=savedTheme?savedTheme==='dark':true;
 function applyTheme(){
   const b=document.getElementById('body');
   const btn=document.getElementById('theme-btn');
