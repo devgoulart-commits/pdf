@@ -247,6 +247,22 @@ body{display:block;min-height:100vh}
 .site-lang-btn:hover{color:var(--text)}
 .site-lang-btn.active{background:linear-gradient(100deg,#6366f1,#8b5cf6);color:#fff;box-shadow:0 4px 12px -3px rgba(99,102,241,.5)}
 
+/* ── PÍLULA IDIOMA + TEMA (header, estilo seletor da imagem) ── */
+.lang-theme-pill{position:relative;display:flex;align-items:center;height:34px;padding:0 4px 0 12px;border:1px solid var(--border);border-radius:999px;background:var(--bg-card);flex-shrink:0}
+.lang-dropdown-toggle{display:flex;align-items:center;gap:6px;height:100%;padding:0 6px;background:transparent;border:none;color:var(--text);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.lang-dropdown-toggle:hover{color:var(--gold2)}
+.lang-chevron{width:11px;height:11px;stroke:var(--muted);stroke-width:2.2;fill:none;transition:transform .15s}
+.lang-dropdown-toggle.open .lang-chevron{transform:rotate(180deg)}
+.lang-theme-divider{width:1px;height:16px;background:var(--border);margin:0 3px}
+.theme-icon-btn{width:26px;height:26px;flex-shrink:0;border-radius:50%;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text)}
+.theme-icon-btn:hover{background:rgba(148,163,184,.15)}
+.lang-dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);left:0;min-width:170px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:6px;box-shadow:0 12px 30px rgba(0,0,0,.35);z-index:300}
+.lang-dropdown-menu.open{display:block}
+.lang-dropdown-item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;background:transparent;border:none;color:var(--muted);font-size:12.5px;font-weight:600;padding:9px 10px;border-radius:8px;cursor:pointer}
+.lang-dropdown-item:hover{background:rgba(99,102,241,.1);color:var(--text)}
+.lang-dropdown-item.active{color:#a5b4fc;background:rgba(99,102,241,.14)}
+body.collapsed .lang-theme-pill{width:100%;justify-content:space-between}
+
 /* ── NAV (Início / Sobre / Contato) ── */
 .nav-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:10px;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer}
 .nav-item.active,.nav-item:hover{background:rgba(99,102,241,.1);color:#a5b4fc}
@@ -406,7 +422,8 @@ body{display:block;min-height:100vh}
 .view-sec p{margin-bottom:12px;color:var(--muted);font-size:14px}
 
 /* ── CONTATO ── */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:680px){.contact-grid{grid-template-columns:1fr}}
 .contact-card{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s}
 .contact-card:hover{border-color:var(--gold)}
@@ -419,6 +436,8 @@ body{display:block;min-height:100vh}
 .btn-wa:hover{background:var(--wa-dark)}
 .btn-email{background:var(--gold);color:#000}
 .btn-email:hover{opacity:.85}
+.btn-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.btn-ig:hover{opacity:.85}
 
 .msg-form{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:4px}
 .msg-form h3{font-size:15px;font-weight:600;margin-bottom:16px;color:var(--gold)}
@@ -774,12 +793,19 @@ body{display:block;min-height:100vh}
     </nav>
 
     <div class="navbar-right">
-      <div class="sidebar-lang" id="site-lang-switch">
-        <button class="site-lang-btn active" onclick="setSiteLang('pt',this)">🇧🇷 PT</button>
-        <button class="site-lang-btn" onclick="setSiteLang('en',this)">🇺🇸 EN</button>
-        <button class="site-lang-btn" onclick="setSiteLang('es',this)">🇪🇸 ES</button>
+      <div class="lang-theme-pill" id="lang-theme-pill">
+        <button class="lang-dropdown-toggle" id="lang-dropdown-toggle" onclick="toggleLangDropdown(event)">
+          <span id="lang-dropdown-label">PT · Português</span>
+          <svg class="lang-chevron" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+        </button>
+        <span class="lang-theme-divider"></span>
+        <button class="theme-icon-btn" id="theme-btn" onclick="toggleTheme()" title="Alternar tema">☀️</button>
+        <div class="lang-dropdown-menu" id="lang-dropdown-menu">
+          <button class="lang-dropdown-item site-lang-btn active" data-lang="pt" onclick="setSiteLang('pt',this)">🇧🇷 Português</button>
+          <button class="lang-dropdown-item site-lang-btn" data-lang="en" onclick="setSiteLang('en',this)">🇺🇸 English</button>
+          <button class="lang-dropdown-item site-lang-btn" data-lang="es" onclick="setSiteLang('es',this)">🇪🇸 Español</button>
+        </div>
       </div>
-      <button class="theme-btn theme-btn-nav" id="theme-btn" onclick="toggleTheme()" title="Alternar tema">☀️</button>
       <div id="auth-slot"></div>
       <button class="btn-nav-cta" onclick="scrollToTools()">Ver Ferramentas</button>
     </div>
@@ -1023,11 +1049,19 @@ body{display:block;min-height:100vh}
         <div class="cc-label">E-mail</div>
         <div class="cc-value">fgaholdingllc@gmail.com</div>
         <div class="cc-sub" id="cc-sub-email">Suporte técnico e comercial</div>
-        <a class="btn-contact btn-email" href="mailto:fgaholdingllc@gmail.com">
-          <span id="btn-send-email-contact"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg> Enviar E-mail</span>
+      </div>
+      <!-- Instagram -->
+      <div class="contact-card">
+        <span class="cc-icon icon-badge" style="width:44px;height:44px"><svg class="hicon" style="width:22px;height:22px;stroke:var(--gold2)" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17.5" cy="6.5" r="1" fill="var(--gold2)" stroke="none"/></svg></span>
+        <div class="cc-label">Instagram</div>
+        <div class="cc-value">@fgaholdingllc</div>
+        <div class="cc-sub" id="cc-sub-ig">Novidades e bastidores</div>
+        <a class="btn-contact btn-ig" href="https://instagram.com/fgaholdingllc" target="_blank">
+          <span id="btn-open-ig"><svg class="hicon" style="width:16px;height:16px" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Abrir Instagram</span>
         </a>
       </div>
     </div>
+
 
     <!-- Formulário de mensagem -->
     <div class="msg-form">
@@ -1089,6 +1123,7 @@ body{display:block;min-height:100vh}
       <a onclick="goToView('contato')" data-goto-view="contato">Contato</a>
       <a href="mailto:fgaholdingllc@gmail.com">E-mail</a>
       <a href="https://wa.me/5531997661377" target="_blank">WhatsApp</a>
+      <a href="https://instagram.com/fgaholdingllc" target="_blank">Instagram</a>
     </div>
   </div>
   <div class="footer-bottom-land">© 2026 FGA Holding LLC · Todos os direitos reservados · <a href="mailto:fgaholdingllc@gmail.com">fgaholdingllc@gmail.com</a></div>
@@ -1214,8 +1249,8 @@ function applyTheme(){
   const b=document.getElementById('body');
   const btn=document.getElementById('theme-btn');
   const s=SITE_I18N[siteLang]||SITE_I18N.pt;
-  if(isDark){b.classList.remove('light');if(btn)btn.innerHTML=ic('sun',15)+' '+s.themeLight;}
-  else{b.classList.add('light');if(btn)btn.innerHTML=ic('moon',15)+' '+s.themeDark;}
+  if(isDark){b.classList.remove('light');if(btn){btn.innerHTML=ic('sun',15);btn.title=s.themeLight;}}
+  else{b.classList.add('light');if(btn){btn.innerHTML=ic('moon',15);btn.title=s.themeDark;}}
 }
 function toggleTheme(){
   isDark=!isDark;
@@ -1449,12 +1484,37 @@ const SITE_I18N={
   }
 };
 
+const LANG_PILL_LABELS={pt:'PT · Português',en:'EN · English',es:'ES · Español'};
+function toggleLangDropdown(e){
+  if(e) e.stopPropagation();
+  const menu=document.getElementById('lang-dropdown-menu');
+  const toggle=document.getElementById('lang-dropdown-toggle');
+  if(!menu||!toggle) return;
+  const open=menu.classList.toggle('open');
+  toggle.classList.toggle('open',open);
+}
+document.addEventListener('click',function(e){
+  const pill=document.getElementById('lang-theme-pill');
+  if(!pill) return;
+  if(!pill.contains(e.target)){
+    const menu=document.getElementById('lang-dropdown-menu');
+    const toggle=document.getElementById('lang-dropdown-toggle');
+    if(menu) menu.classList.remove('open');
+    if(toggle) toggle.classList.remove('open');
+  }
+});
 function setSiteLang(l,btn){
   siteLang=l;
   convLang=l; // mantém o idioma do conversor Office IA sincronizado com o idioma do site
   document.querySelectorAll('.site-lang-btn').forEach(b=>b.classList.remove('active'));
   if(!btn){const idx0={pt:0,en:1,es:2}[l];const btns=document.querySelectorAll('.site-lang-btn');btn=btns[idx0];}
   if(btn) btn.classList.add('active');
+  const pillLabel=document.getElementById('lang-dropdown-label');
+  if(pillLabel) pillLabel.textContent=LANG_PILL_LABELS[l]||LANG_PILL_LABELS.pt;
+  const menu=document.getElementById('lang-dropdown-menu');
+  const toggle=document.getElementById('lang-dropdown-toggle');
+  if(menu) menu.classList.remove('open');
+  if(toggle) toggle.classList.remove('open');
   applySiteLang();
   if(typeof pushCloudData==='function')pushCloudData();
   // se o painel do conversor estiver visível, sincroniza os botões PT/EN/ES dele também
@@ -1486,7 +1546,9 @@ function applySiteLang(){
   const searchInputSec=document.getElementById('search-input-sec');
   if(searchInputSec) searchInputSec.placeholder=s.searchPlaceholder;
   const themeBtn=document.getElementById('theme-btn');
-  if(themeBtn) themeBtn.innerHTML=(isDark?ic('sun',15):ic('moon',15))+' '+(isDark?s.themeLight:s.themeDark);
+  if(themeBtn){themeBtn.innerHTML=isDark?ic('sun',15):ic('moon',15);themeBtn.title=isDark?s.themeLight:s.themeDark;}
+  const langLabel=document.getElementById('lang-dropdown-label');
+  if(langLabel) langLabel.textContent=LANG_PILL_LABELS[siteLang]||LANG_PILL_LABELS.pt;
   setTxt('hero-sub',s.heroSub);
   setTxt('sec-header-title',s.secToolsTitle);
   setTxt('footer-rights-text',s.footerRights);
